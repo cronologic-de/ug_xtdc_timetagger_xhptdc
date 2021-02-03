@@ -7,27 +7,34 @@
 
 % this file creates two similar user guides depending on the commend \deviceName
 
+%source files that differ between versions can be input with \ttinput
+%this will prefix the include with TT4_ or xTDC4, depending on versoin
+
 \usepackage{ifthen}
 % if the device name is not provided as a command line parameter
 % pdflatex "\newcommand{\deviceName}{xTDC4} \input{xTDC4_User_Guide.tex}"
 % define it here
-%\ifthenelse{\isundefined{\deviceName}}{\newcommand{\deviceName}{TimeTagger4}}{}
-\newcommand{\deviceName}{TimeTagger4}
+%\newcommand{\deviceName}{xTDC4}
+\ifthenelse{\isundefined{\deviceName}}{\newcommand{\deviceName}{TimeTagger4}}{}
 
 %output the first option for the TimeTagger, the second one otherwise
 % example: 
 % \itett{THIS IS A TIMETAGGER}{THIS IS AN XTDC4}
-\newcommand{\itett}[2]{ \ifthenelse{\equal{\deviceName}{TimeTagger4}}{#1}{#2}}
-\newcommand{\fileprefix}{\itett{TT4}{XTDC4}}
+\ifthenelse{\equal{\deviceName}{TimeTagger4}}{\newcommand{\itett}[2]{#1}}{\newcommand{\itett}[2]{#2}}
+%\newcommand{\itett}[2]{ \ifthenelse{\equal{\deviceName}{TimeTagger4}}{#1}{#2}}
+\itett{
+	\newcommand{\ttinput}[1]{\input{TT4_#1}}
+}{
+	\newcommand{\ttinput}[1]{\input{xTDC4_#1}}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document} 
-\cronofront{figures/\fileprefix_title.pdf}
+\cronofront{fileprefix_title.pdf}
 %
 	\chapter{Introduction}
-		\input{\fileprefix_Intro.tex}
-%		\input{TT4_Intro.tex}
+		\ttinput{Intro.tex}
 	\chapter{Hardware}
 		\input{TT4_Hardware.tex}
 	\chapter{Driver Programming API} 
