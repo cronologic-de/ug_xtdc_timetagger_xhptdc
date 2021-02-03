@@ -14,7 +14,9 @@
 % if the device name is not provided as a command line parameter
 % pdflatex "\newcommand{\deviceName}{xTDC4} \input{xTDC4_User_Guide.tex}"
 % define it here
-%\newcommand{\deviceName}{xTDC4}
+
+%\newcommand{\deviceName}{TimeTagger4}
+\newcommand{\deviceName}{xTDC4}
 \ifthenelse{\isundefined{\deviceName}}{\newcommand{\deviceName}{TimeTagger4}}{}
 
 %output the first option for the TimeTagger, the second one otherwise
@@ -24,8 +26,10 @@
 %\newcommand{\itett}[2]{ \ifthenelse{\equal{\deviceName}{TimeTagger4}}{#1}{#2}}
 \itett{
 	\newcommand{\ttinput}[1]{\input{TT4_#1}}
+	\newcommand{\titlefile}{TT4_title.pdf}
 }{
 	\newcommand{\ttinput}[1]{\input{xTDC4_#1}}
+	\newcommand{\titlefile}{xTDC4_title.pdf}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,7 +40,8 @@
 	\chapter{Introduction}
 		\ttinput{Intro.tex}
 	\chapter{Hardware}
-		\input{TT4_Hardware.tex}
+		\input{Hardware.tex}
+		\input{Software.tex}
 	\chapter{Driver Programming API} 
 		\input{TT4_API.tex}
 	\section{Packet Format\label{cp:packetformat}}

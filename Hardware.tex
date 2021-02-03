@@ -140,19 +140,47 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 
 \section{\deviceName\ Functionality}
 	The \deviceName\ is a ``classic'' common start time-to-digital converter. 
-	It records the time difference between a leading or trailing edge on the start input to the leading and trailing edges of the stop inputs. 
-	Rising and falling edges of the stop channel A-D can be enabled individually. The measurements are quantized to $500$~ps for -2G devices and tp $1000$~ps for -1G devices. 
-	The timestamps are recorded in integer multiples of a bin size of $500$~ps for both board types to simplifiy setups where data from differnt board types is combined.
-	Transitions of the input signals are called hits. To reliably detect hits the signal has to be stable for more than one quantisation interval before and after the edge.  
-	Triggers on the start channel must not occur less than 5ns apart. The \deviceName\ records events without dead time at a readout rate of about 48MHits/s.
+
+	\itett{ %TimeTagger Version
+		It records the time difference between a leading or trailing edge on the start input to the leading and trailing edges of the stop inputs. 
+		Rising and falling edges of the stop channel A-D can be enabled individually. The measurements are quantized to $500$~ps for -2G devices and tp $1000$~ps for -1G devices. 
+		The timestamps are recorded in integer multiples of a bin size of $500$~ps for both board types to simplifiy setups where data from differnt board types is combined.
+		Transitions of the input signals are called hits. To reliably detect hits the signal has to be stable for more than one quantisation interval before and after the edge.  
+		Triggers on the start channel must not occur less than 5ns apart. The \deviceName\ records events without dead time at a readout rate of about 48MHits/s.
+	} { %xTDC4 Version
+		It records the time difference between leading or trailing edges on the start input and the stop inputs. 
+		Each stop channel A-D can be enabled individually. 
+		The standard deviation of the timestamps is approx. $8$~ps. 
+		The timestamps are recorded in integer multiples of a bin size of $5/(3\cdot 128) = 13.0208\overline{3}$~ps. 
+		The data acquisition can be limited to rising or falling signal transitions. 
+		
+		The maximum trigger rate on the start channel is 4~MHz.
+		
+		\subsection{Handling of Difficult Hits}
+			Transitions of the input signals are called hits. To measure all hits with the meximum resolution the hits must fulfill all criteria set forth in this document.
+			However, the \deviceName does include mechanisms to provide as much information as possible for hits that fall out of these specs.
+		
+			To reliably detect hits the signal has to be stable for at least $900$~ps before and after the edge that is to be measured. 
+			Pulses as short as $250$~ps are usually detected at full resolution, but have a significant chance to assigned to the wrong group or appeare out of order. 
+			For these hits bit 7 in the data word is set. See section \ref{flags} for more information on the data format.
+
+			Between multiple hits on a stop channel a deadtime of approximately $5$~ns is required for full resolution. 
+			Hits that are closer together will only be reported with a resolution of $5/6~ns = 833,\overline{3}~ps$. For these hits both bits 6 and 7 are set.
+
+			Data is copied from the 15 entry L0 FIFO to the larger downstream FIFOs at a reate of about 12MHz per channel. 
+			If the L0 FIFO overflows the hig resolution measurement of some hits will be discarded. 
+			In this case a measurement from an alternative TDC wil be used that has a resolution of about 150ps. 
+			For these hits bit 6 in the data word will be set
+	}
 
 	\subsection{Grouping and Events}
-	In typical applications a start hit is followed by a manifold of hits on e.g. a detector. 
-	The hits recorded are managed in groups (which are called ``events'' in some applications). 
-	Figure \ref{fig:grouping} shows a corresponding timing diagram. The user can define the range of a group, i.e. the time window within which hits 
-	on the stop channels are recorded, in software. Hits occurring outside of that time window are discarded. 
-	The maximum recording range for a group is $8.4~$ms. Different ranges can be set for each of the 4 stop channels by setting corresponding timetagger4\tu configuration.channel[n].start and .stop values in the channel configuration. 
-	The values need to be set as multiples of $500$~ps.
+		In typical applications a start hit is followed by a manifold of hits on e.g. a detector. 
+		The hits recorded are managed in groups (which are called ``events'' in some applications). 
+		Figure \ref{fig:grouping} shows a corresponding timing diagram. The user can define the range of a group, i.e. the time window within which hits 
+		on the stop channels are recorded, in software. Hits occurring outside of that time window are discarded. 
+		 Different ranges can be set for each of the 4 stop channels by setting corresponding configuration.channel[n].start and .stop values in the channel configuration. 
+		The values need to be set as multiples of the bin size.
+
 	%
 		\begin{figure*}[ht]
 			\begin{center}
@@ -195,7 +223,7 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 		Figure \ref{fig:matrix} shows how the TiGer blocks are connected. They can be triggered by an OR of an arbitrary combination of inputs, 
 		including the auto trigger. Each TiGer can drive its output to its corresponding LEMO connector. This turns the connector into a DC coupled output. 
 		Connected hardware must not drive any signals to connectors used as outputs, as doing so could damage both the \deviceName and the external hardware.
-		Pulses that are short enough for the input AC coupling are available as input signals to the TimeTagger. 
+		Pulses that are short enough for the input AC coupling are available as input signals to the \deviceName. 
 		This can be used to measure exact time differences between the generated output signals and input signals on other channels.
 
 		
@@ -234,25 +262,3 @@ config.tiger_block[0].sources = TIMETAGGER4_TRIGGER_SOURCE_A|TIMETAGGER4_TRIGGER
 config.dc_offset[0] = TIMETAGGER4_DC_OFFSET_P_LVCMOS_18; 
 \end{lstlisting}
 	
-	\section{Performing a firmware update}
-
-		After installing the \deviceName\ device driver, a firmware update tool is available.
-		 By choosing ``FirmwareGUI.exe'' a firmware update can be performed. 
-		 After invoking the application a window as shown in Figure \ref{fig:Firmware} will appear. 
-		 The tool can be used for updating the firmware and to create a backup of the on-board calibration data of the \deviceName\ unit. 
-		 If several boards are present, the one which is going to be used can be selected in the upper left corner of the window. 
-		 When pressing one of the ``Backup'' buttons a backup of the firmware or the calibration data will be created, respectively. 
-		 In order to perform a firmware update, chose the ``.cronorom''-file to be used by pressing ``Browse''. 
-		 The file contains the firmware data. By pressing ``Flash'' the firmware is written to the board. 
-		 ``Verify'' can be used to compare the firmware data stored on the \deviceName\ to the one inside a file.
-		 ``Flash All'' and ``Verify All'' perform the corresponding operation on all boards which are installed.\par
-
-		\begin{figure*}[ht]
-			\begin{center}
-				\includegraphics[width=0.8\textwidth]{figures/tt4_flashtool.png}
-				\caption{\label{fig:Firmware}The firmware update and calibration data backup tool as provided with the \deviceName\ device driver.}
-			\end{center}
-		\end{figure*}
-
-\textbf{Important note:} The new firmware will only be used by the board after a power cycle, i.e. after switching the PC (or Ndigo crate) off and back on. 
-A simple reboot is not sufficient. Therefore the information shown in the upper half of the application window does not change right after flashing a new firmware.
