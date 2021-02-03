@@ -1,0 +1,36 @@
+The \deviceName\ is a \emph{common-start} high resolution time-to-digital converter. 
+Timestamps of leading or trailing edges of digital pulses are recorded. 
+The \deviceName\ produces a stream of output packets, each containing data from a single start event. 
+The relative timestamps of all stop pulses that occur within a configurable range are grouped into one packet.
+
+\section{Features}
+	\begin{itemize}
+		\item 4 channel common start TDC with 8~ps resolution
+		\item Standard Range: $218~\mu s$ (24~bit timestamp)
+		\item Extended Range: 13.975~ms
+		\item Bin size: approx. 13~ps
+		\item Double pulse resolution for best results: 5~ns
+		\item Double pulse resolution without lost hits: 1.7~ns
+		\item Dead time between groups: none
+		\item Minimum interval between starts: 250~ns
+		\item L0 FIFO: 15~words/channel
+		\item L1 FIFO: 512~words/channel
+		\item L2 FIFO: 10000~words
+		\item PCIe~1.1~x1 with 200~MB/s throughput
+	\end{itemize} 
+
+\section{Applications}
+The \deviceName\ can be used in all time measurement applications where a common start setup with four channels is sufficient. 
+For alternatives with more channels or more flexible grouping check our TDC website \href{https://www.cronologic.de/produkte/products-overview#tdcdata}{www.cronologic.de}.
+
+The \deviceName\ is well suited for the following applications:
+\begin{itemize}
+	\item time of flight mass spectrometers (TOF-MS)
+	\item LIDAR down to 2~mm resolution
+	\item reciprocal counters
+	\item coincidence measurements
+	\item quantum communication
+	\item time correleated single photon counting (TCSPC)
+	\item synchronisation of atomic clocks
+	\item fluorescence lifetime imaging microscopy (FLIM)
+\end{itemize} 

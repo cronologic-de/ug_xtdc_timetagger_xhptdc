@@ -1,0 +1,37 @@
+% SVN Info:
+% $Date: 2021-02-01 14:11:20 +0100 (Mo, 01 Feb 2021) $
+% $Rev: 1041 $
+% $Author: kolja $
+The \deviceName\ is a \emph{common-start} low resolution high throughput time-to-digital converter. 
+Timestamps of leading or trailing edges (or both) of digital pulses are recorded. 
+The \deviceName\ produces a stream of output packets, each containing data from a single start event. 
+The relative timestamps of all stop pulses that occur within a configurable range are grouped into one packet.
+
+\section{Features}
+	\begin{itemize}
+		\item 4 channel common start TDC
+		\item resoltion 500~ps (-2G) or 1~ns (-1G)
+		\item Standard Range: 4.194~ms (23~bit)
+		\item Extended Range: 1.073~s (31 bit)
+		\item Bin size: 500~ps
+		\item Double pulse resolution: 1~ns (-2G) or 2~ns (1-G)
+		\item Dead time between groups: none
+		\item Minimum interval between starts: 4~ns
+		\item L0 FIFO: 1000~words/channel
+		\item L1 FIFO: 1000~words shared between channels
+		\item PCIe~1.1~x1 with 200~MB/s throughput
+	\end{itemize} 
+
+\section{Applications}
+	The \deviceName\  can be used in all time measurement applications where a common start setup with 500ps resolution is sufficient. 
+	For alternatives with higher resolution, more channels or higher readout rates check our TDC website \href{https://www.cronologic.de/produkte/products-overview#tdcdata}{www.cronologic.de}.
+
+	The \deviceName\ is well suited for the following applications:
+	\begin{itemize}
+		\item LIDAR down to 8~cm resolution
+		\item blade oscillation measurements
+		\item reciprocal counters
+		\item coincidence measurements
+		\item quantum communication
+		\item single photon counting
+	\end{itemize} 

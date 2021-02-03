@@ -1,0 +1,75 @@
+% SVN Info:
+% $Date: 2021-01-29 22:28:41 +0100 (Fr, 29 Jan 2021) $
+% $Rev: 1039 $
+% $Author: kolja $
+\section{Information Required by DIN EN 61010-1}
+\subsection{Manufacturer\label{cp:manu}}
+
+The \deviceName\ is a product of:\
+
+\begin{quote}
+	cronologic GmbH \& Co. KG\\
+	Jahnstra\ss{}e 49\\
+	60318 Frankfurt\par
+	Germany
+	\noindent HRA 42869 beim Amtsgericht Frankfurt/M\par
+	\noindent VAT-ID: DE235184378
+\end{quote}
+
+\subsection{Intended Use and System Integration}
+
+	The devices are not ready to use as delivered by cronologic. It requires the development of specialized software to fulfill the application of the end user. The device is provided to system integrators to be built into measurement systems that are distributed to end users. These systems usually consist of the \deviceName, a main board, a case, application software and possible additional electronics to attach the system to some type of detector. They might also be integrated with the detector.\par
+
+	The \deviceName\ is designed to comply with DIN EN 61326-1 when operated on a PCIe compliant main board housed in a properly shielded enclosure. 
+	When operated in a closed standard compliant enclosure the device does not pose any hazards as defined by EN 61010-1.\par
+
+	Radiated emissions, noise immunity and safety highly depend on the quality of the enclosure. It is the responsibility of the system integrator to ensure that the assembled system is compliant to applicable standards of the country that the system is operated in, especially with regards to user safety and electromagnetic interference. Compliance was only tested for attached cables shorter than 3m.\par
+
+	When handling the board, adequate measures have to be taken to protect the circuits against electrostatic discharge (ESD). All power supplied to the system must be turned off before installing the board.
+
+	\subsection{Environmental Conditions for Storage}
+
+	The board shall be stored between operation under the following conditions:
+
+	\noindent
+	\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+		\hline
+		Symbol & Parameter & Min & Typical & Max & Units\\
+		\hline\hline
+		T & ambient temperature & -30 && 60 & $^{\circ}$C\\
+		\hline
+		RH & relative humidity at 31$^{\circ}$C non condensing & 10 && 70 & \%\\
+		\hline
+	\end{tabularx}
+
+
+\subsection{Environmental Conditions for Operation}
+
+	The board is designed to be operated under the following conditions:
+
+	\noindent
+	\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+		\hline
+		Symbol & Parameter & Min & Typical & Max & Units\\
+		\hline\hline
+		T & ambient temperature & 5 && 40 & $^{\circ}$C\\
+		\hline
+		RH & relative humidity at 31$^{\circ}$C & 20 && 75 & \%\\
+		\hline
+	\end{tabularx}
+
+	WARNING: Do not connect any DC coupled inputs to a channel while the TiGer of that channel is configured as an output (see Section \ref{cp:tiger}).
+	Doing so could do permanent damage to the \deviceName\ and the external hardware.
+
+\subsection{Cooling}
+
+	The \deviceName\ in its base configuration has passive cooling that requires a certain amount of air flow. 
+	If the case design can't provide enough air flow to the board, a slot cooler like Zalman ZM-SC100 can be placed next to the board. 
+	Active cooling is also available as an option for the board.
+
+
+\subsection{Recycling}
+
+	cronologic is registered with the ``Stiftung Elektro-Altger\"a{}te Register'' as a manufacturer of electronic systems with Registration ID DE 77895909.\par
+
+	The \deviceName\ belongs to category 9, ``\"U{}berwachungs und Kontrollinstrumente f\"u{}r aus\-schlie\ss lich gewerbliche Nutzung''. The last owner of a \deviceName\ must recycle it, treat the board in compliance with \S{}11 and \S{}12 of the German ElektroG, or return it to the manufacturer's address listed on page \pageref{cp:manu}.

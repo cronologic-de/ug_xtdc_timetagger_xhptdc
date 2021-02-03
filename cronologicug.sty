@@ -1,0 +1,77 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cronologicug}
+\author{cronologic GmbH \& Co KG}
+
+%\DeclareOption*{\newcommand{\deviceName}{\CurrentOption}}
+
+% Kolja believes that usepackage should be replace by RequirePackage, but could not get it to work
+\usepackage[utf8]{inputenc}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{graphicx} %for including figures
+\usepackage{scrhack}  % avoid float@addtolist warning in package "listing"
+\usepackage{tabularx}
+\usepackage{amsmath} %for math environments
+\usepackage[left=25mm, right=25mm, top=25mm, bottom=25mm]{geometry} %for page properties (pagestyle)
+\usepackage[section,subsection,subsubsection]{extraplaceins} %for binding figures to a (sub-)section
+\usepackage{listings}%for code in latex document, might be the source of the float@addtolist warning
+\usepackage{textcomp}%for code in latex document
+\usepackage{balance}%for two-column layout
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage{array} %for centered AND constant width columns
+\usepackage{longtable}
+\usepackage[footsepline=1pt]{scrlayer-scrpage}%for header, footer
+\usepackage{makecell}  % multi line table cells
+\usepackage[T1]{fontenc}  % fix warning for availability of bold slanted fonts
+\usepackage{attachfile2} 
+\usepackage{xcolor} 
+
+\usepackage{incgraph} % to include the title page
+
+%%%%%%%%%% Defitinions for the whole document
+
+% color definitions
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\definecolor{crondarkgreen}{RGB}{32, 90, 133} %1. Überschrift
+\definecolor{crondarkblue}{RGB}{43, 119, 177} %2. Überschrift
+\definecolor{cronlightgreen}{RGB}{86,159,214} %3. Überschrift
+\definecolor{crongrey}{gray}{0.32} %Variablendeklaration API
+%
+%
+\addtokomafont{chapter}{\color{crondarkgreen}}
+\addtokomafont{section}{\color{crondarkblue}}
+\addtokomafont{subsection}{\color{cronlightgreen}}
+%
+
+%import a title PDF and create TOC
+\newcommand{\cronofront}[1]{
+	\newpage
+	\pagestyle{empty}
+	\incgraph[a4paper][width=\paperwidth]{#1}
+	\newpage 
+	\tableofcontents
+	\newpage
+	\pagestyle{scrheadings}
+	\pagenumbering{arabic}
+}
+
+\newcommand{\ugrev}{{1.4.0}}
+\newcommand{\cronvar}[2]{\noindent\textsf{\textbf{\textcolor{crongrey}{#1} #2}}}%for variable declaration
+\newcommand{\crondef}[1]{\noindent\textsf{\textcolor{crongrey}{\#{}define} #1}}%for definitions
+\newcommand{\tu}{\textunderscore}%shorter
+\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
+\renewcommand{\arraystretch}{1.6} 
+\parskip 8pt
+
+
+
+%%%%%%%%%%% Design Footer 
+% https://esc-now.de/_/latex-individuelle-kopf--und-fusszeilen-update
+\setkomafont{footsepline}{\color{cronlightgreen}}
+\pagestyle{scrheadings}
+\clearpairofpagestyles
+\ifoot{cronologic GmbH \& Co. KG}
+\cfoot{\pagemark}
+\ofoot{\deviceName\ User Guide \ugrev} 
+\renewcommand*{\chapterpagestyle}{scrheadings} % The first page of a chapter should not look different
+ 
