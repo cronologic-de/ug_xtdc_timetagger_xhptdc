@@ -78,7 +78,7 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 			\end{itemize}
 
 			\cronvar{int}{dma\tu read\tu delay}\\
-			The update delay of the write pointer after a packet has been send over PCIe. The base unit is 16 to 32 ns.
+			The update delay of the write pointer after a packet has been sent over PCIe. Specified in multiples of 16ns
 			Should not be changed by the user.\par
 
 			\cronvar{int}{use\tu ext\tu clock}\\
@@ -143,7 +143,8 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 			\begin{itemize}
 				\item[0:] Experimental first board version. Labeled "Rev. 1"
 				\item[1:] First commercial version. Labeled "Rev. 2"
-				\item[1:] Latest commercial version. Labeled "Rev. 3"
+				\item[2:] Updated commercial version. Labeled "Rev. 3"
+				\item[4:] Lates commercial version. Labeled "Rev. 4"
 			\end{itemize}
 
 			\cronvar{int}{board\tu configuration}\\
@@ -154,7 +155,11 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 			Subversion revision id of the FPGA configuration source code.
 
 			\cronvar{int}{chip\tu id}\\
-			Reserved.\par
+			\itett{
+				Reserved.
+				}{
+				16 bit factory ID of the TDC chip.
+				}\par
 
 			\cronvar{int}{board\tu serial}\\
 			Serial number.\\
@@ -214,20 +219,26 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 
 			\cronvar{int}{alerts}\\
 			Alert bits from temperature sensor and the system monitor.
-			The TimeTagger4 does not implement any temperature alerst.
+			\itett{
+				The TimeTagger4 does not implement any temperature alerts.
+			}{
+				Bit 0 is set if the TDC temperature exceeds 140°C. The TDC did shut down and the device needs to be reinitialized. 
+			}\par
 
 			\cronvar{int}{pcie\tu pwr\tu mgmt}\par
 			Allways 0. 
 
 			\cronvar{int}{pcie\tu link\tu width}\\
-			Number of PCIe lanes the card uses. Should always be 1 for the TimeTagger. \par
+			Number of PCIe lanes the card uses. Should always be 1 for the \deviceName. \par
 
 			\cronvar{int}{pcie\tu max\tu payload}\\
 			Maximum size in bytes for one PCIe transaction. Depends on system configuration.\par
 
 	\section{Configuration}
 
-		The device is configured with a configuration structure. The user should first obtain a structure that contains the default settings of the device read from an on board ROM , than modify the structure as needed for the user application and use the result to configure the device.\par
+		The device is configured with a configuration structure. 
+		The user should first obtain a structure that contains the default settings of the device read from an on board ROM , 
+		then modify the structure as needed for the user application and use the result to configure the device.\par
 
 		\cronvar{int}{timetagger4\tu configure(}\cronvar{timetagger4\tu device} {*device,} \\ \cronvar{timetagger4\tu configuration}{*config)}\\
 		Configures the \deviceName\ device.\par
@@ -242,7 +253,7 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 
 			This is the structure containing the configuration information. It is used in conjunction with \textsf{timetagger4\tu get\tu default\tu configuration()}, \textsf{timetagger4\tu get\tu current\tu configuration()} and \textsf{timetagger4\tu configure()}.\par
 
-			It uses internally the structures \textsf{timetagger4\tu tiger\tu block} and \textsf{timetagger4\tu trigger}.\par
+			It uses the substructures \textsf{timetagger4\tu tiger\tu block} and \textsf{timetagger4\tu trigger}.\par
 
 			\cronvar{int}{size}\\
 			The number of bytes occupied by the structure.\par
@@ -252,9 +263,15 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 
 			\cronvar{int}{tdc\tu mode}\\
 			TDC mode. Can be grouped or continuous. \\
-			Currently only TIMETAGGER4\tu TDC\tu MODE\tu GROUPED is supported. This is set per default by timetagger4\tu get\tu current\tu configuration() and should be left unchanged.\par
+			Currently only TIMETAGGER4\tu TDC\tu MODE\tu GROUPED is supported. 
+			This is set per default by timetagger4\tu get\tu current\tu configuration() and should be left unchanged.\par
 
-			\cronvar{crono\tu bool\tu t}{start\tu rising} Not applicable for \deviceName.
+			\cronvar{crono\tu bool\tu t}{start\tu rising} 
+			\itett{
+				Not applicable for the \deviceName.
+			}{
+				Selects whether the rising or falling edge of the start signal is used to start a group.
+			}\par
 
 			\cronvar{double}{dc\tu offset[TIMETAGGER4\tu CHANNEL\tu COUNT + 1]}\\
 			Set the threshold voltage for the input channels S, A - D (see figure \ref{fig:dcoffset1}).
@@ -301,16 +318,21 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 %%			\end{figure}
 
 			\cronvar{timetagger4\tu trigger}{trigger[TIMETAGGER4\tu TRIGGER\tu COUNT]}\\
-			Configuration of the external trigger sources.\par
+			Configuration the polarity of the external trigger sources.
+			These are used as inputs for the TiGer blocks and as inputs to the time measurement unit.\par
 
 			\cronvar{timetagger4\tu tiger\tu block}{tiger\tu block[TIMETAGGER4\tu TIGER\tu COUNT]}
 			Configuration of the timing generator (TiGeR).
 
 			\cronvar{timetagger4\tu channel}{channel[TIMETAGGER4\tu CHANNEL\tu COUNT]}\\
-			Configure polaritiy, type and threshold for the TDC channels.
+				Configure the TDC channels.
 
 			\cronvar{timetagger4\tu lowres\tu channel}{lowres\tu channel[TIMETAGGER4\tu LOWRES\tu CHANNEL\tu COUNT]}\\
-			Not applicable for \deviceName.
+			\itett{
+				Not applicable for \deviceName. 
+			}{
+				Only applicable to the xTDC4-Sciex. Configures the additional digital lowres inputs.
+			}\par
 
 			\cronvar{int}{auto\tu trigger\tu period}\\
 			\cronvar{int}{auto\tu trigger\tu random\tu exponent}\\
@@ -324,146 +346,170 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 
 			\noindent There is no enable or reset as the usage of this trigger can be configured in the TiGer block channel source field.\par
 
-		\subsection{Structure timetagger4\tu trigger}
-
+			\subsection{Structure timetagger4\tu trigger}
+			\label{structtrigger}
 			\cronvar{crono\tu bool\tu t}{falling}\\
-			Triggers on falling edges.\par
-
 			\cronvar{crono\tu bool\tu t}{rising}\\
-			Triggers on rising edges.\par
+			Select for which edges a trigger event is created inside the FPGA.
+			\itett{
+				The \deviceName can output measurements for one or both edges of input signals. 
+			}{
+				The \deviceName can output measurements with a reduced bin size of $5/6~ns = 833,\overline{3}~ps$ for one or both edges of input signals. 
+				See section \ref{difficulthits} for more information on hits with varying resolution.
+				Use \textsf{xtdc4\tu channel.rising} on page \pageref{structchannel} to select which edge is measured with full resolution.
+				The edge that is selected for full resolution measurement must also be enabled for low resolution measurement.
+			}\par
 
-		\subsection{Structure timetagger4\tu tiger\tu block\label{cp:tigerblock}}
+			\subsection{Structure timetagger4\tu tiger\tu block\label{cp:tigerblock}}
 
-		\cronvar{crono\tu bool\tu t}{enable}\\
-		Activates the timing generator (TiGer).\par
-
-		\cronvar{crono\tu bool\tu t}{negate}\\
-		Inverts output polarity. Default is set to false.\par
-
-		\cronvar{crono\tu bool\tu t}{retrigger}\\
-		Enables/disables retrigger setting.\\
-		Default is set to false. If retriggering is enabled the timer is reset to the value of the start parameter, whenever the input signal is set while waiting to reach the stop time.\par
-
-		\cronvar{crono\tu bool\tu t}{extend}\\
-		Not implemented.
-
-		\cronvar{crono\tu bool\tu t}{enable\tu lemo\tu output}\\
-		Enables the LEMO output. Drive the TiGer Signal to the corresponding Lemo connector as an output. 
-		This is DC coupled, so make sure that you do not any devices connected as inputs.
-		Pulses created by the TiGer are visible at the \deviceName inputs and can be measured again to get the exact timing.  
-
-		\cronvar{int}{start}\\
-		In multiples of 4~ns. The time from the first input signal seen in idle stat until the TiGer output is set. 
-		The value of \textsf{start} needs to be less or equal to the \textsf{stop} value. The maximum value for start is \(2^{16}-1\).
-
-		\cronvar{int}{stop}\\
-		In multiples of 4~ns from 0 to \(2^{16}-1\).
-		This is the time from leaving the idle state until the TiGer outout is reset. 
-		If retriggering is enabled, the timer is reset to the value of the start parameter whenever the input signal is set while waiting for the stop time. 
-		
-
-		\cronvar{int}{sources}\\
-		A bit mask with a bit set for all trigger sources that can trigger this channel. 
-		Default is \textsf{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu S}.\par
-
-		\begin{tabular}{lc}
-				\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu S} & 0x00000001\\
-				\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu A} & 0x00000002\\
-				\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu B} & 0x00000004\\
-				\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu C} & 0x00000008\\
-				\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu D} & 0x00000010\\
-				%\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu S1} & 0x00000020\\
-				%\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu S2} & 0x00000040\\
-				%\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu GATE} & 0x00000080\\
-				\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu AUTO} & 0x00004000\\
-				\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu ONE} & 0x00008000
-			\end{tabular}
-
-		\subsection{Structure timetagger4\tu channel}
-			Contains TDC channel settings.\par
-
-			\cronvar{crono\tu bool\tu t}{enabled}\\
-			Enable TDC channel.\par
-
-			\cronvar{crono\tu bool\tu t}{rising}\\
-			Not applicable for \deviceName.
-
+			\cronvar{crono\tu bool\tu t}{enable}\\
+			Activates the timing generator (TiGer).\par
+	
+			\cronvar{crono\tu bool\tu t}{negate}\\
+			Inverts output polarity. Default is set to false.\par
+	
+			\cronvar{crono\tu bool\tu t}{retrigger}\\
+			Enables retrigger setting.\\
+			If enabled the timer is reset to the value of the \textsf{start} parameter, whenever the input signal is set while waiting to reach the \textsf{stop} time.\par
+	
+			\cronvar{crono\tu bool\tu t}{extend}\\
+			Not implemented.
+	
+			\cronvar{crono\tu bool\tu t}{enable\tu lemo\tu output}\\
+			Enables the LEMO output. Drive the TiGer Signal to the corresponding Lemo connector as an output. 
+			This is DC coupled, so make sure that you do not any devices connected as inputs.
+			Pulses created by the TiGer are visible at the \deviceName inputs and can be measured again to get the exact timing.  
+	
 			\cronvar{int}{start}\\
 			\cronvar{int}{stop}\\
-			Veto function for grouping of hits into packets in multiples of $500$~ps. Only hits between start and stop are read out.
-			The parameters must adhere to the following relations:
-			\[
-				0 <= start <= stop < 2^{31}
-			\]
-			This allows for a total range of \(2^{31}*500ps \approx 1.07s\). 
-
-			\cronvar{int}{stop}\\
-			Veto function for grouping of hits into packets. 
-			Only timestamps prior to \textsf{stop} are recorded.  
-			Specified in multiples of $500$~ps.
-			\textsf{Stop} must not be smaller than \textsf{start}
-
-	\section{Run Time Control}
-
-			\cronvar{int}{timetagger4\tu continue\tu capture(}\cronvar{timetagger4\tu device}{*device)}\\
-			Call this to resume data acquisition after a call to \textsf{timetagger4\tu pause\tu capture()}.\par
-
-			\cronvar{int}{timetagger4\tu pause\tu capture(}\cronvar{timetagger4\tu device}{*device)}\\
-			Pause data acquisition.\par
-
-			\cronvar{int}{timetagger4\tu start\tu capture(}\cronvar{timetagger4\tu device}{*device)}\\
-			Start data acquisition.\par
-
-			\cronvar{int}{timetagger4\tu start\tu tiger(\cronvar{timetagger4\tu device}{*device})}\\
-			Start timing generator.\par
-
-			\cronvar{int}{timetagger4\tu stop\tu capture(}\cronvar{timetagger4\tu device}{*device)}\\
-			Stop data acquisition.\par
-
-			\cronvar{int}{timetagger4\tu stop\tu tiger(\cronvar{timetagger4\tu device}{*device})}\\
-			Stop timing generator.\par
-
-	\section{Readout\label{cp:readout}}
-
-		\cronvar{int}{timetagger4\tu acknowledge(}\cronvar{timetagger4\tu device}{*device,} \cronvar{crono\tu packet}{*packet)}\\
-		Acknowledges the processing of the last read block. This is only necessary if \textsf{timetagger4\tu read()} is not called with 
-		\textsf{in.acknowledge\tu last\tu read} set.\\
-		This feature allows to either free up partial DMA space early if there will be no call to \textsf{timetagger4\tu read} anytime soon. 
-		It also allows to keep data over multiple calls to \textsf{timetagger4\tu read} to avoid unnecessary copying of data. \par
-
-		\cronvar{int}{timetagger4\tu get\tu device\tu type}\\
-		Returns the type of the device.	\textsf{CRONO\tu DEVICE\tu TIMETAGGER4}\par
-
-		\cronvar{const char*}{timetagger4\tu get\tu last\tu error\tu message(\cronvar{timetagger4\tu device}{*device})}\\
-		Returns most recent error message.\par
-
-		\cronvar{int}{timetagger4\tu read(}\cronvar{timetagger4\tu device}{*device,} \cronvar{timetagger4\tu read\tu in}{*in,} \\ \cronvar{timetagger4\tu read\tu out}{*out)}\\
-		Return a pointer to an array of captured data in \textsf{read\tu out}. 
-		The result can contain any number of packets of type \textsf{timetagger4\tu packet}.
-		\textsf{read\tu in} provides parameters to the driver. 
-		A call to this method automatically allows the driver to reuse the memory returned in the previous call if \textsf{read\tu in.acknowledge\tu last\tu read} is set.\\
-		Returns an error code as defined in the structure \textsf{timetagger4\tu read\tu out}.
-
-		\subsection{Input Structure timetagger4\tu read\tu in}
-
-			\cronvar{timetagger4\tu bool\tu t}{acknowledge\tu last\tu read}\\
-			If set \textsf{timetagger4\tu read()} automatically acknowledges packets from the last read.
-
-		\subsection{Input Structure timetagger4\tu read\tu out}
-			\cronvar{crono\tu packet}{*first\tu packet}\\
-			Pointer to the first packet that was capture by the call of \textsf{timetagger4\tu read}.\par
-
-			\cronvar{crono\tu packet}{*last\tu packet}\\
-			Address of header of the last packet in the buffer.\par
-
-			\cronvar{int}{error\tu code}\\
-			Assignments of the error codes.\par
+			\itett{
+				In multiples of $4~ns$.
+			}{
+				In multiples of $20/3 = 6,\overline{6}~ns$
+			}
+			The time during which the TiGer output is set, relativ to the trigger input. The parameters \textsf{start} and \textsf{stop} must fulfill the following conditions:
+			\[ 0 <= start <= stop <= 2^{16}-1 \]
+			If retriggering is enabled, the timer is reset to the value of the start parameter whenever the input signal is set while waiting for the stop time. \par
+			
+	
+			\cronvar{int}{sources}\\
+			A bit mask with a bit set for all trigger sources that can trigger this TiGer block. 
+			Default is \textsf{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu S}.\par
+	
 			\begin{tabular}{lc}
-				\crondef{CRONO\tu READ\tu OK} & 0\\
-				\crondef{CRONO\tu READ\tu NO\tu DATA} & 1\\
-				\crondef{CRONO\tu READ\tu INTERNAL\tu ERROR} & 2\\
-				\crondef{CRONO\tu READ\tu TIMEOUT} & 3\par
-			\end{tabular}\par
+					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu S} & 0x00000001\\
+					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu A} & 0x00000002\\
+					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu B} & 0x00000004\\
+					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu C} & 0x00000008\\
+					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu D} & 0x00000010\\
+					%\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu S1} & 0x00000020\\
+					%\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu S2} & 0x00000040\\
+					%\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu GATE} & 0x00000080\\
+					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu AUTO} & 0x00004000\\
+					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu ONE} & 0x00008000
+				\end{tabular} 
+	
+			\subsection{Structure timetagger4\tu channel}
+				\label{structchannel}
+				Contains TDC channel settings.\par
+	
+				\cronvar{crono\tu bool\tu t}{enabled}\\
+				Enable TDC channel.\par
+	
+				\cronvar{crono\tu bool\tu t}{rising}\\
+				\itett{
+					Not applicable for \deviceName.
+				}{
+					Select which edge of the signal is used for full resolution measurements. 
+					\textsf{xtdc4\tu trigger.rising} and \textsf{xtdc4\tu trigger.falling} described on page \pageref{structtrigger} are used 
+					to select which edges are recorded for low resolution measurement. 
+					The edge that is selected for full resolution measurement must also be enabled for low resolution measurement.
+					See section \ref{difficulthits} for more information on hits with varying resolution.
+				}\par
 
-			\cronvar{const char}{*error\tu message}
-			The last error in human readable form, possibly with additional information on the error.
+				\itett{}{ % onyl for xTDC4
+					\cronvar{crono\tu bool\tu t}{cc\tu enable}\\
+					Enable carry chain TDC. This is set to \emph{true} by default an should be left unchanged. \par
+	
+					\cronvar{crono\tu bool\tu t}{cc\tu same\tu edge}\\
+					Sets whether the carry chain TDC records the same or opposite edge as the TDC chip. 
+					If the same edge is selected, that carry chain TDC acts  as a backup if the chip misses hits due to FIFO overflows or short input pulses.
+					If opposite edges are selected, both edges of a pulse can be measured with reasonable resolution. See section \ref{difficulthits} for more information.\par
+	
+					\cronvar{crono\tu bool\tu t}{ths788\tu disable}\\
+					Disable full resolution timestamps. This is set to \emph{false} by default and should be left unchanged.\par
+				}
+	
+				\cronvar{int}{start}\\
+				\cronvar{int}{stop}\\
+				Veto function for grouping of hits into packets in multiples of the binsize. Only hits between start and stop are read out.
+				The parameters must adhere to the following relations:
+				\[
+					0 <= start <= stop < 2^{ \itett{31}{30}}
+				\]
+	
+	
+		\section{Run Time Control}
+	
+				\cronvar{int}{timetagger4\tu continue\tu capture(}\cronvar{timetagger4\tu device}{*device)}\\
+				Call this to resume data acquisition after a call to \textsf{timetagger4\tu pause\tu capture()}.\par
+	
+				\cronvar{int}{timetagger4\tu pause\tu capture(}\cronvar{timetagger4\tu device}{*device)}\\
+				Pause data acquisition.\par
+	
+				\cronvar{int}{timetagger4\tu start\tu capture(}\cronvar{timetagger4\tu device}{*device)}\\
+				Start data acquisition.\par
+	
+				\cronvar{int}{timetagger4\tu start\tu tiger(\cronvar{timetagger4\tu device}{*device})}\\
+				Start timing generator.\par
+	
+				\cronvar{int}{timetagger4\tu stop\tu capture(}\cronvar{timetagger4\tu device}{*device)}\\
+				Stop data acquisition.\par
+	
+				\cronvar{int}{timetagger4\tu stop\tu tiger(\cronvar{timetagger4\tu device}{*device})}\\
+				Stop timing generator.\par
+	
+		\section{Readout\label{cp:readout}}
+	
+			\cronvar{int}{timetagger4\tu acknowledge(}\cronvar{timetagger4\tu device}{*device,} \cronvar{crono\tu packet}{*packet)}\\
+			Acknowledges the processing of the last read block. This is only necessary if \textsf{timetagger4\tu read()} is not called with 
+			\textsf{in.acknowledge\tu last\tu read} set.\\
+			This feature allows to either free up partial DMA space early if there will be no call to \textsf{timetagger4\tu read} anytime soon. 
+			It also allows to keep data over multiple calls to \textsf{timetagger4\tu read} to avoid unnecessary copying of data. \par
+	
+			\cronvar{int}{timetagger4\tu get\tu device\tu type}\\
+			Returns the type of the device.	\textsf{CRONO\tu DEVICE\tu TIMETAGGER4}\par
+	
+			\cronvar{const char*}{timetagger4\tu get\tu last\tu error\tu message(\cronvar{timetagger4\tu device}{*device})}\\
+			Returns most recent error message.\par
+	
+			\cronvar{int}{timetagger4\tu read(}\cronvar{timetagger4\tu device}{*device,} \cronvar{timetagger4\tu read\tu in}{*in,} \\ \cronvar{timetagger4\tu read\tu out}{*out)}\\
+			Return a pointer to an array of captured data in \textsf{read\tu out}. 
+			The result can contain any number of packets of type \textsf{timetagger4\tu packet}.
+			\textsf{read\tu in} provides parameters to the driver. 
+			A call to this method automatically allows the driver to reuse the memory returned in the previous call if \textsf{read\tu in.acknowledge\tu last\tu read} is set.\\
+			Returns an error code as defined in the structure \textsf{timetagger4\tu read\tu out}.
+	
+			\subsection{Input Structure timetagger4\tu read\tu in}
+	
+				\cronvar{timetagger4\tu bool\tu t}{acknowledge\tu last\tu read}\\
+				If set \textsf{timetagger4\tu read()} automatically acknowledges packets from the last read.
+	
+			\subsection{Input Structure timetagger4\tu read\tu out}
+				\cronvar{crono\tu packet}{*first\tu packet}\\
+				Pointer to the first packet that was capture by the call of \textsf{timetagger4\tu read}.\par
+	
+				\cronvar{crono\tu packet}{*last\tu packet}\\
+				Address of header of the last packet in the buffer.\par
+	
+				\cronvar{int}{error\tu code}\\
+				Assignments of the error codes.\par
+				\begin{tabular}{lc}
+					\crondef{CRONO\tu READ\tu OK} & 0\\
+					\crondef{CRONO\tu READ\tu NO\tu DATA} & 1\\
+					\crondef{CRONO\tu READ\tu INTERNAL\tu ERROR} & 2\\
+					\crondef{CRONO\tu READ\tu TIMEOUT} & 3\par
+				\end{tabular}\par
+	
+				\cronvar{const char}{*error\tu message}
+				The last error in human readable form, possibly with additional information on the error.

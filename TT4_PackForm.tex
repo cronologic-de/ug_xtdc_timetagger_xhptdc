@@ -31,7 +31,7 @@
 	Number of 64-bit elements (each containing up to 2 TDC hits) in the data array.\par
 
 	\cronvar{unsigned \tu\tu int64}{timestamp}\\
-	Coarse timestamp of the start pulse. Values are given in multiples of $500$~ps.\par
+	Coarse timestamp of the start pulse. Values are given in multiples of \itett{$500$~ps}{$5/3=1.\overline{6}$~ns}.\par
 
 	\cronvar{unsigned \tu\tu int64}{data[1]}\\
 	TDC hits. the user can cast the array to uint32* to directly operate on the TDC hits.
@@ -45,16 +45,35 @@
 	\end{tabular}
 	\end{small}
 
-	The timestamp of the hit is stored in bits 31 down to 8 in multiples of 500~ps. For the -1G Variant bit 8 is always 0.\\
+	The timestamp of the hit is stored in bits 31 down to 8 in multiples of 
+	\itett{500~ps. For the -1G Variant bit 8 is always 0.}{
+		$5/(3*128) = 13.0208\overline{3}$~ps
+	}\\
 	
 	\label{flags}
 	Bits 7 down to 4 are hit flags:\par
-	Bit 7: Always 0.\par
-	Bit 6: Always 1.\par
-	Bit 5: Rollover. The time since start pulse exceeded the 24 range that can be enoded in a data word. This word does not ncode a hit. 
-	Instead it the readout software should increment a rollover counter that can be used as upper bits of the following time stamps.  The counters should be reset for each packet.
+	\itett{
+		Bit 7: Always 0.\par
+		Bit 6: Always 1.\par
+	} {
+		Bit 7, 6: Resolution of this measurement. See section \ref{difficulthits}.\\
+		\noindent
+		\begin{small}
+		\begin{tabular}{|c|c||l|}
+			\hline
+			bit 7 & bit 6 & Measurement Type \\\hline\hline
+			0 & 0 &  Normal full resolution measuremnt.\\\hline
+			0 & 1 &  Measurement performed with carry chain TDC at about 150~ps resolution.\\\hline
+			1 & 0 &  Full resolution measurement that might in the wrong place in the data stream.\\\hline
+			1 & 1 &  Measurement with only $5/6~ns = 833.\overline{3}~ps$ resolution. \\\hline
+		\end{tabular}
+		\end{small}
+		
+	}
+	Bit 5: Rollover. The time since start pulse exceeded the \itett{23}{24} bit range that can be enoded in a data word. This word does not encode a measurement. 
+	Instead the readout software should increment a rollover counter that can be used as the upper bits of consecutive time stamps.  The counters should be reset for each packet.
 	The total offset of a hit in picosencods can be computed by
-	\[	\Delta T_{hit} = \mathrm{(\#\ rollovers \cdot 2^{23} + TDC\_ DATA_{hit}) \cdot timetagger4\_param\_info.binsize} \]
+	\[	\Delta T_{hit} = \mathrm{(\#\ rollovers \cdot 2^{\itett{23}{24}} + TDC\_ DATA_{hit}) \cdot timetagger4\_param\_info.binsize} \]
 	\indent
 	Bit 4: Set if this word encodes a rising edge. Otherwise this word belongs to a falling edge.
 	The channel number is given in the lowest nibble of the data word. A value of 0 corresponds to channel A, a value of 3 to channel D.\par
