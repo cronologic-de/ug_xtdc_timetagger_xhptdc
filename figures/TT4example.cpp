@@ -1,3 +1,4 @@
+// timetagger4_user_guide_example.cpp : Example application for the TimeTagger4
 #include "timetagger4_interface.h"
 #include "stdio.h"
 #include <windows.h>
@@ -5,7 +6,7 @@
 typedef unsigned int uint32;
 typedef unsigned __int64 uint64;
 
-timetagger4_device * initializeTimeTagger(int buffer_size, int board_id, int card_index) {
+timetagger4_device * initialize_timetagger(int buffer_size, int board_id, int card_index) {
 	// prepare initialization
 	timetagger4_init_parameters params;
 	
@@ -25,7 +26,7 @@ timetagger4_device * initializeTimeTagger(int buffer_size, int board_id, int car
     return device;
 }
 
-int configureTimeTagger(timetagger4_device * device) {
+int configure_timetagger(timetagger4_device * device) {
 
 	// prepare configuration
 	timetagger4_configuration config;
@@ -74,20 +75,23 @@ int configureTimeTagger(timetagger4_device * device) {
 	config.tiger_block[0].sources = TIMETAGGER4_TRIGGER_SOURCE_AUTO;
 
 	// if TiGeR is used for triggering with positive pulses
-	config.dc_offset[0] = TIMETAGGER4_DC_OFFSET_P_LVCMOS_18;
+	if (config.tiger_block[0].enable == 1)
+		config.dc_offset[0] = TIMETAGGER4_DC_OFFSET_P_LVCMOS_18;
+	else
+		config.dc_offset[0] = TIMETAGGER4_DC_OFFSET_N_NIM;
 
 	// write configuration to board
 	return timetagger4_configure(device, &config);	
 }
 
-double GetBinsize(timetagger4_device * device)
+double get_binsize(timetagger4_device * device)
 {
 	timetagger4_param_info parinfo;
 	timetagger4_get_param_info(device, &parinfo);
 	return parinfo.binsize;
 }
 
-void printDeviceInformation(timetagger4_device * device) {
+void print_device_information(timetagger4_device * device) {
     // print board information
 	timetagger4_static_info staticinfo;
 	timetagger4_get_static_info(device, &staticinfo);
@@ -97,10 +101,10 @@ void printDeviceInformation(timetagger4_device * device) {
 	printf("Firmware Revision   : %d.%d\n", staticinfo.firmware_revision, staticinfo.subversion_revision);
 	printf("Driver Revision     : %d.%d.%d\n", ((staticinfo.driver_revision >> 16) & 255), ((staticinfo.driver_revision >> 8) & 255), (staticinfo.driver_revision & 255));
 	printf("Driver SVN Revision : %d\n", staticinfo.driver_build_revision);
-	printf("\nTDC binsize         : %0.2f ps\n", GetBinsize(device));
+	printf("\nTDC binsize         : %0.2f ps\n", get_binsize(device));
 }
 
-void printHit(uint32 hit, double BinSize) {
+void print_hit(uint32 hit, double binsize) {
     // extract channel number (A-D)
     char channel = 65 + (hit & 0xf);
 
@@ -112,17 +116,17 @@ void printHit(uint32 hit, double BinSize) {
 
     // TDC bin size is 500 ps. Convert timestamp to ns.
     double ts_offset_ns = ts_offset;
-    ts_offset_ns *= BinSize / 1000.0;
+    ts_offset_ns *= binsize / 1000.0;
 
     printf("Hit @Channel %c - Flags %d - Offset %u (raw) / %.1f ns\n", channel, flags, ts_offset, ts_offset_ns);
 }
 
-_int64 processPacket(_int64 GroupAbsTime_old, volatile crono_packet *p, int UpdateCount, double BinSize) {
+_int64 processPacket(_int64 group_abs_time_old, volatile crono_packet *p, int update_count, double binsize) {
     // do something with the data, e.g. calculate current rate
-    _int64 GroupAbsTime = p->timestamp;
+    _int64 group_abs_time = p->timestamp;
     // group timestamp increments at 2 GHz
-    double Rate = (2e9 / ((double)(GroupAbsTime - GroupAbsTime_old) / (double)UpdateCount));
-    printf("\r%.2f kHz", Rate / 1000.0);
+    double rate = (2e9 / ((double)(group_abs_time - group_abs_time_old) / (double)update_count));
+    printf("\r%.2f kHz", rate / 1000.0);
 
     // ...or print hits (not a good idea at high data rates,
     printf("Card %d - Flags %d - Length %d - Type %d - TS %llu\n", p->card, p->flags, p->length, p->type, p->timestamp);
@@ -136,19 +140,19 @@ _int64 processPacket(_int64 GroupAbsTime_old, volatile crono_packet *p, int Upda
     uint32* packet_data = (uint32*)(p->data);
     for (int i = 0; i < hit_count; i++)
     {
-        printHit(packet_data[i], BinSize);
+        print_hit(packet_data[i], binsize);
     }
     printf("\n\n");
-    return GroupAbsTime;
+    return group_abs_time;
 }
 
 int main(int argc, char* argv[])
 {
 	printf("cronologic timetagger4_user_guide_example using driver: %s\n", timetagger4_get_driver_revision_str());
 
-    timetagger4_device * device = initializeTimeTagger(8*1024*1024, 0, 0);
+    timetagger4_device * device = initialize_timetagger(8*1024*1024, 0, 0);
 
-	int status = configureTimeTagger(device);
+	int status = configure_timetagger(device);
     if (status != CRONO_OK)
 	{
 		printf("Could not configure TimeTagger4: %s", timetagger4_get_last_error_message(device));
@@ -156,7 +160,7 @@ int main(int argc, char* argv[])
 		return status;
 	}
 
-    printDeviceInformation(device);
+    print_device_information(device);
 
 	// configure readout behaviour
 	timetagger4_read_in read_config;
@@ -185,10 +189,10 @@ int main(int argc, char* argv[])
 	int packets_with_errors = 0;
 	bool last_read_no_data = false;
 
-	_int64 GroupAbsTime = 0;
-	_int64 GroupAbsTime_old = 0;
-	int UpdateCount = 100;
-	double BinSize = GetBinsize(device);
+	_int64 group_abs_time = 0;
+	_int64 group_abs_time_old = 0;
+	int update_count = 100;
+	double binsize = get_binsize(device);
 
 	printf("Reading packets:\n");
 	// read 10000 packets
@@ -209,8 +213,8 @@ int main(int argc, char* argv[])
 			{
                 // printf is slow, so this demo only processes every 1000th packet
                 // your application would of course collect every packet
-				if (packet_count % UpdateCount == 0) {
-					GroupAbsTime = processPacket(GroupAbsTime, p, UpdateCount, BinSize);
+				if (packet_count % update_count == 0) {
+					group_abs_time = processPacket(group_abs_time, p, update_count, binsize);
 				}
 				p = crono_next_packet(p);
 				packet_count++;

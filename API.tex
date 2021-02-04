@@ -1,10 +1,6 @@
-% SVN Info:
-% $Date: 2021-02-01 14:11:20 +0100 (Mo, 01 Feb 2021) $
-% $Rev: 1041 $
-% $Author: kolja $
 The API is a DLL with C linkage.\par
 
-The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interface.h}.
+The functions provided by the DLL are declared in \textsf{\itett{TimeTagger4}{xTDC4}\tu interface.h}.
 
 \section{Constants}
 
@@ -26,7 +22,7 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 		Returns the number of boards present in the system that are supported by this driver.\par
 
 		\ttvar{int}{get\tu default\tu init\tu parameters(}\cronvar{\prefix init\tu parameters}{ *init)}\\
-		Sets up the standard parameters. Gets a set of default parameters for \textsf{timetagger4\tu init()}. This must always be used to initialize the \textsf{timetagger4\tu init\tu parameter()} structure.\par
+		Sets up the standard parameters. Gets a set of default parameters for \textsf{\prefix init()}. This must always be used to initialize the \textsf{\prefix init\tu parameter()} structure.\par
 
 		\cronvar{\prefix device *}{init(}\cronvar{\prefix init\tu parameters}{*params}, \\ \cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
 		Opens and initializes the \deviceName\ board with the given index. 
@@ -34,13 +30,13 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 
 		Params is a structure of type \textsf{\prefix init\tu parameters} that must be completely initialized.\par
 
-		\subsection{Structure timetagger4\tu init\tu parameters}
+		\subsection{Structure \prefix init\tu parameters}
 			\cronvar{int}{version}\\
 			The version number. Must be set to \textsf{\PREFIX API\tu VERSION}.\par
 
 			\cronvar{int}{card\tu index}\\
 			The index in the list of \deviceName\ boards that should be initialized.\\
-			There might be multiple boards in the system that are handled by this driver as reported by \textsf{timetagger4\tu count\tu devices}. This index selects one of them. Boards are enumerated depending on the PCIe slot. 
+			There might be multiple boards in the system that are handled by this driver as reported by \textsf{\prefix count\tu devices}. This index selects one of them. Boards are enumerated depending on the PCIe slot. 
 			The lower the bus number and the lower the slot number the lower the card index.\par
 
 			\cronvar{int}{board\tu id}\\
@@ -91,9 +87,9 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 			The driver provides functions to retrieve detailed information on the type of board, its configuration, settings and state. The information is split according to its scope and the computational requirements to query the information from the board.
 
 			\ttvar{int}{get\tu driver\tu revision()}\\
-			Returns the driver version, same format as timetagger4\tu static\tu info::driver\tu revision. This function does not require a \deviceName\ board to be present.
+			Returns the driver version, same format as \prefix static\tu info::driver\tu revision. This function does not require a \deviceName\ board to be present.
 
-			\cronvar{const char*}{timetagger4\tu get\tu driver\tu revision\tu str()}\\
+			\ttvar{const char*}{get\tu driver\tu revision\tu str()}\\
 			Returns the driver version including SVN build revision as a string. This function does not require \deviceName\ board to be present.
 
 			\ttvar{int}{get\tu fast\tu info(}\cronvar{\prefix device}{*device}, \cronvar{\prefix fast\tu info}{*info)}\\
@@ -113,7 +109,7 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 			Contains static information.\\
 			Gets a structure that contains information about the board that does not change during run time.\par
 
-		\subsection{Structure timetagger4\tu static\tu info}
+		\subsection{Structure \prefix static\tu info}
 
 			This structure contains information about the board that does not change during run time. It is provided by the function \textsf{\prefix get\tu static\tu info}.\par
 
@@ -175,7 +171,7 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 			\cronvar{int}{flash\tu valid}\\
 			If not 0 the driver found valid calibration data in the flash on the board and is using it.\par
 
-		\subsection{Structure timetagger4\tu param\tu info}
+		\subsection{Structure \prefix param\tu info}
 			This struct contains configuration changes provided by \textsf{\prefix get\tu param\tu info()}.
 
 			\cronvar{int}{size}\\
@@ -203,7 +199,7 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 			\cronvar{\tu\tu int64}{total\tu buffer}\\
 			The total amount of DMA buffer in bytes.
 
-		\subsection{Structure timetagger4\tu fast\tu info}
+		\subsection{Structure \prefix fast\tu info}
 
 			\cronvar{int}{size}\\
 			The number of bytes occupied by the structure. \par
