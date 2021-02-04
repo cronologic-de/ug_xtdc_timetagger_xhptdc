@@ -36,6 +36,7 @@
 	\newcommand{\PREFIX}{TIMETAGGER4\tu}
 }
 
+\newcommand{\ugrev}{{1.7.0}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document} 
@@ -47,24 +48,23 @@
 		\input{Hardware.tex}
 		\input{Software.tex}
 	\chapter{Driver Programming API} 
-		\input{TT4_API.tex}
+		\input{API.tex}
 	\section{Packet Format\label{cp:packetformat}}
-		\input{TT4_PackForm.tex}
+		\input{PackForm.tex}
 	\chapter{C Example} 
-		\input{TT4_CExp.tex}
+		\input{CExample.tex}
 	\chapter{Technical Data}  
-		\input{TT4_Tech.tex}
-		\newpage
-		\input{TT4_DIN.tex}
+		\ttinput{Tech.tex}
+		\input{DIN.tex}
 	\chapter{Revision History}
 		\noindent
-		User Guide \hyperlink{ugrev}{\ugrev} as of 2020-02-03\\
+		User Guide \hyperlink{ugrev}{\ugrev} as of 2020-02-04\\
 		Firmware \hyperlink{fwrev}{0 (build 983)}, Driver \hyperlink{drvrev}{v1.4.1}\\
 		\\
 		cronologic GmbH \& Co. KG\\
 		Jahnstraße 49\\
 		60318 Frankfurt am Main\\Germany\\
-		\input{TT4_FwRev.tex}
-		\input{TT4_DrvRev.tex}
-		\input{TT4_UGRev.tex}
+		\ttinput{FwRev.tex}
+		\input{DrvRev.tex} 
+		\input{UGRev.tex}
 \end{document}

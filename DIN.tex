@@ -2,6 +2,62 @@
 % $Date: 2021-01-29 22:28:41 +0100 (Fr, 29 Jan 2021) $
 % $Rev: 1039 $
 % $Author: kolja $
+\section{Electrical Characteristics}
+
+	\subsection{Power Supply}
+
+		\noindent
+		\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+			\hline
+			Symbol & Parameter & Min & Typical & Max & Units\\
+			\hline\hline
+			P & Total power consumption &&& 25& W\\
+			\hline
+			I & PCIe 3,3V rail input current &&&4& mA\\
+			\hline
+			VCC & PCIe 3,3V rail power supply voltage &3,1&3,3&3,5& V\\
+			\hline
+			I & PCIe 12V rail input current &&&2,1& A\\
+			\hline
+			VCC & PCIe 12V rail power supply voltage &11,1&12&12,9& V\\
+			\hline
+			I & PCIe 3,3VAux rail input current &&0&& A\\
+			\hline
+			VCC & PCIe 3,3VAux rail power supply voltage &&3,3&& V\\
+			\hline
+		\end{tabularx}
+
+	\subsection{Inputs}
+
+		The \deviceName's inputs are single-ended AC-coupled with 50$\Omega$ DC termination.
+
+		\noindent
+		\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+			\hline
+			Symbol & Parameter & Min & Typical & Max & Units\\
+			\hline\hline
+			V\subscript{Base} & Input Baseline & 0 & & 5 & V\\
+			\hline
+			V\subscript{Threshold} & Trigger Level & V\subscript{Base} - 1.32 & & V\subscript{Base} + 1.18 & V\\
+			\hline
+			t\subscript{Pulse} & Pulse Length & 2 & 5 & 200 & ns\\
+			\hline
+			t\subscript{Rise} & Pulse Edge 20\% to 80\%  &  &  & 10 & ns\\
+			\hline
+			t\subscript{Fall} & Pulse Edge 80\% to 20\%  &  &  & 10 & ns\\
+			\hline
+			Z\subscript{P} & Input Impedance && 50 && $\Omega$\\
+			\hline
+			I\subscript{Term} & Termination Current & -50 & -20 & 50 & mA\\
+			\hline
+		\end{tabularx}
+
+	All inputs are AC coupled. The inputs have very high input bandwidth requirements and therefore there are no circuits that provide over voltage protection for these signals. 
+	Any voltage on the inputs above 5V or below -5V relative to the voltage of the slot cover can result in permanent damage to the board.
+
+	Make sure not to drive the inputs when the connector is configured as a TiGer output (see Section \ref{cp:tiger}). 
+
+\newpage
 \section{Information Required by DIN EN 61010-1}
 \subsection{Manufacturer\label{cp:manu}}
 

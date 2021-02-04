@@ -14,21 +14,26 @@ Each board is tested against the values listed in the `Min' and `Max`columns. `T
 			\hline
 			Symbol & Parameter & Min & Typical & Max & Units\\
 			\hline\hline
-			INL & Integral nonlinearity &  &  & 0.5 & bins \\
+			INL & Integral nonlinearity &  &  & 1 & bins \\
 			\hline
-			DNL & Differential nonlinearity & & 0.2 & & bins \\
+			DNL & Differential nonlinearity & & & 0.5 & bins \\
 			\hline
-			t\subscript{Bin} & Binsize &  & 500 & & ps \\
+			t\subscript{Bin} & Binsize &  &  $5000/384$            & & ps \\
+							 &         &  &  $13.0208\overline{3}$ & & ps \\
 			\hline
-			t\subscript{Res1} & Double pulse resolution for -1G &  & 1000 & & ps \\
+			t\subscript{DPfull} & distance betwenn edges for full resolution & 5 &  & & ns \\
 			\hline
-			t\subscript{Res2} & Double pulse resolution for -2G &  & 500 & & ps \\
+			t\subscript{DPCC} & distance betwenn edges for carry chain TDC & 10 &  & & ns \\
 			\hline
-			$\Delta$t\subscript{Start} & Interval between consecutive starts & 4 &  & & ns \\
+			t\subscript{DPlow} & distance betwenn edges for lowres measurements & 1.8 &  & & ns \\
 			\hline
-			t\subscript{Range} & Measurement range using hits only &  &  & 4.184 & ms \\
+			$\Delta$t\subscript{Start} & Interval between consecutive starts & 250 &  & & ns \\
 			\hline
-			t\subscript{Extended} & Extended range using rollovers &  &  & 1.073 & s \\
+			t\subscript{Range} & Measurement range using hits only &  &  & $2^{24}-1$ & bins \\
+			                   &                                   &  &  & $218$ & $\mu$s \\
+			\hline
+			t\subscript{Extended} & Extended range using rollovers &  &  & $2^{30}-1$ & ms \\
+			                      &                                &  &  & $14$ & ms \\
 			\hline
 			f\subscript{Readout} &  Readout rate &  &  & 48 & MHits/s \\			
 			\hline
