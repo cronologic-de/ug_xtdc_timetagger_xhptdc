@@ -1,7 +1,21 @@
-% SVN Info:
-% $Date: 2021-02-01 14:11:20 +0100 (Mo, 01 Feb 2021) $
-% $Rev: 1041 $
-% $Author: kolja $
+% User guide for the cronologic GmbH & Co. KG TimeTagger4 and xTDC4 boards.
+%
+% to create user guides with the correct filenames run the parent configuration files like this
+% pdflatex xTDC4_User_Guide.tex
+% pdflatex TimeTagger4_User_Guide.tex
+%
+% Visit www.cronologic.de for ready made PDFs of these user guides
+% https://www.cronologic.de/products/tdcs/xtdc4-pcie 
+% https://www.cronologic.de/products/tdcs/timetagger
+%
+% You can contribute to this documentation at
+% https://github.com/cronologic-de/ug_xtdc4_timetagger
+%
+% the whole user guide is provided by cronologic GmbH & Co. KG under a
+% Creative Commons Attribution-NoDerivatices 4.0 International License
+% https://creativecommons.org/licenses/by-nd/4.0/
+% except fpr extraplaceins.sty which is in the public domain
+
 \documentclass[11pt,notitlepage]{scrreprt}
 \usepackage{cronologicug}
 
@@ -16,7 +30,7 @@
 % define it here
 
 %\newcommand{\deviceName}{TimeTagger4}
-\newcommand{\deviceName}{xTDC4}
+%\newcommand{\deviceName}{xTDC4}
 \ifthenelse{\isundefined{\deviceName}}{\newcommand{\deviceName}{TimeTagger4}}{}
 
 %output the first option for the TimeTagger, the second one otherwise
@@ -40,7 +54,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document} 
-\cronofront{fileprefix_title.pdf}
+\itett{\cronofront{figures/TT4_title.pdf}}{\cronofront{figures/XTDC4_title.pdf}}
+
 %
 	\chapter{Introduction}
 		\ttinput{Intro.tex}
