@@ -8,35 +8,35 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 
 \section{Constants}
 
-	\crondef{TIMETAGGER4\tu CHANNEL\tu COUNT 4}\\
+	\ttdef{CHANNEL\tu COUNT 4}\\
 	The number of TDC input channels.\par
 
-	\crondef{TIMETAGGER4\tu TIGER\tu COUNT 5}\\
+	 \ttdef{TIGER\tu COUNT 5}\\
 	The number of timing generators. One for each TDC input and one for the Start input.\par
 
-	\crondef{TIMETAGGER4\tu TRIGGER\tu COUNT 16}\\
+	 \ttdef{TRIGGER\tu COUNT 16}\\
 	The number of potential trigger sources for the timing generators. One for each TDC input, one for the Start input plus some specials. 
 	Not all triggeer sources are available on the \deviceName . See Section~\ref{cp:tigerblock} for details.\par
 
 \section{Initialization}
-		\cronvar{int}{timetagger4\tu close(}\cronvar{timetagger4\tu device}{*device)}\\
+		\ttvar{int}{close(}\cronvar{\prefix device}{*device)}\\
 		Finalizes the driver for this device.
 
-		\cronvar{int}{timetagger4\tu count\tu devices(}\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
+		\ttvar{int}{count\tu devices(}\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
 		Returns the number of boards present in the system that are supported by this driver.\par
 
-		\cronvar{int}{timetagger4\tu get\tu default\tu init\tu parameters(}\cronvar{timetagger4\tu init\tu parameters}{*init)}\\
+		\ttvar{int}{get\tu default\tu init\tu parameters(}\cronvar{\prefix init\tu parameters}{ *init)}\\
 		Sets up the standard parameters. Gets a set of default parameters for \textsf{timetagger4\tu init()}. This must always be used to initialize the \textsf{timetagger4\tu init\tu parameter()} structure.\par
 
-		\cronvar{timetagger4\tu device}{*timetagger4\tu init(}\cronvar{timetagger4\tu init\tu parameters}{*params}, \\ \cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
+		\cronvar{\prefix device *}{init(}\cronvar{\prefix init\tu parameters}{*params}, \\ \cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
 		Opens and initializes the \deviceName\ board with the given index. 
 		With \textsf{error\tu code} and \textsf{error\tu message} the user must provide pointers to buffers where error information should be written by the driver.\par
 
-		Params is a structure of type \textsf{timetagger4\tu init\tu parameters} that must be completely initialized.\par
+		Params is a structure of type \textsf{\prefix init\tu parameters} that must be completely initialized.\par
 
 		\subsection{Structure timetagger4\tu init\tu parameters}
 			\cronvar{int}{version}\\
-			The version number. Must be set to \textsf{TIMETAGGER4\tu API\tu VERSION}.\par
+			The version number. Must be set to \textsf{\PREFIX API\tu VERSION}.\par
 
 			\cronvar{int}{card\tu index}\\
 			The index in the list of \deviceName\ boards that should be initialized.\\
@@ -45,8 +45,9 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 
 			\cronvar{int}{board\tu id}\\
 			the global index in all cronologic devices.\\
-			This 8 bit number is filled into each packet created by the board and is useful if data streams of multiple boards will be merged. If only \deviceName\ cards are used this number can be set to the \textsf{card\tu index}. If boards of different types that use a compatible data format are used in a system each board should get a unique id.
-			Can be changed with \textsf{int timetagger4\tu set\tu board\tu id\allowbreak(timetagger4\tu device *device, int board\tu id)}.\par
+			This 8 bit number is filled into each packet created by the board and is useful if data streams of multiple boards will be merged. If only \deviceName\ cards are used this number can be set to the \textsf{card\tu index}. 
+			If boards of different types that use a compatible data format are used in a system each board should get a unique id.
+			Can be changed with \textsf{int \prefix set\tu board\tu id\allowbreak(\prefix device *device, int board\tu id)}.\par
 
 			\cronvar{\tu \tu int64}{buffer\tu size[8]}\\
 			The minimum size of the DMA buffer.\\
@@ -55,12 +56,12 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 			\cronvar{int}{buffer\tu type}\\
 			The type of buffer. Must be set to 0.
 			\begin{description}
-				\item[] \crondef{TIMETAGGER4\tu BUFFER\tu ALLOCATE   0}
-				\item[] \crondef{TIMETAGGER4\tu BUFFER\tu USE\tu PHYSICAL   1}  // unsupported
+				\item[]  \ttdef{BUFFER\tu ALLOCATE   0}
+				\item[]  \ttdef{BUFFER\tu USE\tu PHYSICAL   1}  // unsupported
 			\end{description}
 
 			\cronvar{\tu \tu int64}{buffer\tu address}\\
-			This is set by timetagger4\_init() to the start address of the reserved memory.\\ 
+			This is set by \prefix init() to the start address of the reserved memory.\\ 
 			The buffers will be allocated with the sizes given above. Make sure that the memory is large enough.\par
 
 			\cronvar{int}{variant}\\
@@ -68,7 +69,7 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 
 			\cronvar{int}{device\tu type}\\
 			A constant for the different devices of cronologic \textsf{CRONO\tu DEVICE\tu *}.\\
-			Initialized by \textsf{timetagger4\tu get\tu default\tu init\tu parameters()}. Must be left unchanged.
+			Initialized by \textsf{\prefix get\tu default\tu init\tu parameters()}. Must be left unchanged.
 			\begin{itemize}
 				\item[] \crondef{CRONO\tu DEVICE\tu HPTDC 1}
 				\item[] \crondef{CRONO\tu DEVICE\tu NDIGO5G 2}
@@ -89,32 +90,32 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 
 			The driver provides functions to retrieve detailed information on the type of board, its configuration, settings and state. The information is split according to its scope and the computational requirements to query the information from the board.
 
-			\cronvar{int}{timetagger4\tu get\tu driver\tu revision()}\\
+			\ttvar{int}{get\tu driver\tu revision()}\\
 			Returns the driver version, same format as timetagger4\tu static\tu info::driver\tu revision. This function does not require a \deviceName\ board to be present.
 
 			\cronvar{const char*}{timetagger4\tu get\tu driver\tu revision\tu str()}\\
 			Returns the driver version including SVN build revision as a string. This function does not require \deviceName\ board to be present.
 
-			\cronvar{int}{timetagger4\tu get\tu fast\tu info(}\cronvar{timetagger4\tu device}{*device}, \cronvar{timetagger4\tu fast\tu info}{*info)}\\
+			\ttvar{int}{get\tu fast\tu info(}\cronvar{\prefix device}{*device}, \cronvar{\prefix fast\tu info}{*info)}\\
 			Returns fast dynamic information.\\
 			This call gets a structure that contains dynamic information that can be obtained within a few microseconds.\par
 
-			\cronvar{int}{timetagger4\tu get\tu param\tu info(}\cronvar{timetagger4\tu device}{*device}, \cronvar{timetagger4\tu param\tu info}{*info)}\\
+			\ttvar{int}{get\tu param\tu info(}\cronvar{\prefix device}{*device}, \cronvar{\prefix param\tu info}{*info)}\\
 			Returns configuration changes.\\
 			Gets a structure that contains information that changes indirectly due to configuration changes.\par
 
-			\cronvar{int}{timetagger4\tu get\tu slow\tu info(}\cronvar{timetagger4\tu device}{*device}, \cronvar{timetagger4\tu slow\tu info}{*info)}\\
+			\ttvar{int}{get\tu slow\tu info(}\cronvar{\prefix device}{*device}, \cronvar{\prefix slow\tu info}{*info)}\\
 			Returns slow dynamic information.\\
 			The data reported in this structure requires milliseconds to be obtained. 
 			The application should only call it in situations where the program flow can be blocked as long.\par
 
-			\cronvar{int}{timetagger4\tu get\tu static\tu info(}\cronvar{timetagger4\tu device}{*device},\cronvar{timetagger4\tu static\tu info}{*info)}\\
+			\ttvar{int}{get\tu static\tu info(}\cronvar{\prefix device}{*device},\cronvar{\prefix static\tu info}{*info)}\\
 			Contains static information.\\
 			Gets a structure that contains information about the board that does not change during run time.\par
 
 		\subsection{Structure timetagger4\tu static\tu info}
 
-			This structure contains information about the board that does not change during run time. It is provided by the function \textsf{timetagger4\tu get\tu static\tu info}.\par
+			This structure contains information about the board that does not change during run time. It is provided by the function \textsf{\prefix get\tu static\tu info}.\par
 
 			\cronvar{int}{size}\\
 			The number of bytes occupied by the structure.
@@ -175,7 +176,7 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 			If not 0 the driver found valid calibration data in the flash on the board and is using it.\par
 
 		\subsection{Structure timetagger4\tu param\tu info}
-			This struct contains configuration changes provided by timetagger4\tu get\tu param\tu info().
+			This struct contains configuration changes provided by \textsf{\prefix get\tu param\tu info()}.
 
 			\cronvar{int}{size}\\
 			The number of bytes occupied by the structure. \par
@@ -225,8 +226,8 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 				Bit 0 is set if the TDC temperature exceeds 140°C. The TDC did shut down and the device needs to be reinitialized. 
 			}\par
 
-			\cronvar{int}{pcie\tu pwr\tu mgmt}\par
-			Allways 0. 
+			\cronvar{int}{pcie\tu pwr\tu mgmt}
+			Allways 0. \par
 
 			\cronvar{int}{pcie\tu link\tu width}\\
 			Number of PCIe lanes the card uses. Should always be 1 for the \deviceName. \par
@@ -240,20 +241,20 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 		The user should first obtain a structure that contains the default settings of the device read from an on board ROM , 
 		then modify the structure as needed for the user application and use the result to configure the device.\par
 
-		\cronvar{int}{timetagger4\tu configure(}\cronvar{timetagger4\tu device} {*device,} \\ \cronvar{timetagger4\tu configuration}{*config)}\\
+		\ttvar{int}{configure(}\cronvar{\prefix device} {*device,} \\ \cronvar{\prefix configuration}{*config)}\\
 		Configures the \deviceName\ device.\par
 
-		\cronvar{int}{timetagger4\tu get\tu current\tu configuration(}\cronvar{timetagger4\tu device}{*device,} \\ \cronvar{timetagger4\tu configuration}{*config)}\\
+		\ttvar{int}{get\tu current\tu configuration(}\cronvar{\prefix device}{*device,} \\ \cronvar{\prefix configuration}{*config)}\\
 		Gets current configuration. Copies the current configuration to the specified config pointer.\par
 
-		\cronvar{int}{timetagger4\tu get\tu default\tu configuration(}\cronvar{timetagger4\tu device}{*device,} \\ \cronvar{timetagger4\tu configuration}{*config)}\\
+		\ttvar{int}{get\tu default\tu configuration(}\cronvar{\prefix device}{*device,} \\ \cronvar{\prefix configuration}{*config)}\\
 		Gets default configuration. Copies the default configuration to the specified config pointer.\par
 
-		\subsection{Structure timetagger4\tu configuration}
+		\subsection{Structure \prefix configuration}
 
-			This is the structure containing the configuration information. It is used in conjunction with \textsf{timetagger4\tu get\tu default\tu configuration()}, \textsf{timetagger4\tu get\tu current\tu configuration()} and \textsf{timetagger4\tu configure()}.\par
+			This is the structure containing the configuration information. It is used in conjunction with \textsf{\prefix get\tu default\tu configuration()}, \textsf{\prefix get\tu current\tu configuration()} and \textsf{\prefix configure()}.\par
 
-			It uses the substructures \textsf{timetagger4\tu tiger\tu block} and \textsf{timetagger4\tu trigger}.\par
+			It uses the substructures \textsf{\prefix tiger\tu block} and \textsf{\prefix trigger}.\par
 
 			\cronvar{int}{size}\\
 			The number of bytes occupied by the structure.\par
@@ -263,8 +264,8 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 
 			\cronvar{int}{tdc\tu mode}\\
 			TDC mode. Can be grouped or continuous. \\
-			Currently only TIMETAGGER4\tu TDC\tu MODE\tu GROUPED is supported. 
-			This is set per default by timetagger4\tu get\tu current\tu configuration() and should be left unchanged.\par
+			Currently only \PREFIX TDC\tu MODE\tu GROUPED is supported. 
+			This is set per default by \textsf{\prefix get\tu current\tu configuration()} and should be left unchanged.\par
 
 			\cronvar{crono\tu bool\tu t}{start\tu rising} 
 			\itett{
@@ -273,7 +274,7 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 				Selects whether the rising or falling edge of the start signal is used to start a group.
 			}\par
 
-			\cronvar{double}{dc\tu offset[TIMETAGGER4\tu CHANNEL\tu COUNT + 1]}\\
+			\cronvar{double}{dc\tu offset[\PREFIX CHANNEL\tu COUNT + 1]}\\
 			Set the threshold voltage for the input channels S, A - D (see figure \ref{fig:dcoffset1}).
 			\begin{itemize}
 				\item dc\tu offset[0] : threshold for channel Start
@@ -317,17 +318,17 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 %%				\end{center}
 %%			\end{figure}
 
-			\cronvar{timetagger4\tu trigger}{trigger[TIMETAGGER4\tu TRIGGER\tu COUNT]}\\
+			\ttvar{\prefix trigger}{trigger[\PREFIX TRIGGER\tu COUNT]}\\
 			Configuration the polarity of the external trigger sources.
 			These are used as inputs for the TiGer blocks and as inputs to the time measurement unit.\par
 
-			\cronvar{timetagger4\tu tiger\tu block}{tiger\tu block[TIMETAGGER4\tu TIGER\tu COUNT]}
+			\ttvar{\prefix tiger\tu block}{tiger\tu block[\PREFIX TIGER\tu COUNT]}
 			Configuration of the timing generator (TiGeR).
 
-			\cronvar{timetagger4\tu channel}{channel[TIMETAGGER4\tu CHANNEL\tu COUNT]}\\
+			\ttvar{\prefix channel}{channel[\PREFIX CHANNEL\tu COUNT]}\\
 				Configure the TDC channels.
 
-			\cronvar{timetagger4\tu lowres\tu channel}{lowres\tu channel[TIMETAGGER4\tu LOWRES\tu CHANNEL\tu COUNT]}\\
+			\ttvar{\prefix lowres\tu channel}{lowres\tu channel[\PREFIX LOWRES\tu CHANNEL\tu COUNT]}\\
 			\itett{
 				Not applicable for \deviceName. 
 			}{
@@ -346,7 +347,7 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 
 			\noindent There is no enable or reset as the usage of this trigger can be configured in the TiGer block channel source field.\par
 
-			\subsection{Structure timetagger4\tu trigger}
+			\subsection{Structure \prefix trigger}
 			\label{structtrigger}
 			\cronvar{crono\tu bool\tu t}{falling}\\
 			\cronvar{crono\tu bool\tu t}{rising}\\
@@ -360,7 +361,7 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 				The edge that is selected for full resolution measurement must also be enabled for low resolution measurement.
 			}\par
 
-			\subsection{Structure timetagger4\tu tiger\tu block\label{cp:tigerblock}}
+			\subsection{Structure \prefix tiger\tu block\label{cp:tigerblock}}
 
 			\cronvar{crono\tu bool\tu t}{enable}\\
 			Activates the timing generator (TiGer).\par
@@ -394,22 +395,22 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 	
 			\cronvar{int}{sources}\\
 			A bit mask with a bit set for all trigger sources that can trigger this TiGer block. 
-			Default is \textsf{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu S}.\par
+			Default is \textsf{\PREFIX TRIGGER\tu SOURCE\tu S}.\par
 	
 			\begin{tabular}{lc}
-					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu S} & 0x00000001\\
-					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu A} & 0x00000002\\
-					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu B} & 0x00000004\\
-					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu C} & 0x00000008\\
-					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu D} & 0x00000010\\
-					%\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu S1} & 0x00000020\\
-					%\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu S2} & 0x00000040\\
-					%\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu GATE} & 0x00000080\\
-					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu AUTO} & 0x00004000\\
-					\crondef{TIMETAGGER4\tu TRIGGER\tu SOURCE\tu ONE} & 0x00008000
+					 \ttdef{TRIGGER\tu SOURCE\tu S} & 0x00000001\\
+					 \ttdef{TRIGGER\tu SOURCE\tu A} & 0x00000002\\
+					 \ttdef{TRIGGER\tu SOURCE\tu B} & 0x00000004\\
+					 \ttdef{TRIGGER\tu SOURCE\tu C} & 0x00000008\\
+					 \ttdef{TRIGGER\tu SOURCE\tu D} & 0x00000010\\
+					% \ttdef{TRIGGER\tu SOURCE\tu S1} & 0x00000020\\
+					% \ttdef{TRIGGER\tu SOURCE\tu S2} & 0x00000040\\
+					% \ttdef{TRIGGER\tu SOURCE\tu GATE} & 0x00000080\\
+					 \ttdef{TRIGGER\tu SOURCE\tu AUTO} & 0x00004000\\
+					 \ttdef{TRIGGER\tu SOURCE\tu ONE} & 0x00008000
 				\end{tabular} 
 	
-			\subsection{Structure timetagger4\tu channel}
+			\subsection{Structure \prefix channel}
 				\label{structchannel}
 				Contains TDC channel settings.\par
 	
@@ -451,53 +452,53 @@ The functions provided by the DLL are declared in \textsf{TimeTagger4\tu interfa
 	
 		\section{Run Time Control}
 	
-				\cronvar{int}{timetagger4\tu continue\tu capture(}\cronvar{timetagger4\tu device}{*device)}\\
-				Call this to resume data acquisition after a call to \textsf{timetagger4\tu pause\tu capture()}.\par
+				\ttvar{int}{continue\tu capture(}\ttvar{\prefix device}{*device)}\\
+				Call this to resume data acquisition after a call to \textsf{\prefix pause\tu capture()}.\par
 	
-				\cronvar{int}{timetagger4\tu pause\tu capture(}\cronvar{timetagger4\tu device}{*device)}\\
+				\ttvar{int}{pause\tu capture(}\ttvar{\prefix device}{*device)}\\
 				Pause data acquisition.\par
 	
-				\cronvar{int}{timetagger4\tu start\tu capture(}\cronvar{timetagger4\tu device}{*device)}\\
+				\ttvar{int}{start\tu capture(}\ttvar{\prefix device}{*device)}\\
 				Start data acquisition.\par
 	
-				\cronvar{int}{timetagger4\tu start\tu tiger(\cronvar{timetagger4\tu device}{*device})}\\
+				\ttvar{int}{start\tu tiger(\ttvar{\prefix device}{*device})}\\
 				Start timing generator.\par
 	
-				\cronvar{int}{timetagger4\tu stop\tu capture(}\cronvar{timetagger4\tu device}{*device)}\\
+				\ttvar{int}{stop\tu capture(}\ttvar{\prefix device}{*device)}\\
 				Stop data acquisition.\par
 	
-				\cronvar{int}{timetagger4\tu stop\tu tiger(\cronvar{timetagger4\tu device}{*device})}\\
+				\ttvar{int}{stop\tu tiger(\ttvar{\prefix device}{*device})}\\
 				Stop timing generator.\par
 	
 		\section{Readout\label{cp:readout}}
 	
-			\cronvar{int}{timetagger4\tu acknowledge(}\cronvar{timetagger4\tu device}{*device,} \cronvar{crono\tu packet}{*packet)}\\
-			Acknowledges the processing of the last read block. This is only necessary if \textsf{timetagger4\tu read()} is not called with 
+			\ttvar{int}{acknowledge(}\cronvar{\prefix device}{*device,} \cronvar{crono\tu packet}{*packet)}\\
+			Acknowledges the processing of the last read block. This is only necessary if \textsf{\prefix read()} is not called with 
 			\textsf{in.acknowledge\tu last\tu read} set.\\
-			This feature allows to either free up partial DMA space early if there will be no call to \textsf{timetagger4\tu read} anytime soon. 
-			It also allows to keep data over multiple calls to \textsf{timetagger4\tu read} to avoid unnecessary copying of data. \par
+			This feature allows to either free up partial DMA space early if there will be no call to \textsf{\prefix read()} anytime soon. 
+			It also allows to keep data over multiple calls to \textsf{\prefix read()} to avoid unnecessary copying of data. \par
 	
-			\cronvar{int}{timetagger4\tu get\tu device\tu type}\\
-			Returns the type of the device.	\textsf{CRONO\tu DEVICE\tu TIMETAGGER4}\par
+			\ttvar{int}{get\tu device\tu type}\\
+			Returns the type of the device as \textsf{CRONO\tu DEVICE\tu \itett{TIMETAGGER4}{XTDC4}}.\par
 	
-			\cronvar{const char*}{timetagger4\tu get\tu last\tu error\tu message(\cronvar{timetagger4\tu device}{*device})}\\
+			\ttvar{const char*}{get\tu last\tu error\tu message(\cronvar{\prefix device}{*device})}\\
 			Returns most recent error message.\par
 	
-			\cronvar{int}{timetagger4\tu read(}\cronvar{timetagger4\tu device}{*device,} \cronvar{timetagger4\tu read\tu in}{*in,} \\ \cronvar{timetagger4\tu read\tu out}{*out)}\\
+			\ttvar{int}{read(}\cronvar{\prefix device}{*device,} \cronvar{\prefix read\tu in}{*in,} \\ \cronvar{\prefix read\tu out}{*out)}\\
 			Return a pointer to an array of captured data in \textsf{read\tu out}. 
-			The result can contain any number of packets of type \textsf{timetagger4\tu packet}.
+			The result can contain any number of packets of type \textsf{\prefix packet}.
 			\textsf{read\tu in} provides parameters to the driver. 
 			A call to this method automatically allows the driver to reuse the memory returned in the previous call if \textsf{read\tu in.acknowledge\tu last\tu read} is set.\\
-			Returns an error code as defined in the structure \textsf{timetagger4\tu read\tu out}.
+			Returns an error code as defined in the structure \textsf{\prefix read\tu out}.
 	
-			\subsection{Input Structure timetagger4\tu read\tu in}
+			\subsection{Input Structure \prefix read\tu in}
 	
-				\cronvar{timetagger4\tu bool\tu t}{acknowledge\tu last\tu read}\\
-				If set \textsf{timetagger4\tu read()} automatically acknowledges packets from the last read.
+				\ttvar{\prefix bool\tu t}{acknowledge\tu last\tu read}\\
+				If set \textsf{\prefix read()} automatically acknowledges packets from the last read.
 	
-			\subsection{Input Structure timetagger4\tu read\tu out}
+			\subsection{Input Structure \prefix read\tu out}
 				\cronvar{crono\tu packet}{*first\tu packet}\\
-				Pointer to the first packet that was capture by the call of \textsf{timetagger4\tu read}.\par
+				Pointer to the first packet that was capture by the call of \textsf{\prefix read}.\par
 	
 				\cronvar{crono\tu packet}{*last\tu packet}\\
 				Address of header of the last packet in the buffer.\par

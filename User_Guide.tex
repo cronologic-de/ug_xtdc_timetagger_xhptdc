@@ -25,12 +25,13 @@
 %this will prefix the include with TT4_ or xTDC4, depending on versoin
 
 \usepackage{ifthen}
-% if the device name is not provided as a command line parameter
-% pdflatex "\newcommand{\deviceName}{xTDC4} \input{xTDC4_User_Guide.tex}"
-% define it here
+% instead of setting \devicename in a top level file you can also provide it at the command line
+% pdflatex "\newcommand{\deviceName}{xTDC4} \input{User_Guide.tex}"
 
+% or define it here
 %\newcommand{\deviceName}{TimeTagger4}
 %\newcommand{\deviceName}{xTDC4}
+
 \ifthenelse{\isundefined{\deviceName}}{\newcommand{\deviceName}{TimeTagger4}}{}
 
 %output the first option for the TimeTagger, the second one otherwise
@@ -41,14 +42,17 @@
 \itett{
 	\newcommand{\ttinput}[1]{\input{TT4_#1}}
 	\newcommand{\titlefile}{TT4_title.pdf}
-	\newcommand{\prefix}{xtdc4\tu}
-	\newcommand{\PREFIX}{XTDC4\tu}
+	\newcommand{\prefix}{timetagger4\tu}
+	\newcommand{\PREFIX}{TIMETAGGER4\tu}
+
 }{
 	\newcommand{\ttinput}[1]{\input{xTDC4_#1}}
 	\newcommand{\titlefile}{xTDC4_title.pdf}
-	\newcommand{\prefix}{timetagger4\tu}
-	\newcommand{\PREFIX}{TIMETAGGER4\tu}
+	\newcommand{\prefix}{xtdc4\tu}
+	\newcommand{\PREFIX}{XTDC4\tu}
 }
+\newcommand{\ttvar}[2]{\noindent\textsf{\textbf{\textcolor{crongrey}{#1} \prefix #2}}}%for variable declaration
+\newcommand{\ttdef}[1]{\noindent\textsf{\textcolor{crongrey}{\#{}define} \PREFIX #1}}%for definitions
 
 \newcommand{\ugrev}{{1.7.0}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
