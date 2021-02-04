@@ -54,6 +54,8 @@
 latex.out/
 
 ## Auxiliary and intermediate files from other packages:
+*.tmp 
+
 # algorithms
 *.alg
 *.loa
