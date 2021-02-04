@@ -54,7 +54,9 @@
 latex.out/
 
 ## Auxiliary and intermediate files from other packages:
+# make4ht
 *.tmp 
+*-.png
 
 # algorithms
 *.alg
