@@ -136,13 +136,7 @@ The functions provided by the DLL are declared in \textsf{\itett{TimeTagger4}{xT
 
 			\cronvar{int}{board\tu revision}\\
 			Board revision number.\\
-			The board revision number can be read from a register. It is a four bit number that changes when the schematic of the board is changed.
-			\begin{itemize}
-				\item[0:] Experimental first board version. Labeled "Rev. 1"
-				\item[1:] First commercial version. Labeled "Rev. 2"
-				\item[2:] Updated commercial version. Labeled "Rev. 3"
-				\item[4:] Lates commercial version. Labeled "Rev. 4"
-			\end{itemize}
+			The board revision number can be read from a register. It is a four bit number that changes when the schematic of the board is changed. This should match the revision number printed on the board.
 
 			\cronvar{int}{board\tu configuration}\\
 			Describes the schematic configuration of the board.\\
