@@ -29,6 +29,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: xTDC-and-TimeTagger-User-Guides
-          path: *_User_Guide.pdf
+          path: "*_User_Guide.pdf"
 
  
