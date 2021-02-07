@@ -12,7 +12,7 @@ The functions provided by the DLL are declared in \textsf{\itett{TimeTagger4}{xT
 
 	 \ttdef{TRIGGER\tu COUNT 16}\\
 	The number of potential trigger sources for the timing generators. One for each TDC input, one for the Start input plus some specials. 
-	Not all triggeer sources are available on the \deviceName . See Section~\ref{cp:tigerblock} for details.\par
+	Not all trigger sources are available on the \deviceName . See Section~\ref{cp:tigerblock} for details.\par
 
 \section{Initialization}
 		\ttvar{int}{close(}\cronvar{\prefix device}{*device)}\\
@@ -125,7 +125,7 @@ The functions provided by the DLL are declared in \textsf{\itett{TimeTagger4}{xT
 			This value has been passed to the constructor by the user. It is reflected in the output data.\par
 
 			\cronvar{int}{driver\tu revision}\\
-			Encoded version number fo the driver.\\
+			Encoded version number for the driver.\\
 			The lower three bytes contain a triple level hierarchy of version numbers, e.g. 0x010103 encodes version 1.1.3.\\
 			A change in the first digit generally requires a recompilation of user applications. 
 			Changes in the second digit denote significant improvements or changes that don't break compatibility 
@@ -136,11 +136,11 @@ The functions provided by the DLL are declared in \textsf{\itett{TimeTagger4}{xT
 
 			\cronvar{int}{board\tu revision}\\
 			Board revision number.\\
-			The board revision number can be read from a register. It is a four bit number that changes when the schematic of the board is changed. This should match the revision number printed on the board.
+			The board revision number can be read from a register. It is a four-bit number that changes when the schematic of the board is changed. This should match the revision number printed on the board.
 
 			\cronvar{int}{board\tu configuration}\\
 			Describes the schematic configuration of the board.\\
-			The same board schematic can be populated in multiple variants. This is a four bit code that can be read from a register.
+			The same board schematic can be populated in multiple variants. This is a four bit-code that can be read from a register.
 
 			\cronvar{int}{subversion\tu revision}\\
 			Subversion revision id of the FPGA configuration source code.
@@ -157,10 +157,10 @@ The functions provided by the DLL are declared in \textsf{\itett{TimeTagger4}{xT
 			With year and running number in 8.24 format. The number is identical to the one printed on the silvery sticker on the board.\par
 
 			\cronvar{unsigned int}{flash\tu serial\tu high}\\
-			high 32 bits of 64 bit manufacturer serial number of the flash chip.
+			high 32 bits of the 64-bit manufacturer serial number of the flash chip.
 
 			\cronvar{unsigned int}{flash\tu serial\tu low}\\
-			low 32 bits of 64 bit manufacturer serial number of the flash chip
+			low 32 bits of the 64-bit manufacturer serial number of the flash chip
 
 			\cronvar{int}{flash\tu valid}\\
 			If not 0 the driver found valid calibration data in the flash on the board and is using it.\par
@@ -228,7 +228,7 @@ The functions provided by the DLL are declared in \textsf{\itett{TimeTagger4}{xT
 	\section{Configuration}
 
 		The device is configured with a configuration structure. 
-		The user should first obtain a structure that contains the default settings of the device read from an on board ROM , 
+		The user should first obtain a structure that contains the default settings of the device read from an on-board ROM, 
 		then modify the structure as needed for the user application and use the result to configure the device.\par
 
 		\ttvar{int}{configure(}\cronvar{\prefix device} {*device,} \\ \cronvar{\prefix configuration}{*config)}\\
@@ -313,16 +313,16 @@ The functions provided by the DLL are declared in \textsf{\itett{TimeTagger4}{xT
 			These are used as inputs for the TiGer blocks and as inputs to the time measurement unit.\par
 
 			\ttvar{\prefix tiger\tu block}{tiger\tu block[\PREFIX TIGER\tu COUNT]}
-			Configuration of the timing generator (TiGeR).
+			Configuration of the timing generator (TiGer).
 
 			\ttvar{\prefix channel}{channel[\PREFIX CHANNEL\tu COUNT]}\\
 				Configure the TDC channels.
 
-			\ttvar{\prefix lowres\tu channel}{lowres\tu channel[\PREFIX LOWRES\tu CHANNEL\tu COUNT]}\\
+			\ttvar{\prefix low-res\tu channel}{low-res\tu channel[\PREFIX LOWRES\tu CHANNEL\tu COUNT]}\\
 			\itett{
 				Not applicable for \deviceName. 
 			}{
-				Only applicable to the xTDC4-Sciex. Configures the additional digital lowres inputs.
+				Only applicable to the xTDC4-Sciex. Configures the additional digital low-res inputs.
 			}\par
 
 			\cronvar{int}{auto\tu trigger\tu period}\\
@@ -378,7 +378,7 @@ The functions provided by the DLL are declared in \textsf{\itett{TimeTagger4}{xT
 			}{
 				In multiples of $20/3 = 6,\overline{6}~ns$
 			}
-			The time during which the TiGer output is set, relativ to the trigger input. The parameters \textsf{start} and \textsf{stop} must fulfill the following conditions:
+			The time during which the TiGer output is set, relative to the trigger input. The parameters \textsf{start} and \textsf{stop} must fulfill the following conditions:
 			\[ 0 <= start <= stop <= 2^{16}-1 \]
 			If retriggering is enabled, the timer is reset to the value of the start parameter whenever the input signal is set while waiting for the stop time. \par
 			
@@ -420,7 +420,7 @@ The functions provided by the DLL are declared in \textsf{\itett{TimeTagger4}{xT
 
 				\itett{}{ % onyl for xTDC4
 					\cronvar{crono\tu bool\tu t}{cc\tu enable}\\
-					Enable carry chain TDC. This is set to \emph{true} by default an should be left unchanged. \par
+					Enable carry chain TDC. This is set to \emph{true} by default and should be left unchanged. \par
 	
 					\cronvar{crono\tu bool\tu t}{cc\tu same\tu edge}\\
 					Sets whether the carry chain TDC records the same or opposite edge as the TDC chip. 
