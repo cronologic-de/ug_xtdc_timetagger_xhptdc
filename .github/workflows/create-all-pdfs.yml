@@ -21,4 +21,10 @@ jobs:
         uses: dante-ev/latex-action@master
         with:
           root_file: TimeTagger4_User_guide.tex
+      - name: Upload User Guides as Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: TimeTagger4_User_Guide.pdf
+          path: TimeTagger4_User_Guide.pdf
+
  
