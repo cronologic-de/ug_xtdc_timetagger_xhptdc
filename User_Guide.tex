@@ -16,6 +16,9 @@
 % https://creativecommons.org/licenses/by-nd/4.0/
 % except fpr extraplaceins.sty which is in the public domain
 
+% configure Visual Studio Code LaTeX Workshop 
+% !TEX root = TimeTagger4_User_guide.tex
+
 \documentclass[11pt,notitlepage]{scrreprt}
 \usepackage{cronologicug}
 
@@ -29,28 +32,58 @@
 % pdflatex "\newcommand{\deviceName}{xTDC4} \input{User_Guide.tex}"
 
 % or define it here
-%\renewcommand{\deviceName}{TimeTagger4}
-%\renewcommand{\deviceName}{xTDC4}
+%\newcommand{\deviceName}{TimeTagger4}
+%\newcommand{\deviceName}{xTDC4}
 
-\ifthenelse{\isundefined{\deviceName}}{\newcommand{\deviceName}{TimeTagger4}}{}
+
+\ifthenelse{\isundefined{\deviceName}}{
+	\message {\\ WARNING: Undefined device name, TimeTagger4 used}
+	\newcommand{\deviceName}{TimeTagger4}}{}
+\message{\\Device name is \deviceName }
+
 
 %output the first option for the TimeTagger, the second one otherwise
 % example: 
-% \itett{THIS IS A TIMETAGGER}{THIS IS AN XTDC4}
+% \itett{THIS IS A TimeTagger4}{THIS IS NOT}
 \ifthenelse{\equal{\deviceName}{TimeTagger4}}{\newcommand{\itett}[2]{#1}}{\newcommand{\itett}[2]{#2}}
-%\newcommand{\itett}[2]{ \ifthenelse{\equal{\deviceName}{TimeTagger4}}{#1}{#2}}
-\itett{
+\itett{\message{\\TIMETAGGER\\}}{\message{\\NO TIMETAGGER\\}}
+
+% output code only for the xHPTDC8
+% example: 
+% \ifXHPTDC{THIS IS AN xHPTDC8} {THIS IS NOT}
+% NOTE: Macro names may not contain digits
+\ifthenelse{\equal{\deviceName}{xHPTDC8    }} {\newcommand{\ifxHPTDC}[2]{#1}}{\newcommand{\ifxHPTDC}[2]{#2}}
+\ifxHPTDC{\message{\\XHPTDC8\\}}{\message{\\NO XHPTDC\\}}
+
+
+
+% output code for the TimeTagger4, xTDC4 or xHPTDC8
+% example: 
+% \txh{THIS IS A TimeTagger4}{THIS IS AN xTDC4}{THIS IS AN xHPTDC8}
+\itett{\newcommand{\txh}[3]{#1}}{\ifxHPTDC{\newcommand{\txh}[3]{#3}} {\newcommand{\txh}[3]{#2}}}
+
+\txh{ % TimeTagger4
+	\message{Generating User Guide for TimeTagger4}
 	\newcommand{\ttinput}[1]{\input{TT4_#1}}
 	\newcommand{\titlefile}{TT4_title.pdf}
 	\newcommand{\prefix}{timetagger4\tu}
 	\newcommand{\PREFIX}{TIMETAGGER4\tu}
 
-}{
-	\newcommand{\ttinput}[1]{\input{xTDC4_#1}}
+}{ % xTDC4
+	\message{Generating User Guide for xTDC4}
+	\newcommand{\ttinput}[1]{\input{XTDC4_#1}}
 	\newcommand{\titlefile}{xTDC4_title.pdf}
 	\newcommand{\prefix}{xtdc4\tu}
 	\newcommand{\PREFIX}{XTDC4\tu}
 } 
+{ % xHPTDC8
+	\message{Generating User Guide for xHPTDC4}
+	\newcommand{\ttinput}[1]{\input{XHPTDC8_#1}}
+	\newcommand{\titlefile}{xHTDC8_title.pdf}
+	\newcommand{\prefix}{xhptdc8\tu}
+	\newcommand{\PREFIX}{XHPTDC8\tu}
+} 
+
 \newcommand{\ttvar}[2]{\noindent\textsf{\textbf{\textcolor{crongrey}{#1} \prefix #2}}}%for variable declaration
 \newcommand{\ttdef}[1]{\noindent\textsf{\textcolor{crongrey}{\#{}define} \PREFIX #1}}%for definitions
 
@@ -58,7 +91,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document} 
-\itett{\cronofront{figures/TT4_title.pdf}}{\cronofront{figures/XTDC4_title.pdf}}
+%\itett{\cronofront{figures/TT4_title.pdf}}{\cronofront{figures/XTDC4_title.pdf}}
 
 % this is an XCIrcuit drawing  convertex from postscript with 
 %ps2pdf.exe -dEPSCrop xhptdc8_trigger_matrix.ps
