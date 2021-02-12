@@ -18,7 +18,7 @@
 
 % configure Visual Studio Code LaTeX Workshop 
 % !TEX root = xHPTDC8_User_guide.tex
-
+ 
 \documentclass[11pt,notitlepage]{scrreprt}
 \usepackage{cronologicug}
 
@@ -35,8 +35,8 @@
 %\newcommand{\deviceName}{TimeTagger4}
 %\newcommand{\deviceName}{xTDC4}
 
-
-\ifthenelse{\isundefined{\deviceName}}{
+  
+\ifthenelse{\isundefined{\deviceName}}{ 
 	\message {\\ WARNING: Undefined device name, TimeTagger4 used}
 	\newcommand{\deviceName}{TimeTagger4}}{}
 \message{\\Device name is \deviceName }
@@ -56,7 +56,7 @@
 \ifxHPTDC{\message{\\XHPTDC8\\}}{\message{\\NO XHPTDC\\}}
 
 
-
+ 
 % output code for the TimeTagger4, xTDC4 or xHPTDC8
 % example: 
 % \txh{THIS IS A TimeTagger4}{THIS IS AN xTDC4}{THIS IS AN xHPTDC8}
@@ -64,21 +64,21 @@
 
 \txh{ % TimeTagger4
 	\message{Generating User Guide for TimeTagger4}
-	\newcommand{\ttinput}[1]{\input{TT4_#1}}
+	\newcommand{\ttinput}[1]{\input{timetagger/#1}}
 	\newcommand{\titlefile}{"figures/TT4_title.pdf"}
 	\newcommand{\prefix}{timetagger4\tu}
 	\newcommand{\PREFIX}{TIMETAGGER4\tu}
 
 }{ % xTDC4
 	\message{Generating User Guide for xTDC4}
-	\newcommand{\ttinput}[1]{\input{XTDC4_#1}}
+	\newcommand{\ttinput}[1]{\input{xtdc/#1}}
 	\newcommand{\titlefile}{"figures/xTDC4_title.pdf"}
 	\newcommand{\prefix}{xtdc4\tu}
 	\newcommand{\PREFIX}{XTDC4\tu}
 } 
 { % xHPTDC8
 	\message{Generating User Guide for xHPTDC8}
-	\newcommand{\ttinput}[1]{\input{XHPTDC8_#1}}
+	\newcommand{\ttinput}[1]{\input{xhptdc/#1}}
 	\newcommand{\titlefile}{"figures/xHPTDC8_title.pdf"}
 	\newcommand{\prefix}{xhptdc8\tu}
 	\newcommand{\PREFIX}{XHPTDC8\tu}
@@ -101,17 +101,17 @@
 	\chapter{Introduction}
 		\ttinput{Intro.tex}
 	\chapter{Hardware}
-		\input{Hardware.tex}
-		\input{Software.tex}
+		\input{common/Hardware.tex}
+		\input{common/Software.tex}
 	\chapter{Driver Programming API} 
-		\input{API.tex} 
+		\input{common/API.tex} 
 	\section{Packet Format\label{cp:packetformat}} 
-		\input{PackForm.tex}
+		\input{common/PackForm.tex}
 	\chapter{C Example} 
-		\input{CExample.tex}
+		\input{common/CExample.tex}
 	\chapter{Technical Data}   
 		\ttinput{Tech.tex}
-		\input{DIN.tex}
+		\input{common/DIN.tex}
 	\chapter{Revision History}
 		\noindent
 		User Guide \hyperlink{ugrev}{\ugrev} as of 2020-02-04\\
@@ -120,6 +120,6 @@
 		Jahnstraße 49\\
 		60318 Frankfurt am Main\\Germany\\
 		\ttinput{FwRev.tex}
-		\ifxHPTDC{\input{XHPTDC8_DrvRev.tex}}{\input{DrvRev.tex}} 
-		\input{UGRev.tex}
-\end{document}
+		\ifxHPTDC{\input{xhptdc/DrvRev.tex}}{\input{common/DrvRev.tex}} 
+		\input{common/UGRev.tex}
+\end{document}  
