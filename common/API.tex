@@ -254,9 +254,12 @@ The functions provided by the DLL are declared in \textsf{\itett{TimeTagger4}{xT
 
 			\cronvar{int}{tdc\tu mode}\\
 			TDC mode. Can be grouped or continuous. \\
-			Currently only \PREFIX TDC\tu MODE\tu GROUPED is supported. 
-			This is set per default by \textsf{\prefix get\tu current\tu configuration()} and should be left unchanged.\par
-
+			\ifxHPTDC{
+				This defines whether grouping is used by the \textsf{Read()} method.	
+			}{
+				Currently only \PREFIX TDC\tu MODE\tu GROUPED is supported. 
+				This is set per default by \textsf{\prefix get\tu current\tu configuration()} and should be left unchanged.\par
+			}
 			\cronvar{crono\tu bool\tu t}{start\tu rising} 
 			\itett{
 				Not applicable for the \deviceName.
@@ -351,13 +354,30 @@ The functions provided by the DLL are declared in \textsf{\itett{TimeTagger4}{xT
 				The edge that is selected for full resolution measurement must also be enabled for low resolution measurement.
 			}\par
 
+%%%%% tiger_block			
+
 			\subsection{Structure \prefix tiger\tu block\label{cp:tigerblock}}
 
-			\cronvar{crono\tu bool\tu t}{enable}\\
-			Activates the timing generator (TiGer).\par
+			\ifxHPTDC{
+				\cronvar{int}{mode}\\
+				Enables the desired mode of operation for the tiger.
+
+				\begin{tabular}{lrl}
+					\ttdef{TIGER \tu OFF} & 0 & no operation \\
+					\ttdef{TIGER \tu OUTPUT} & 1 & output is driven with 2V amplitude. There must be no input connected \\
+					\ttdef{TIGER \tu BIDI} & 2 & output is driven with 1V amplitude. Pulse rate should be low. \\
+					\ttdef{TIGER \tu BIDI} & 2 & output is driven wuth 1V bidirectional pulses. $start = stop -1$\\
+				\end{tabular}
+
+				Gating blocks interpret any value that is not \ttdef{TIGER \tu OFF} as enable.	
+			}{
+				\cronvar{crono\tu bool\tu t}{enable}\\
+				Activates the timing generator (TiGer).\par
+			}
 	
 			\cronvar{crono\tu bool\tu t}{negate}\\
-			Inverts output polarity. Default is set to false.\par
+			Inverts output polarity. Default is set to false.
+			\ifxHPTDC{For gating blocks, a value of false blocks inputs between start and stop, a value of true blocks outputs outside that interval.}{}\par
 	
 			\cronvar{crono\tu bool\tu t}{retrigger}\\
 			Enables retrigger setting.\\
@@ -366,11 +386,13 @@ The functions provided by the DLL are declared in \textsf{\itett{TimeTagger4}{xT
 			\cronvar{crono\tu bool\tu t}{extend}\\
 			Not implemented.
 	
-			\cronvar{crono\tu bool\tu t}{enable\tu lemo\tu output}\\
-			Enables the LEMO output. Drive the TiGer Signal to the corresponding Lemo connector as an output. 
-			This is DC coupled, so make sure that you do not any devices connected as inputs.
-			Pulses created by the TiGer are visible at the \deviceName inputs and can be measured again to get the exact timing.  
-	
+			\ifxHPTDC{}{
+				\cronvar{crono\tu bool\tu t}{enable\tu lemo\tu output}\\
+				Enables the LEMO output. Drive the TiGer Signal to the corresponding Lemo connector as an output. 
+				This is DC coupled, so make sure that you do not any devices connected as inputs.
+				Pulses created by the TiGer are visible at the \deviceName inputs and can be measured again to get the exact timing.  
+			}
+
 			\cronvar{int}{start}\\
 			\cronvar{int}{stop}\\
 			\itett{
