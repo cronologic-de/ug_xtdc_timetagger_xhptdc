@@ -17,7 +17,7 @@
 % except fpr extraplaceins.sty which is in the public domain
 
 % configure Visual Studio Code LaTeX Workshop 
-% !TEX root = TimeTagger4_User_guide.tex
+% !TEX root = xHPTDC8_User_guide.tex
 
 \documentclass[11pt,notitlepage]{scrreprt}
 \usepackage{cronologicug}
@@ -52,7 +52,7 @@
 % example: 
 % \ifXHPTDC{THIS IS AN xHPTDC8} {THIS IS NOT}
 % NOTE: Macro names may not contain digits
-\ifthenelse{\equal{\deviceName}{xHPTDC8    }} {\newcommand{\ifxHPTDC}[2]{#1}}{\newcommand{\ifxHPTDC}[2]{#2}}
+\ifthenelse{\equal{\deviceName}{xHPTDC8}} {\newcommand{\ifxHPTDC}[2]{#1}}{\newcommand{\ifxHPTDC}[2]{#2}}
 \ifxHPTDC{\message{\\XHPTDC8\\}}{\message{\\NO XHPTDC\\}}
 
 
@@ -65,21 +65,21 @@
 \txh{ % TimeTagger4
 	\message{Generating User Guide for TimeTagger4}
 	\newcommand{\ttinput}[1]{\input{TT4_#1}}
-	\newcommand{\titlefile}{TT4_title.pdf}
+	\newcommand{\titlefile}{"figures/TT4_title.pdf"}
 	\newcommand{\prefix}{timetagger4\tu}
 	\newcommand{\PREFIX}{TIMETAGGER4\tu}
 
 }{ % xTDC4
 	\message{Generating User Guide for xTDC4}
 	\newcommand{\ttinput}[1]{\input{XTDC4_#1}}
-	\newcommand{\titlefile}{xTDC4_title.pdf}
+	\newcommand{\titlefile}{"figures/xTDC4_title.pdf"}
 	\newcommand{\prefix}{xtdc4\tu}
 	\newcommand{\PREFIX}{XTDC4\tu}
 } 
 { % xHPTDC8
-	\message{Generating User Guide for xHPTDC4}
+	\message{Generating User Guide for xHPTDC8}
 	\newcommand{\ttinput}[1]{\input{XHPTDC8_#1}}
-	\newcommand{\titlefile}{xHTDC8_title.pdf}
+	\newcommand{\titlefile}{"figures/xHPTDC8_title.pdf"}
 	\newcommand{\prefix}{xhptdc8\tu}
 	\newcommand{\PREFIX}{XHPTDC8\tu}
 } 
@@ -91,36 +91,35 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document} 
-%\itett{\cronofront{figures/TT4_title.pdf}}{\cronofront{figures/XTDC4_title.pdf}}
+\cronofront{\titlefile}
 
 % this is an XCIrcuit drawing  convertex from postscript with 
 %ps2pdf.exe -dEPSCrop xhptdc8_trigger_matrix.ps
 %\includegraphics[width=0.7\textwidth]{figures/xhptdc8_trigger_matrix2.pdf}
 
-%
+% 
 	\chapter{Introduction}
 		\ttinput{Intro.tex}
 	\chapter{Hardware}
 		\input{Hardware.tex}
 		\input{Software.tex}
 	\chapter{Driver Programming API} 
-		\input{API.tex}
-	\section{Packet Format\label{cp:packetformat}}
+		\input{API.tex} 
+	\section{Packet Format\label{cp:packetformat}} 
 		\input{PackForm.tex}
 	\chapter{C Example} 
 		\input{CExample.tex}
-	\chapter{Technical Data}  
+	\chapter{Technical Data}   
 		\ttinput{Tech.tex}
 		\input{DIN.tex}
 	\chapter{Revision History}
 		\noindent
 		User Guide \hyperlink{ugrev}{\ugrev} as of 2020-02-04\\
-		Firmware \hyperlink{fwrev}{0 (build 983)}, Driver \hyperlink{drvrev}{v1.4.1}\\
 		\\
 		cronologic GmbH \& Co. KG\\
 		Jahnstraße 49\\
 		60318 Frankfurt am Main\\Germany\\
 		\ttinput{FwRev.tex}
-		\input{DrvRev.tex} 
+		\ifxHPTDC{\input{XHPTDC8_DrvRev.tex}}{\input{DrvRev.tex}} 
 		\input{UGRev.tex}
 \end{document}

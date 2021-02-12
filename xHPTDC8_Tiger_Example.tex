@@ -1,0 +1,34 @@
+\subsubsection{TiGer Example: Generate 200 kHz Start Pulse}
+The AutoTrigger is used to generate a 200 kHz period. The TiGer generates a 200 kHz signal with $12 ns$ pulse width on LEMO-00 output Start.
+\begin{lstlisting}[frame=tlrb]
+// generate an internal 200 kHz trigger
+config.auto_trigger_period = 1250;
+config.auto_trigger_random_exponent = 0;
+
+// setup TiGer
+config.tiger_block[0].enable = 1;
+config.tiger_block[0].start = 0;
+config.tiger_block[0].stop = config.tiger_block[0].start + 2;
+config.tiger_block[0].negate = 0;
+config.tiger_block[0].enable_lemo_output = 1;
+config.tiger_block[0].sources = XHPTDC8_TRIGGER_SOURCE_AUTO;
+
+// if TiGer is used for triggering other channels with positive pulses
+config.dc_offset[0] = XHPTDC8_DC_OFFSET_P_LVCMOS_18; 
+\end{lstlisting}
+
+\subsubsection{TiGer Example: Generate Common-Start from Stops}
+A trigger event on any Stop channel is used to generate the next event on the Start channel. 
+The start value of the TiGer block should be set so that the pulse occurs after the last stop event of the group.
+\begin{lstlisting}[frame=tlrb]
+config.tiger_block[0].enable = 1;
+config.tiger_block[0].start = 32;
+config.tiger_block[0].stop = config.tiger_block[0].start + 2;
+config.tiger_block[0].negate = 0;
+config.tiger_block[0].enable_lemo_output = 1;
+// an event on any of the channels A - D starts 
+config.tiger_block[0].sources = XHPTDC8_TRIGGER_SOURCE_A|XHPTDC8_TRIGGER_SOURCE_B|XHPTDC8_TRIGGER_SOURCE_C|XHPTDC8_TRIGGER_SOURCE_D;
+
+// if TiGer is used for triggering with positive pulses
+config.dc_offset[0] = XHPTDC8_DC_OFFSET_P_LVCMOS_18; 
+\end{lstlisting}

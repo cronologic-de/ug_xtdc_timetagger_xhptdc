@@ -3,7 +3,7 @@
 # https://www.cronologic.de/products/tdcs/xtdc4-pcie
 # https://www.cronologic.de/products/tdcs/timetagger
 *User_Guide.pdf
-
+src/*
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
