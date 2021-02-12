@@ -1,0 +1,45 @@
+\txh{ %TimeTagger Version
+The \deviceName\ is a ``classic'' common start time-to-digital converter. 
+
+It records the time difference between a leading or trailing edge on the start input to the leading and trailing edges of the stop inputs. 
+Rising and falling edges of the stop channel A-D can be enabled individually. 
+The measurements are quantized to $500$~ps for -2G devices and tp $1000$~ps for -1G devices. 
+The timestamps are recorded in integer multiples of a bin size of $500$~ps for both board types to simplifiy setups where data from differnt board types is combined.
+Transitions of the input signals are called hits. To reliably detect hits the signal has to be stable for more than one quantisation interval before and after the edge.  
+Triggers on the start channel must not occur less than 5ns apart. The \deviceName\ records events without dead time at a readout rate of about 48MHits/s.
+} { %xTDC4 Version
+The \deviceName\ is a ``classic'' common start time-to-digital converter. 
+
+It records the time difference between leading or trailing edges on the start input and the stop inputs. 
+Each stop channel A-D can be enabled individually. 
+The standard deviation of the timestamps is approx. $8$~ps. 
+The timestamps are recorded in integer multiples of a bin size of $5/(3\cdot 128) = 13.0208\overline{3}$~ps. 
+The data acquisition can be limited to rising or falling signal transitions. 
+
+The maximum trigger rate on the start channel is 4~MHz.
+
+\subsection{Handling of Difficult Hits}
+    \label{difficulthits}
+    Transitions of the input signals are called hits. To measure all hits with the maximum resolution the hits must fulfill all criteria set forth in this document.
+    However, the \deviceName does include mechanisms to provide as much information as possible for hits that fall out of these specs.
+
+    To reliably detect hits the signal has to be stable for at least $900$~ps before and after the edge that is to be measured. 
+    Pulses as short as $250$~ps are usually detected at full resolution but have a significant chance to be assigned to the wrong group or appear out of order. 
+    For these hits bit 7 in the data word is set. See section \ref{flags} for more information on the data format.
+
+    Between multiple hits on a stop channel a deadtime of approximately $5$~ns is required for full resolution. 
+    Hits that are closer together will only be reported with a resolution of $5/6~ns = 833,\overline{3}~ps$. For these hits both bits 6 and 7 are set.
+
+    Data is copied from the 15-entry L0 FIFO to the larger downstream FIFOs at a reate of about $12$~MHz per channel. 
+    If the L0 FIFO overflows the hig resolution measurement of some hits will be discarded. 
+    In this case a measurement from an alternative TDC wil be used that has a resolution of about $150$~ps. 
+    For these hits bit 6 in the data word will be set
+} { %xHPTDC8 version
+    The \deviceName is a streaming time-to-digital converter. It records the timestamps of changes at the inputs A-H in an infinite stream. 
+    A flexible grouping mode is available that can emulated common-start or common-stop behaviour. See section \ref{grouping} for details.
+
+    For each channel it can be selected individually whether rising or falling edges are recorded. It is not possible to record both edges of the same channel. 
+    The timestamps are recorded in integer multiples of a bin size of $5/(3\cdot 128) = 13.0208\overline{3}$~ps. 
+    There must be at least 5~ns between consecutive hits on the same input channel to be detected reliably. 
+    The \deviceName\ records events without dead time at a readout rate of about 48MHits/s.
+}

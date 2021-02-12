@@ -93,15 +93,17 @@
 \begin{document} 
 \cronofront{\titlefile}
 
-% this is an XCIrcuit drawing  convertex from postscript with 
-%ps2pdf.exe -dEPSCrop xhptdc8_trigger_matrix.ps
-%\includegraphics[width=0.7\textwidth]{figures/xhptdc8_trigger_matrix2.pdf}
+
 
 % 
 	\chapter{Introduction}
 		\ttinput{Intro.tex}
 	\chapter{Hardware}
 		\input{common/Hardware.tex}
+	\chapter{\deviceName\ Functionality}
+		\input{common/Functionality.tex}
+		\input{common/Grouping.tex}
+		\input{common/AutoTiger.tex}
 		\input{common/Software.tex}
 	\chapter{Driver Programming API} 
 		\input{common/API.tex} 

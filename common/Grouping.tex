@@ -1,0 +1,17 @@
+\section{Grouping and Events}
+\label{grouping}
+In typical applications a start hit is followed by a manifold of hits on e.g. a detector. 
+The hits recorded are managed in groups (which are called ``events'' in some applications). 
+Figure \ref{fig:grouping} shows a corresponding timing diagram. The user can define the range of a group, i.e. the time window within which hits 
+on the stop channels are recorded, in software. Hits occurring outside of that time window are discarded. 
+ Different ranges can be set for each of the 4 stop channels by setting corresponding configuration.channel[n].start and .stop values in the channel configuration. 
+The values need to be set as multiples of the bin size.
+
+%
+\begin{figure*}[ht]
+    \begin{center}
+        \includegraphics[width=0.7\textwidth]{figures/grouping.pdf}
+        \caption{Acquired hits are merged to groups as explained in the text.\label{fig:grouping}}
+    \end{center}
+\end{figure*}
+%
