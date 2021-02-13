@@ -22,7 +22,11 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 	%
 		\begin{figure*}[hb]
 			\begin{center}
-				\includegraphics[width=0.3\textwidth]{figures/InputCircuit.pdf}
+				\ifxHPTDC{
+					\includegraphics[width=0.3\textwidth]{xhptdc/figures/InputCircuit.pdf}
+				}{
+					\includegraphics[width=0.3\textwidth]{figures/InputCircuit.pdf}
+				}
 				\caption{Input circuit for each of the input channels.\label{fig:inputcirc}}
 			\end{center}
 		\end{figure*}
@@ -51,7 +55,7 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 		\end{figure*}
 	%
 
-	Furthermore, three inter board connectors can be found at the top edge of the \deviceName\ board, 
+	Furthermore, three inter-board connectors can be found at the top edge of the \deviceName\ board, 
 	as displayed in Figure \ref{fig:schematics} on page \pageref{fig:schematics}. 
 	Connector J25 is reserved for future use. The pinout of connector J12 is shown in Table \ref{J12} and the pinout of connector J6 is depicted in Table \ref{J6}.
 

@@ -38,7 +38,7 @@ The trigger can be used as a source for the TiGer unit (see Section \ref{cp:tige
 
 
 \section{Timing Generator (TiGer)\label{cp:tiger}}
-Each LEMO-00 input can be used as a LVCMOS trigger output. The TiGer function can be configured independently for each LEMO-00 connector. 
+Each LEMO-00 input can be used as a LVCMOS trigger output. The TiGer function can be configured independently for each connector. 
 Each TiGet block can use an arbitrary combination of inputs to trigger its state machine including the AutoTrigger.
 See Section \ref{cp:tigerblock} for a full description of the configuration options.
 
@@ -58,9 +58,27 @@ See Section \ref{cp:tigerblock} for a full description of the configuration opti
 %
 
 Figure \ref{fig:matrix} shows how the TiGer blocks are connected. They can be triggered by an OR of an arbitrary combination of inputs, 
-including the auto trigger. Each TiGer can drive its output to its corresponding LEMO connector. This turns the connector into a DC coupled output. 
-Connected hardware must not drive any signals to connectors used as outputs, as doing so could damage both the \deviceName and the external hardware.
-Pulses that are short enough for the input AC coupling are available as input signals to the \deviceName. 
-This can be used to measure exact time differences between the generated output signals and input signals on other channels.
+including the auto trigger. Each TiGer can drive its output to its corresponding LEMO connector. This turns the connector into an output. 
 
+\ifxHPTDC{
+	The TiGer outputs are AC coupled to the connector. They can be operated in one of the following modes:
+	\paragraph*{\textsf{TIGER\tu OFF}} 
+		No signal is output to the connetor. 
+	\paragraph*{\textsf{TIGER\tu OUTPUT}} 
+		In this mode the connector is input only. Pulses are unipolar with 2V amplitude. 
+		Connected hardware must not drive any signals to connectors used as outputs, as doing so could damage both the \deviceName and the external hardware. 
+		We recoomend to only use short pulses to avoid undesirable baseline shift due to the AC coupling, but the device does not pose any restrictions on the duty cycle. 
+		This mode can be used as a clock output with a frequency of $75/N$~MHz for integer $N$.
+	\paragraph*{\textsf{TIGER\tu BIDI}} 
+		In this mode the TiGer creates unipolarpulses with 1V amplitude and still be used as an input. 
+		Use short pulses to keep the propability of collision and the effect on the baseline low.	
+	\paragraph*{\textsf{TIGER\tu BIPOLAR}} 
+		In this mode the connector creates bipolar pulses with 1V amplitude. The connector can still be used as an input. 
+		The pulses have no effect on the baseline offset. TiGer must be configured with $stop = start + 1$.  
+}{
+	The TiGer is DC coupled to the connector. Connected hardware must not drive any signals to connectors used as outputs, 
+	as doing so could damage both the \deviceName and the external hardware.
+	Pulses that are short enough for the input AC coupling are available as input signals to the \deviceName. 
+	This can be used to measure exact time differences between the generated output signals and input signals on other channels.
+}
 \ttinput{Tiger_Example.tex}	

@@ -61,14 +61,13 @@
 % example: 
 % \txh{THIS IS A TimeTagger4}{THIS IS AN xTDC4}{THIS IS AN xHPTDC8}
 \itett{\newcommand{\txh}[3]{#1}}{\ifxHPTDC{\newcommand{\txh}[3]{#3}} {\newcommand{\txh}[3]{#2}}}
-
+ 
 \txh{ % TimeTagger4
 	\message{Generating User Guide for TimeTagger4}
 	\newcommand{\ttinput}[1]{\input{timetagger/#1}}
 	\newcommand{\titlefile}{"figures/TT4_title.pdf"}
 	\newcommand{\prefix}{timetagger4\tu}
 	\newcommand{\PREFIX}{TIMETAGGER4\tu}
-
 }{ % xTDC4
 	\message{Generating User Guide for xTDC4}
 	\newcommand{\ttinput}[1]{\input{xtdc/#1}}
@@ -84,16 +83,19 @@
 	\newcommand{\PREFIX}{XHPTDC8\tu}
 } 
 
+\hyphenation{Time-Tagger xTDC xHPTDC}
+
+
 \newcommand{\ttvar}[2]{\noindent\textsf{\textbf{\textcolor{crongrey}{#1} \prefix #2}}}%for variable declaration
 \newcommand{\ttdef}[1]{\noindent\textsf{\textcolor{crongrey}{\#{}define} \PREFIX #1}}%for definitions
 
 \newcommand{\ugrev}{{1.7.0}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+ 
 \begin{document} 
 \cronofront{\titlefile}
 
-
+    
 
 % 
 	\chapter{Introduction}
@@ -106,7 +108,13 @@
 		\input{common/AutoTiger.tex}
 		\input{common/Software.tex}
 	\chapter{Driver Programming API} 
-		\input{common/API.tex} 
+		\ifxHPTDC{
+			% also includes common/StructConfig.tex
+			\input{xhptdc/API.tex}   
+		}{
+			% also includes common/StructConfig.tex and common/InfoStructs.tex
+			\input{common/API.tex}  
+		}
 	\section{Packet Format\label{cp:packetformat}} 
 		\input{common/PackForm.tex}
 	\chapter{C Example} 

@@ -1,0 +1,115 @@
+\subsection{Structure \prefix static\tu info}
+
+This structure contains information about the board that does not change during run time. It is provided by the function \textsf{\prefix get\tu static\tu info}.\par
+
+\cronvar{int}{size}\\
+The number of bytes occupied by the structure.
+
+\cronvar{int}{version}\\
+A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
+
+
+\cronvar{int}{board\tu id}\\
+ID of the board.\\
+This value has been passed to the constructor by the user. It is reflected in the output data.\par
+
+\cronvar{int}{driver\tu revision}\\
+Encoded version number for the driver.\\
+The lower three bytes contain a triple level hierarchy of version numbers, e.g. 0x010103 encodes version 1.1.3.\\
+A change in the first digit generally requires a recompilation of user applications. 
+Changes in the second digit denote significant improvements or changes that don't break compatibility 
+and the third digit increments with minor bug fixes and similar updates that do not affect the API.\par
+
+\cronvar{int}{firmware\tu revision}\\
+Revision number of the FPGA configuration.
+
+\cronvar{int}{board\tu revision}\\
+Board revision number.\\
+The board revision number can be read from a register. It is a four-bit number that changes when the schematic of the board is changed. This should match the revision number printed on the board.
+
+\cronvar{int}{board\tu configuration}\\
+Describes the schematic configuration of the board.\\
+The same board schematic can be populated in multiple variants. This is a four bit-code that can be read from a register.
+
+\cronvar{int}{subversion\tu revision}\\
+Subversion revision id of the FPGA configuration source code.
+
+\cronvar{int}{chip\tu id}\\
+\itett{
+    Reserved.
+    }{
+    16 bit factory ID of the TDC chip.
+    }\par
+
+\cronvar{int}{board\tu serial}\\
+Serial number.\\
+With year and running number in 8.24 format. The number is identical to the one printed on the silvery sticker on the board.\par
+
+\cronvar{unsigned int}{flash\tu serial\tu high}\\
+high 32 bits of the 64-bit manufacturer serial number of the flash chip.
+
+\cronvar{unsigned int}{flash\tu serial\tu low}\\
+low 32 bits of the 64-bit manufacturer serial number of the flash chip
+
+\cronvar{int}{flash\tu valid}\\
+If not 0 the driver found valid calibration data in the flash on the board and is using it.\par
+
+\subsection{Structure \prefix param\tu info}
+This struct contains configuration changes provided by \textsf{\prefix get\tu param\tu info()}.
+
+\cronvar{int}{size}\\
+The number of bytes occupied by the structure. \par
+
+\cronvar{int}{version}\\
+A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
+
+
+\cronvar{double}{binsize}
+Bin size (in ps) of the measured TDC data.
+
+\cronvar{int}{board\tu id}\\
+Board ID.\\
+The board uses this ID to identify itself in the output data stream. The ID takes values between 0 and 255.\par
+
+\cronvar{int}{channels}\\
+Number of channels of the board.\\
+Returns 4.\par
+
+\cronvar{int}{channel\tu mask}\\
+Bit assignment of each enabled input channel.\\
+Bit $n <= 0 < 4$ is set if channel n is enabled. \par
+
+\cronvar{\tu\tu int64}{total\tu buffer}\\
+The total amount of DMA buffer in bytes.
+
+\subsection{Structure \prefix fast\tu info}
+
+\cronvar{int}{size}\\
+The number of bytes occupied by the structure. \par
+
+\cronvar{int}{version}\\
+A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
+
+
+\cronvar{int}{tdc\tu rpm}\\
+Speed of the TDC fan in rounds per minute. Reports 0 if no fan is present.\par
+
+\cronvar{int}{fpga\tu rpm}\\
+Speed of the FPGA fan in rounds per minute. Reports 0 if no fan is present.\par
+
+\cronvar{int}{alerts}\\
+Alert bits from temperature sensor and the system monitor.
+\itett{
+    The TimeTagger4 does not implement any temperature alerts.
+}{
+    Bit 0 is set if the TDC temperature exceeds 140°C. The TDC did shut down and the device needs to be reinitialized. 
+}\par
+
+\cronvar{int}{pcie\tu pwr\tu mgmt}
+Allways 0. \par
+
+\cronvar{int}{pcie\tu link\tu width}\\
+Number of PCIe lanes the card uses. Should always be 1 for the \deviceName. \par
+
+\cronvar{int}{pcie\tu max\tu payload}\\
+Maximum size in bytes for one PCIe transaction. Depends on system configuration.\par

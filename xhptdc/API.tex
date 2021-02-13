@@ -1,0 +1,33 @@
+The API is a DLL with C linkage.\par
+
+The functions provided by the DLL are declared in \textsf{\txh{TimeTagger4}{xTDC4}{xHPTDC8}\tu interface.h}.
+
+\section{Constants}
+
+	\ttdef{CHANNEL\tu COUNT 4}\\
+	The number of TDC input channels.\par
+
+	 \ttdef{TIGER\tu COUNT 5}\\
+	The number of timing generators. One for each TDC input and one for the \ifxHPTDC{adc trigger}{start input}.\par
+
+	 \ttdef{TRIGGER\tu COUNT 16}\\
+	The number of potential trigger sources for the timing generators. One for each TDC input, one for the Start input plus some specials. 
+	 See Section~\ref{cp:tigerblock} for details.\par
+
+
+\section{Run Time Control}
+
+	 \cronvar{int}{ContinueCapture()}\\
+	 Call this to resume data acquisition after a call to \textsf{\prefix pause\tu capture()}.\par
+
+	 \cronvar{int}{PauseCapture()}\\
+	 Pause data acquisition.\par
+
+	 \cronvar{int}{StartCapture()}\\
+	 Start data acquisition.\par
+
+	 \cronvar{int}{StopCapture()}\\
+	 Stop data acquisition.\par
+
+\input{common/StructConfig.tex}
+

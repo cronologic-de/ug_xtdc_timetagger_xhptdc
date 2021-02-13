@@ -1,0 +1,226 @@
+\subsection{Structure \prefix configuration}
+
+			This is the structure containing the configuration information. It is used in conjunction with \textsf{\prefix get\tu default\tu configuration()}, \textsf{\prefix get\tu current\tu configuration()} and \textsf{\prefix configure()}.\par
+
+			It uses the substructures \textsf{\prefix tiger\tu block} and \textsf{\prefix trigger}.\par
+
+			\cronvar{int}{size}\\
+			The number of bytes occupied by the structure.\par
+
+			\cronvar{int}{version}\\
+			A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
+
+			\cronvar{int}{tdc\tu mode}\\
+			TDC mode. Can be grouped or continuous. \\
+			\ifxHPTDC{
+				This defines whether grouping is used by the \textsf{Read()} method. Defaults to \textsf{\PREFIX TDC\tu MODE\tu CONTINOUS} 	
+			}{
+				Currently only \textsf{\PREFIX TDC\tu MODE\tu GROUPED} is supported. 
+				This is set per default by \textsf{\prefix get\tu current\tu configuration()} and should be left unchanged.\par
+			}
+			\cronvar{crono\tu bool\tu t}{start\tu rising} 
+			\itett{
+				Not applicable for the \deviceName.
+			}{
+				Selects whether the rising or falling edge of the start signal is used to start a group.
+			}\par
+
+			\cronvar{double}{dc\tu offset[\PREFIX CHANNEL\tu COUNT + 1]}\\
+			Set the threshold voltage for the input channels S, A - D (see figure \ref{fig:dcoffset1}).
+			\begin{itemize}
+				\item dc\tu offset[0] : threshold for channel Start
+				\item dc\tu offset[1 - 4] : threshold for channels A \ldots D
+			\end{itemize}
+			Supported range is -1.32V to +1.18V. This should be close to 50\% of the height of the input pulse. Examples for various signaling standards are defined as follows\par
+			\begin{tabular}{ll}
+				\crondef{DC\tu OFFSET\tu P\tu NIM} & +0.35\\
+				\crondef{DC\tu OFFSET\tu P\tu CMOS} & +1.18\\
+				\crondef{DC\tu OFFSET\tu P\tu LVCMOS\tu 33} & +1.18\\
+				\crondef{DC\tu OFFSET\tu P\tu LVCMOS\tu 25} & +1.18\\
+				\crondef{DC\tu OFFSET\tu P\tu LVCMOS\tu 18} & +0.90\\
+				\crondef{DC\tu OFFSET\tu P\tu TTL} & +1.18\\
+				\crondef{DC\tu OFFSET\tu P\tu LVTTL\tu 33} & +1.18\\
+				\crondef{DC\tu OFFSET\tu P\tu LVTTL\tu 25} & +1.18\\
+				\crondef{DC\tu OFFSET\tu P\tu SSTL\tu 3} & +1.18\\
+				\crondef{DC\tu OFFSET\tu P\tu SSTL\tu 2} & +1.18\\
+				\crondef{DC\tu OFFSET\tu N\tu NIM} & -0.35\\
+				\crondef{DC\tu OFFSET\tu N\tu CMOS} & -1.32\\
+				\crondef{DC\tu OFFSET\tu N\tu LVCMOS\tu 33} & -1.32\\
+				\crondef{DC\tu OFFSET\tu N\tu LVCMOS\tu 25} & -1.25\\
+				\crondef{DC\tu OFFSET\tu N\tu LVCMOS\tu 18} & -0.90\\
+				\crondef{DC\tu OFFSET\tu N\tu TTL} & -1.32\\
+				\crondef{DC\tu OFFSET\tu N\tu LVTTL\tu 33} & -1.32\\
+				\crondef{DC\tu OFFSET\tu N\tu LVTTL\tu 25} & -1.25\\
+				\crondef{DC\tu OFFSET\tu N\tu SSTL\tu 3} & -1.32\\
+				\crondef{DC\tu OFFSET\tu N\tu SSTL\tu 2} & -1.25\\
+			\end{tabular}\par
+			 \noindent The inputs are AC coupled. Thus, the absolute voltage is not important for pulse inputs. It is the relative pulse amplitude that causes the input circuits to switch. \textit{dc\tu offset} must be set to the relative switching voltage for the input standard in use. If the pulses are negative, a negative switching threshold must be set and vice versa.
+			\begin{figure}
+				\begin{center}
+					\ifxHPTDC{
+						\includegraphics[width=0.3\textwidth]{xhptdc/figures/InputCircuit.pdf}
+					}{
+						\includegraphics[width=0.3\textwidth]{figures/InputCircuit.pdf}
+					}
+					\caption{Input circuit for each of the input channels. \label{fig:dcoffset1}}
+				\end{center} 
+			\end{figure}
+%%			\begin{figure}
+%%				\begin{center}
+%%					\includegraphics[width=\textwidth]{figures/dc_offset.pdf}
+%%%					\caption{\textit{dc\tu offset} is used to shift the signal on each input channel such that the noise margin relative to the switching threshold is maximized.
+%%					Insets of figure a) and b) show the base line of the signal with $\mathrm{\textit{dc\tu offset}}~=~0$ close to the switching threshold of the input buffer. Figure a) shows the positive pulse with $\mathrm{\textit{dc\tu offset}}~>~0$ and figure b) shows the negative pulse with $\mathrm{\textit{dc\tu offset}}~<~0$.\label{fig:dcoffset2}}
+%%				\end{center}
+%%			\end{figure}
+
+			\ttvar{\prefix trigger}{trigger[\PREFIX TRIGGER\tu COUNT]}\\
+			Configuration the polarity of the external trigger sources.
+			These are used as inputs for the TiGer blocks and as inputs to the time measurement unit.\par
+
+			\ttvar{\prefix tiger\tu block}{tiger\tu block[\PREFIX TIGER\tu COUNT]}
+			Configuration of the timing generator (TiGer).
+
+			\ttvar{\prefix channel}{channel[\PREFIX CHANNEL\tu COUNT]}\\
+				Configure the TDC channels.
+
+			\ttvar{\prefix low-res\tu channel}{low-res\tu channel[\PREFIX LOWRES\tu CHANNEL\tu COUNT]}\\
+			\itett{
+				Not applicable for \deviceName. 
+			}{
+				Only applicable to the xTDC4-Sciex. Configures the additional digital low-res inputs.
+			}\par
+
+			\cronvar{int}{auto\tu trigger\tu period}\\
+			\cronvar{int}{auto\tu trigger\tu random\tu exponent}\\
+			Create a trigger either periodically or randomly. There are two parameters $M = \text{trigger\tu period}$ and $N = \text{random\tu exponent}$ that result in a distance between triggers of $T$ clock cycles.
+
+			\begin{align}
+				T &= 1 + M + [1...2^N]\\
+				&0 \leq M < 2^{32}\\
+				&0 \leq N < 32
+			\end{align}
+
+			\noindent There is no enable or reset as the usage of this trigger can be configured in the TiGer block channel source field.\par
+
+			\subsection{Structure \prefix trigger}
+			\label{structtrigger}
+			\cronvar{crono\tu bool\tu t}{falling}\\
+			\cronvar{crono\tu bool\tu t}{rising}\\
+			Select for which edges a trigger event is created inside the FPGA.
+			\itett{
+				The \deviceName can output measurements for one or both edges of input signals. 
+			}{
+				The \deviceName can output measurements with a reduced bin size of $5/6~ns = 833,\overline{3}~ps$ for one or both edges of input signals. 
+				See section \ref{difficulthits} for more information on hits with varying resolution.
+				Use \textsf{xtdc4\tu channel.rising} on page \pageref{structchannel} to select which edge is measured with full resolution.
+				The edge that is selected for full resolution measurement must also be enabled for low resolution measurement.
+			}\par
+
+%%%%% tiger_block			
+
+			\subsection{Structure \prefix tiger\tu block\label{cp:tigerblock}}
+
+			\ifxHPTDC{
+				\cronvar{int}{mode}\\
+				Enables the desired mode of operation for the tiger.
+
+				\begin{tabular}{lrl}
+					\ttdef{TIGER \tu OFF} & 0 & no operation \\
+					\ttdef{TIGER \tu OUTPUT} & 1 & output is driven with 2V amplitude. There must be no input connected \\
+					\ttdef{TIGER \tu BIDI} & 2 & output is driven with 1V amplitude. Pulse rate should be low. \\
+					\ttdef{TIGER \tu BIDI} & 2 & output is driven wuth 1V bidirectional pulses. $start = stop -1$\\
+				\end{tabular}
+
+				Gating blocks interpret any value that is not \ttdef{TIGER \tu OFF} as enable.	
+			}{
+				\cronvar{crono\tu bool\tu t}{enable}\\
+				Activates the timing generator (TiGer).\par
+			}
+	
+			\cronvar{crono\tu bool\tu t}{negate}\\
+			Inverts output polarity. Default is set to false.
+			\ifxHPTDC{For gating blocks, a value of false blocks inputs between start and stop, a value of true blocks outputs outside that interval.}{}\par
+	
+			\cronvar{crono\tu bool\tu t}{retrigger}\\
+			Enables retrigger setting.\\
+			If enabled the timer is reset to the value of the \textsf{start} parameter, whenever the input signal is set while waiting to reach the \textsf{stop} time.\par
+	
+			\cronvar{crono\tu bool\tu t}{extend}\\
+			Not implemented.
+	
+			\ifxHPTDC{}{
+				\cronvar{crono\tu bool\tu t}{enable\tu lemo\tu output}\\
+				Enables the LEMO output. Drive the TiGer Signal to the corresponding Lemo connector as an output. 
+				This is DC coupled, so make sure that you do not any devices connected as inputs.
+				Pulses created by the TiGer are visible at the \deviceName inputs and can be measured again to get the exact timing.  
+			}
+
+			\cronvar{int}{start}\\
+			\cronvar{int}{stop}\\
+			\itett{
+				In multiples of $4~ns$.
+			}{
+				In multiples of $20/3 = 6,\overline{6}~ns$
+			}
+			The time during which the TiGer output is set, relative to the trigger input. The parameters \textsf{start} and \textsf{stop} must fulfill the following conditions:
+			\[ 0 <= start <= stop <= 2^{16}-1 \]
+			If retriggering is enabled, the timer is reset to the value of the start parameter whenever the input signal is set while waiting for the stop time. \par
+			
+	
+			\cronvar{int}{sources}\\
+			A bit mask with a bit set for all trigger sources that can trigger this TiGer block. 
+			Default is \textsf{\PREFIX TRIGGER\tu SOURCE\tu S}.\par
+	
+			\begin{tabular}{lc}
+					 \ttdef{TRIGGER\tu SOURCE\tu S} & 0x00000001\\
+					 \ttdef{TRIGGER\tu SOURCE\tu A} & 0x00000002\\
+					 \ttdef{TRIGGER\tu SOURCE\tu B} & 0x00000004\\
+					 \ttdef{TRIGGER\tu SOURCE\tu C} & 0x00000008\\
+					 \ttdef{TRIGGER\tu SOURCE\tu D} & 0x00000010\\
+					% \ttdef{TRIGGER\tu SOURCE\tu S1} & 0x00000020\\
+					% \ttdef{TRIGGER\tu SOURCE\tu S2} & 0x00000040\\
+					% \ttdef{TRIGGER\tu SOURCE\tu GATE} & 0x00000080\\
+					 \ttdef{TRIGGER\tu SOURCE\tu AUTO} & 0x00004000\\
+					 \ttdef{TRIGGER\tu SOURCE\tu ONE} & 0x00008000
+				\end{tabular} 
+	
+			\subsection{Structure \prefix channel}
+				\label{structchannel}
+				Contains TDC channel settings.\par
+	
+				\cronvar{crono\tu bool\tu t}{enabled}\\
+				Enable TDC channel.\par
+	
+				\cronvar{crono\tu bool\tu t}{rising}\\
+				\itett{
+					Not applicable for \deviceName.
+				}{
+					Select which edge of the signal is used for full resolution measurements. 
+					\textsf{xtdc4\tu trigger.rising} and \textsf{xtdc4\tu trigger.falling} described on page \pageref{structtrigger} are used 
+					to select which edges are recorded for low resolution measurement. 
+					The edge that is selected for full resolution measurement must also be enabled for low resolution measurement.
+					See section \ref{difficulthits} for more information on hits with varying resolution.
+				}\par
+
+				\itett{}{ % onyl for xTDC4
+					\cronvar{crono\tu bool\tu t}{cc\tu enable}\\
+					Enable carry chain TDC. This is set to \emph{true} by default and should be left unchanged. \par
+	
+					\cronvar{crono\tu bool\tu t}{cc\tu same\tu edge}\\
+					Sets whether the carry chain TDC records the same or opposite edge as the TDC chip. 
+					If the same edge is selected, that carry chain TDC acts  as a backup if the chip misses hits due to FIFO overflows or short input pulses.
+					If opposite edges are selected, both edges of a pulse can be measured with reasonable resolution. See section \ref{difficulthits} for more information.\par
+	
+					\cronvar{crono\tu bool\tu t}{ths788\tu disable}\\
+					Disable full resolution timestamps. This is set to \emph{false} by default and should be left unchanged.\par
+				}
+	
+				\cronvar{int}{start}\\
+				\cronvar{int}{stop}\\
+				Veto function for grouping of hits into packets in multiples of the binsize. Only hits between start and stop are read out.
+				The parameters must adhere to the following relations:
+				\[
+					0 <= start <= stop < 2^{ \itett{31}{30}}
+				\]
+	
+	
