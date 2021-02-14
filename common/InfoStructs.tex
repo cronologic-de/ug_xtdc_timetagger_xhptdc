@@ -1,3 +1,45 @@
+\section{Status Information}
+	
+
+\subsection{Functions for Information Retrieval}
+    The driver provides functions to retrieve detailed information on the type of board, its configuration, settings and state. 
+    The information is split according to its scope and the computational requirements to query the information from the board.
+    
+    \ifxHPTDC{
+        The information is provided on a per board basis. The parameter \textsf{index} selects which board is queried.
+    }{}
+
+    \ttvar{int}{get\tu device\tu type}(\device)\\
+    Returns the type of the device as \textsf{CRONO\tu DEVICE\tu \txh{TIMETAGGER4}{XTDC4}{XHPTDC8}}.\par
+
+    \ttvar{const char*}{get\tu last\tu error\tu message(\device)}\\
+    Returns most recent error message.\par
+
+    \ttvar{int}{get\tu fast\tu info(}\deviceindex, \lb\cronvar{\prefix fast\tu info}{*info)}\\
+    Returns fast dynamic information.\\
+    This call gets a structure that contains dynamic information that can be obtained within a few microseconds.\par
+
+    \ttvar{int}{get\tu param\tu info(}\deviceindex, \lb\cronvar{\prefix param\tu info}{*info)}\\
+    Returns configuration changes.\\
+    Gets a structure that contains information that changes indirectly due to configuration changes.\par
+
+    \ttvar{int}{get\tu slow\tu info(}\deviceindex, \lb\cronvar{\prefix slow\tu info}{*info)}\\
+    Returns slow dynamic information.\\
+    The data reported in this structure requires milliseconds to be obtained. 
+    The application should only call it in situations where the program flow can be blocked as long.\par
+
+    \ttvar{int}{get\tu static\tu info(}\deviceindex, \lb\cronvar{\prefix static\tu info}{*info)}\\
+    Contains static information.\\
+    Gets a structure that contains information about the board that does not change during run time.\par
+
+   \ifxHPTDC{
+        \ttvar{int}{get\tu temperature\tu info(}\deviceindex, \lb\cronvar{\prefix temperature\tu info}{*info)}\\
+        Get temperature measurements from multiple sources on the board.
+
+        \ttvar{int}{get\tu clock\tu info(}\deviceindex, \lb\cronvar{\prefix clock\tu info}{*info)}\\
+        Get information on clocking configuration an status.
+   }{}
+
 \subsection{Structure \prefix static\tu info}
 
 This structure contains information about the board that does not change during run time. It is provided by the function \textsf{\prefix get\tu static\tu info}.\par
@@ -20,6 +62,9 @@ A change in the first digit generally requires a recompilation of user applicati
 Changes in the second digit denote significant improvements or changes that don't break compatibility 
 and the third digit increments with minor bug fixes and similar updates that do not affect the API.\par
 
+\cronvar{int}{driver\tu build\tu revision}\\
+
+
 \cronvar{int}{firmware\tu revision}\\
 Revision number of the FPGA configuration.
 
@@ -34,25 +79,32 @@ The same board schematic can be populated in multiple variants. This is a four b
 \cronvar{int}{subversion\tu revision}\\
 Subversion revision id of the FPGA configuration source code.
 
-\cronvar{int}{chip\tu id}\\
 \itett{
+    \cronvar{int}{chip\tu id}\\
     Reserved.
-    }{
+}{
+    \cronvar{int}{chip\tu id}\\
     16 bit factory ID of the TDC chip.
-    }\par
+}{
+    \cronvar{int}{chip\tu id[2]}\\
+    16 bit factory ID for each of the TDC chips.
+}\par
 
 \cronvar{int}{board\tu serial}\\
 Serial number.\\
 With year and running number in 8.24 format. The number is identical to the one printed on the silvery sticker on the board.\par
 
 \cronvar{unsigned int}{flash\tu serial\tu high}\\
-high 32 bits of the 64-bit manufacturer serial number of the flash chip.
-
 \cronvar{unsigned int}{flash\tu serial\tu low}\\
-low 32 bits of the 64-bit manufacturer serial number of the flash chip
+64-bit manufacturer serial number of the flash chip
 
 \cronvar{int}{flash\tu valid}\\
 If not 0 the driver found valid calibration data in the flash on the board and is using it.\par
+
+\cronvar{int}{calibration\tu date}\\
+DIN EN ISO 8601 string YYYY-MM-DD HH:DD describing the time when the card was calibrated.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Structure \prefix param\tu info}
 This struct contains configuration changes provided by \textsf{\prefix get\tu param\tu info()}.
@@ -73,14 +125,16 @@ The board uses this ID to identify itself in the output data stream. The ID take
 
 \cronvar{int}{channels}\\
 Number of channels of the board.\\
-Returns 4.\par
+Returns \ifxHPTDC{8}{4}.\par
 
 \cronvar{int}{channel\tu mask}\\
 Bit assignment of each enabled input channel.\\
-Bit $n <= 0 < 4$ is set if channel n is enabled. \par
+Bit $0 \leq n < \ifxHPTDC{8}{4}$ is set if channel $n$ is enabled. \par
 
 \cronvar{\tu\tu int64}{total\tu buffer}\\
 The total amount of DMA buffer in bytes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Structure \prefix fast\tu info}
 
@@ -90,10 +144,10 @@ The number of bytes occupied by the structure. \par
 \cronvar{int}{version}\\
 A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
 
-
-\cronvar{int}{tdc\tu rpm}\\
-Speed of the TDC fan in rounds per minute. Reports 0 if no fan is present.\par
-
+\ifxHPTDC{} {
+    \cronvar{int}{tdc\tu rpm}\\
+    Speed of the TDC fan in rounds per minute. Reports 0 if no fan is present.\par
+}
 \cronvar{int}{fpga\tu rpm}\\
 Speed of the FPGA fan in rounds per minute. Reports 0 if no fan is present.\par
 
@@ -113,3 +167,47 @@ Number of PCIe lanes the card uses. Should always be 1 for the \deviceName. \par
 
 \cronvar{int}{pcie\tu max\tu payload}\\
 Maximum size in bytes for one PCIe transaction. Depends on system configuration.\par
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifxHPTDC{
+    \subsection{Structure \prefix temperature\tu info}
+
+        \cronvar{int}{size}\\
+        The number of bytes occupied by the structure. \par
+
+        \cronvar{int}{version}\\
+        A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
+
+        \cronvar{float}{tdc[2]}\\
+        Temperature for each of the TDC chips in °C
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \subsection{Structure \prefix temperature\tu info}
+
+        \cronvar{int}{size}\\
+        The number of bytes occupied by the structure. \par
+
+        \cronvar{int}{version}\\
+        A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
+
+        \cronvar{crono\tu bool\tu t}{cdce\tu locked}\\
+        Set if the jitter cleaning PLL clock synthesizer achieved lock.
+
+        \cronvar{int}{cdce\tu version}\\
+        Version information from the CDCE62005 clock synthesizer.\\
+        
+        \cronvar{int}{clock\tu source}\\
+        Source for the clock synthesizer is usually the 10MHz on board oscillator. 
+        When multiple boards are synchonised all but the first board use a clock that they receive on J12.\\       
+        \begin{tabular}{lc}
+            \ttdef{CLK\tu J12} & 1\\
+            \ttdef{CLK\tu OSC} & 2\\
+            \ttdef{CLK\tu FPGA} & 4\\
+        \end{tabular}
+    
+        \cronvar{crono\tu bool\tu t}{fpga\tu locked}\\
+        Set if the FPGA datapath PLL achieved lock.
+    
+}{}

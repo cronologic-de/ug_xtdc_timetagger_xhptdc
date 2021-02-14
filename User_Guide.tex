@@ -89,7 +89,7 @@
 \newcommand{\ttvar}[2]{\noindent\textsf{\textbf{\textcolor{crongrey}{#1} \prefix #2}}}%for variable declaration
 \newcommand{\ttdef}[1]{\noindent\textsf{\textcolor{crongrey}{\#{}define} \PREFIX #1}}%for definitions
 
-\newcommand{\ugrev}{{1.7.0}}
+\newcommand{\ugrev}{{1.8.0\tu draft}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
 \begin{document} 
@@ -100,29 +100,36 @@
 % 
 	\chapter{Introduction}
 		\ttinput{Intro.tex}
+
 	\chapter{Hardware}
 		\input{common/Hardware.tex}
+
 	\chapter{\deviceName\ Functionality}
 		\input{common/Functionality.tex} 
 		\input{common/Grouping.tex}
 		\input{common/AutoTiger.tex}
-		\input{common/Software.tex}
+
 	\chapter{Driver Programming API} 
-		\ifxHPTDC{
-			% also includes common/StructConfig.tex
-			\input{xhptdc/API.tex}   
-		}{
-			% also includes common/StructConfig.tex and common/InfoStructs.tex
-			\input{common/API.tex}  
-		}
-	\section{Packet Format\label{cp:packetformat}} 
+		% also includes common/StructConfig.tex and common/InfoStructs.tex
+		\input{common/API.tex}  
+	\section{Readout\label{cp:readout}}  % and packet format
+		\input{common/Readout.tex}
+
+%		ifxHPTDC{
+%			\input{xhptdc/PackForm.tex}
+%		}{
+%		}
+	\chapter{Packet Format\label{cp:packetformat}} 
 		\input{common/PackForm.tex}
-	\chapter{C Example} 
+
+	\chapter{C Example}  
 		\input{common/CExample.tex}
-	\chapter{Technical Data}   
-		\ttinput{Tech.tex}
+
+	\chapter{Technical Data}    
+		\ttinput{Tech.tex} 
 		\input{common/DIN.tex}
-	\chapter{Revision History}
+
+	\chapter{Revision History} 
 		\noindent
 		User Guide \hyperlink{ugrev}{\ugrev} as of 2020-02-04\\
 		\\

@@ -1,113 +1,151 @@
+\ifxHPTDC{
+	\newcommand{\device}{\cronvar{\prefix device\tu manager}{*device\tu manager}}
+	\newcommand{\deviceindex}{\device, \cronvar{int}{index}}
+	\newcommand{\initparameters}{xhptdc8manager\tu init\tu parameters}
+}{
+	\newcommand{\device}{\cronvar{\prefix device}{*device}}
+	\newcommand{\deviceindex}{\device}
+	\newcommand{\initparameters}{\prefix init\tu parameters}
+}
+
 The API is a DLL with C linkage.\par
 
 The functions provided by the DLL are declared in \textsf{\txh{TimeTagger4}{xTDC4}{xHPTDC8}\tu interface.h}.
 
 \section{Constants}
+\ifxHPTDC{
+	\crondef{XHPTDC8MANAGER\tu DEVICES\tu MAX 8}\\
+	The maximum number of boards supported by the device manager.
 
-	\ttdef{CHANNEL\tu COUNT 4}\\
+	\ttdef{CHANNEL\tu COUNT 8}\\
 	The number of TDC input channels.\par
 
-	 \ttdef{TIGER\tu COUNT 5}\\
-	The number of timing generators. One for each TDC input and one for the \ifxHPTDC{adc trigger}{start input}.\par
+	\ttdef{GATE\tu COUNT 8}\\
+	The number of gating blocks. One for each TDC input.\par
+
+	 \ttdef{TIGER\tu COUNT 9}\\
+	The number of timing generators. One for each TDC input and one for the adc trigger.\par
 
 	 \ttdef{TRIGGER\tu COUNT 16}\\
 	The number of potential trigger sources for the timing generators. One for each TDC input, one for the Start input plus some specials. 
 	 See Section~\ref{cp:tigerblock} for details.\par
 
-\section{Initialization}
-		\ttvar{int}{close(}\cronvar{\prefix device}{*device)}\\
+}{
+	\ttdef{CHANNEL\tu COUNT 4}\\
+	The number of TDC input channels.\par
+
+	 \ttdef{TIGER\tu COUNT 5}\\
+	The number of timing generators. One for each TDC input and one for the start input.\par
+
+	 \ttdef{TRIGGER\tu COUNT 16}\\
+	The number of potential trigger sources for the timing generators. One for each TDC input, one for the Start input plus some specials. 
+	 See Section~\ref{cp:tigerblock} for details.\par
+}
+
+
+\section{Driver Information}
+
+	Even if there is no board present the driver revision can be queried using these functions.
+
+	\ttvar{int}{get\tu driver\tu revision()}\\
+	Returns the driver version, same format as \textsf{\prefix static\tu info::driver\tu revision}. 
+	This function does not require a \deviceName\ board to be present.
+
+	\ttvar{const char*}{get\tu driver\tu revision\tu str()}\\
+	Returns the driver version including SVN build revision as a string. 
+
+	\ttvar{int}{count\tu devices(}\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
+	Returns the number of boards present in the system that are supported by this driver.\par
+
+
+\section {Initialization}
+
+		\ttvar{int}{close(}\device )\\
 		Finalizes the driver for this device.
 
-		\ttvar{int}{count\tu devices(}\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
-		Returns the number of boards present in the system that are supported by this driver.\par
 
-		\ttvar{int}{get\tu default\tu init\tu parameters(}\cronvar{\prefix init\tu parameters}{ *init)}\\
+	
+
+		\ttvar{int}{get\tu default\tu init\tu parameters(}\cronvar{\initparameters}{ *init)}\\
 		Sets up the standard parameters. Gets a set of default parameters for \textsf{\prefix init()}. This must always be used to initialize the \textsf{\prefix init\tu parameter()} structure.\par
 
-		\cronvar{\prefix device *}{init(}\cronvar{\prefix init\tu parameters}{*params}, \\ \cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
+		\cronvar{\prefix device *}{init(}\cronvar{\initparameters}{*params}, \\ 
+		\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
 		Opens and initializes the \deviceName\ board with the given index. 
 		With \textsf{error\tu code} and \textsf{error\tu message} the user must provide pointers to buffers where error information should be written by the driver.\par
 
-		Params is a structure of type \textsf{\prefix init\tu parameters} that must be completely initialized.\par
+		The paramter \textsf{params} is a structure of type \textsf{\prefix init\tu parameters} that must be completely initialized.\par
 
-		\subsection{Structure \prefix init\tu parameters}
+		\subsection{Structure \initparameters}
 			\cronvar{int}{version}\\
 			The version number. Must be set to \textsf{\PREFIX API\tu VERSION}.\par
 
-			\cronvar{int}{card\tu index}\\
-			The index in the list of \deviceName\ boards that should be initialized.\\
-			There might be multiple boards in the system that are handled by this driver as reported by \textsf{\prefix count\tu devices}. This index selects one of them. Boards are enumerated depending on the PCIe slot. 
-			The lower the bus number and the lower the slot number the lower the card index.\par
+			\ifxHPTDC{}{
+				\cronvar{int}{card\tu index}\\
+				The index in the list of \deviceName\ boards that should be initialized.\\
+				There might be multiple boards in the system that are handled by this driver as reported by \textsf{\prefix count\tu devices}. This index selects one of them. Boards are enumerated depending on the PCIe slot. 
+				The lower the bus number and the lower the slot number the lower the card index.\par
 
-			\cronvar{int}{board\tu id}\\
-			the global index in all cronologic devices.\\
-			This 8 bit number is filled into each packet created by the board and is useful if data streams of multiple boards will be merged. If only \deviceName\ cards are used this number can be set to the \textsf{card\tu index}. 
-			If boards of different types that use a compatible data format are used in a system each board should get a unique id.
-			Can be changed with \textsf{int \prefix set\tu board\tu id\allowbreak(\prefix device *device, int board\tu id)}.\par
+				\cronvar{int}{board\tu id}\\
+				the global index in all cronologic devices.\\
+				This 8 bit number is filled into each packet created by the board and is useful if data streams of multiple boards will be merged. If only \deviceName\ cards are used this number can be set to the \textsf{card\tu index}. 
+				If boards of different types that use a compatible data format are used in a system each board should get a unique id.
+				Can be changed with \textsf{int \prefix set\tu board\tu id\allowbreak(\prefix device *device, int board\tu id)}.\par
+			}
 
 			\cronvar{\tu \tu int64}{buffer\tu size[8]}\\
 			The minimum size of the DMA buffer.\\
 			If set to 0 the default size of 16~MByte is used. For the \deviceName\ only the first entry is used.\par
 
-			\cronvar{int}{buffer\tu type}\\
-			The type of buffer. Must be set to 0.
-			\begin{description}
-				\item[]  \ttdef{BUFFER\tu ALLOCATE   0}
-				\item[]  \ttdef{BUFFER\tu USE\tu PHYSICAL   1}  // unsupported
-			\end{description}
+			\ifxHPTDC{}{
+				\cronvar{int}{buffer\tu type}\\
+				The type of buffer. Must be set to 0.
+				\begin{description}
+					\item[]  \ttdef{BUFFER\tu ALLOCATE   0}
+					\item[]  \ttdef{BUFFER\tu USE\tu PHYSICAL   1}  // unsupported
+				\end{description}
+			
 
-			\cronvar{\tu \tu int64}{buffer\tu address}\\
-			This is set by \prefix init() to the start address of the reserved memory.\\ 
-			The buffers will be allocated with the sizes given above. Make sure that the memory is large enough.\par
+				\cronvar{\tu \tu int64}{buffer\tu address}\\
+				This is set by \prefix init() to the start address of the reserved memory.\\ 
+				The buffers will be allocated with the sizes given above. Make sure that the memory is large enough.\par
+			}
 
 			\cronvar{int}{variant}\\
 			Set to 0. Can be used to activate future device variants such as different base frequencies.\par
 
 			\cronvar{int}{device\tu type}\\
 			A constant for the different devices of cronologic \textsf{CRONO\tu DEVICE\tu *}.\\
-			Initialized by \textsf{\prefix get\tu default\tu init\tu parameters()}. Must be left unchanged.
-			\begin{itemize}
-				\item[] \crondef{CRONO\tu DEVICE\tu HPTDC 1}
-				\item[] \crondef{CRONO\tu DEVICE\tu NDIGO5G 2}
-				\item[] \crondef{CRONO\tu DEVICE\tu NDIGO250M 4}
-				\item[] \crondef{CRONO\tu DEVICE\tu xTDC4 6}
-				\item[] \crondef{CRONO\tu DEVICE\tu TIMETAGGER4 8}
-			\end{itemize}
+			Initialized by \textsf{\prefix get\tu default\tu init\tu parameters()}. This value is identical to the PCI Device ID. Must be left unchanged.
+			\begin{tabular}{ll}
+				\crondef{CRONO\tu DEVICE\tu HPTDC}       & 0x1 \\
+				\crondef{CRONO\tu DEVICE\tu NDIGO5G}     & 0x2 \\
+				\crondef{CRONO\tu DEVICE\tu NDIGO250M}   & 0x4 \\
+				\crondef{CRONO\tu DEVICE\tu xTDC4}       & 0x6 \\
+				\crondef{CRONO\tu DEVICE\tu TIMETAGGER4} & 0x8 \\
+				\crondef{CRONO\tu DEVICE\tu XHPTDC8}     & 0xC \\
+			\end{tabular}
 
 			\cronvar{int}{dma\tu read\tu delay}\\
 			The update delay of the write pointer after a packet has been sent over PCIe. Specified in multiples of 16ns
 			Should not be changed by the user.\par
 
-			\cronvar{int}{use\tu ext\tu clock}\\
-			If set to 1 use external 10 MHz reference. If set to 0 use internal reference.\par
+			\ifxHPTDC{
+				\cronvar{int}{multiboard}\\
+				Set if multiple devices shall be synchronized.\par
+	
+				\cronvar{int}{use\tu ext\tu clock}\\
+				If set to 1 use external 10 MHz reference. If set to 0 use internal reference.\par
 
-	\section{Status Information}
-		\subsection{Functions for Information Retrieval}
+				\cronvar{int}{ignore\tu calibration}\\
+				Leave at 0 to use device calibration data.\par
+		
+			}{
+				\cronvar{int}{use\tu ext\tu clock}\\
+				If set to 1 use external 10 MHz reference. If set to 0 use internal reference.\par	
+			}
+	
 
-			The driver provides functions to retrieve detailed information on the type of board, its configuration, settings and state. The information is split according to its scope and the computational requirements to query the information from the board.
-
-			\ttvar{int}{get\tu driver\tu revision()}\\
-			Returns the driver version, same format as \prefix static\tu info::driver\tu revision. This function does not require a \deviceName\ board to be present.
-
-			\ttvar{const char*}{get\tu driver\tu revision\tu str()}\\
-			Returns the driver version including SVN build revision as a string. This function does not require \deviceName\ board to be present.
-
-			\ttvar{int}{get\tu fast\tu info(}\cronvar{\prefix device}{*device}, \cronvar{\prefix fast\tu info}{*info)}\\
-			Returns fast dynamic information.\\
-			This call gets a structure that contains dynamic information that can be obtained within a few microseconds.\par
-
-			\ttvar{int}{get\tu param\tu info(}\cronvar{\prefix device}{*device}, \cronvar{\prefix param\tu info}{*info)}\\
-			Returns configuration changes.\\
-			Gets a structure that contains information that changes indirectly due to configuration changes.\par
-
-			\ttvar{int}{get\tu slow\tu info(}\cronvar{\prefix device}{*device}, \cronvar{\prefix slow\tu info}{*info)}\\
-			Returns slow dynamic information.\\
-			The data reported in this structure requires milliseconds to be obtained. 
-			The application should only call it in situations where the program flow can be blocked as long.\par
-
-			\ttvar{int}{get\tu static\tu info(}\cronvar{\prefix device}{*device},\cronvar{\prefix static\tu info}{*info)}\\
-			Contains static information.\\
-			Gets a structure that contains information about the board that does not change during run time.\par
 	
 	% info structures
 	\input{common/InfoStructs.tex}
@@ -120,13 +158,17 @@ The functions provided by the DLL are declared in \textsf{\txh{TimeTagger4}{xTDC
 		The user should first obtain a structure that contains the default settings of the device read from an on-board ROM, 
 		then modify the structure as needed for the user application and use the result to configure the device.\par
 
-		\ttvar{int}{configure(}\cronvar{\prefix device} {*device,} \\ \cronvar{\prefix configuration}{*config)}\\
+		\ifxHPTDC{
+			Each board is configured individually. The parameter \textsf{index} selects the board.
+		}{}
+
+		\ttvar{int}{configure(}\deviceindex, \\ \cronvar{\prefix configuration}{*config)}\\
 		Configures the \deviceName\ device.\par
 
-		\ttvar{int}{get\tu current\tu configuration(}\cronvar{\prefix device}{*device,} \\ \cronvar{\prefix configuration}{*config)}\\
+		\ttvar{int}{get\tu current\tu configuration(}\deviceindex, \\ \cronvar{\prefix configuration}{*config)}\\
 		Gets current configuration. Copies the current configuration to the specified config pointer.\par
 
-		\ttvar{int}{get\tu default\tu configuration(}\cronvar{\prefix device}{*device,} \\ \cronvar{\prefix configuration}{*config)}\\
+		\ttvar{int}{get\tu default\tu configuration(}\deviceindex, \\ \cronvar{\prefix configuration}{*config)}\\
 		Gets default configuration. Copies the default configuration to the specified config pointer.\par
 
 	%%%%%%%%%%%%%%%%% configuration structure mostly shared between devices
@@ -134,65 +176,24 @@ The functions provided by the DLL are declared in \textsf{\txh{TimeTagger4}{xTDC
 
 	\section{Run Time Control}
 
-			\ttvar{int}{continue\tu capture(}\ttvar{\prefix device}{*device)}\\
-			Call this to resume data acquisition after a call to \textsf{\prefix pause\tu capture()}.\par
+		\ttvar{int}{start\tu capture(}\device)\\
+		Start data acquisition.\par
 
-			\ttvar{int}{pause\tu capture(}\ttvar{\prefix device}{*device)}\\
-			Pause data acquisition.\par
+		\ttvar{int}{pause\tu capture(}\device)\\
+		Pause a started data acquisition. 
+		Pause and continue have less overhead than start and stop but don't allow for a configuration change.\par
 
-			\ttvar{int}{start\tu capture(}\ttvar{\prefix device}{*device)}\\
-			Start data acquisition.\par
+		\ttvar{int}{continue\tu capture(}\device)\\
+		Call this to resume data acquisition after a call to \textsf{\prefix pause\tu capture()}.\par
+		Pause and continue have less overhead than start and stop but don't allow for a configuration change.\par
 
-			\ttvar{int}{start\tu tiger(\ttvar{\prefix device}{*device})}\\
-			Start timing generator.\par
+		\ttvar{int}{stop\tu capture(}\device)\\
+		Stop data acquisition.\par
 
-			\ttvar{int}{stop\tu capture(}\ttvar{\prefix device}{*device)}\\
-			Stop data acquisition.\par
+		\ttvar{int}{start\tu tiger(}\device)\\
+		Start timing generator. This can be done independantly of the state of the data acquisition.\par
 
-			\ttvar{int}{stop\tu tiger(\ttvar{\prefix device}{*device})}\\
-			Stop timing generator.\par
+		\ttvar{int}{stop\tu tiger(}\device)\\
+		Stop timing generator. This can be done independantly of the state of the data acquisition.\par
 
-	\section{Readout\label{cp:readout}}
-
-		\ttvar{int}{acknowledge(}\cronvar{\prefix device}{*device,} \cronvar{crono\tu packet}{*packet)}\\
-		Acknowledges the processing of the last read block. This is only necessary if \textsf{\prefix read()} is not called with 
-		\textsf{in.acknowledge\tu last\tu read} set.\\
-		This feature allows to either free up partial DMA space early if there will be no call to \textsf{\prefix read()} anytime soon. 
-		It also allows to keep data over multiple calls to \textsf{\prefix read()} to avoid unnecessary copying of data. \par
-
-		\ttvar{int}{get\tu device\tu type}\\
-		Returns the type of the device as \textsf{CRONO\tu DEVICE\tu \itett{TIMETAGGER4}{XTDC4}}.\par
-
-		\ttvar{const char*}{get\tu last\tu error\tu message(\cronvar{\prefix device}{*device})}\\
-		Returns most recent error message.\par
-
-		\ttvar{int}{read(}\cronvar{\prefix device}{*device,} \cronvar{\prefix read\tu in}{*in,} \\ \cronvar{\prefix read\tu out}{*out)}\\
-		Return a pointer to an array of captured data in \textsf{read\tu out}. 
-		The result can contain any number of packets of type \textsf{\prefix packet}.
-		\textsf{read\tu in} provides parameters to the driver. 
-		A call to this method automatically allows the driver to reuse the memory returned in the previous call if \textsf{read\tu in.acknowledge\tu last\tu read} is set.\\
-		Returns an error code as defined in the structure \textsf{\prefix read\tu out}.
-
-		\subsection{Input Structure \prefix read\tu in}
-
-			\ttvar{\prefix bool\tu t}{acknowledge\tu last\tu read}\\
-			If set \textsf{\prefix read()} automatically acknowledges packets from the last read.
-
-		\subsection{Input Structure \prefix read\tu out}
-			\cronvar{crono\tu packet}{*first\tu packet}\\
-			Pointer to the first packet that was capture by the call of \textsf{\prefix read}.\par
-
-			\cronvar{crono\tu packet}{*last\tu packet}\\
-			Address of header of the last packet in the buffer.\par
-
-			\cronvar{int}{error\tu code}\\
-			Assignments of the error codes.\par
-			\begin{tabular}{lc}
-				\crondef{CRONO\tu READ\tu OK} & 0\\
-				\crondef{CRONO\tu READ\tu NO\tu DATA} & 1\\
-				\crondef{CRONO\tu READ\tu INTERNAL\tu ERROR} & 2\\
-				\crondef{CRONO\tu READ\tu TIMEOUT} & 3\par
-			\end{tabular}\par
-
-			\cronvar{const char}{*error\tu message}
-			The last error in human readable form, possibly with additional information on the error.
+	
