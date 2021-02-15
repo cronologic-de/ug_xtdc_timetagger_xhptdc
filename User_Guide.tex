@@ -83,16 +83,16 @@
 	\newcommand{\PREFIX}{XHPTDC8\tu}
 } 
 
-\hyphenation{Time-Tagger xTDC xHPTDC}
+\hyphenation{Time-Tagger xTDC xHPTDC cronologic}
 
 
 \newcommand{\ttvar}[2]{\noindent\textsf{\textbf{\textcolor{crongrey}{#1} \prefix #2}}}%for variable declaration
 \newcommand{\ttdef}[1]{\noindent\textsf{\textcolor{crongrey}{\#{}define} \PREFIX #1}}%for definitions
 
-\newcommand{\ugrev}{{1.8.0\tu draft}}
+\newcommand{\ugrev}{{1.8.0\tu draft\tu 2}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
-\begin{document} 
+\begin{document}  
 \cronofront{\titlefile}
 
     
@@ -107,7 +107,7 @@
 	\chapter{\deviceName\ Functionality}
 		\input{common/Functionality.tex} 
 		\input{common/Grouping.tex}
-		\input{common/AutoTiger.tex}
+		\input{common/AutoTiger.tex} 
 
 	\chapter{Driver Programming API} 
 		% also includes common/StructConfig.tex and common/InfoStructs.tex
