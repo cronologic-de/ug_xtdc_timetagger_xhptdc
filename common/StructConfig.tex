@@ -176,22 +176,28 @@
 %%%%% tiger_block			
 
 	\subsection{Structure \prefix tiger\tu block\label{cp:tigerblock}}
-
+	See section \ref{cp:tiger} for additional information.
+	
 	\ifxHPTDC{
 		\cronvar{int}{mode}\\
-		Enables the desired mode of operation for the tiger.
+		Enables the desired mode of operation for the tiger. 
 
 		\begin{tabular}{lrl}
 			\ttdef{TIGER \tu OFF} & 0 & No operation \\
 			\ttdef{TIGER \tu OUTPUT} & 1 & Output is driven with 2V amplitude. \\*
 										&   &There must be no input connected \\
 			\ttdef{TIGER \tu BIDI} & 2 & Output is driven with 1V amplitude. \\*
-									&   & Pulse rate should be low. \\
-			\ttdef{TIGER \tu BIDI} & 2 & Output is driven wuth 1V bidirectional pulses.\\*
-									&   & $start = stop -1$\\
+									&   & Pulse rate should be low. \\*
+			\ttdef{TIGER \tu BIPOLAR} & 2 & Output is driven wuth 1V bidirectional pulses.\\*
+									&   & $start = stop -1$\\*
 		\end{tabular}
-
-		Gating blocks interpret any value that is not \textsf{TIGER \tu OFF} as enable.	
+		The gating blocks are only used intenally.		
+		Gating blocks interpret any value that is not 0 as as enable.
+		\begin{tabular}{lrl}
+			\ttdef{GATE \tu OFF} & 0 & No gating, alle hits are captured. \\*
+			\ttdef{GATE \tu ON} & 1 & No hits are captured while the gate is active.\\*
+		\end{tabular}
+	
 	}{
 		\cronvar{crono\tu bool\tu t}{enable}\\
 		Activates the timing generator (TiGer).\par

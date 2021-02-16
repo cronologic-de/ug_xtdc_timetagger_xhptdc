@@ -74,7 +74,9 @@ including the auto trigger. Each TiGer can drive its output to its corresponding
 		Use short pulses to keep the propability of collision and the effect on the baseline low.	
 	\paragraph*{\textsf{TIGER\tu BIPOLAR}} 
 		In this mode the connector creates bipolar pulses with 1V amplitude. The connector can still be used as an input. 
-		The pulses have no effect on the baseline offset. TiGer must be configured with $stop = start + 1$.  
+		The pulses have no effect on the baseline offset. 
+		TiGer should be configured with $stop = start$ for minimum width bipolar pulses of $2 \times 6.\overline{6}~ns$. 
+		The maximum bipolar pulse width is \textsf{XHPTDC8\tu TIGER\tu MAX\tu BIPOLAR\tu PULSE\tu LENGTH = 15}.    
 }{
 	The TiGer is DC coupled to the connector. Connected hardware must not drive any signals to connectors used as outputs, 
 	as doing so could damage both the \deviceName and the external hardware.
@@ -86,7 +88,7 @@ including the auto trigger. Each TiGer can drive its output to its corresponding
 \ifxHPTDC{
 	\subsection{Triggering the ADC with the TiGer}
 		\label{adctiger}
-		There is a ninth TiGer hat is connected to the trigger input of the ADC. 
+		There is a ninth TiGer hat is connected to the trigger input of the ADC. See section \ref{adc} for additional information on the ADC. 
 
 		The ADC TiGer can be used with retrigger set to periodically sample ADC data. 
 		The period should be no shorter than 300ns or 45 TiGer clocks.
@@ -105,6 +107,7 @@ including the auto trigger. Each TiGer can drive its output to its corresponding
 		The gating is performed before the L0 buffer. 
 		
 	\section{Triggerable ADC}
+		\label{adc}
 		The \deviceName is equipped with a Triggerable ADC. 
 		Whenever there is a rising edge on the ADC trigger connector, 
 		the voltage on the ADC input connector is sampled. 
