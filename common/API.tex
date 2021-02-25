@@ -1,10 +1,12 @@
 \ifxHPTDC{
-	\newcommand{\device}{\cronvar{\prefix device\tu manager}{*device\tu manager}}
+	\newcommand{\device}{\cronvar{\prefix manager}{*xhptdc8\tu mgr}}
 	\newcommand{\deviceindex}{\device, \cronvar{int}{index}}
+	\newcommand{\deviceconfig}{\device}
 	\newcommand{\initparameters}{xhptdc8manager\tu init\tu parameters}
 }{
 	\newcommand{\device}{\cronvar{\prefix device}{*device}}
 	\newcommand{\deviceindex}{\device}
+	\newcommand{\deviceconfig}{\deviceindex}
 	\newcommand{\initparameters}{\prefix init\tu parameters}
 }
 
@@ -30,7 +32,7 @@ The functions provided by the DLL are declared in \textsf{\txh{TimeTagger4}{xTDC
 	The number of potential trigger sources for the timing generators. One for each TDC input, one for the Start input plus some specials. 
 	 See Section~\ref{cp:tigerblock} for details.\par
 
-}{
+}{ 
 	\ttdef{CHANNEL\tu COUNT 4}\\
 	The number of TDC input channels.\par
 
@@ -55,6 +57,7 @@ The functions provided by the DLL are declared in \textsf{\txh{TimeTagger4}{xTDC
 	Returns the driver version including SVN build revision as a string. 
 
 	\ttvar{int}{count\tu devices(}\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
+	\label{countdevices}
 	Returns the number of boards present in the system that are supported by this driver.\par
 
 
@@ -153,27 +156,29 @@ The functions provided by the DLL are declared in \textsf{\txh{TimeTagger4}{xTDC
 	
 
 	\section{Configuration}
-
-		The device is configured with a configuration structure. 
+		\ifxHPTDC{
+			All \deviceName in the system are configure by a single configuration structure which in turn contains sub structures that configure the individual boards.
+		}{
+			The device is configured with a configuration structure. 
+		}
 		The user should first obtain a structure that contains the default settings of the device read from an on-board ROM, 
 		then modify the structure as needed for the user application and use the result to configure the device.\par
 
-		\ifxHPTDC{
-			Each board is configured individually. The parameter \textsf{index} selects the board.
-		}{}
 
-		\ttvar{int}{configure(}\deviceindex, \\ \cronvar{\prefix configuration}{*config)}\\
+		\ttvar{int}{configure(}\deviceconfig, \\ \cronvar{\prefix \ifxHPTDC{manager\tu }{}configuration}{*config)}\\
 		Configures the \deviceName\ device.\par
 
-		\ttvar{int}{get\tu current\tu configuration(}\deviceindex, \\ \cronvar{\prefix configuration}{*config)}\\
+		\ttvar{int}{get\tu current\tu configuration(}\deviceconfig, \\ \cronvar{\prefix \ifxHPTDC{manager\tu }{}configuration}{*config)}\\
 		Gets current configuration. Copies the current configuration to the specified config pointer.\par
 
-		\ttvar{int}{get\tu default\tu configuration(}\deviceindex, \\ \cronvar{\prefix configuration}{*config)}\\
+		\ttvar{int}{get\tu default\tu configuration(}\deviceconfig, \\ \cronvar{\prefix \ifxHPTDC{manager\tu }{}configuration}{*config)}\\
 		Gets default configuration. Copies the default configuration to the specified config pointer.\par
+
 
 	%%%%%%%%%%%%%%%%% configuration structure mostly shared between devices
 	\input{common/StructConfig.tex}
 
+	%%%%%%%%%%%%%%%%% run time control
 	\section{Run Time Control}
 
 		\ttvar{int}{start\tu capture(}\device)\\

@@ -3,7 +3,7 @@
 % to create user guides with the correct filenames run the parent configuration files like this
 % pdflatex xTDC4_User_Guide.tex
 % pdflatex TimeTagger4_User_Guide.tex
-%
+% 
 % Visit www.cronologic.de for ready made PDFs of these user guides
 % https://www.cronologic.de/products/tdcs/xtdc4-pcie 
 % https://www.cronologic.de/products/tdcs/timetagger
@@ -23,7 +23,7 @@
 \usepackage{cronologicug}
 
 % this file creates two similar user guides depending on the commend \deviceName
-
+ 
 %source files that differ between versions can be input with \ttinput
 %this will prefix the include with TT4_ or xTDC4, depending on versoin
 
@@ -48,14 +48,14 @@
 \ifthenelse{\equal{\deviceName}{TimeTagger4}}{\newcommand{\itett}[2]{#1}}{\newcommand{\itett}[2]{#2}}
 \itett{\message{\\TIMETAGGER\\}}{\message{\\NO TIMETAGGER\\}}
 
-% output code only for the xHPTDC8
+% output code only for the xHPTDC8 
 % example: 
 % \ifXHPTDC{THIS IS AN xHPTDC8} {THIS IS NOT}
 % NOTE: Macro names may not contain digits
 \ifthenelse{\equal{\deviceName}{xHPTDC8}} {\newcommand{\ifxHPTDC}[2]{#1}}{\newcommand{\ifxHPTDC}[2]{#2}}
 \ifxHPTDC{\message{\\XHPTDC8\\}}{\message{\\NO XHPTDC\\}}
 
-
+  
  
 % output code for the TimeTagger4, xTDC4 or xHPTDC8
 % example: 
@@ -94,7 +94,7 @@
  
 \begin{document}  
 \cronofront{\titlefile}
-
+ 
     
 
 % 
