@@ -1,228 +1,202 @@
-// xtdc4_user_guide_example.cpp : Example application for the xTDC4
-#include "xTDC4_interface.h"
+// xtdc8_user_guide_example.cpp : Example application for the xHPTDC8
+#include "xtdc8_interface.h"
+#include "xtdc8_grouping.h"
 #include "stdio.h"
 #include <windows.h>
 
 typedef unsigned int uint32;
 typedef unsigned __int64 uint64;
 
-xtdc4_device * initialize_xtdc4(int buffer_size, int board_id, int card_index) {
-	// prepare initialization
-	xtdc4_init_parameters params;
 
-	xtdc4_get_default_init_parameters(&params);
-	params.buffer_size[0] = buffer_size;		// size of the packet buffer
-	params.board_id = 0;						// value copied to "card" field of every packet, allowed range 0..255
-	params.card_index = 0;						// which of the xTDC4 board found in the system to be used
+xhptdc8_manager * initialize_xhptdc8(int buffer_size) {
+	// prepare initialization
+	xtdc8manager_init_parameters params;
+
+	xhptdc8_get_default_init_parameters(&params);
+	params.buffer_size = buffer_size;		
 
 	int error_code;
 	const char * err_message;
-	xtdc4_device * device = xtdc4_init(&params, &error_code, &err_message);
+	xhptdc8_manager *x_man = xhptdc8_init(&params , &error_code, &err_message);
 	if (error_code != CRONO_OK)
 	{
-		printf("Could not init xTDC4 compatible board: %s\n", err_message);
-		return nullptr;
+		printf("Could not initialize xHPTDC8 compatible board: %s\n", err_message);
+		exit(1);
 	}
-	return device;
+	return x_man;
 }
 
-int configure_xtdc4(xtdc4_device * device) {
-	// prepare configuration
-	xtdc4_configuration config;
 
-	// fill configuration data structure with default values
-	// so that the configuration is valid and only parameters
-	// of interest have to be set explicitly
-	xtdc4_get_default_configuration(device, &config);
+int get_device_count() {
+	int error_code;
+	const char * error_message;
 
-	// set config of the 4 TDC channels
-	for (int i = 0; i < XTDC4_TDC_CHANNEL_COUNT; i++)
+	int device_count = xhptdc8_count_devices(&error_code, &error_message);
+	if (error_code != CRONO_OK)
 	{
-		// enable recording hits on TDC channel
-		config.channel[i].enabled = true;
-
-		// define range of the group
-		config.channel[i].start = 0;	// range begins right after start pulse
-		config.channel[i].stop = 30000;	// recording window stops after ~15 us
-
-		// measure only falling edge
-		config.trigger[i + 1].falling = 1;
-		config.trigger[i + 1].rising = 0;
+		printf("Could not count xHPTDC8: %s\n", error_message);
+		exit(1);
 	}
-
-	// start group on falling edges on the start channel 0
-	config.trigger[0].falling = 1;	// enable packet generation on falling edge of start pulse
-	config.trigger[0].rising = 0;	// disable packet generation on rising edge of start pulse
-
-	// generate an internal 200 kHz trigger
-	config.auto_trigger_period = 750;
-	config.auto_trigger_random_exponent = 0;
-
-	// setup TiGeR
-	// sending a signal to the LEMO outputs (and to the TDC on the same channel)
-	// requires proper 50 Ohm termination on the LEMO output to work reliably
-
-	// use 200 kHz auto trigger to generate
-	// a 200 kHz signal with 12 ns pulse width on LEMO output Start
-	config.tiger_block[0].enable = 1;
-	config.tiger_block[0].start = 0;
-	config.tiger_block[0].stop = config.tiger_block[0].start + 1;
-	config.tiger_block[0].negate = 0;
-	config.tiger_block[0].retrigger = 0;
-	config.tiger_block[0].extend = 0;
-	config.tiger_block[0].enable_lemo_output = 1;
-	config.tiger_block[0].sources = XTDC4_TRIGGER_SOURCE_AUTO;
-
-	// if TiGeR is used for triggering with positive pulses
-	config.dc_offset[0] = XTDC4_DC_OFFSET_P_LVCMOS_18;
-
-	// write configuration to board
-	return xtdc4_configure(device, &config);
+	return device_count;
 }
 
-double get_binsize(xtdc4_device * device)
-{
-	xtdc4_param_info parinfo;
-	xtdc4_get_param_info(device, &parinfo);
-	return parinfo.binsize;
-}
 
-void print_device_information(xtdc4_device * device) {
-	// print board information
-	xtdc4_static_info staticinfo;
-	xtdc4_get_static_info(device, &staticinfo);
-	printf("Board Serial        : %d.%d\n", staticinfo.board_serial >> 24, staticinfo.board_serial & 0xffffff);
-	printf("Board Configuration : 0x%x\n", staticinfo.board_configuration);
-	printf("Board Revision      : %d\n", staticinfo.board_revision);
-	printf("Firmware Revision   : %d.%d\n", staticinfo.firmware_revision, staticinfo.subversion_revision);
-	printf("Driver Revision     : %d.%d.%d\n", ((staticinfo.driver_revision >> 16) & 255), ((staticinfo.driver_revision >> 8) & 255), (staticinfo.driver_revision & 255));
-	printf("Driver SVN Revision : %d\n", staticinfo.driver_build_revision);
-	printf("\nTDC binsize         : %0.2f ps\n", get_binsize(device));
-}
-
-void print_hit(uint32 hit, double binsize) {
-	// extract channel number (A-D)
-	char channel = 65 + (hit & 0xf);
-
-	// extract hit flags
-	int flags = (hit >> 4 & 0xf);
-
-	// extract hit timestamp
-	int ts_offset = (hit >> 8 & 0xffffff);
-
-	// TDC bin size is 500 ps. Convert timestamp to ns.
-	double ts_offset_ns = ts_offset;
-	ts_offset_ns *= binsize / 1000.0;
-
-	printf("Hit @Channel %c - Flags %d - Offset %u (raw) / %.1f ns\n", channel, flags, ts_offset, ts_offset_ns);
-}
-
-_int64 process_packet(_int64 group_abs_time_old, volatile crono_packet *p, int update_count, double binsize) {
-	// do something with the data, e.g. calculate current rate
-	_int64 group_abs_time = p->timestamp;
-	// group timestamp increments at 2 GHz
-	double rate = (600000000 / ((double)(group_abs_time - group_abs_time_old) / (double)update_count));
-	printf("\r%.2f kHz ", rate / 1000.0);
-
-	// ...or print hits (not a good idea at high data rates,
-	printf("Card %d - Flags %d - Length %d - Type %d - TS %llu\n", p->card, p->flags, p->length, p->type, p->timestamp);
-
-	// There fit two hits into every 64 bit word. 
-	// The flag with weight 1 tells us, whether the number of hits in the packet is odd
-	int hit_count = 2 * (p->length);
-	if ((p->flags & 0x1) == 1)
-		hit_count -= 1;
-
-	uint32* packet_data = (uint32*)(p->data);
-	for (int i = 0; i < hit_count; i++)
-	{
-		print_hit(packet_data[i], binsize);
-	}
-	printf("\n\n");
-	return group_abs_time;
-}
-
-int main(int argc, char* argv[])
-{
-	printf("cronologic xtdc4_user_guide_example using driver: %s\n", xtdc4_get_driver_revision_str());
-
-	xtdc4_device * device = initialize_xtdc4(8 * 1024 * 1024, 0, 0);
-
-	int status = configure_xtdc4(device);
-	if (status != CRONO_OK)
-	{
-		printf("Could not configure xTDC4: %s", xtdc4_get_last_error_message(device));
-		xtdc4_close(device);
-		return status;
-	}
-
-	print_device_information(device);
-
-	// configure readout behaviour
-	xtdc4_read_in read_config;
-	// automatically acknowledge all data as processed
-	// on the next call to xtdc4_read()
-	// old packet pointers are invalid after calling xtdc4_read()
-	read_config.acknowledge_last_read = 1;
-
-	// structure with packet pointers for read data
-	xtdc4_read_out read_data;
-
-	// start data capture
-	status = xtdc4_start_capture(device);
-	if (status != CRONO_OK) {
-		printf("Could not start capturing %s", xtdc4_get_last_error_message(device));
-		xtdc4_close(device);
-		return status;
-	}
-
-	// start timing generator
-	xtdc4_start_tiger(device);
-
-	// some book keeping
-	int packet_count = 0;
-	int empty_packets = 0;
-	int packets_with_errors = 0;
-	bool last_read_no_data = false;
-
-	_int64 group_abs_time = 0;
-	_int64 group_abs_time_old = 0;
-	int update_count = 100;
-	double binsize = get_binsize(device);
-
-	printf("Reading packets:\n");
-	// read 10000 packets
-	while (packet_count < 10000)
-	{
-		// get pointers to acquired packets
-		status = xtdc4_read(device, &read_config, &read_data);
-		if (status != CRONO_OK)
+//@TO-Do bin mir noch unsicher welche config sinvoll ist
+int configure_xhptdc8(xhptdc8_manager *xhptdc8_man, int device_count) {
+	xhptdc8_manager_configuration *mgr_cfg = new xhptdc8_manager_configuration;
+	for (int j = 0; j < device_count; j++) {
+		config[j] = new xhptdc8_device_configuration;
+		xhptdc8_get_default_configuration(xhptdc8_man, j, config[j]);
+		for (int i = 0; i < XHPTDC8_TDC_CHANNEL_COUNT; i++)
 		{
-			Sleep(100);
-			printf(" - No data! -\n");
+			config[j]->tdc_trigger_offset[i] = XHPTDC8_DC_OFFSET_N_NIM;
+			config[j]->channel[i].enable = true;
 		}
-		else
+		config[j]->adc_channel.enable = 1;
+		config[j]->adc_channel.watchdog_readout = 0;
+		config[j]->adc_channel.trigger_offset = XHPTDC8_DC_OFFSET_N_NIM;
+
+		config[j]->tdc_mode = XHPTDC8_TDC_MODE_CONTINUOUS;
+
+		config[j]->auto_trigger_period = 1000;
+		config[j]->auto_trigger_random_exponent = 0;
+
+		for (int i = 0; i < XHPTDC8_TDC_CHANNEL_COUNT; i++)
 		{
-			// iterate over all packets received with the last read
-			volatile crono_packet* p = read_data.first_packet;
-			while (p <= read_data.last_packet)
+			config[j]->gating_block[i].extend = false;
+			config[j]->gating_block[i].negate = false;
+			config[j]->gating_block[i].retrigger = false;
+			config[j]->gating_block[i].sources = XHPTDC8_TRIGGER_SOURCE_AUTO;
+
+			if (i == 0)
+				config[j]->gating_block[i].start = 0;
+			else
+				config[j]->gating_block[i].start = 3;
+			config[j]->gating_block[i].stop = config[j]->gating_block[i].start + 1;
+		}
+	}
+	return xhptdc8_configure(xhptdc8_man, config);
+}
+
+
+void print_device_information(xhptdc8_manager *xhptdc8_man) {
+	xhptdc8_static_info staticinfo;
+	printf("-------------------------\n");
+	for (int i = 0; i < get_device_count(); i++) {
+		xhptdc8_get_static_info(xhptdc8_man, i, &staticinfo);
+		printf("Board Serial         : %d.%d\n", staticinfo.board_serial >> 24, staticinfo.board_serial & 0xffffff);
+		printf("Board Configuration  : %d\n", staticinfo.board_configuration);
+		printf("Board Revision       : %d\n", staticinfo.board_revision);
+		printf("Firmware Revision    : %d.%d\n", staticinfo.firmware_revision, staticinfo.subversion_revision);
+		printf("Driver Revision      : %d.%d.%d\n", ((staticinfo.driver_revision >> 16) & 255), ((staticinfo.driver_revision >> 8) & 255), (staticinfo.driver_revision & 255));
+		printf("Driver SVN Revision  : %d\n", staticinfo.driver_build_revision);
+	}
+}
+
+//@TO-Do hier sind auch noch anpassungen noetig
+void read_hits_wrapper(xhptdc8_manager *xhptdc8_man, int events_per_read) {
+	int total_event_count(events_per_read * 10000);
+
+	TDCHit* hit_buffer = new TDCHit[events_per_read];
+
+	unsigned long long last_ts = 0;
+	int total_events = 0;
+
+	while (total_events < total_event_count) {
+		unsigned long hit_count = 0;
+
+		while (true) {
+			hit_count = xhptdc8_read_hits(xhptdc8_man, hit_buffer, events_per_read);
+			if (!hit_count) {
+				Sleep(1);
+				continue;
+			}
+			break;
+		}
+
+		if (hit_count > 0)
+		{
+			//total_events += hit_count;
+
+			unsigned long long last_i_ts = 0;
+			for (unsigned int i = 0; i < hit_count; i++)
 			{
-				// printf is slow, so this demo only processes every 1000th packet
-				// your application would of course collect every packet
-				if (packet_count % update_count == 0) {
-					group_abs_time = process_packet(group_abs_time, p, update_count, binsize);
+				bool adc_data = ((hit_buffer[i].channel % 10) == 8) || ((hit_buffer[i].channel % 10) == 9);
+				if ((hit_buffer[i].type & XHPTDC8_TDCHIT_TYPE_ERROR) > 0)
+				{
+					printf("Error!\n");
+					printf("Channel  : %u\n", hit_buffer[i].channel);
+					printf("Type     : %x\n", (byte)hit_buffer[i].type);
+					printf("Time     : %llu\n", hit_buffer[i].time);
+					if (adc_data)
+						printf("ADC Data : %i\n", (int)(hit_buffer[i].bin));
 				}
-				p = crono_next_packet(p);
-				packet_count++;
+				if (last_ts > hit_buffer[i].time)
+				{
+					printf("Events not sorted!\n");
+					printf("Channel: %u\n", hit_buffer[i].channel);
+					printf("Type  : %x\n", (byte)hit_buffer[i].type);
+					printf("Time : %llu\n", hit_buffer[i].time);
+					if (adc_data)
+						printf("ADC Data : %i\n", (int)(hit_buffer[i].bin));
+				}
+				last_ts = hit_buffer[i].time;
+				printf("Channel %u - Time %llu - Type %x", hit_buffer[i].channel, hit_buffer[i].time, hit_buffer[i].type);
+				if (adc_data)
+					printf(" - ADC Data : %i", (int)(hit_buffer[i].bin));
+
+				printf("\n");
+				total_events++;
+				if ((total_events % 100) == 0)
+					printf("Sum: %i - Packet events: %i\n", total_events, hit_count);
 			}
 		}
 	}
+}
 
-	// shut down packet generation and DMA transfers
-	xtdc4_stop_capture(device);
 
-	// deactivate xTDC4
-	xtdc4_close(device);
+int main(int argc, char* argv[]) {
+	printf("cronologic xhptdc8_user_guide_example using driver: %s\n", xhptdc8_get_driver_revision_str());
 
+	xhptdc8_manager * x_man = initialize_xhptdc8(8 * 1024 * 1024);
+
+	int status = configure_xhptdc8(x_man, get_device_count());
+	if (status != CRONO_OK)
+	{
+		printf("Could not configure xHPTDC8: %s\n", xhptdc8_get_last_error_message(x_man));
+		exit(1);
+	}
+
+	print_device_information(x_man);
+
+	status = xhptdc8_start_capture(x_man);
+	if (status != CRONO_OK)
+	{
+		printf("Could not start capturing: %s\n", xhptdc8_get_last_error_message(x_man));
+		exit(1);
+	}
+
+	status = xhptdc8_start_tiger(x_man, 0);
+	if (status != CRONO_OK)
+	{
+		printf("Could not start TiGer: %s\n", xhptdc8_get_last_error_message(x_man));
+		exit(1);
+	}
+
+	read_hits_wrapper(x_man, 10000);
+
+	status = xhptdc8_stop_capture(x_man);
+	if (status != CRONO_OK)
+	{
+		printf("Could not stop capturing: %s\n", xhptdc8_get_last_error_message(x_man));
+		exit(1);
+	}
+
+	status = xhptdc8_close(x_man);
+	if (status != CRONO_OK)
+	{
+		printf("Error closing xHPTDC8: %s\n", xhptdc8_get_last_error_message(x_man));
+		exit(1);
+	}
 	return 0;
 }

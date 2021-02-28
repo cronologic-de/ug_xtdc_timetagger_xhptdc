@@ -1,14 +1,14 @@
 \ifxHPTDC{
 	\subsection{Structure \prefix manager\tu configuration}
-	\ttvar{\prefix device\tu configuration}{device\tu configurations[\PREFIX DEVICES\tu MAX]}\\
+	\cronvar{\prefix device\tu configuration}{device\tu configurations[\PREFIX DEVICES\tu MAX]}\\
 	A structure with the configuration for an individual \deviceName board as defined in the next subsection.
 	Use the function \textsf{\prefix count\tu devices()} to query how many entries contain valid information. See section \ref{countdevices} for details. \par 
 
-	\ttvar{\prefix grouping\tu configuration}{grouping}\\
+	\cronvar{\prefix grouping\tu configuration}{grouping}\\
 	Structure with the parameters for grouping. 
 	See section \ref{structgrouping} for the definition of the structure and section \ref{grouping} for more information on grouping.\par
 
-	\ttvar{void *}{bin\tu to\tu ps}\\
+	\cronvar{void *}{bin\tu to\tu ps}\\
 	Reserved for future use.
 	
 }{}
@@ -70,10 +70,12 @@
 	}
 
 	\cronvar{double}{dc\tu offset[\PREFIX CHANNEL\tu COUNT + 1]}\\
-	Set the threshold voltage for the input channels S, A - D (see figure \ref{fig:dcoffset1}).
+	
+	Set the threshold voltage for the input channels \ifxHPTDC{A \ldots H and TRG}{S, A \ldots D} (see figure \ref{fig:dcoffset1}).
 	\begin{itemize}
 		\ifxHPTDC{
 			\item dc\tu offset[0 - 7] : threshold for channels A \ldots H
+			\item dc\tu offset[8] : threshold for channel TRG
 		}{
 			\item dc\tu offset[0] : threshold for channel Start
 			\item dc\tu offset[1 - 4] : threshold for channels A \ldots D
