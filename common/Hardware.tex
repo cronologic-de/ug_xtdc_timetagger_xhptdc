@@ -4,9 +4,7 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 
 %
 \section{\deviceName\ Inputs and Connectors}
-	\subsection{Connectors}
-	%
-	Figure \ref{fig:schematics} on page \pageref{fig:schematics} shows the location of the inputs on the slot bracket.
+	Figure \ref{fig:bracket} shows the location of the inputs on the slot bracket.
 %
 	\begin{figure*}[hb]
 		\begin{center}
@@ -15,31 +13,31 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 			}{
 				\includegraphics[width=0.6\textwidth]{figures/xTDC4_Slotblende.pdf}
 			}
-			\caption{Input connectors of the \deviceName\ on the PCIe bracket.}
+			\caption{Input connectors of the \deviceName\ on the PCIe bracket.\label{fig:bracket}}
 		\end{center}
 	\end{figure*}
 	%
+	\begin{figure*}[hb]
+		\begin{center}
+			\ifxHPTDC{
+				\includegraphics[width=0.3\textwidth]{xhptdc/figures/InputCircuit.pdf}
+			}{
+				\includegraphics[width=0.3\textwidth]{figures/InputCircuit.pdf}
+			}
+			\caption{Input circuit for each of the input channels.\label{fig:inputcirc}}
+		\end{center}
+	\end{figure*}
 	%
-		\begin{figure*}[hb]
-			\begin{center}
-				\ifxHPTDC{
-					\includegraphics[width=0.3\textwidth]{xhptdc/figures/InputCircuit.pdf}
-				}{
-					\includegraphics[width=0.3\textwidth]{figures/InputCircuit.pdf}
-				}
-				\caption{Input circuit for each of the input channels.\label{fig:inputcirc}}
-			\end{center}
-		\end{figure*}
-		%
+
 	Lemo-00 connectors are used for input connection. The inputs are AC-coupled and have an impedance of 50$\Omega$. 
-	A schematic of the input circuit is shown in Figure \ref{fig:inputcirc} on page \pageref{fig:inputcirc}. 
-	The digital threshold for any input can be adjusted to comply with a manifold of single ended signaling standards.
+	A schematic of the input circuit is shown in Figure \ref{fig:inputcirc}. 
+	The digital threshold for any input can be adjusted to comply with a multitude of single ended signaling standards.
 	The threshold can also be used to configure the input for either positive or negative pulses.
 	
 	
 	The connectors can also be used as outputs. 
 	\ifxHPTDC{AC-coupled}{DC-coupled} output pulses for automatic internal triggering and control of external devices 
-	can be generated using the TiGer timing pattern generator.
+	can be generated using the TiGer timing pattern generator. See section \ref{cp:tiger} for details on TiGer. 
 
 	%
 		\begin{figure*}[ht]
@@ -51,12 +49,12 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 				}
 				
 				\caption{Schematic view of a \deviceName\ board showing inter-board connectors C1, C2 and C3.\label{fig:schematics}}
-			\end{center}
+			\end{center} 
 		\end{figure*}
 	%
 
 	Furthermore, three inter-board connectors can be found at the top edge of the \deviceName\ board, 
-	as displayed in Figure \ref{fig:schematics} on page \pageref{fig:schematics}. 
+	as displayed in Figure \ref{fig:schematics}. 
 	Connector J25 is reserved for future use. The pinout of connector J12 is shown in Table \ref{J12} and the pinout of connector J6 is depicted in Table \ref{J6}.
 
 	\begin{table}

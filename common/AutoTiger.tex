@@ -20,7 +20,6 @@
 	extendedchars=true,
 }
 
-\pagebreak
 \section{Auto Triggering Function Generator\label{cp:AutoTriggeringFunctionGenerator}}
 Some applications require internal periodic or random triggering. The \deviceName\ function generator provides this functionality.\par
 
@@ -32,23 +31,22 @@ The period is
     T = 1 + M + [1...2^N]
 \end{align}
 
-clock cycles with a duration of $4 ns$ per cycle.\par
+clock cycles \ifxHPTDC{of the 150~MHz clock}{with a duration of $4~ns$ per cycle}.\par
 
 The trigger can be used as a source for the TiGer unit (see Section \ref{cp:tiger}).
 
 
 \section{Timing Generator (TiGer)\label{cp:tiger}}
-Each LEMO-00 input can be used as a LVCMOS trigger output. The TiGer function can be configured independently for each connector. 
+Each digital LEMO-00 input can be used as a \ifxHPTDC{AC coupled}{LVCMOS} trigger output. The TiGer function can be configured independently for each connector. 
 Each TiGet block can use an arbitrary combination of inputs to trigger its state machine including the AutoTrigger.
 See Section \ref{cp:tigerblock} for a full description of the configuration options.
-
 % 
 \begin{figure*}[ht]
     \begin{center}
-        \ifxHPTDC { S
+        \ifxHPTDC { 
             % this is an XCIrcuit drawing  convertex from postscript with 
             %ps2pdf.exe -dEPSCrop xhptdc8_trigger_matrix.ps
-            \includegraphics[width=0.7\textwidth]{xhptdc/figures/xhptdc8_trigger_matrix.pdf}
+            \includegraphics[width=0.6\textwidth]{xhptdc/figures/xhptdc8_trigger_matrix.pdf}
         }{
             \includegraphics[width=0.7\textwidth]{figures/xTDC4_tiger_matrix.pdf}
         }
@@ -59,6 +57,11 @@ See Section \ref{cp:tigerblock} for a full description of the configuration opti
 
 Figure \ref{fig:matrix} shows how the TiGer blocks are connected. They can be triggered by an OR of an arbitrary combination of inputs, 
 including the auto trigger. Each TiGer can drive its output to its corresponding LEMO connector. This turns the connector into an output. 
+
+When there is an ADC trigger pulse on the TRG connector, either of the two on board ADCs is triggered in an unpredictable pattern. 
+If the TRG input shall be used as a trigger the trigger sources must be contain both \textsf{ADC1\tu CNV} and \textsf{ADC21\tu CNV}.
+
+The trigger sources with names ending in \textsf{\tu sync} are managed by the driver for multi board setups and must be left unchanged by the user.
 
 \ifxHPTDC{
 	The TiGer outputs are AC coupled to the connector. They can be operated in one of the following modes:
@@ -90,12 +93,12 @@ including the auto trigger. Each TiGer can drive its output to its corresponding
 		\label{adctiger}
 		There is a ninth TiGer hat is connected to the trigger input of the ADC. See section \ref{adc} for additional information on the ADC. 
 
-		The ADC TiGer can be used with retrigger set to periodically sample ADC data. 
+		The ADC TiGer can be used with retrigger enabled to periodically sample ADC data. 
 		The period should be no shorter than 300ns or 45 TiGer clocks.
 
-		The ADC TiGer can also be used to sample voltages relative to one of the TDC inputs. In this case 
+		The ADC TiGer can also be used to sample voltages at a time relative to one of the TDC inputs. In this case 
 		stop should be set to at least 45 to ensure that the sample period criterion is met even when pulses
-		arrive in quick succession.
+		arrive in quick succession. A typical application would be to sample some slow control voltage once per start signal.
 
 	\section{Gating}
 		Each TDC channel has a second TiGer block that functions as a gate as shown in figure \ref{fig:matrix}. 
@@ -103,25 +106,25 @@ including the auto trigger. Each TiGer can drive its output to its corresponding
 		If the block is negated hits are only recorded while the gating block is active.
 		
 		This is a useful feature in setups where the trigger creates a lot of noise.
-		A suitable configuration of the gating block can reduce the bandwidth an buffer usage significantly.
-		The gating is performed before the L0 buffer. 
+		A suitable configuration of the gating block can reduce the bandwidth and buffer usage significantly.
+		Gating is performed before the L0 buffer. Grouping is performed in software after readout. 
 		
 	\section{Triggerable ADC}
 		\label{adc}
-		The \deviceName is equipped with a Triggerable ADC. 
+		The \deviceName\ is equipped with a triggerable ADC. 
 		Whenever there is a rising edge on the ADC trigger connector, 
 		the voltage on the ADC input connector is sampled. 
 		The result is inserted as a packet with timestamp and ADC value into the readout data stream.
 
 		The ADC trigger also is connected to the output of a TiGer block. 
-		This can be used to to trigger the ADC periodical or relative to one of the TDC inputs.
+		This can be used to to trigger the ADC periodical or relative to one of the TDC input as described in section \ref{adctiger}
 
-		The triggers should not be closer than 300ns apart.
+		The ADC triggers should not be closer than 300ns apart.
 
-		There two ADCs interleaved to ensure that there is always an ADC available. 
+		There are two interleaved ADCs  to ensure that there is always an ADC available even during readout. 
 		This is exposed to the user both in the output data format and in the TiGer and Gating trigger sources.
 		When using the ADC trigger as a trigger for Gating or TiGer both trigger sources shall be set to the same value.
-		During readout the information which ADC a sample originated from can be ignored unless advanced calibration is 
+		During readout the user shall not distinguish between data from the two ADCs unless advanced calibration is 
 		desired for the ADC data. In that case the two ADCs should be treated separately.   
 
 }{}

@@ -1,10 +1,10 @@
-\ttvar{int}{acknowledge(}\cronvar{\prefix device}{*device,} \cronvar{crono\tu packet}{*packet)}\\
+\ttvar{int}{acknowledge(}\device, \cronvar{crono\tu packet}{*packet)}\\
 Acknowledges the processing of the last read block. This is only necessary if \textsf{\prefix read()} is not called with 
 \textsf{in.acknowledge\tu last\tu read} set.\\
 This feature allows to either free up partial DMA space early if there will be no call to \textsf{\prefix read()} anytime soon. 
 It also allows to keep data over multiple calls to \textsf{\prefix read()} to avoid unnecessary copying of data. \par
 
-\ttvar{int}{read(}\cronvar{\prefix device}{*device,} \cronvar{\prefix read\tu in}{*in,} \\ \cronvar{\prefix read\tu out}{*out)}\\
+\ttvar{int}{read(}\device \cronvar{\prefix read\tu in}{*in,} \\ \cronvar{\prefix read\tu out}{*out)}\\
 Return a pointer to an array of captured data in \textsf{read\tu out}. 
 The result can contain any number of packets of type \textsf{\prefix packet}.
 \textsf{read\tu in} provides parameters to the driver. 
@@ -36,3 +36,4 @@ Returns an error code as defined in the structure \textsf{\prefix read\tu out}.
 	\cronvar{const char}{*error\tu message}
 	The last error in human readable form, possibly with additional information on the error.
 
+ 

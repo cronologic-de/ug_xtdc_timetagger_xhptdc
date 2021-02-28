@@ -1,23 +1,25 @@
+%%%%%%%%%%%% struct manager configuration
 \ifxHPTDC{
 	\subsection{Structure \prefix manager\tu configuration}
 	\cronvar{\prefix device\tu configuration}{device\tu configurations[\PREFIX DEVICES\tu MAX]}\\
-	A structure with the configuration for an individual \deviceName board as defined in the next subsection.
+	A structure with the configuration for an individual \deviceName\ board as defined in the next subsection.
 	Use the function \textsf{\prefix count\tu devices()} to query how many entries contain valid information. See section \ref{countdevices} for details. \par 
 
 	\cronvar{\prefix grouping\tu configuration}{grouping}\\
 	Structure with the parameters for grouping. 
 	See section \ref{structgrouping} for the definition of the structure and section \ref{grouping} for more information on grouping.\par
 
-	\cronvar{void *}{bin\tu to\tu ps}\\
+	\cronvar{void}{*bin\tu to\tu ps}\\
 	Reserved for future use.
 	
 }{}
-
+%%%%%%%%%%%%%% struct device_configuration
 \subsection{Structure \prefix \ifxHPTDC{device\tu}{}configuration}
 
 	This is the structure containing the configuration information. 
-	It is used in conjunction with \textsf{\prefix get\tu default\tu configuration()}, \textsf{\prefix get\tu current\tu configuration()} and \textsf{\prefix configure()}.\par
-
+	\ifxHPTDC{}{
+		It is used in conjunction with \textsf{\prefix get\tu default\tu configuration()}, \textsf{\prefix get\tu current\tu configuration()} and \textsf{\prefix configure()}.\par
+	}
 	It uses the substructures \textsf{\prefix tiger\tu block}, \textsf{\prefix channel} and \textsf{\prefix trigger}.\par
 
 	\cronvar{int}{size}\\
@@ -38,7 +40,8 @@
 			&0 \leq N < 32
 		\end{align}
 
-		\noindent There is no enable or reset as the usage of this trigger can be configured in the TiGer block channel source field.\par
+		\noindent There is no enable or reset. The auto trigger is running continously. 
+		The usage of this trigger can be configured in the TiGer block source field.\par
 	}
 	\ifxHPTDC{
 		\autotrigger
@@ -46,9 +49,8 @@
 
 	\cronvar{int}{tdc\tu mode}\\
 	\ifxHPTDC{
-		This defines whether grouping is used by the \textsf{Read()} method. \\
-		Defaults to \textsf{\PREFIX TDC\tu MODE\tu CONTINUOUS} 	
-
+		This defines whether grouping is used by the \textsf{read\tu hits()} method. \\
+		Defaults to continuous mode. \\*
 		\begin{tabular}{lc}
 			\ttdef{TDC\tu MODE\tu GROUPED} & 0   \\
 			\ttdef{TDC\tu MODE\tu CONTINUOUS} & 1   \\
@@ -69,8 +71,7 @@
 		}\par
 	}
 
-	\cronvar{double}{dc\tu offset[\PREFIX CHANNEL\tu COUNT + 1]}\\
-	
+	\cronvar{double}{dc\tu offset[\PREFIX CHANNEL\tu COUNT + 1]}\\	
 	Set the threshold voltage for the input channels \ifxHPTDC{A \ldots H and TRG}{S, A \ldots D} (see figure \ref{fig:dcoffset1}).
 	\begin{itemize}
 		\ifxHPTDC{
@@ -81,7 +82,7 @@
 			\item dc\tu offset[1 - 4] : threshold for channels A \ldots D
 		}
 	\end{itemize}
-	Supported range is -1.32V to +1.18V. This should be close to 50\% of the height of the input pulse. Examples for various signaling standards are defined as follows\par
+	Supported range is -1.32V to +1.18V. This should be close to 50\% of the height of the input pulse. Examples for various signaling standards are defined as follows:\par
 	\begin{tabular}{ll}
 		\ttdef{DC\tu OFFSET\tu P\tu NIM} & +0.35\\
 		\ttdef{DC\tu OFFSET\tu P\tu CMOS} & +1.18\\
@@ -125,7 +126,7 @@
 %%			\end{figure}
 
 	\ttvar{\prefix trigger}{trigger[\PREFIX TRIGGER\tu COUNT]}\\
-	Configuration the polarity of the external trigger sources.
+	Configures the polarity of the external trigger sources.
 	These are used as inputs for the TiGer blocks and as inputs to the time measurement unit.\par
 
 	\ttvar{\prefix tiger\tu block}{tiger\tu block[\PREFIX TIGER\tu COUNT]}\\
@@ -143,6 +144,8 @@
 		\cronvar{crono\tu bool\tu t}{is\tu master}\\
 		\cronvar{crono\tu bool\tu t}{is\tu slave}\\
 		Configure whether this board is master or slave in a multi board setup.
+		\ifxHPTDC{This will be managed by the driver in a way that results in the board with the lowest serial number to become the master. 
+		}{}
 
 		\cronvar{crono\tu bool\tu t}{skip\tu tdc\tu alignment}\\
 		If set,  the phase of the two TDC chips is not realigned when capturing is restartet.
@@ -184,20 +187,17 @@
 		Use \textsf{xtdc4\tu channel.rising} on page \pageref{structchannel} to select which edge is measured with full resolution.
 		The edge that is selected for full resolution measurement must also be enabled for low resolution measurement.
 	}{
-		The TDC can only measure either rising or falling edges.  	
-		Even though the TDC can only capture either reither or falling edges but not both, the gating blocks and the TiGer are more flexibel. 
-		Set the corresponding flag for one of the edges or both edges then using the input with a TiGer or gating block.
+		While the TDC can only measure either rising or falling edges, the gating blocks and the TiGer are more flexibel. 
+		Set the corresponding flag for one of the edges or both edges when using the input with a TiGer or gating block.
 	}\par
 
 %%%%% tiger_block			
 
 	\subsection{Structure \prefix tiger\tu block\label{cp:tigerblock}}
 	See section \ref{cp:tiger} for additional information.
-	
 	\ifxHPTDC{
-		\cronvar{int}{mode}\\
-		Enables the desired mode of operation for the tiger. 
-
+		\cronvar{int}{mode}\\*
+		Enables the desired mode of operation for the tiger. \\*
 		\begin{tabular}{lrl}
 			\ttdef{TIGER \tu OFF} & 0 & No operation \\
 			\ttdef{TIGER \tu OUTPUT} & 1 & Output is driven with 2V amplitude. \\*
@@ -207,9 +207,8 @@
 			\ttdef{TIGER \tu BIPOLAR} & 2 & Output is driven wuth 1V bidirectional pulses.\\*
 									&   & $start = stop -1$\\*
 		\end{tabular}
-		The gating blocks are only used intenally.		
-		Gating blocks interpret any value that is not 0 as as enable.
-
+		The gating blocks are only used internally and produce no pulses accessible to the user.		
+		Gating blocks interpret any value that is not 0 as as enable.\\*
 		\begin{tabular}{lrl}
 			\ttdef{GATE \tu OFF} & 0 & No gating, alle hits are captured. \\*
 			\ttdef{GATE \tu ON} & 1 & No hits are captured while the gate is active.\\*
@@ -222,7 +221,8 @@
 
 	\cronvar{crono\tu bool\tu t}{negate}\\
 	Inverts output polarity. Default is set to false.
-	\ifxHPTDC{For gating blocks, a value of false blocks inputs between start and stop, a value of true blocks outputs outside that interval.}{}\par
+	\ifxHPTDC{For gating blocks, a value of false blocks inputs between start and stop, a value of true blocks outputs outside that interval.
+	The TiGer creates a high pulse from \textsf{start} to \textsf{stop} unless negated.}{}\par
 
 	\cronvar{crono\tu bool\tu t}{retrigger}\\
 	Enables retrigger setting.\\
@@ -243,7 +243,7 @@
 	\itett{
 		In multiples of $4~ns$.
 	}{
-		In multiples of $20/3 = 6,\overline{6}~ns$
+		In multiples of $20~ns/3 = 6,\overline{6}~ns$
 	}
 	The time during which the TiGer output is set, relative to the trigger input. The parameters \textsf{start} and \textsf{stop} must fulfill the following conditions:
 	\[ 0 <= start <= stop <= 2^{16}-1 \]
@@ -344,7 +344,7 @@
 
 	\cronvar{int}{zero\tu channel}\\
 	Optionally a different channel can be used to calculate the relative timestamps in a group. 
-	Is disabled per default by setting this paramteer to $-1$.\par
+	This is disabled per default by setting this paramteer to $-1$.\par
 	
 	\cronvar{\tu\tu int64}{zero\tu channel\tu offset}\\
 	This offset in picoseconds is added to relative timestamps within a group.\par
@@ -371,8 +371,8 @@
 
 	\cronvar{int}{veto\tu mode}\\
 	A window defined by \textsf{veto\tu start} and \textsf{veto\tu stop} can be used to suppress hits. 
-	The functionality is very similar to the gating blocks but is define in software. 
-	While gating block can only work locally on the information available within each board the veto function is applied globally accross all boards.
+	The functionality is very similar to the gating blocks but is defined in software. 
+	While gating blocks can only work locally on the information available within each board the veto function is applied globally accross all boards.
 	This feature can not be used to improve FIFO usage or PCIe bandwidth usage. 
 	 \\*
 	Either data inside or outside the veto window can be suppressed.\\*

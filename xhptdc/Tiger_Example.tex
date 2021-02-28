@@ -1,11 +1,12 @@
 \subsubsection{TiGer Example: Generate 200 kHz Start Pulse}
-The AutoTrigger is used to generate a 200 kHz period. The TiGer generates a 200 kHz signal with $13.3 ~ns$ pulse width on LEMO-00 output A.
+The AutoTrigger is used to generate a 200 kHz period. 
+The TiGer generates a 200 kHz signal with $13.3 ~ns$ pulse width on LEMO-00 output A.
 \begin{lstlisting}[frame=tlrb]
 // generate an internal 200 kHz trigger
-config.auto_trigger_period = 1250;
+config.auto_trigger_period = 750;
 config.auto_trigger_random_exponent = 0;
 
-// setup TiGer
+// setup TiGer 
 config.tiger_block[0].mode = XHPTDC8_TIGER_BIPOLAR;
 config.tiger_block[0].start = 0;
 config.tiger_block[0].stop = config.tiger_block[0].start + 1;

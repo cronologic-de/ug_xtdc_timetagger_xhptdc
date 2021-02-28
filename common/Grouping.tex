@@ -2,14 +2,24 @@
 \label{grouping}
 \ifxHPTDC{
     If \textsf{config.tdc\tu mode} is set to \textsf{\PREFIX TDC\tu MODE\tu CONTINOUS} the TDC will operate in grouping mode. 
-    This setting only affects data collected using the \textsf{\prefix Read()} method. Data collected using \textsf{\prefix ReadHits()} will always be continous. 
+    In grouping mode each call to \textsf{read\tu hits()} will return a group of timestamps relative to some trigger event. 
+    Otherwise the call returns all available timestamps as absolute timestamps counting upwards from \textsf{start\tu capture()}
 }{} 
 
-In typical applications a start hit is followed by a manifold of hits on e.g. a detector. 
+In typical applications a start hit is followed by a multitude of hits on e.g. a detector. 
 The hits recorded are managed in groups (which are called ``events'' in some applications). 
+%
+\begin{figure*}[ht]
+    \begin{center}
+        \includegraphics[width=0.7\textwidth]{figures/grouping.pdf}
+        \caption{Acquired hits are merged to groups as explained in the text.\label{fig:grouping}}
+    \end{center}
+\end{figure*}
+%
+
 Figure \ref{fig:grouping} shows a corresponding timing diagram. The user can define the range of a group, i.e. the time window within which hits 
 on the stop channels are recorded, in software. Hits occurring outside of that time window are discarded. 
- Different ranges can be set for each of the 4 stop channels by setting corresponding configuration.channel[n].start and .stop values in the channel configuration. 
+ Different ranges can be set for each of the 4 stop channels by setting corresponding values for \textsf{config.grouping.start} and \textsf{.stop} values.
 
  \ifxHPTDC{
      The values are configured in picoseconds. Negative values can be used in common stop applications.
@@ -19,14 +29,6 @@ on the stop channels are recorded, in software. Hits occurring outside of that t
     \[ 0 <= start <= stop <= 2^{16}-1 \]
  }
 
+ In single board setups it is recommended to also configure the gating blocks accoringly. This prevents data from beeing read out that is discarding by the grouping code anyway. 
+ Plase note that the grouping parameters are given in picoseconds while the gating blocks are configured in cycles of the 150~MHz clock.
 
-%
-\begin{figure*}[ht]
-    \begin{center}
-        \includegraphics[width=0.7\textwidth]{figures/grouping.pdf}
-        \caption{Acquired hits are merged to groups as explained in the text.\label{fig:grouping}}
-    \end{center}
-\end{figure*}
-
-
-%
