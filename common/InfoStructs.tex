@@ -53,20 +53,22 @@ The number of bytes occupied by the structure.
 \cronvar{int}{version}\\
 A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
 
-
 \cronvar{int}{board\tu id}\\
 ID of the board.\\
-This value has been passed to the constructor by the user. It is reflected in the output data.\par
+\ifxHPTDC{
+    All \deviceName\ boards in the system are numbered according in order of their serial numbers starting at zero.
+    The channel A of a board has channel number $board\_id \cdot 10$. \par
+}{}
 
 \cronvar{int}{driver\tu revision}\\
 Encoded version number for the driver.\\
 The lower three bytes contain a triple level hierarchy of version numbers, e.g. 0x010103 encodes version 1.1.3.\\
-A change in the first digit generally requires a recompilation of user applications. 
+The versionen adheres to the Semantic Versioning scheme as defined at \href{https://semver.org}{https://semver.org}. A change in the first digit generally requires a recompilation of user applications. 
 Changes in the second digit denote significant improvements or changes that don't break compatibility 
 and the third digit increments with minor bug fixes and similar updates that do not affect the API.\par
 
 \cronvar{int}{driver\tu build\tu revision}\\
-
+The build number of the driver according to cronologic's internal versioning system.
 
 \cronvar{int}{firmware\tu revision}\\
 Revision number of the FPGA configuration.
@@ -122,9 +124,11 @@ A version number that is increased when the definition of the structure is chang
 \cronvar{double}{binsize}\\
 Bin size (in ps) of the measured TDC data.
 
-\cronvar{int}{board\tu id}\\
-Board ID.\\
-The board uses this ID to identify itself in the output data stream. The ID takes values between 0 and 255.\par
+\ifxHPTDC{}{ %board ID is found in the static_info structure.
+    \cronvar{int}{board\tu id}\\
+    Board ID.\\
+    The board uses this ID to identify itself in the output data stream. The ID takes values between 0 and 255.\par
+}
 
 \cronvar{int}{channels}\\
 Number of TDC channels of the board.\\

@@ -7,7 +7,8 @@ The time stamp of the hit in picoseconds. If grouping is enabled the timestamp i
 Otherwise the timestampe is continuously counting up from the call to \textsf{start\tu capture()}.
 
 \cronvar{unsigned char}{channel}\\
-0 to 7 for the TDC channels A to H. 8 or 9 for ADC data. Data from channels 8 and 9 should usually be treated as data from the same channel. 
+For the forst in the system this 0 to 7 for the TDC channels A to H. 8 or 9 for ADC data. Data from channels 8 and 9 should usually be treated as data from the same channel. 
+For the other boards the channel number is incremented by $board\_id \cdot 10$
 
 \cronvar{unsigned char}{type}\\
 Additional information on the type of hit recorded. See section \ref{hittypes}.
@@ -20,7 +21,7 @@ For ADC hits this contains the sampled voltage. For TDC hits the content is unde
 \newcommand{\HTYPE}{\PREFIX TDCHIT\tu TYPE\tu}
 
 \paragraph*{Type information for TDC measurements}
-If the hit is a TDC measurement on channels 0 to 7 the following flags are defined for the \textsf{type} field of the TDCHit structure:\\*
+If the hit is a TDC measurement on channels A to H the following flags are defined for the \textsf{type} field of the TDCHit structure:\\*
 \begin{tabular}{lc}
     \crondef{\HTYPE RISING} & 0x01\\
     \indent Rising edge &\\
