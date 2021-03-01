@@ -27,7 +27,7 @@
 			\hline
 		\end{tabularx}
 
-	\subsection{Inputs}
+	\subsection{TDC Inputs}
 
 		The \deviceName's inputs are single-ended AC-coupled with 50$\Omega$ DC termination.
 
@@ -54,8 +54,30 @@
 
 	All inputs are AC coupled. The inputs have very high input bandwidth requirements and therefore there are no circuits that provide over voltage protection for these signals. 
 	Any voltage on the inputs above 5V or below -5V relative to the voltage of the slot cover can result in permanent damage to the board.
+	
+	\ifxHPTDC{
+		All digital inputs can output AC coupled pulses from the TiGer. 
+		Special care should be taken not to enable the TiGer output when sensitive equipment is connected that could be damaged by the pulses. 
+	}{
+		Make sure not to drive the inputs when the connector is configured as a TiGer output. 
+	}
+	See Section \ref{cp:tiger}. 
 
-	Make sure not to drive the inputs when the connector is configured as a TiGer output (see Section \ref{cp:tiger}). 
+\subsection{ADC Inputs}
+The ADC input is DC coupled to a differential termination voltage of 400~mV. 
+This means that the actual voltage seen by the ADC will depend on the output impedance of the source that is driving the input.\\*
+\noindent
+	\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+		\hline
+		Symbol & Parameter & Min & Typical & Max & Units\\
+		\hline\hline
+		V\subscript{in} & Input voltage & -2.0 &  & 2.5 & V \\
+		\hline 
+		V\subscript{term} & Termination voltage & & 0.4 & & V \\
+		\hline 
+		Z\subscript{in} & Input Impedance & & 50  & & $\Omega$ \\
+		\hline
+	\end{tabularx}
 
 \newpage
 \section{Information Required by DIN EN 61010-1}

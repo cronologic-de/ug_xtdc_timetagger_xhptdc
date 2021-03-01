@@ -1,0 +1,34 @@
+	%%%%%%%%%%%%%%%%% run time control
+	\section{Controlling the State of the Driver}
+		\ttvar{int}{start\tu capture(}\device)\\
+		Start data acquisition.\par
+
+		\ttvar{int}{pause\tu capture(}\device)\\
+		Pause a started data acquisition. 
+		Pause and continue have less overhead than start and stop but don't allow for a configuration change.\par
+
+		\ttvar{int}{continue\tu capture(}\device)\\
+		Call this to resume data acquisition after a call to \textsf{\prefix pause\tu capture()}.
+		Pause and continue have less overhead than start and stop but don't allow for a configuration change.\par
+
+		\ttvar{int}{stop\tu capture(}\device)\\
+		Stop data acquisition.\par
+
+		\ttvar{int}{start\tu tiger(}\device)\\
+		Start timing generator. This can be done independantly of the state of the data acquisition.\par
+
+		\ttvar{int}{stop\tu tiger(}\device)\\
+		Stop timing generator. This can be done independantly of the state of the data acquisition.\par
+
+\section{Readout}
+
+\ttvar{int}{read\tu hits(}\device, \cronvar{\prefix manager}{*\prefix mgr,} \cronvar{TDCHit}{*hit\tu buf,} \cronvar{size\tu t}{read\tu max} )\\
+Read a multitude of hits into a buffer provided by the user. Returns the number of hits that are read.\\
+
+If grouping is enabled a single group is read. If the group is to large for the buffer the remaining hits of the group are discarded.
+
+If grouping is disabled, all availabe data is read up to the size of the buffer.
+
+The method always returns immediately. If no hits are read it of is benefitial to call \textsf{sleep()} or yield the CPU to another process instead of trying again immediately.
+
+

@@ -89,14 +89,12 @@
 \newcommand{\ttvar}[2]{\noindent\textsf{\textbf{\textcolor{crongrey}{#1} \prefix #2}}}%for variable declaration
 \newcommand{\ttdef}[1]{\noindent\textsf{\textcolor{crongrey}{\#{}define} \PREFIX #1}}%for definitions
 
-\newcommand{\ugrev}{{1.8.0\tu draft\tu 2}}
+\newcommand{\ugrev}{{1.8.0\tu draft\tu 3}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
 \begin{document}  
 \cronofront{\titlefile}
  
-     
-
 % 
 	\chapter{Introduction}
 		\ttinput{Intro.tex}
@@ -112,16 +110,21 @@
 	\chapter{Driver Programming API} 
 		% also includes common/StructConfig.tex and common/InfoStructs.tex
 		\input{common/API.tex}  
-	\section{Readout\label{cp:readout}}  % and packet format
-		\input{common/Readout.tex}
+		  
+	\chapter{Run Time Control\label{cp:readout}}  % and packet format
+		\ifxHPTDC{
+			\input{xhptdc/Readout.tex}
+		}{
+			\input{common/Readout.tex}
+		} 
 
-%		ifxHPTDC{
-%			\input{xhptdc/PackForm.tex}
-%		}{
-%		}
-	\chapter{Packet Format\label{cp:packetformat}} 
-		\input{common/PackForm.tex}
-
+	\chapter{Output Data Format\label{cp:packetformat}} 
+		\ifxHPTDC{
+			\input{xhptdc/PackForm.tex} 
+		}{
+			\input{common/PackForm.tex}
+		}  
+ 
 	\chapter{C Example}  
 		\input{common/CExample.tex}
 

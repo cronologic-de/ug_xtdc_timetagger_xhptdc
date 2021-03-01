@@ -181,26 +181,6 @@ The functions provided by the DLL are declared in \textsf{\txh{TimeTagger4}{xTDC
 	%%%%%%%%%%%%%%%%% configuration structure mostly shared between devices
 	\input{common/StructConfig.tex}
 
-	%%%%%%%%%%%%%%%%% run time control
-	\section{Run Time Control}
-		\ttvar{int}{start\tu capture(}\device)\\
-		Start data acquisition.\par
 
-		\ttvar{int}{pause\tu capture(}\device)\\
-		Pause a started data acquisition. 
-		Pause and continue have less overhead than start and stop but don't allow for a configuration change.\par
-
-		\ttvar{int}{continue\tu capture(}\device)\\
-		Call this to resume data acquisition after a call to \textsf{\prefix pause\tu capture()}.\\
-		Pause and continue have less overhead than start and stop but don't allow for a configuration change.\par
-
-		\ttvar{int}{stop\tu capture(}\device)\\
-		Stop data acquisition.\par
-
-		\ttvar{int}{start\tu tiger(}\device)\\
-		Start timing generator. This can be done independantly of the state of the data acquisition.\par
-
-		\ttvar{int}{stop\tu tiger(}\device)\\
-		Stop timing generator. This can be done independantly of the state of the data acquisition.\par
 
 	
