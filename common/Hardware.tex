@@ -48,7 +48,7 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 					\includegraphics[width=0.7\textwidth]{figures/xTDC4_schematic.pdf}
 				}
 				
-				\caption{Schematic view of a \deviceName\ board showing inter-board connectors J6, J12 and J25.\label{fig:schematics}}
+				\caption{Schematic view of a \deviceName\ board showing the inter-board connectors.\label{fig:schematics}}
 			\end{center} 
 		\end{figure*}
 	%
@@ -56,6 +56,7 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 	Furthermore, three inter-board connectors can be found at the top edge of the \deviceName\ board, 
 	as displayed in Figure \ref{fig:schematics}. 
 	Connector J25 is reserved for future use. The pinout of connector J12 is shown in Table \ref{J12} and the pinout of connector J6 is depicted in Table \ref{J6}.
+	\ifxHPTDC{Connector J2 is a coax clock input that must receive a 10 MHz clock if multiple boards are used in together as described in section \ref{multiboard}.}{}
 
 	\begin{table}
 	\begin{small}
@@ -125,6 +126,19 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 	\end{small}
 	\end{table}
 
+%%%%%%%%%%%%%%% multiboard
+\ifxHPTDC{
+	\section{Synchronizing multiple boards}
+		\label{multiboard}
+		If more than eight TDC inputs are required, up to eight boards can be synchronises within a system. The boards must each receive a common 10~MHz clock on connector J2. 
+		For systems of up to four boards cronoglic offers the ClockBox product that conveniently makes such clocks evailable inside the PC enclosure.
+
+		The \deviceName\ API described in chapter \ref{cp:api} manages up to eight boards automatically
+		and provides a single data stream that contains sorted hit data from all boards in chronological order. 
+		Channel A of each board is assigned channel number \textsf{board\tu index} $\cdot 10$. 
+		The \textsf{board\tu index} is assigned to the boards in the order of the serial numbers starting at 0.
+
+}{}
 
 
 
