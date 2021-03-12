@@ -1,7 +1,7 @@
 %%%%%%%%%%%% struct manager configuration
 \ifxHPTDC{
 	\subsection{Structure \prefix manager\tu configuration}
-	\cronvar{\prefix device\tu configuration}{device\tu configurations[\PREFIX DEVICES\tu MAX]}\\
+	\cronvar{\prefix device\tu configuration}{device\tu configs[\PREFIX DEVICES\tu MAX]}\\
 	A structure with the configuration for an individual \deviceName\ board as defined in the next subsection.
 	Use the function \textsf{\prefix count\tu devices()} to query how many entries contain valid information. See section \ref{countdevices} for details. \par 
 
@@ -17,10 +17,10 @@
 \subsection{Structure \prefix \ifxHPTDC{device\tu}{}configuration}
 
 	This is the structure containing the configuration information. 
-	\ifxHPTDC{}{
+	\ifxHPTDC{}{ % xHPTDC8 uses TDC manager instead
 		It is used in conjunction with \textsf{\prefix get\tu default\tu configuration()}, \textsf{\prefix get\tu current\tu configuration()} and \textsf{\prefix configure()}.\par
 	}
-	It uses the substructures \textsf{\prefix tiger\tu block}, \textsf{\prefix channel} and \textsf{\prefix trigger}.\par
+	It uses the multiple substructures to configure various aspects of the board. 
 
 	\cronvar{int}{size}\\
 	The number of bytes occupied by the structure.\par
@@ -49,7 +49,7 @@
 
 	\cronvar{int}{tdc\tu mode}\\
 	\ifxHPTDC{
-		This defines whether grouping is used by the \textsf{read\tu hits()} method. \\
+		This defines whether grouping is used by the \textsf{\prefix read\tu hits()} method. \\
 		Defaults to continuous mode. \\*
 		\begin{tabular}{lc}
 			\ttdef{TDC\tu MODE\tu GROUPED} & 0   \\
@@ -71,7 +71,7 @@
 		}\par
 	}
 
-	\cronvar{double}{dc\tu offset[\PREFIX CHANNEL\tu COUNT + 1]}\\	
+	\cronvar{double}{dc\tu offset[\PREFIX TDC\tu CHANNEL\tu COUNT + 1]}\\	
 	Set the threshold voltage for the input channels \ifxHPTDC{A \ldots H and TRG}{S, A \ldots D} (see figure \ref{fig:dcoffset1}).
 	\begin{itemize}
 		\ifxHPTDC{
@@ -141,13 +141,7 @@
 		Configure the TDC channels.
 
 	\ifxHPTDC{
-		\cronvar{crono\tu bool\tu t}{is\tu master}\\
-		\cronvar{crono\tu bool\tu t}{is\tu slave}\\
-		Configure whether this board is master or slave in a multi board setup.
-		\ifxHPTDC{This will be managed by the driver in a way that results in the board with the lowest serial number to become the master. 
-		}{}
-
-		\cronvar{crono\tu bool\tu t}{skip\tu tdc\tu alignment}\\
+		\cronvar{crono\tu bool\tu t}{skip\tu alignment}\\
 		If set,  the phase of the two TDC chips is not realigned when capturing is restartet.
 
 		\cronvar{crono\tu bool\tu t}{alignment\tu source}\\
@@ -204,7 +198,7 @@
 										&   &There must be no input connected \\
 			\ttdef{TIGER \tu BIDI} & 2 & Output is driven with 1V amplitude. \\*
 									&   & Pulse rate should be low. \\*
-			\ttdef{TIGER \tu BIPOLAR} & 2 & Output is driven wuth 1V bidirectional pulses.\\*
+			\ttdef{TIGER \tu BIPOLAR} & 3 & Output is driven with 1~V bidirectional pulses.\\*
 									&   & $start = stop -1$\\*
 		\end{tabular}
 		The gating blocks are only used internally and produce no pulses accessible to the user.		
@@ -252,7 +246,7 @@
 
 	\cronvar{int}{sources}\\
 	A bit mask with a bit set for all trigger sources that can trigger this TiGer block. 
-	Default is \textsf{\PREFIX TRIGGER\tu SOURCE\tu S}.\par
+	Default is \textsf{\PREFIX TRIGGER\tu SOURCE\tu \ifxHPTDC{A}{S}}.\par
 
 	\begin{tabular}{lc}
 			\ttdef{TRIGGER\tu SOURCE\tu NONE} & 0x00000000\\
@@ -332,7 +326,7 @@
 %%%%%%%%%%%%%%%%%%%%% grouping, only fpr xHPTDC8
 
 \ifxHPTDC{
-	\subsection{Structure \prefix grouping}	
+	\subsection{Structure \prefix grouping\tu configuration}	
 	\label{structgrouping}
 	This structure configures the behaviour of the grouping functionality. See section \ref{grouping}.
 	Grouping is enabled with the \textsf{tdc\tu mode} paramter defined in the top level of the config structure.
@@ -351,10 +345,10 @@
 
 	\cronvar{\tu\tu int64}{range\tu start}\\
 	\cronvar{\tu\tu int64}{range\tu stop}\\
-	Values in the interval from \textsf{start} to \textsf{stop} are included in the group. 
+	Values in the interval from \textsf{range\tu start} to \textsf{range\tu stop} are included in the group. 
 	Either or both values can be negative to create common-stop behaviour. 
 	\[
-		-2^{63} \le start \le stop < 2^{63} 
+		-2^{63} \le range\_start \le range\_stop < 2^{63} 
 	\]\par
 
 	\cronvar{\tu\tu int64}{trigger\tu deadtime}\\
@@ -391,7 +385,7 @@
 	\cronvar{crono\tu bool\tu t}{veto\tu relative\tu zero}\\
 	If set, the veto window is defined relative to the zero channel. Otherwise the window is defined relative to the trigger.\par 
 
-	\cronvar{crono\tu bool\tu t}{allow\tu overlap}\\
+	\cronvar{crono\tu bool\tu t}{overlap}\\
 	Unsupported, must remain \textsf{false}.
 
 }{}

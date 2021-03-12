@@ -37,8 +37,8 @@ The trigger can be used as a source for the TiGer unit (see Section \ref{cp:tige
 
 
 \section{Timing Generator (TiGer)\label{cp:tiger}}
-Each digital LEMO-00 input can be used as a \ifxHPTDC{AC coupled}{LVCMOS} trigger output. The TiGer function can be configured independently for each connector. 
-Each TiGet block can use an arbitrary combination of inputs to trigger its state machine including the AutoTrigger.
+Each digital LEMO-00 input can be used as a \ifxHPTDC{AC coupled}{LVCMOS} trigger output. 
+The TiGer function can be configured independently for each connector. 
 See Section \ref{cp:tigerblock} for a full description of the configuration options.
 % 
 \begin{figure*}[ht]
@@ -65,24 +65,24 @@ The trigger sources with names ending in \textsf{\tu sync} are managed by the dr
 
 \ifxHPTDC{
 	The TiGer outputs are AC coupled to the connector. They can be operated in one of the following modes:
-	\paragraph*{\textsf{TIGER\tu OFF}} 
+	\paragraph*{\textsf{\PREFIX\tu TIGER\tu OFF}} 
 		No signal is output to the connetor. 
-	\paragraph*{\textsf{TIGER\tu OUTPUT}} 
+	\paragraph*{\textsf{\PREFIX\tu TIGER\tu OUTPUT}} 
 		In this mode the connector is input only. Pulses are unipolar with 2V amplitude. 
 		Connected hardware must not drive any signals to connectors used as outputs, as doing so could damage both the \deviceName and the external hardware. 
-		We recoomend to only use short pulses to avoid undesirable baseline shift due to the AC coupling, but the device does not pose any restrictions on the duty cycle. 
+		We recommend to only use short pulses to avoid undesirable baseline shift due to the AC coupling, but the device does not pose any restrictions on the duty cycle. 
 		This mode can be used as a clock output with a frequency of $75/N$~MHz for integer $N$.
-	\paragraph*{\textsf{TIGER\tu BIDI}} 
-		In this mode the TiGer creates unipolarpulses with 1V amplitude and still be used as an input. 
+	\paragraph*{\textsf{\PREFIX\tu TIGER\tu BIDI}} 
+		In this mode the TiGer creates unipolar pulses with 1~V amplitude. The connector can still be used as an input. 
 		Use short pulses to keep the propability of collision and the effect on the baseline low.	
-	\paragraph*{\textsf{TIGER\tu BIPOLAR}} 
-		In this mode the connector creates bipolar pulses with 1V amplitude. The connector can still be used as an input. 
+	\paragraph*{\textsf{\PREFIX\tu TIGER\tu BIPOLAR}} 
+		In this mode the connector creates bipolar pulses with 1~V amplitude. The connector can still be used as an input. 
 		The pulses have no effect on the baseline offset. 
 		TiGer should be configured with $stop = start$ for minimum width bipolar pulses of $2 \times 6.\overline{6}~ns$. 
 		The maximum bipolar pulse width is \textsf{XHPTDC8\tu TIGER\tu MAX\tu BIPOLAR\tu PULSE\tu LENGTH = 15}.    
 }{
 	The TiGer is DC coupled to the connector. Connected hardware must not drive any signals to connectors used as outputs, 
-	as doing so could damage both the \deviceName and the external hardware.
+	as doing so could damage both the \deviceName\  and the external hardware.
 	Pulses that are short enough for the input AC coupling are available as input signals to the \deviceName. 
 	This can be used to measure exact time differences between the generated output signals and input signals on other channels.
 }
@@ -91,10 +91,10 @@ The trigger sources with names ending in \textsf{\tu sync} are managed by the dr
 \ifxHPTDC{
 	\subsection{Triggering the ADC with the TiGer}
 		\label{adctiger}
-		There is a ninth TiGer hat is connected to the trigger input of the ADC. See section \ref{adc} for additional information on the ADC. 
+		There is a ninth TiGer that is connected to the trigger input of the ADC. See section \ref{adc} for additional information on the ADC. 
 
 		The ADC TiGer can be used with retrigger enabled to periodically sample ADC data. 
-		The period should be no shorter than 300ns or 45 TiGer clocks.
+		The period should be no shorter than 300~ns or 45 TiGer clocks.
 
 		The ADC TiGer can also be used to sample voltages at a time relative to one of the TDC inputs. In this case 
 		stop should be set to at least 45 to ensure that the sample period criterion is met even when pulses

@@ -2,7 +2,7 @@
 	
 
 \subsection{Functions for Information Retrieval}
-    The driver provides functions to retrieve detailed information on the type of board, its configuration, settings and state. 
+    The driver provides functions to retrieve detailed information on the board type, its configuration, settings and state. 
     The information is split according to its scope and the computational requirements to query the information from the board.
     
     \ifxHPTDC{
@@ -84,7 +84,7 @@ The same board schematic can be populated in multiple variants. This is a four b
 \cronvar{int}{subversion\tu revision}\\
 Subversion revision id of the FPGA configuration source code.
 
-\itett{
+\txh{
     \cronvar{int}{chip\tu id}\\
     Reserved.
 }{
@@ -170,7 +170,7 @@ Alert bits from temperature sensor and the system monitor.
 }\par
 
 \cronvar{int}{pcie\tu pwr\tu mgmt}\\
-Allways 0. \par
+Always 0. \par
 
 \cronvar{int}{pcie\tu link\tu width}\\
 Number of PCIe lanes the card uses. Should always be 1 for the \deviceName. \par
@@ -182,12 +182,12 @@ Maximum size in bytes for one PCIe transaction. Depends on system configuration.
 The state the XHPTDC8Manager is in.
 
 \begin{tabular}{lc}
-    \cronvar{const static int}{\PREFIX STATE\tu UNINITIALIZED} & 0  \\*
-    \cronvar{const static int}{\PREFIX STATE\tu NOT\tu CONFIGURED} & 1  \\*
-    \cronvar{const static int}{\PREFIX STATE\tu CONFIGURED} & 2  \\*
-    \cronvar{const static int}{\PREFIX STATE\tu RUNNING} & 3  \\*
-    \cronvar{const static int}{\PREFIX STATE\tu PAUSED} & 4  \\*
-    \cronvar{const static int}{\PREFIX STATE\tu SHUTDOWN} & 5  \\*
+    \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CREATED} & 0  \\*
+    \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu INITIALIZED} & 1  \\*
+    \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CONFIGURED} & 2  \\*
+    \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CAPTURING} & 3  \\*
+    \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu PAUSED} & 4  \\*
+    \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CLOSED} & 5  \\*
 \end{tabular}\par
 
 %%%%%%%%%%%%%%%%%%%%%%% temperature info
@@ -203,6 +203,9 @@ The state the XHPTDC8Manager is in.
 
         \cronvar{float}{tdc[2]}\\
         Temperature for each of the TDC chips in °C
+
+        \cronvar{float}{fpga}
+        Temperature in °C read from the FPGA's internal sensor.
 
     %%%%%%%%%%%%%%%%%%%%% clock info
 
@@ -222,11 +225,11 @@ The state the XHPTDC8Manager is in.
         
         \cronvar{int}{clock\tu source}\\
         Source for the clock synthesizer is usually the 10MHz on board oscillator. 
-        When multiple boards are synchonised all but the first board use a clock that they receive on J12.\\       
+        When multiple boards are synchonised all but the first board use a clock that they receive on J2. See section \ref{multiboard} for details.\\       
         \begin{tabular}{lc}
-            \ttdef{CLK\tu J12} & 1\\
             \ttdef{CLK\tu OSC} & 2\\
-            \ttdef{CLK\tu FPGA} & 4\\
+            \ttdef{CLK\tu J2}  & 4\\
+            \ttdef{CLK\tu J12} & 1\\
         \end{tabular}
     
         \cronvar{crono\tu bool\tu t}{fpga\tu locked}\\

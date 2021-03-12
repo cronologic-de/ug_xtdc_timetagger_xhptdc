@@ -1,3 +1,5 @@
+% NOTE: xHPTDC has a seperate file describing the readout
+
 %%%%%%%%%%%%%%%%% run time control
 \section{Run Time Control}
 	\ttvar{int}{start\tu capture(}\device)\\
@@ -15,12 +17,13 @@
 	Stop data acquisition.\par
 
 	\ttvar{int}{start\tu tiger(}\device)\\
-	Start timing generator. This can be done independantly of the state of the data acquisition.\par
+	Start timing generator. This can be done independently of the state of the data acquisition.\par
 
 	\ttvar{int}{stop\tu tiger(}\device)\\
-	Stop timing generator. This can be done independantly of the state of the data acquisition.\par
+	Stop timing generator. This can be done independently of the state of the data acquisition.\par
 
-	\section{Readout}
+%%%%%% readout
+\section{Readout}
 	\ttvar{int}{acknowledge(}\device, \cronvar{crono\tu packet}{*packet)}\\
 	Acknowledges the processing of the last read block. This is only necessary if \textsf{\prefix read()} is not called with 
 	\textsf{in.acknowledge\tu last\tu read} set.\\
