@@ -14,7 +14,7 @@ pdflatex TimeTagger4_User_Guide.tex
 
 ## License
 This documentation is licensed under an [Creative Commons Attribution-NoDerivatices 4.0 International License](https://creativecommons.org/licenses/by-nd/4.0/).
-You are free to copy and redistribute the material in any medium or format for any purpose, even commercially unchanged if you give appropriate credit to cronologic GmbH & Co. KG. A link to [this repository](https://github.com/cronologic-de/ug_xhptdc8 ) or the product pages is sufficient.
+You are free to copy and redistribute the material in any medium or format for any purpose, even commercially unchanged if you give appropriate credit to cronologic GmbH & Co. KG. A link to [this repository](https://github.com/cronologic-de/ug_xhptdc8 ) or the [product pages](https://www.cronologic.de/products/products-overview#tdcdata) is sufficient.
 
 If you decide to contribute to this repository you transfer non-exclusive but unlimited rights to your edit to cronologic GmbH & Co. KG.
 
