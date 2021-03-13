@@ -33,6 +33,10 @@ jobs:
         uses: dante-ev/latex-action@master
         with:
           root_file: xTDC4_User_guide.tex
+      - name: Compile xHPTDC8 User Guide
+        uses: dante-ev/latex-action@master
+        with:
+          root_file: xHPTDC8_User_guide.tex
       - name: Upload User Guides as Artifacts
         uses: actions/upload-artifact@v2
         with:
