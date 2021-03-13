@@ -1,0 +1,221 @@
+<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1617.8 918.2">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #40692b;
+      }
+
+      .cls-2 {
+        fill: #baacad;
+        stroke: #919191;
+        stroke-width: 21px;
+      }
+
+      .cls-15, .cls-16, .cls-18, .cls-2, .cls-20 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-3 {
+        fill: #323232;
+      }
+
+      .cls-10, .cls-12, .cls-4, .cls-8 {
+        stroke-miterlimit: 4.27;
+      }
+
+      .cls-4 {
+        fill: url(#Unbenannter_Verlauf);
+        stroke: url(#Unbenannter_Verlauf_2);
+      }
+
+      .cls-5 {
+        fill: url(#Unbenannter_Verlauf_3);
+      }
+
+      .cls-6 {
+        fill: #d6d6d6;
+      }
+
+      .cls-7 {
+        isolation: isolate;
+        font-size: 40.86px;
+        font-family: AvenirNext-DemiBold, Avenir Next;
+        font-weight: 300;
+      }
+
+      .cls-14, .cls-15, .cls-16, .cls-7 {
+        fill: #fff;
+      }
+
+      .cls-8 {
+        fill: url(#Unbenannter_Verlauf_4);
+        stroke: url(#Unbenannter_Verlauf_5);
+      }
+
+      .cls-9 {
+        fill: url(#Unbenannter_Verlauf_6);
+      }
+
+      .cls-10 {
+        fill: url(#Unbenannter_Verlauf_7);
+        stroke: url(#Unbenannter_Verlauf_8);
+      }
+
+      .cls-11 {
+        fill: url(#Unbenannter_Verlauf_9);
+      }
+
+      .cls-12 {
+        fill: url(#Unbenannter_Verlauf_10);
+        stroke: url(#Unbenannter_Verlauf_11);
+      }
+
+      .cls-13 {
+        fill: url(#Unbenannter_Verlauf_12);
+      }
+
+      .cls-15 {
+        stroke: #f2f2f2;
+        stroke-width: 11px;
+      }
+
+      .cls-16 {
+        stroke: #b5b5b5;
+        stroke-width: 3px;
+      }
+
+      .cls-17 {
+        fill: #010001;
+      }
+
+      .cls-18 {
+        fill: #d8c69e;
+        stroke: #ac9b63;
+        stroke-width: 2px;
+      }
+
+      .cls-19 {
+        fill: #fa0025;
+      }
+
+      .cls-20 {
+        fill: none;
+        stroke: #fa0025;
+        stroke-width: 30px;
+      }
+    </style>
+    <linearGradient id="Unbenannter_Verlauf" data-name="Unbenannter Verlauf" x1="570.8" y1="-2347.75" x2="664" y2="-2347.75" gradientTransform="translate(-8.4 2440.1)" gradientUnits="userSpaceOnUse">
+      <stop offset="0.08" stop-color="#a3a3a3"/>
+      <stop offset="0.54" stop-color="#fff"/>
+      <stop offset="0.61" stop-color="#f5f5f5"/>
+      <stop offset="0.75" stop-color="#d9d9d9"/>
+      <stop offset="0.92" stop-color="#adadad"/>
+      <stop offset="1" stop-color="#969696"/>
+    </linearGradient>
+    <linearGradient id="Unbenannter_Verlauf_2" data-name="Unbenannter Verlauf 2" x1="570.3" y1="-45.75" x2="664.5" y2="-45.75" gradientTransform="translate(-8.4 138.1)" xlink:href="#Unbenannter_Verlauf"/>
+    <radialGradient id="Unbenannter_Verlauf_3" data-name="Unbenannter Verlauf 3" cx="617.45" cy="-2214.25" r="105.8" gradientTransform="translate(-8.4 2440.1)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="0.06" stop-color="#e2e2e2"/>
+      <stop offset="0.15" stop-color="#c5c5c5"/>
+      <stop offset="0.23" stop-color="#aeaeae"/>
+      <stop offset="0.33" stop-color="#9e9e9e"/>
+      <stop offset="0.43" stop-color="#949494"/>
+      <stop offset="0.57" stop-color="#919191"/>
+      <stop offset="1" stop-color="#2b2b29"/>
+    </radialGradient>
+    <linearGradient id="Unbenannter_Verlauf_4" data-name="Unbenannter Verlauf 4" x1="703.2" y1="-2347.75" x2="796.4" y2="-2347.75" xlink:href="#Unbenannter_Verlauf"/>
+    <linearGradient id="Unbenannter_Verlauf_5" data-name="Unbenannter Verlauf 5" x1="702.7" y1="-45.75" x2="796.9" y2="-45.75" gradientTransform="translate(-8.4 138.1)" xlink:href="#Unbenannter_Verlauf"/>
+    <radialGradient id="Unbenannter_Verlauf_6" data-name="Unbenannter Verlauf 6" cx="749.75" cy="-2214.25" r="105.82" xlink:href="#Unbenannter_Verlauf_3"/>
+    <linearGradient id="Unbenannter_Verlauf_7" data-name="Unbenannter Verlauf 7" x1="836.3" y1="-2347.75" x2="929.5" y2="-2347.75" xlink:href="#Unbenannter_Verlauf"/>
+    <linearGradient id="Unbenannter_Verlauf_8" data-name="Unbenannter Verlauf 8" x1="835.8" y1="-45.75" x2="930" y2="-45.75" gradientTransform="translate(-8.4 138.1)" xlink:href="#Unbenannter_Verlauf"/>
+    <radialGradient id="Unbenannter_Verlauf_9" data-name="Unbenannter Verlauf 9" cx="882.95" cy="-2214.25" r="105.75" xlink:href="#Unbenannter_Verlauf_3"/>
+    <linearGradient id="Unbenannter_Verlauf_10" data-name="Unbenannter Verlauf 10" x1="968.3" y1="-2347.25" x2="1061.5" y2="-2347.25" xlink:href="#Unbenannter_Verlauf"/>
+    <linearGradient id="Unbenannter_Verlauf_11" data-name="Unbenannter Verlauf 11" x1="967.8" y1="-45.25" x2="1062" y2="-45.25" gradientTransform="translate(-8.4 138.1)" xlink:href="#Unbenannter_Verlauf"/>
+    <radialGradient id="Unbenannter_Verlauf_12" data-name="Unbenannter Verlauf 12" cx="1014.95" cy="-2213.75" r="105.79" xlink:href="#Unbenannter_Verlauf_3"/>
+  </defs>
+  <g id="Platine">
+    <rect class="cls-1" y="123.3" width="1617.8" height="224.5"/>
+    <rect class="cls-1" x="185.5" y="347.8" width="1432.3" height="570.4"/>
+    <rect class="cls-2" x="271.4" y="524.5" width="227.3" height="355.2"/>
+  </g>
+  <g id="Zeichnung">
+    <g id="clk4">
+      <rect class="cls-3" x="650.8" y="106.9" width="16.6" height="68.2"/>
+      <rect class="cls-3" x="559.8" y="174.1" width="129.4" height="129.4"/>
+      <rect class="cls-4" x="562.4" y="0.5" width="93.2" height="183.7"/>
+      <rect class="cls-5" x="545.1" y="161.9" width="127.9" height="127.9"/>
+      <circle class="cls-6" cx="609" cy="225.9" r="63.7"/>
+      <text id="CLK9" class="cls-7" transform="translate(564 340.69)">CLK4</text>
+    </g>
+    <g id="clk5">
+      <rect class="cls-3" x="783.1" y="106.9" width="16.6" height="68.2"/>
+      <rect class="cls-3" x="692.1" y="174.1" width="129.4" height="129.4"/>
+      <rect class="cls-8" x="694.8" y="0.5" width="93.2" height="183.7"/>
+      <rect class="cls-9" x="677.4" y="161.9" width="127.9" height="127.9"/>
+      <circle class="cls-6" cx="741.4" cy="225.9" r="63.7"/>
+      <text id="CLK5-2" data-name="CLK5" class="cls-7" transform="translate(696.32 340.69)">CLK5</text>
+    </g>
+    <g id="clk7">
+      <rect class="cls-3" x="916.2" y="106.9" width="16.6" height="68.2"/>
+      <rect class="cls-3" x="825.2" y="174.1" width="129.4" height="129.4"/>
+      <rect class="cls-10" x="827.9" y="0.5" width="93.2" height="183.7"/>
+      <rect class="cls-11" x="810.6" y="161.9" width="127.9" height="127.9"/>
+      <circle class="cls-6" cx="874.5" cy="225.9" r="63.7"/>
+      <text id="CLK7-2" data-name="CLK7" class="cls-7" transform="translate(829.43 340.69)">CLK7</text>
+    </g>
+    <g id="clk6">
+      <rect class="cls-3" x="1048.3" y="107.4" width="16.6" height="68.2"/>
+      <rect class="cls-3" x="957.3" y="174.6" width="129.4" height="129.4"/>
+      <rect class="cls-12" x="959.9" y="1" width="93.2" height="183.7"/>
+      <rect class="cls-13" x="942.6" y="162.4" width="127.9" height="127.9"/>
+      <circle class="cls-6" cx="1014.9" cy="232.2" r="63.7" transform="translate(547.34 1160.7) rotate(-76.72)"/>
+      <text class="cls-7" transform="translate(961.5 341.17)">CLK6</text>
+    </g>
+    <g id="X1">
+      <rect class="cls-14" x="403.1" y="184.1" width="120.7" height="120.7"/>
+      <circle class="cls-15" cx="465.3" cy="243" r="49.7"/>
+      <circle class="cls-16" cx="465.3" cy="243.4" r="46.3"/>
+    </g>
+    <g id="JP3">
+      <polygon class="cls-17" points="625.8 892.8 549.5 892.8 544.7 887.8 544.7 858.3 551.6 850 544.7 843.2 544.7 813.9 551.6 806.6 544.7 799.1 544.7 770.1 551.6 762.1 544.7 754.6 544.7 726.9 551.6 719.1 544.7 711.2 544.7 678.6 549.3 673.3 626 673.3 631.6 679 631.6 710.9 624.7 718.1 631.6 726 631.6 754.6 624.9 761.9 631.6 770.1 631.6 799.1 624.9 806.6 631.6 813.9 631.6 844.1 625.1 850 631.6 858.3 631.6 886.1 625.8 892.8"/>
+      <rect class="cls-18" x="564.3" y="689.1" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="599.9" y="689.1" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="564" y="734.8" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="599.7" y="734.8" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="564" y="779" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="599.7" y="779" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="564.3" y="823.3" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="600" y="823.3" width="10.4" height="10.4"/>
+      <text id="JP3-2" data-name="JP3" class="cls-7" transform="translate(639.5 805.1)">JP3</text>
+      <rect id="Jumper" class="cls-19" x="552.78" y="852.32" width="72.6" height="37.21" rx="5.66"/>
+      <rect class="cls-18" x="564" y="865.9" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="599.7" y="865.9" width="10.4" height="10.4"/>
+    </g>
+    <g id="JP4">
+      <polygon class="cls-17" points="1044.8 751.7 1037.9 744.2 1037.9 715.2 1044.8 707.2 1037.9 699.6 1037.9 671.9 1044.8 664.1 1037.9 656.3 1037.9 623.6 1042.5 618.4 1119.2 618.4 1124.8 624.1 1124.8 655.9 1117.9 663.2 1124.8 671 1124.8 699.6 1118.1 706.9 1124.8 715.2 1124.8 744.2 1118.1 751.7 1044.8 751.7"/>
+      <rect class="cls-18" x="1057.5" y="634.1" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="1093.2" y="634.1" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="1057.2" y="679.9" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="1092.9" y="679.9" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="1057.2" y="724.1" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="1092.9" y="724.1" width="10.4" height="10.4"/>
+      <text class="cls-7" transform="translate(1135.22 702.1)">JP4</text>
+    </g>
+    <g id="JP7">
+      <polygon class="cls-17" points="940.5 575.8 933.6 569 933.6 539.7 940.5 532.4 933.6 524.9 933.6 495.9 940.5 487.8 933.6 480.3 933.6 452.6 940.5 444.8 933.6 437 933.6 404.3 938.2 399.1 1014.9 399.1 1020.5 404.8 1020.5 436.6 1013.6 443.9 1020.5 451.7 1020.5 480.3 1013.8 487.6 1020.5 495.9 1020.5 524.9 1013.8 532.4 1020.5 539.7 1020.5 569.9 1014 575.8 940.5 575.8"/>
+      <rect class="cls-18" x="953.2" y="414.8" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="988.9" y="414.8" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="952.9" y="460.6" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="988.6" y="460.6" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="952.9" y="504.8" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="988.6" y="504.8" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="953.2" y="549" width="10.4" height="10.4"/>
+      <rect class="cls-18" x="988.9" y="549" width="10.4" height="10.4"/>
+      <text id="JP7-2" data-name="JP7" class="cls-7" transform="translate(1028.62 501.92)">JP7</text>
+    </g>
+  </g>
+  <g>
+    <path class="cls-20" d="M869.69,839.6,733.1,865.27" transform="translate(-8.4 -5.9)"/>
+    <polygon class="cls-19" points="746.5 815.71 737.45 856.97 760.86 892.14 663.09 870.95 746.5 815.71"/>
+  </g>
+</svg>

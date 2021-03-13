@@ -27,7 +27,7 @@
 			\hline
 		\end{tabularx}
 
-	\subsection{Inputs}
+	\subsection{TDC Inputs}
 
 		The \deviceName's inputs are single-ended AC-coupled with 50$\Omega$ DC termination.
 
@@ -54,8 +54,54 @@
 
 	All inputs are AC coupled. The inputs have very high input bandwidth requirements and therefore there are no circuits that provide over voltage protection for these signals. 
 	Any voltage on the inputs above 5V or below -5V relative to the voltage of the slot cover can result in permanent damage to the board.
+	
+	\ifxHPTDC{
+		All digital inputs can output AC coupled pulses from the TiGer. 
+		Special care should be taken not to enable the TiGer output when sensitive equipment is connected that could be damaged by the pulses. 
+	}{
+		Make sure not to drive the inputs when the connector is configured as a TiGer output. 
+	}
+	See Section \ref{cp:tiger}. 
+%%%%%%%%%%% ADC input
+	\ifxHPTDC{\subsection{ADC Inputs}
+	The ADC input is DC coupled to a differential termination voltage of 400~mV. 
+	This means that the actual voltage seen by the ADC will depend on the output impedance of the source that is driving the input.\\*
+	\noindent
+		\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+			\hline
+			Symbol & Parameter & Min & Typical & Max & Units\\
+			\hline\hline
+			V\subscript{in} & Input voltage & -2.0 &  & 2.5 & V \\
+			\hline 
+			V\subscript{term} & Termination voltage & & 0.4 & & V \\
+			\hline 
+			Z\subscript{in} & Input Impedance & & 50  & & $\Omega$ \\
+			\hline
+		\end{tabularx}
 
-	Make sure not to drive the inputs when the connector is configured as a TiGer output (see Section \ref{cp:tiger}). 
+%%%%%%%%%%% clock input		
+	\subsection{Clock input J2}
+	The ADC input is DC coupled to a differential termination voltage of 400~mV. 
+	This means that the actual voltage seen by the ADC will depend on the output impedance of the source that is driving the input.\\*
+	\noindent
+		\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+			\hline
+			Symbol & Parameter & Min & Typical & Max & Units\\
+			\hline\hline
+			V\subscript{p-p} & Peak to Peak voltage & 1 &  & 3.3 & V \\
+			\hline 
+			V\subscript{cm} & Common mode voltage voltage &-3 & 0 & 3 & V \\
+			\hline 
+			V\subscript{tck} & Clock termination voltage & & 0 &  & V \\
+			\hline 
+			Z\subscript{in} & Input Impedance & & 50  & & $\Omega$ \\
+			\hline 
+			D\subscript{J2} & Duty cycle & 45 & 50 & 55 & \% \\
+			 \hline 
+			 f\subscript{J2}& Frequency &  & 10 &  & MHz \\
+			\hline
+		\end{tabularx}
+}{}
 
 \newpage
 \section{Information Required by DIN EN 61010-1}
@@ -70,6 +116,7 @@ The \deviceName\ is a product of:\
 	Germany
 	\noindent HRA 42869 beim Amtsgericht Frankfurt/M\par
 	\noindent VAT-ID: DE235184378
+	\noindent PCI Vendor ID: 0x1A13
 \end{quote}
 
 \subsection{Intended Use and System Integration}
@@ -79,8 +126,9 @@ The \deviceName\ is a product of:\
 	The \deviceName\ is designed to comply with DIN EN 61326-1 when operated on a PCIe compliant main board housed in a properly shielded enclosure. 
 	When operated in a closed standard compliant enclosure the device does not pose any hazards as defined by EN 61010-1.\par
 
-	Radiated emissions, noise immunity and safety highly depend on the quality of the enclosure. It is the responsibility of the system integrator to ensure that the assembled system is compliant to applicable standards of the country that the system is operated in, especially with regards to user safety and electromagnetic interference. Compliance was only tested for attached cables shorter than 3m.\par
-
+	Radiated emissions, noise immunity and safety highly depend on the quality of the enclosure. 
+	It is the responsibility of the system integrator to ensure that the assembled system is compliant to applicable standards of the country that the system is operated in, especially with regards to user safety and electromagnetic interference. \par
+	 
 	When handling the board, adequate measures must be taken to protect the circuits against electrostatic discharge (ESD). All power supplied to the system must be turned off before installing the board.
 
 	\subsection{Environmental Conditions for Storage}

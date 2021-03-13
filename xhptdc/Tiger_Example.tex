@@ -1,0 +1,29 @@
+\subsubsection{TiGer Example: Generate 200 kHz Start Pulse}
+The AutoTrigger is used to generate a 200 kHz period. 
+The TiGer generates a 200 kHz signal with $13.3 ~ns$ pulse width on LEMO-00 output A.
+\begin{lstlisting}[frame=tlrb]
+// generate an internal 200 kHz trigger
+config.auto_trigger_period = 750;
+config.auto_trigger_random_exponent = 0;
+
+// setup TiGer 
+config.tiger_block[0].mode = XHPTDC8_TIGER_BIPOLAR;
+config.tiger_block[0].start = 0;
+config.tiger_block[0].stop = config.tiger_block[0].start + 1;
+config.tiger_block[0].negate = 0;
+config.tiger_block[0].sources = XHPTDC8_TRIGGER_SOURCE_AUTO;
+
+// configuer offset such that a 1V pulse can be detected by input A 
+config.dc_offset[0] = XHPTDC8_DC_OFFSET_NIM; 
+\end{lstlisting}
+
+\subsubsection{TiGer Example: Delayed Ouput from multiple sources}
+A trigger event on any channel B to D is used to generate a bipolar output pulse on channel A with configurable delay. 
+\begin{lstlisting}[frame=tlrb]
+config.tiger_block[0].mode = XHPTDC8_TIGER_BIPOLAR;
+config.tiger_block[0].start = 20;
+config.tiger_block[0].stop = config.tiger_block[0].start + 1;
+config.tiger_block[0].negate = 0;
+// an event on any of the channels B - D starts the TiGer 
+config.tiger_block[0].sources = XHPTDC8_TRIGGER_SOURCE_B|XHPTDC8_TRIGGER_SOURCE_C|XHPTDC8_TRIGGER_SOURCE_D;
+\end{lstlisting}

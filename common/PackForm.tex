@@ -1,8 +1,7 @@
-% SVN Info:
-% $Date: 2021-02-01 14:11:20 +0100 (Mo, 01 Feb 2021) $
-% $Rev: 1041 $
-% $Author: kolja $
-\subsection{Output Structure crono\tu packet}
+
+
+
+\section{Output Structure crono\tu packet}
 
 	\cronvar{unsigned char}{channel}\\
 	Unused, always 0.\par
@@ -56,7 +55,7 @@
 		Bit 7: Always 0.\par
 		Bit 6: Always 1.\par
 	} {
-		Bit 7, 6: Resolution of this measurement. See section \ref{difficulthits}.\\
+		Bit 7, 6: Resolution of this measurement. \ifxHPTDC{}{See section \ref{difficulthits}}.\\
 		\noindent
 		\begin{small}
 		\begin{tabular}{|c|c||l|}
@@ -78,3 +77,4 @@
 	\indent
 	Bit 4: Set if this word encodes a rising edge. Otherwise, this word belongs to a falling edge.
 	The channel number is given in the lowest nibble of the data word. A value of 0 corresponds to channel A, a value of 3 to channel D.\par
+ 

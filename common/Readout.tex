@@ -1,0 +1,65 @@
+% NOTE: xHPTDC has a seperate file describing the readout
+
+%%%%%%%%%%%%%%%%% run time control
+\section{Run Time Control}
+	\ttvar{int}{start\tu capture(}\device)\\
+	Start data acquisition.\par
+
+	\ttvar{int}{pause\tu capture(}\device)\\
+	Pause a started data acquisition. 
+	Pause and continue have less overhead than start and stop but don't allow for a configuration change.\par
+
+	\ttvar{int}{continue\tu capture(}\device)\\
+	Call this to resume data acquisition after a call to \textsf{\prefix pause\tu capture()}.
+	Pause and continue have less overhead than start and stop but don't allow for a configuration change.\par
+
+	\ttvar{int}{stop\tu capture(}\device)\\
+	Stop data acquisition.\par
+
+	\ttvar{int}{start\tu tiger(}\device)\\
+	Start timing generator. This can be done independently of the state of the data acquisition.\par
+
+	\ttvar{int}{stop\tu tiger(}\device)\\
+	Stop timing generator. This can be done independently of the state of the data acquisition.\par
+
+%%%%%% readout
+\section{Readout}
+	\ttvar{int}{acknowledge(}\device, \cronvar{crono\tu packet}{*packet)}\\
+	Acknowledges the processing of the last read block. This is only necessary if \textsf{\prefix read()} is not called with 
+	\textsf{in.acknowledge\tu last\tu read} set.\\
+	This feature allows to either free up partial DMA space early if there will be no call to \textsf{\prefix read()} anytime soon. 
+	It also allows to keep data over multiple calls to \textsf{\prefix read()} to avoid unnecessary copying of data. \par
+
+	\ttvar{int}{read(}\device \cronvar{\prefix read\tu in}{*in,} \\ \cronvar{\prefix read\tu out}{*out)}\\
+	Return a pointer to an array of captured data in \textsf{read\tu out}. 
+	The result can contain any number of packets of type \textsf{\prefix packet}.
+	\textsf{read\tu in} provides parameters to the driver. 
+	A call to this method automatically allows the driver to reuse the memory returned in the previous call if \textsf{read\tu in.acknowledge\tu last\tu read} is set.\\
+	Returns an error code as defined in the structure \textsf{\prefix read\tu out}.
+
+	\subsection{Input Structure \prefix read\tu in}
+
+		\ttvar{\prefix bool\tu t}{acknowledge\tu last\tu read}\\
+		If set \textsf{\prefix read()} automatically acknowledges packets from the last read. 
+		Otherwise \textsf{\prefix acknowledge()} needs to be called explicitely be the user. 
+
+	\subsection{Input Structure \prefix read\tu out}
+		\cronvar{crono\tu packet}{*first\tu packet}\\
+		Pointer to the first packet that was captureed by the call of \textsf{\prefix read()}.\par
+
+		\cronvar{crono\tu packet}{*last\tu packet}\\
+		Address of header of the last packet in the buffer.\par
+
+		\cronvar{int}{error\tu code}\\
+		Assignments of the error codes.\par
+		\begin{tabular}{lc}
+			\crondef{CRONO\tu READ\tu OK} & 0\\
+			\crondef{CRONO\tu READ\tu NO\tu DATA} & 1\\
+			\crondef{CRONO\tu READ\tu INTERNAL\tu ERROR} & 2\\
+			\crondef{CRONO\tu READ\tu TIMEOUT} & 3\par
+		\end{tabular}\par
+
+		\cronvar{const char}{*error\tu message}
+		The last error in human readable form, possibly with additional information on the error.
+
+	
