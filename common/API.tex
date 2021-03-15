@@ -70,7 +70,7 @@ The functions provided by the DLL are declared in \textsf{\txh{TimeTagger4}{xTDC
 		\ttvar{int}{get\tu default\tu init\tu parameters(}\cronvar{\initparameters}{ *init)}\\
 		Sets up the standard parameters. Gets a set of default parameters for \textsf{\prefix init()}. This must always be used to initialize the \textsf{\prefix init\tu parameter()} structure.\par
 
-		\cronvar{\prefix \ifxHPTDC{manager}{device} *}{init(}\cronvar{\initparameters}{*params}, \\ 
+		\cronvar{\prefix \ifxHPTDC{manager}{device} *}{\prefix init(}\cronvar{\initparameters}{*params}, \\ 
 		\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
 		Opens and initializes the \deviceName\ board with the given index. 
 		The user must provide pointers to memory locations where the driver can store return values.\\

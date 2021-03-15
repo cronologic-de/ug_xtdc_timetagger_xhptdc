@@ -1,9 +1,15 @@
 %%%%%%%%%%%% struct manager configuration
 \ifxHPTDC{
 	\subsection{Structure \prefix manager\tu configuration}
+	\cronvar{int}{size}\\
+	The number of bytes occupied by the structure.\par
+
+	\cronvar{int}{version}\\
+	A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
+
 	\cronvar{\prefix device\tu configuration}{device\tu configs[\PREFIX DEVICES\tu MAX]}\\
-	A structure with the configuration for an individual \deviceName\ board as defined in the next subsection.
-	Use the function \textsf{\prefix count\tu devices()} to query how many entries contain valid information. See section \ref{countdevices} for details. \par 
+	A structure with the configuration for an individual \deviceName\ board as defined in ssection \ref{structconfig}.
+	Use the function \textsf{\prefix count\tu devices()} to query how many entries contain valid information. See section \ref{countdevices} for details on the function. \par 
 
 	\cronvar{\prefix grouping\tu configuration}{grouping}\\
 	Structure with the parameters for grouping. 
@@ -15,7 +21,7 @@
 }{}
 %%%%%%%%%%%%%% struct device_configuration
 \subsection{Structure \prefix \ifxHPTDC{device\tu}{}configuration}
-
+	\label{structconfig}
 	This is the structure containing the configuration information. 
 	\ifxHPTDC{}{ % xHPTDC8 uses TDC manager instead
 		It is used in conjunction with \textsf{\prefix get\tu default\tu configuration()}, \textsf{\prefix get\tu current\tu configuration()} and \textsf{\prefix configure()}.\par
@@ -47,15 +53,9 @@
 		\autotrigger
 	}{}
 
-	\cronvar{int}{tdc\tu mode}\\
-	\ifxHPTDC{
-		This defines whether grouping is used by the \textsf{\prefix read\tu hits()} method. \\
-		Defaults to continuous mode. \\*
-		\begin{tabular}{lc}
-			\ttdef{TDC\tu MODE\tu GROUPED} & 0   \\
-			\ttdef{TDC\tu MODE\tu CONTINUOUS} & 1   \\
-		\end{tabular}
+	\ifxHPTDC{ %see xhptdc8_grouping_configuration.enable	
 	}{
+		\cronvar{int}{tdc\tu mode}\\
 		TDC mode. Can be grouped or continuous.
 		Currently only \textsf{\PREFIX TDC\tu MODE\tu GROUPED} is supported. 
 		This is set per default by \textsf{\prefix get\tu current\tu configuration()} and should be left unchanged.
@@ -71,42 +71,49 @@
 		}\par
 	}
 
-	\cronvar{double}{dc\tu offset[\PREFIX TDC\tu CHANNEL\tu COUNT + 1]}\\	
+	\cronvar{double}{threshold[\PREFIX TDC\tu CHANNEL\tu COUNT + 1]}\\	
 	Set the threshold voltage for the input channels \ifxHPTDC{A \ldots H and TRG}{S, A \ldots D} (see figure \ref{fig:dcoffset1}).
 	\begin{itemize}
 		\ifxHPTDC{
-			\item dc\tu offset[0 - 7] : threshold for channels A \ldots H
-			\item dc\tu offset[8] : threshold for channel TRG
+			\item threshold[0 - 7] : threshold for channels A \ldots H
+			\item threshold[8] : threshold for channel TRG
 		}{
 			\item dc\tu offset[0] : threshold for channel Start
 			\item dc\tu offset[1 - 4] : threshold for channels A \ldots D
 		}
 	\end{itemize}
 	Supported range is -1.32V to +1.18V. This should be close to 50\% of the height of the input pulse. Examples for various signaling standards are defined as follows:\par
+	\ifxHPTDC{
+		\newcommand{\DCOFFSET}{THRESHOLD\tu}
+	}{
+		\newcommand{\DCOFFSET}{DC\tu OFFSET\tu}
+	}
 	\begin{tabular}{ll}
-		\ttdef{DC\tu OFFSET\tu P\tu NIM} & +0.35\\
-		\ttdef{DC\tu OFFSET\tu P\tu CMOS} & +1.18\\
-		\ttdef{DC\tu OFFSET\tu P\tu LVCMOS\tu 33} & +1.18\\
-		\ttdef{DC\tu OFFSET\tu P\tu LVCMOS\tu 25} & +1.18\\
-		\ttdef{DC\tu OFFSET\tu P\tu LVCMOS\tu 18} & +0.90\\
-		\ttdef{DC\tu OFFSET\tu P\tu TTL} & +1.18\\
-		\ttdef{DC\tu OFFSET\tu P\tu LVTTL\tu 33} & +1.18\\
-		\ttdef{DC\tu OFFSET\tu P\tu LVTTL\tu 25} & +1.18\\
-		\ttdef{DC\tu OFFSET\tu P\tu SSTL\tu 3} & +1.18\\
-		\ttdef{DC\tu OFFSET\tu P\tu SSTL\tu 2} & +1.18\\
-		\ttdef{DC\tu OFFSET\tu N\tu NIM} & -0.35\\
-		\ttdef{DC\tu OFFSET\tu N\tu CMOS} & -1.32\\
-		\ttdef{DC\tu OFFSET\tu N\tu LVCMOS\tu 33} & -1.32\\
-		\ttdef{DC\tu OFFSET\tu N\tu LVCMOS\tu 25} & -1.25\\
-		\ttdef{DC\tu OFFSET\tu N\tu LVCMOS\tu 18} & -0.90\\
-		\ttdef{DC\tu OFFSET\tu N\tu TTL} & -1.32\\
-		\ttdef{DC\tu OFFSET\tu N\tu LVTTL\tu 33} & -1.32\\
-		\ttdef{DC\tu OFFSET\tu N\tu LVTTL\tu 25} & -1.25\\
-		\ttdef{DC\tu OFFSET\tu N\tu SSTL\tu 3} & -1.32\\
-		\ttdef{DC\tu OFFSET\tu N\tu SSTL\tu 2} & -1.25\\
+		\ttdef{\DCOFFSET P\tu NIM} & +0.35\\
+		\ttdef{\DCOFFSET P\tu CMOS} & +1.18\\
+		\ttdef{\DCOFFSET P\tu LVCMOS\tu 33} & +1.18\\
+		\ttdef{\DCOFFSET P\tu LVCMOS\tu 25} & +1.18\\
+		\ttdef{\DCOFFSET P\tu LVCMOS\tu 18} & +0.90\\
+		\ttdef{\DCOFFSET P\tu TTL} & +1.18\\
+		\ttdef{\DCOFFSET P\tu LVTTL\tu 33} & +1.18\\
+		\ttdef{\DCOFFSET P\tu LVTTL\tu 25} & +1.18\\
+		\ttdef{\DCOFFSET P\tu SSTL\tu 3} & +1.18\\
+		\ttdef{\DCOFFSET P\tu SSTL\tu 2} & +1.18\\
+		\ttdef{\DCOFFSET N\tu NIM} & -0.35\\
+		\ttdef{\DCOFFSET N\tu CMOS} & -1.32\\
+		\ttdef{\DCOFFSET N\tu LVCMOS\tu 33} & -1.32\\
+		\ttdef{\DCOFFSET N\tu LVCMOS\tu 25} & -1.25\\
+		\ttdef{\DCOFFSET N\tu LVCMOS\tu 18} & -0.90\\
+		\ttdef{\DCOFFSET N\tu TTL} & -1.32\\
+		\ttdef{\DCOFFSET N\tu LVTTL\tu 33} & -1.32\\
+		\ttdef{\DCOFFSET N\tu LVTTL\tu 25} & -1.25\\
+		\ttdef{\DCOFFSET N\tu SSTL\tu 3} & -1.32\\
+		\ttdef{\DCOFFSET N\tu SSTL\tu 2} & -1.25\\
 	\end{tabular}\par
 		\noindent The inputs are AC coupled. Thus, the absolute voltage is not important for pulse inputs. 
-		It is the relative pulse amplitude that causes the input circuits to switch. \textit{dc\tu offset} must be set to the relative switching voltage for the input standard in use. If the pulses are negative, a negative switching threshold must be set and vice versa.
+		It is the relative pulse amplitude that causes the input circuits to switch. 
+		The parameter must be set to the relative switching voltage for the input standard in use. 
+		If the pulses are negative, a negative switching threshold must be set and vice versa.
 	\begin{figure}
 		\begin{center}
 			\ifxHPTDC{
@@ -332,6 +339,9 @@
 	Grouping is enabled with the \textsf{tdc\tu mode} paramter defined in the top level of the config structure.
 
 	In this structure intervals are always provided in picoseconds, independently of the bin size of the TDC.
+
+	\cronvar{bool}{enable}
+	Enable grouping. Defaults to \textsf{false}.
 
 	\cronvar{int}{trigger\tu channel}\\
 	Channel number that is used to trigger the creation of a group.\par

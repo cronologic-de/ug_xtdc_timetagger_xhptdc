@@ -14,11 +14,11 @@
 		\ttvar{int}{stop\tu capture(}\device)\\
 		Stop data acquisition.\par
 
-		\ttvar{int}{start\tu tiger(}\device)\\
-		Start timing generator. This can be done independantly of the state of the data acquisition.\par
+		\ttvar{int}{start\tu tiger(}\device, \cronvar{int}{index})\\
+		\ttvar{int}{stop\tu tiger(}\device, \cronvar{int}{index})\\
+		Start and stop the timing generator of an individual board. 
+		This can be done independently of the state of the data acquisition.\par	
 
-		\ttvar{int}{stop\tu tiger(}\device)\\
-		Stop timing generator. This can be done independantly of the state of the data acquisition.\par
 
 \section{Readout}
 

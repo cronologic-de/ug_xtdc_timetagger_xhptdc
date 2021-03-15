@@ -46,6 +46,7 @@
 
 %import a title PDF and create TOC
 \newcommand{\cronofront}[1]{
+	\pagenumbering{Alph}   %this is invisible but avoids a warning for duplicate hyperlink targets
 	\newpage
 	\pagestyle{empty}
 	\incgraph[a4paper][width=\paperwidth]{#1}
