@@ -106,7 +106,7 @@ With year and running number in 8.24 format. The number is identical to the one 
 \cronvar{unsigned int}{flash\tu serial\tu low}\\
 64-bit manufacturer serial number of the flash chip
 
-\cronvar{int}{flash\tu valid}\\
+\cronvar{crono\tu bool\tu t}{flash\tu valid}\\
 If not 0 the driver found valid calibration data in the flash on the board and is using it.\par
 
 \cronvar{int}{calibration\tu date}\\
@@ -226,16 +226,13 @@ The state the XHPTDC8Manager is in.
         \cronvar{int}{cdce\tu version}\\
         Version information from the CDCE62005 clock synthesizer.\\
         
-        \cronvar{int}{clock\tu source}\\
-        Source for the clock synthesizer is usually the 10MHz on board oscillator. 
-        When multiple boards are synchonised all but the first board use a clock that they receive on J2. See section \ref{multiboard} for details.\\       
-        \begin{tabular}{lc}
-            \ttdef{CLK\tu OSC} & 2\\
-            \ttdef{CLK\tu J2}  & 4\\
-            \ttdef{CLK\tu J12} & 1\\
-        \end{tabular}
+        \cronvar{crono\tu bool\tu t}{use\tu ext\tu clock}\\
+        Source for the clock synthesizer is usually the 10MHz on board oscillator. During initialisation alternatively  an external clock on J2 can be selected.
+        When multiple boards are synchonised all board use a common external clock. See section \ref{multiboard} for details.
+        \\       
+
     
         \cronvar{crono\tu bool\tu t}{fpga\tu locked}\\
-        Set if the FPGA datapath PLL achieved lock.
+        Set if the FPGA datapath PLL achieved lock.\\
     
 }{}

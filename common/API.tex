@@ -155,14 +155,15 @@ By default the installer will place the files into the directory
 			Should not be changed by the user.\par
 
 			\ifxHPTDC{
-				\cronvar{int}{multiboard}\\
-				Set if multiple devices shall be synchronized.\par
+				\cronvar{crono\tu bool\tu t}{multiboard}\\
+				Set if multiple devices shall be synchronized. Also sets the clock source to external.\par
 	
-				\cronvar{int}{use\tu ext\tu clock}\\
-				If set to 1 use external 10 MHz reference. If set to 0 use internal reference.\par
+				\cronvar{crono\tu bool\tu t}{use\tu ext\tu clock}\\
+				If set use the external 10 MHz reference on J2, otherwise the internal clock source is used. 
+				When \textsf{multiboard} is set this parameter is ignored and the external clock is used. \par
 
-				\cronvar{int}{ignore\tu calibration}\\
-				Leave at 0 to use device calibration data.\par
+				\cronvar{crono\tu bool\tu t}{ignore\tu calibration}\\
+				Leave at false to use device calibration data.\par
 		
 			}{
 				\cronvar{int}{use\tu ext\tu clock}\\
