@@ -1,5 +1,8 @@
 	%%%%%%%%%%%%%%%%% run time control
 	\section{Controlling the State of the Driver}
+	Once the devices are configured the following functions can be used to control the behaviour of the devices. 
+	All of these functions return quickly with very little overhead, but they are not guaranteed to be thread safe.
+
 		\ttvar{int}{start\tu capture(}\device)\\
 		Start data acquisition.\par
 
@@ -30,6 +33,10 @@ If grouping is disabled, all availabe data is read up to the size of the buffer.
 The method always returns immediately. If no hits are read it of is beneficial to call \textsf{sleep()} 
 or yield the CPU to another process instead of trying again immediately.\\
 Make sure to set \textsf{size} to the number of elemenst that fit into the buffer.\\*
+
+This function is not thread safe. 
+If you want to process the read data in multiple threads the data needs to be copied to a seperate buffer for each thread.
+
 
 
 

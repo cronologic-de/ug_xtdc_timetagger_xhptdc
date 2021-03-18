@@ -2,7 +2,7 @@
 	\newcommand{\device}{\cronvar{\prefix manager}{*xhptdc8\tu mgr}}
 	\newcommand{\deviceindex}{\device, \cronvar{int}{index}}
 	\newcommand{\deviceconfig}{\device}
-	\newcommand{\initparameters}{xhptdc8manager\tu init\tu parameters}
+	\newcommand{\initparameters}{xhptdc8\tu manager\tu init\tu parameters}
 }{
 	\newcommand{\device}{\cronvar{\prefix device}{*device}}
 	\newcommand{\deviceindex}{\device}
@@ -12,11 +12,27 @@
 
 The API is a DLL with C linkage.\par
 
-The functions provided by the DLL are declared in \textsf{\txh{TimeTagger4}{xTDC4}{xHPTDC8}\tu interface.h}.
+The functions provided by the driver are declared in \textsf{\txh{TimeTagger4}{xTDC4}{xHPTDC8}\tu interface.h} 
+which must be included by your source code.
+You must tell your compiler to link with the file \textsf{xhptdc8\tu driver.lib} 
+or the corresponding 64 bit version \textsf{xhptdc8\tu driver\tu 64.lib}.
+When running your program the dynamic link library containing the actual driver code must reside in the same directory as your executable. 
+The file for the DLL is called \textsf{\prefix driver.dll} for x86 and \textsf{\prefix driver\tu 64.dll} for x64.
 
+All these files are provided with the driver installer that can be downloaded from the product website \url{https://www.cronologic.de}. 
+By default the installer will place the files into the directory 
+\textsf{C:\filesep program files\filesep cronologic\filesep \deviceName\filesep driver}.
+
+\ifxHPTDC{
+	There exist an open source community project that intends to provide some convenient extensions to the driver, code examples 
+	and wrappers to make the driver usable with various programming languages like Python and LabView. 
+	The project is hosted at \url{https://github.com/cronologic-de/xhptdc8_babel}.
+}{}
+
+ 
 \section{Constants}
 \ifxHPTDC{
-	\crondef{XHPTDC8MANAGER\tu DEVICES\tu MAX 8}\\
+	\crondef{XHPTDC8\tu MANAGER\tu DEVICES\tu MAX 8}\\
 	The maximum number of boards supported by the device manager.
 
 	\ttdef{TDC\tu CHANNEL\tu COUNT 8}\\
@@ -72,10 +88,10 @@ The functions provided by the DLL are declared in \textsf{\txh{TimeTagger4}{xTDC
 
 		\cronvar{\prefix \ifxHPTDC{manager}{device} *}{\prefix init(}\cronvar{\initparameters}{*params}, \\ 
 		\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
-		Opens and initializes the \deviceName\ board with the given index. 
-		The user must provide pointers to memory locations where the driver can store return values.\\
-		\textsf{error\tu code} shall point to an integer for the error code. \\
-		\textsf{error\tu message} must point to a pointer to char. The driver will allocate a buffer for zero terminated error messages and store the address of the buffer in the location provided by the user.\par
+		Opens and initializes the \deviceName\ board with the given index. \\
+		\textsf{error\tu code} shall point to an integer where the driver can write the the error code. \\
+		\textsf{error\tu message} must point to a pointer to char. 
+		The driver will allocate a buffer for zero terminated error message and store the address of the buffer in the location provided by the user.\par
 
 		The paramter \textsf{params} is a structure of type \textsf{\prefix init\tu parameters} that must be completely initialized.\par
 
