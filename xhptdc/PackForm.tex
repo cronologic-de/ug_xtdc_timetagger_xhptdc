@@ -7,7 +7,7 @@ The time stamp of the hit in picoseconds. If grouping is enabled the timestamp i
 Otherwise the timestampe is continuously counting up from the call to \textsf{start\tu capture()}.
 
 \cronvar{unsigned char}{channel}\\
-For the forst in the system this 0 to 7 for the TDC channels A to H. 8 or 9 for ADC data. Data from channels 8 and 9 should usually be treated as data from the same channel. 
+For the first board in the system this is 0 to 7 for the TDC channels A to H. 8 or 9 for ADC data. Data from channels 8 and 9 should usually be treated as data from the same channel. 
 For the other boards the channel number is incremented by $board\_id \cdot 10$
 
 \cronvar{unsigned char}{type}\\
