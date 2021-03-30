@@ -65,17 +65,17 @@ The trigger sources with names ending in \textsf{\tu sync} are managed by the dr
 
 \ifxHPTDC{
 	The TiGer outputs are AC coupled to the connector. They can be operated in one of the following modes:
-	\paragraph*{\textsf{\PREFIX\tu TIGER\tu OFF}} 
+	\paragraph*{\textsf{\PREFIX TIGER\tu OFF}} 
 		No signal is output to the connetor. 
-	\paragraph*{\textsf{\PREFIX\tu TIGER\tu OUTPUT}} 
+	\paragraph*{\textsf{\PREFIX TIGER\tu OUTPUT}} 
 		In this mode the connector is input only. Pulses are unipolar with 2V amplitude. 
 		Connected hardware must not drive any signals to connectors used as outputs, as doing so could damage both the \deviceName and the external hardware. 
 		We recommend to only use short pulses to avoid undesirable baseline shift due to the AC coupling, but the device does not pose any restrictions on the duty cycle. 
 		This mode can be used as a clock output with a frequency of $75/N$~MHz for integer $N$.
-	\paragraph*{\textsf{\PREFIX\tu TIGER\tu BIDI}} 
+	\paragraph*{\textsf{\PREFIX TIGER\tu BIDI}} 
 		In this mode the TiGer creates unipolar pulses with 1~V amplitude. The connector can still be used as an input. 
 		Use short pulses to keep the propability of collision and the effect on the baseline low.	
-	\paragraph*{\textsf{\PREFIX\tu TIGER\tu BIPOLAR}} 
+	\paragraph*{\textsf{\PREFIX TIGER\tu BIPOLAR}} 
 		In this mode the connector creates bipolar pulses with 1~V amplitude. The connector can still be used as an input. 
 		The pulses have no effect on the baseline offset. 
 		TiGer should be configured with $stop = start$ for minimum width bipolar pulses of $2 \times 6.\overline{6}~ns$. 
