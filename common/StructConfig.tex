@@ -71,17 +71,19 @@
 		}\par
 	}
 
-	\cronvar{double}{threshold[\PREFIX TDC\tu CHANNEL\tu COUNT + 1]}\\	
-	Set the threshold voltage for the input channels \ifxHPTDC{A \ldots H and TRG}{S, A \ldots D} (see figure \ref{fig:dcoffset1}).
-	\begin{itemize}
-		\ifxHPTDC{
-			\item threshold[0 - 7] : threshold for channels A \ldots H
-			\item threshold[8] : threshold for channel TRG
-		}{
+	\label{apidcoffset}
+	\ifxHPTDC{
+		\cronvar{double}{threshold[\PREFIX TDC\tu CHANNEL\tu COUNT]}\\	
+		Set the threshold voltage for the input channels \ifxHPTDC{A \ldots H}{S, A \ldots D} (see figure \ref{fig:dcoffset1}).	
+	}{
+		\cronvar{double}{dc\tu offset[\PREFIX TDC\tu CHANNEL\tu COUNT]}\\	
+		Set the threshold voltage for the input channels \ifxHPTDC{A \ldots H}{S, A \ldots D} (see figure \ref{fig:dcoffset1}).	
+		\begin{itemize}
 			\item dc\tu offset[0] : threshold for channel Start
 			\item dc\tu offset[1 - 4] : threshold for channels A \ldots D
-		}
-	\end{itemize}
+		\end{itemize}
+	}
+
 	Supported range is -1.32V to +1.18V. This should be close to 50\% of the height of the input pulse. Examples for various signaling standards are defined as follows:\par
 	\ifxHPTDC{
 		\newcommand{\DCOFFSET}{THRESHOLD\tu}
@@ -132,24 +134,27 @@
 %%				\end{center}
 %%			\end{figure}
 
-	\ttvar{\prefix trigger}{trigger[\PREFIX TRIGGER\tu COUNT]}\\
+	\cronvar{\prefix trigger}{trigger[\PREFIX TRIGGER\tu COUNT]}\\
 	Configures the polarity of the external trigger sources.
 	These are used as inputs for the TiGer blocks and as inputs to the time measurement unit.\par
 
-	\ttvar{\prefix tiger\tu block}{tiger\tu block[\PREFIX TIGER\tu COUNT]}\\
+	\cronvar{\prefix tiger\tu block}{tiger\tu block[\PREFIX TIGER\tu COUNT]}\\
 	Configuration of the timing generators (TiGer).
 
 	\ifxHPTDC{
-		\ttvar{\prefix tiger\tu block}{gating\tu block[\PREFIX GATE\tu COUNT]}\\
+		\cronvar{\prefix tiger\tu block}{gating\tu block[\PREFIX GATE\tu COUNT]}\\
 		Configuration of the gating blocks.	
 	}{} % only for xHPTDC8
 
-	\ttvar{\prefix channel}{channel[\PREFIX CHANNEL\tu COUNT]}\\
+	\cronvar{\prefix channel}{channel[\PREFIX CHANNEL\tu COUNT]}\\
 		Configure the TDC channels.
 
 	\ifxHPTDC{
-		\cronvar{crono\tu bool\tu t}{skip\tu alignment}\\
-		If set,  the phase of the two TDC chips is not realigned when capturing is restartet.
+		\cronvar{\prefix channel}{adc\tu channel}\\
+		Configure the ADC channel.\par
+
+ 		\cronvar{crono\tu bool\tu t}{skip\tu alignment}\\
+		If set,  the phase of the two TDC chips is not realigned when capturing is restartet.\par
 
 		\cronvar{crono\tu bool\tu t}{alignment\tu source}\\
 		Define a signal source that is used for phase alignment. Should usually be left unchanged.
@@ -330,6 +335,28 @@
 			\]
 		}
 
+%%%%%%%%%%%%%%%%%%%%%% adc channel
+\ifxHPTDC{
+	\newpage
+	\subsection{Structure adc\tu channel}
+	\label{structadcchannel}
+	This structure configures the ADC intput and the corresponding trigger input. See section \ref{adc}.
+
+	\cronvar{crono\tu bool\tu t}{enable}\\
+	Enable acquisition of ADC data.\par
+
+	\cronvar{crono\tu bool\tu t}{watchdog\tu readout}\\
+	Include periodic ADC measurements in the output data. Watchdog measurements do not inhibit ADC  triggers occuring at the same time.\par
+	
+	\cronvar{int}{watchdog\tu interval}\\
+	Number of 150~MHz clock cycles within one watchdog period. 
+	\[ 100 <= watchdog\_interval  <= 7500\]
+	
+	\cronvar{double}{trigger\tu threshold}\\
+	Threshold voltage for the TRG input. See the description for the \textsf{channel.trigger\tu threshold} in section \ref{apidcoffset}.
+
+}
+
 %%%%%%%%%%%%%%%%%%%%% grouping, only fpr xHPTDC8
 
 \ifxHPTDC{
@@ -340,7 +367,7 @@
 
 	In this structure intervals are always provided in picoseconds, independently of the bin size of the TDC.
 
-	\cronvar{bool}{enable}
+	\cronvar{crono\tu bool\tu t}{enable}
 	Enable grouping. Defaults to \textsf{false}.
 
 	\cronvar{int}{trigger\tu channel}\\
