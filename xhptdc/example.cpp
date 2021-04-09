@@ -9,8 +9,9 @@
 typedef unsigned int uint32;
 typedef unsigned __int64 uint64;
 int exit_on_fail(xhptdc8_manager hMgr, int status, const char* message);
+const int MAX_TRYS_TO_READ_HITS = 1000;
 
-// crate a manager object that provides access to all xHPTDC8 in the system
+// create a manager object that provides access to all xHPTDC8 in the system
 xhptdc8_manager initialize_xhptdc8(int buffer_size) {
 	// prepare initialization
 	xhptdc8_manager_init_parameters params;
@@ -38,6 +39,7 @@ int get_device_count(xhptdc8_manager xhptdc8_man) {
 int configure_xhptdc8(xhptdc8_manager xhptdc8_man, int device_count) {
 	xhptdc8_manager_configuration* mgr_cfg = new xhptdc8_manager_configuration;
 	xhptdc8_get_default_configuration(xhptdc8_man, mgr_cfg);
+	int general_offset = 50, epsilon = 4;
 
 	// configure all devices with an identical configuration
 	for (int device_index = 0; device_index < device_count; device_index++) {
@@ -57,17 +59,26 @@ int configure_xhptdc8(xhptdc8_manager xhptdc8_man, int device_count) {
 		mgr_cfg->device_configs[device_index].auto_trigger_random_exponent = 0;
 
 		// set all TiGers to create a short pulse for every auto trigger 
-		for (int tiger_index = 0; tiger_index < XHPTDC8_TDC_CHANNEL_COUNT; tiger_index++)
+		for (int block_index = 0; block_index < XHPTDC8_TDC_CHANNEL_COUNT; block_index++)
 		{
-			mgr_cfg->device_configs[device_index].tiger_block[tiger_index].extend = false;
-			mgr_cfg->device_configs[device_index].tiger_block[tiger_index].negate = false;
-			mgr_cfg->device_configs[device_index].tiger_block[tiger_index].retrigger = false;
-			mgr_cfg->device_configs[device_index].tiger_block[tiger_index].sources 
+			int channel_offset = block_index * 2;
+			mgr_cfg->device_configs[device_index].tiger_block[block_index].extend = false;
+			mgr_cfg->device_configs[device_index].tiger_block[block_index].negate = false;
+			mgr_cfg->device_configs[device_index].tiger_block[block_index].retrigger = false;
+			mgr_cfg->device_configs[device_index].tiger_block[block_index].sources
 				= XHPTDC8_TRIGGER_SOURCE_AUTO;
+			mgr_cfg->device_configs[device_index].tiger_block[block_index].mode = XHPTDC8_TIGER_BIPOLAR;
 
 			// every channel pulses a little later than the previous channel, for one clock cycle
-			mgr_cfg->device_configs[device_index].gating_block[tiger_index].start = tiger_index * 2;
-			mgr_cfg->device_configs[device_index].gating_block[tiger_index].start = tiger_index * 2 + 1;
+			mgr_cfg->device_configs[device_index].tiger_block[block_index].start = general_offset +  channel_offset;
+			mgr_cfg->device_configs[device_index].tiger_block[block_index].stop = general_offset + channel_offset + 1;
+
+			// block trigger that is outside start-stop range
+			mgr_cfg->device_configs[device_index].gating_block[block_index].negate = false;
+			mgr_cfg->device_configs[device_index].gating_block[block_index].sources = XHPTDC8_TRIGGER_SOURCE_AUTO;
+			mgr_cfg->device_configs[device_index].gating_block[block_index].mode = XHPTDC8_GATE_ON;
+			mgr_cfg->device_configs[device_index].gating_block[block_index].start = general_offset + channel_offset - epsilon;
+			mgr_cfg->device_configs[device_index].gating_block[block_index].stop = general_offset + channel_offset + epsilon + 1;
 		}
 	}
 	return xhptdc8_configure(xhptdc8_man, mgr_cfg);
@@ -95,19 +106,23 @@ void print_hit(TDCHit* hit) {
 
 	printf("Channel %u - Time %llu - Type %x", hit->channel, hit->time, hit->type);
 	if (adc_data)
-		printf(" - ADC Data : %channel_index", (int)(hit->bin));
+		printf(" - ADC Data : %d", (int)(hit->bin));
 
 	printf("\n");
 }
 
-// call read_hits() once per millisecond until there is some data
+// call read_hits() once per millisecond until there is some data or max count of trys
 int poll_for_hits(xhptdc8_manager xhptdc8_man, TDCHit* hit_buffer, size_t events_per_read) {
-	while (true) {
+	int trys_to_read_hits = 0;
+	while (trys_to_read_hits < MAX_TRYS_TO_READ_HITS) {
 		unsigned long hit_count = xhptdc8_read_hits(xhptdc8_man, hit_buffer, events_per_read);
 		if (hit_count)
 			return hit_count;
 		Sleep(1);
+		trys_to_read_hits++;
 	}
+	if (trys_to_read_hits == MAX_TRYS_TO_READ_HITS)
+		printf("not enough data, check trigger source and device configuration\n");
 }
 
 
@@ -126,11 +141,11 @@ void read_hits_wrapper(xhptdc8_manager xhptdc8_man, int events_per_read) {
 			TDCHit* hit = &(hit_buffer[i]);
 			print_hit(hit);
 			if ((total_events++ % 100) == 0)
-				printf("Sum: %channel_index - Packet events: %channel_index\n", total_events, hit_count);
+				printf("Sum: %d - Packet events: %d\n", total_events, hit_count);
 		}
 	}
 
-	delete hit_buffer;
+	delete[] hit_buffer;
 }
 
 // utility function to check for error, print error message and exit
@@ -143,32 +158,40 @@ int exit_on_fail(xhptdc8_manager x_man, int status, const char* message) {
 
 int main(int argc, char* argv[]) {
 	printf("cronologic xhptdc8_user_guide_example using driver: %s\n", xhptdc8_get_driver_revision_str());
+	printf("\n\nThis is illustrating the usage of an xHPTDC8 examplary with internal triggering");
 
+	//init manager for devices
 	xhptdc8_manager x_man = initialize_xhptdc8(8 * 1024 * 1024);
 
 	exit_on_fail(x_man,
+		//configure all devices with that manager
 		configure_xhptdc8(x_man, get_device_count(x_man)),
 		"Could not configure.");
 
 	print_device_information(x_man);
 
 	exit_on_fail(x_man,
+		//start measurement
 		xhptdc8_start_capture(x_man),
 		"Could not start capturing.");
 
 	exit_on_fail(x_man,
+		//start TiGer-functionality
 		xhptdc8_start_tiger(x_man, 0),
 		"Could not start TiGer.");
 
+	//collect measured data
 	read_hits_wrapper(x_man, 10000);
 
 	exit_on_fail(x_man,
+		//stop measurement
 		xhptdc8_stop_capture(x_man),
 		"Could not stop capturing.");
 
 	exit_on_fail(x_man,
+		//close manager
 		xhptdc8_close(x_man),
-		"Could not stop capturing.");
+		"Could not close devices-manager.");
 
 	return 0;
 }
