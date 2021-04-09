@@ -28,7 +28,7 @@
 \ttvar{int}{read\tu hits(}\device,  \cronvar{TDCHit}{*hit\tu buf,} \cronvar{size\tu t}{size} )\\
 Read a multitude of hits into a buffer provided by the user. Returns the number of read hits.\\
 If grouping is enabled a single group is read. 
-If the group is to large for the buffer the remaining hits of the group are discarded.\\*
+If the group is too large for the buffer the remaining hits of the group are discarded.\\*
 If grouping is disabled, all availabe data is read up to the size of the buffer. \\
 The method always returns immediately. If no hits are read it of is beneficial to call \textsf{sleep()} 
 or yield the CPU to another process instead of trying again immediately.\\

@@ -12,8 +12,11 @@
     \ttvar{int}{get\tu device\tu type}(\device)\\
     Returns the type of the device as \textsf{CRONO\tu DEVICE\tu \txh{TIMETAGGER4}{XTDC4}{XHPTDC8}}.\par
 
-    \ttvar{const char*}{get\tu last\tu error\tu message(\device)}\\
-    Returns most recent error message.\par
+    \ttvar{const char*}{get\tu last\tu error\tu message(\device)\ifxHPTDC{,\lb \cronvar{int}{index = -1}}{}}\\
+    Returns most recent error message.
+    \ifxHPTDC{If index is negative the last error message from the \textsf{\prefix\tu manager} is returned. 
+    Otherwise the last error message of the selected board is returned. }{}
+    \par
 
     \ttvar{int}{get\tu fast\tu info(}\deviceindex, \lb\cronvar{\prefix fast\tu info}{*info)}\\
     Returns fast dynamic information.\\
@@ -33,7 +36,7 @@
         Get temperature measurements from multiple sources on the board.
 
         \ttvar{int}{get\tu clock\tu info(}\deviceindex, \lb\cronvar{\prefix clock\tu info}{*info)}\\
-        Get information on clocking configuration an status.
+        Get information on clocking configuration and status.
 
         \ttvar{const char *}{device\tu state\tu to \tu str(}\cronvar{int state)}\\
         Convert the state value from \textsf{\prefix fast\tu info.state} into a human readable string. 
@@ -59,8 +62,8 @@ A version number that is increased when the definition of the structure is chang
 \cronvar{int}{board\tu id}\\
 ID of the board.\\
 \ifxHPTDC{
-    All \deviceName\ boards in the system are numbered according in order of their serial numbers starting at zero.
-    The channel A of a board has channel number $board\_id \cdot 10$. \par
+    All \deviceName\ boards in the system are numbered in the order of their serial numbers starting at zero.
+    The channel A of a board has channel number $index \cdot 10$. \par
 }{}
 
 \cronvar{int}{driver\tu revision}\\
@@ -127,7 +130,7 @@ A version number that is increased when the definition of the structure is chang
 \cronvar{double}{binsize}\\
 Bin size (in ps) of the measured TDC data.
 
-\ifxHPTDC{}{ %board ID is found in the static_info structure.
+\ifxHPTDC{}{ %board ID is found in the static_info structure for .
     \cronvar{int}{board\tu id}\\
     Board ID.\\
     The board uses this ID to identify itself in the output data stream. The ID takes values between 0 and 255.\par
@@ -135,7 +138,7 @@ Bin size (in ps) of the measured TDC data.
 
 \cronvar{int}{channels}\\
 Number of TDC channels of the board.\\
-Returns \ifxHPTDC{8}{4}.\par
+Fixed at \ifxHPTDC{8}{4}.\par
 
 \cronvar{int}{channel\tu mask}\\
 Bit assignment of each enabled input channel.\\

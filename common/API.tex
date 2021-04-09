@@ -47,7 +47,7 @@ By default the installer will place the files into the directory
 	 \ttdef{TRIGGER\tu COUNT 16}\\
 	The number of potential trigger sources for the timing generators. One for each TDC input 
 	\ifxHPTDC{}{, one for the Start input} plus some specials. 
-	 See Section~\ref{cp:tigerblock} for details.\par
+	 See Section~\ref{structtrigger} for details.\par
 
 }{ 
 	\ttdef{CHANNEL\tu COUNT 4}\\
@@ -84,16 +84,19 @@ By default the installer will place the files into the directory
 		Finalizes the driver for this device.
 
 		\ttvar{int}{get\tu default\tu init\tu parameters(}\cronvar{\initparameters}{ *init)}\\
-		Sets up the standard parameters. Gets a set of default parameters for \textsf{\prefix init()}. This must always be used to initialize the \textsf{\prefix init\tu parameter()} structure.\par
+		Sets up the standard parameters. Gets a set of default parameters for \textsf{\prefix init()}. 
+		This must always be used to initialize the \textsf{\initparameters} structure before modifying it 
+		and passing it to \textsf{\prefix init}.\par
 
 		\cronvar{\prefix \ifxHPTDC{manager}{device} *}{\prefix init(}\cronvar{\initparameters}{*params}, \\ 
 		\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
-		Opens and initializes the \deviceName\ board with the given index. \\
+		Opens and initializes the \deviceName\ board
+		\ifxHPTDC{s}{with the given index}. \\
 		\textsf{error\tu code} shall point to an integer where the driver can write the the error code. \\
 		\textsf{error\tu message} must point to a pointer to char. 
 		The driver will allocate a buffer for zero terminated error message and store the address of the buffer in the location provided by the user.\par
 
-		The paramter \textsf{params} is a structure of type \textsf{\prefix init\tu parameters} that must be completely initialized.\par
+		The paramter \textsf{params} is a structure of type \textsf{\initparameters} that must be completely initialized.\par
 
 %%%%%%%%%%%%%%%%% struct init_parameters
 

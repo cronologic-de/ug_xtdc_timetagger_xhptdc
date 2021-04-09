@@ -38,7 +38,7 @@
 	\newcommand{\autotrigger}{			
 		\cronvar{int}{auto\tu trigger\tu period}\\
 		\cronvar{int}{auto\tu trigger\tu random\tu exponent}\\
-		Create a trigger either periodically or randomly. There are two parameters $M = \text{trigger\tu period}$ and $N = \text{random\tu exponent}$ that result in a distance between triggers of $T$ clock cycles.
+		Create a trigger either periodically or randomly. There are two parameters $M = \text{auto\tu trigger\tu period}$ and $N = \text{random\tu exponent}$ that result in a distance between triggers of $T$ clock cycles.
 
 		\begin{align}
 			T &= 1 + M + [1...2^N]\\
@@ -135,7 +135,7 @@
 %%			\end{figure}
 
 	\cronvar{\prefix trigger}{trigger[\PREFIX TRIGGER\tu COUNT]}\\
-	Configures the polarity of the external trigger sources.
+	Configuration of the polarity of the external trigger sources.
 	These are used as inputs for the TiGer blocks and as inputs to the time measurement unit.\par
 
 	\cronvar{\prefix tiger\tu block}{tiger\tu block[\PREFIX TIGER\tu COUNT]}\\
@@ -147,7 +147,7 @@
 	}{} % only for xHPTDC8
 
 	\cronvar{\prefix channel}{channel[\PREFIX CHANNEL\tu COUNT]}\\
-		Configure the TDC channels.
+		Configuration of the TDC channels.
 
 	\ifxHPTDC{
 		\cronvar{\prefix channel}{adc\tu channel}\\
@@ -193,14 +193,15 @@
 		Use \textsf{xtdc4\tu channel.rising} on page \pageref{structchannel} to select which edge is measured with full resolution.
 		The edge that is selected for full resolution measurement must also be enabled for low resolution measurement.
 	}{
-		While the TDC can only measure either rising or falling edges, the gating blocks and the TiGer are more flexibel. 
+		While the TDC can only measure either rising or falling edges, the gating blocks and the TiGer are more flexible. 
 		Set the corresponding flag for one of the edges or both edges when using the input with a TiGer or gating block.
 	}\par
 
 %%%%% tiger_block			
-
+    
 	\subsection{Structure \prefix tiger\tu block\label{cp:tigerblock}}
-	See section \ref{cp:tiger} for additional information.
+	See section \ref{cp:tiger} for additional information.\\
+
 	\ifxHPTDC{
 		\cronvar{int}{mode}\\*
 		Enables the desired mode of operation for the tiger. \\*
@@ -249,7 +250,7 @@
 	\itett{
 		In multiples of $4~ns$.
 	}{
-		In multiples of $20~ns/3 = 6,\overline{6}~ns$
+		In multiples of $20~ns/3 = 6.\overline{6}~ns$
 	}
 	The time during which the TiGer output is set, relative to the trigger input. The parameters \textsf{start} and \textsf{stop} must fulfill the following conditions:
 	\[ 0 <= start <= stop <= 2^{16}-1 \]
@@ -408,9 +409,9 @@
 	 \\*
 	Either data inside or outside the veto window can be suppressed.\\*
 	\begin{tabular}{lc}
-		\ttdef{VETO\tu OFF}     & 0 \\
-		\ttdef{VETO\tu INSIDE}  & 1 \\
-		\ttdef{VETO\tu OUTSIDE} & 2 \\
+		\ttdef{GROUPING\tu VETO\tu OFF}     & 0 \\
+		\ttdef{GROUPING\tu VETO\tu INSIDE}  & 1 \\
+		\ttdef{GROUPING\tu VETO\tu OUTSIDE} & 2 \\
 	\end{tabular}\par
 
 	\cronvar{\tu\tu int64}{veto\tu start}\\
