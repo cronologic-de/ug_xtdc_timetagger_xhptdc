@@ -90,8 +90,8 @@ By default the installer will place the files into the directory
 
 		\cronvar{\prefix \ifxHPTDC{manager}{device} *}{\prefix init(}\cronvar{\initparameters}{*params}, \\ 
 		\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
-		Opens and initializes the \deviceName\ board
-		\ifxHPTDC{s}{with the given index}. \\
+		Opens and initializes the \deviceName. 
+		\ifxHPTDC{boardss}{board with the given index}. \\
 		\textsf{error\tu code} shall point to an integer where the driver can write the the error code. \\
 		\textsf{error\tu message} must point to a pointer to char. 
 		The driver will allocate a buffer for zero terminated error message and store the address of the buffer in the location provided by the user.\par
@@ -191,7 +191,7 @@ By default the installer will place the files into the directory
 
 
 		\ttvar{int}{configure(}\deviceconfig, \\ \cronvar{\prefix \ifxHPTDC{manager\tu }{}configuration}{*config)}\\
-		Configures the \deviceName\ manager.\par
+		Configures the \textsf{\prefix manager}.\par
 
 		\ttvar{int}{get\tu current\tu configuration(}\deviceconfig, \\ \cronvar{\prefix \ifxHPTDC{manager\tu }{}configuration}{*config)}\\
 		Gets current configuration. Copies the current configuration to the specified config pointer.\par

@@ -14,7 +14,7 @@
 
     \ttvar{const char*}{get\tu last\tu error\tu message(\device)\ifxHPTDC{,\lb \cronvar{int}{index = -1}}{}}\\
     Returns most recent error message.
-    \ifxHPTDC{If index is negative the last error message from the \textsf{\prefix\tu manager} is returned. 
+    \ifxHPTDC{If index is negative the last error message from the \textsf{\prefix manager} is returned. 
     Otherwise the last error message of the selected board is returned. }{}
     \par
 
@@ -185,7 +185,7 @@ Number of PCIe lanes the card uses. Should always be 1 for the \deviceName. \par
 Maximum size in bytes for one PCIe transaction. Depends on system configuration.\par
 
 \cronvar{int}{state}\\
-The state the XHPTDC8Manager is in.
+The state the \textsf{\prefix manager} is in.
 
 \begin{tabular}{lc}
     \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CREATED} & 0  \\*
@@ -200,6 +200,7 @@ The state the XHPTDC8Manager is in.
 
 \ifxHPTDC{
     \subsection{Structure \prefix temperature\tu info}
+        This structure provide the values of temperature measurements of three of the chips on the board.
 
         \cronvar{int}{size}\\
         The number of bytes occupied by the structure. \par
@@ -216,6 +217,7 @@ The state the XHPTDC8Manager is in.
     %%%%%%%%%%%%%%%%%%%%% clock info
 
     \subsection{Structure \prefix clock\tu info}
+        This structure provides information about the clock network of the device. 
 
         \cronvar{int}{size}\\
         The number of bytes occupied by the structure. \par

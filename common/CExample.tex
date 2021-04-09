@@ -19,9 +19,16 @@
 		to the file. You can open it in an external viewer or save it to disk by clicking on it.
 
 		The example code is managed as open source on GitHub at 
-		\hyperlink{https://github.com/cronologic-de/xhptdc8_babel/tree/main/ug_example}{https://github.com/cronologic-de/xhptdc8\tu babel}. 
+		\href{https://github.com/cronologic-de/xhptdc8_babel/tree/main/ug_example}{https://github.com/cronologic-de/xhptdc8\tu babel}. 
 		The repository contains a complete project for Microsoft Visual Studio that you can use to compile the example.
-		Examples for more programming languages such as Python and LabView will be added to the repository over time.
+		Examples for more programming languages such as Golang, Rust, Python and LabView will be added to the repository over time.
+
+		At the time this document is written, the following source code can be found in the repository:
+		\begin{itemize}
+			\item \href{https://github.com/cronologic-de/xhptdc8_babel/tree/main/dummy}{dummy library} to be able to develop code for the \deviceName\ without a physical board beeing present
+			\item \href{https://github.com/cronologic-de/xhptdc8_babel/tree/main/util}{utility library} to configure the device from YAML strings or YAML files 
+			\item command line info tool to list information about all \deviceName\ boards in the system. This tool is written in Go.
+		\end{itemize}
 
 		\lstinputlisting{xhptdc/example.cpp}
 	}

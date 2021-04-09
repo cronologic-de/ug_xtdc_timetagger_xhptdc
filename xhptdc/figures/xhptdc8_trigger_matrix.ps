@@ -1,7 +1,7 @@
 %!PS-Adobe-3.0 EPSF-3.0
 %%Title: xhptdc8_trigger_matrix.ps
 %%Creator: XCircuit v3.9 rev73
-%%CreationDate: Sun Feb 28 14:19:45 2021
+%%CreationDate: Fri Apr  9 18:08:45 2021
 %%Pages: 1
 %%BoundingBox: 68 68 757 1106
 %%DocumentNeededResources: font Helvetica Times-Roman 
@@ -306,10 +306,9 @@ begingate
 endgate
 } def
 
-/digital::xnor {
+/digital::xor {
 % trivial
 begingate
-1 1.000 72 0 8 0.000 360.000 xcarc
 1 1.000 -19 -48 96 30.000 90.000 xcarc
 1 1.000 -19 48 96 270.000 330.000 xcarc
 1 1.000 -128 0 80 -37.000 37.000 xcarc
@@ -317,7 +316,7 @@ begingate
 1 1.000 -48 48 -19 48 2 polygon
 1 1.000 -48 -48 -19 -48 2 polygon
 1.000 0.000 0.000 scb
-(Out) {/Times-Roman cf} 2 4 0.000 1.000 80 0 pinlabel
+(Out) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
 (In.1) {/Times-Roman cf} 2 7 0.000 1.000 -56 32 pinlabel
 (In.2) {/Times-Roman cf} 2 7 0.000 1.000 -56 -32 pinlabel
 endgate
@@ -441,8 +440,6 @@ endgate
 (negate) {/Helvetica cf} 2 16 0.000 0.700 -4920 1928 label
 (negate) {/Helvetica cf} 2 16 0.000 0.700 -4924 1736 label
 1 1.000 -5360 1576 -5360 1552 2 polygon
-1.000 180.000 -4864 1384 digital::xnor
-1.000 180.000 -4864 1576 digital::xnor
 1 1.000 -5216 1360 -5216 1552 2 polygon
 1 1.000 -4944 1384 -5168 1384 2 polygon
 1 1.000 -5168 1384 -5168 1360 2 polygon
@@ -522,6 +519,10 @@ polygon
 0 1.000 -5080 2752 -5080 2640 -4968 2640 -4968 2752 4 polygon
 1 1.000 -4904 2728 -4968 2728 2 polygon
 1 1.000 -4904 2664 -4968 2664 2 polygon
+1.000 180.000 -4864 1576 digital::xor
+1.000 180.000 -4864 1384 digital::xor
+1 1.000 -4944 1576 -4928 1576 2 polygon
+1 1.000 -4944 1384 -4928 1384 2 polygon
 pgsave restore showpage
 
 %%Trailer

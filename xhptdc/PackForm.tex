@@ -3,12 +3,18 @@ For each measured edge the \deviceName\ creates a 12 byte data structure TDCHit 
 \section{Structure TDCHit}
 \label{TDCHit}
 \cronvar{long long}{time}\\
-The time stamp of the hit in picoseconds. If grouping is enabled the timestamp is relative to the trigger or the separate zero reference of the group. 
-Otherwise the timestampe is continuously counting up from the call to \textsf{start\tu capture()}.
+The time stamp of the hit in picoseconds. 
+
+If grouping is disabled the timestamps are continuously counting up from the call to \textsf{start\tu capture()}.
+
+If grouping is enabled the timestamps are relative to the trigger or the separate zero reference of the group. 
+The first of a group has channel number 255 and provides the absolute time of the group. 
+The absolute time of each of the hits can be obtained by adding this value to each of the relative timestamps.
 
 \cronvar{unsigned char}{channel}\\
 For the first board in the system this is 0 to 7 for the TDC channels A to H. 8 or 9 for ADC data. Data from channels 8 and 9 should usually be treated as data from the same channel. 
-For the other boards the channel number is incremented by $board\_id \cdot 10$
+For the other boards the channel number is incremented by $board\_id \cdot 10$.
+In grouping mode the first hit of each group has channel number 255 and contains the absolute time of the group.
 
 \cronvar{unsigned char}{type}\\
 Additional information on the type of hit recorded. See section \ref{hittypes}.

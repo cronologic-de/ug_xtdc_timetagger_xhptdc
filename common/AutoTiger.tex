@@ -69,7 +69,7 @@ The trigger sources with names ending in \textsf{\tu sync} are managed by the dr
 		No signal is output to the connetor. 
 	\paragraph*{\textsf{\PREFIX TIGER\tu OUTPUT}} 
 		In this mode the connector is input only. Pulses are unipolar with 2V amplitude. 
-		Connected hardware must not drive any signals to connectors used as outputs, as doing so could damage both the \deviceName and the external hardware. 
+		Connected hardware must not drive any signals to connectors used as outputs, as doing so could damage both the \deviceName\ and the external hardware. 
 		We recommend to only use short pulses to avoid undesirable baseline shift due to the AC coupling, but the device does not pose any restrictions on the duty cycle. 
 		This mode can be used as a clock output with a frequency of $75/N$~MHz for integer $N$.
 	\paragraph*{\textsf{\PREFIX TIGER\tu BIDI}} 
@@ -102,8 +102,8 @@ The trigger sources with names ending in \textsf{\tu sync} are managed by the dr
 
 	\section{Gating}
 		Each TDC channel has a second TiGer block that functions as a gate as shown in figure \ref{fig:matrix}. 
-		While that output of that gating block is active no hits are recorded in that channel.
-		If the block is negated hits are only recorded while the gating block is active.
+		Hits are recorded in a channel only while the output of the gating block is active  .
+		If the block is negated hits are only recorded while the gating block is inactive.
 		
 		This is a useful feature in setups where the trigger creates a lot of noise.
 		A suitable configuration of the gating block can reduce the bandwidth and buffer usage significantly.
