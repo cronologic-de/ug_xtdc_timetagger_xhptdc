@@ -378,25 +378,25 @@
 	Optionally a different channel can be used to calculate the relative timestamps in a group. 
 	This is disabled per default by setting this paramteer to $-1$.\par
 	
-	\cronvar{\tu\tu int64}{zero\tu channel\tu offset}\\
+	\cronvar{\longlong}{zero\tu channel\tu offset}\\
 	This offset in picoseconds is added to relative timestamps within a group.\par
 
-	\cronvar{\tu\tu int64}{range\tu start}\\
-	\cronvar{\tu\tu int64}{range\tu stop}\\
+	\cronvar{\longlong}{range\tu start}\\
+	\cronvar{\longlong}{range\tu stop}\\
 	Values in the interval from \textsf{range\tu start} to \textsf{range\tu stop} are included in the group. 
 	Either or both values can be negative to create common-stop behaviour. 
 	\[
 		-2^{63} \le range\_start \le range\_stop < 2^{63} 
 	\]\par
 
-	\cronvar{\tu\tu int64}{trigger\tu deadtime}\\
+	\cronvar{\longlong}{trigger\tu deadtime}\\
 	After a trigger was detected additional triggers will be suppressed for this interval. Must not be negative.\par
 
 	\cronvar{crono\tu bool\tu t}{require\tu windows\tu hit}\\
 	If set a group is only created if there is at least one hit in the window defined by \textsf{window\tu start} and \textsf{window\tu stop}.\par
 
-	\cronvar{\tu\tu int64}{window\tu start}\\
-	\cronvar{\tu\tu int64}{window\tu stop}\\
+	\cronvar{\longlong}{window\tu start}\\
+	\cronvar{\longlong}{window\tu stop}\\
 	\[
 		-2^{63} \le window\_ start \le window\_ stop < 2^{63} 
 	\]\par
@@ -414,8 +414,8 @@
 		\ttdef{GROUPING\tu VETO\tu OUTSIDE} & 2 \\
 	\end{tabular}\par
 
-	\cronvar{\tu\tu int64}{veto\tu start}\\
-	\cronvar{\tu\tu int64}{veto\tu stop}\\
+	\cronvar{\longlong}{veto\tu start}\\
+	\cronvar{\longlong}{veto\tu stop}\\
 	\[
 		-2^{63} \le veto\_ start \le veto\_ stop < 2^{63} 
 	\]\par

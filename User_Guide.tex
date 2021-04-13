@@ -83,13 +83,26 @@
 	\newcommand{\PREFIX}{XHPTDC8\tu}
 } 
 
+\ifxHPTDC{
+	\newcommand{\longlong}{uint64\tu t} 
+	\newcommand{\uint}{uint32\tu t}
+	\newcommand{\ushort}{uint16\tu t}
+	\newcommand{\uchar}{uint8\tu t}	
+}{
+	\newcommand{\longlong}{\tu \tu int64}
+	\newcommand{\uint}{unsigned int}
+	\newcommand{\ushort}{unsigned short}
+	\newcommand{\uchar}{unsigned char}	
+}
+
+
 \hyphenation{Time-Tagger xTDC xHPTDC cronologic}
 
 
 \newcommand{\ttvar}[2]{\noindent\textsf{\textbf{\textcolor{crongrey}{#1} \prefix #2}}}%for variable declaration
 \newcommand{\ttdef}[1]{\noindent\textsf{\textcolor{crongrey}{\#{}define} \PREFIX #1}}%for definitions
 
-\newcommand{\ugrev}{{1.8.1}}
+\newcommand{\ugrev}{{1.8.2}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
 \begin{document}  
@@ -134,7 +147,7 @@
 
 	\chapter{Revision History} 
 		\noindent
-		User Guide \hyperlink{ugrev}{\ugrev} as of 2020-04-09\\  %needs also be updated in UgRev.tex
+		User Guide \hyperlink{ugrev}{\ugrev} as of 2020-04-13\\  %needs also be updated in UgRev.tex
 		\\
 		cronologic GmbH \& Co. KG\\
 		Jahnstraße 49\\

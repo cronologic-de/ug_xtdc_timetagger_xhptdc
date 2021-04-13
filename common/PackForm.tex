@@ -30,10 +30,10 @@
 	\cronvar{unsigned int}{length}\\
 	Number of 64-bit elements (each containing up to 2 TDC hits) in the data array.\par
 
-	\cronvar{unsigned \tu\tu int64}{timestamp}\\
+	\cronvar{unsigned long long}{timestamp}\\
 	Coarse timestamp of the start pulse. Values are given in multiples of \itett{$500$~ps}{$5/3=1.\overline{6}$~ns}.\par
 
-	\cronvar{unsigned \tu\tu int64}{data[1]}\\
+	\cronvar{unsigned long long}{data[1]}\\
 	TDC hits. the user can cast the array to uint32* to directly operate on the TDC hits.
 
 	\noindent

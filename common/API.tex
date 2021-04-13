@@ -61,6 +61,8 @@ By default the installer will place the files into the directory
 	 See Section~\ref{cp:tigerblock} for details.\par
 }
 
+\ttdef{OK 0}\\
+Error codes are set by the API functions to this value if there has been no error. Other error codes can be found in \textsf{xHPTDC8\tu interface.h}\par
 
 \section{Driver Information}
 
@@ -117,7 +119,7 @@ By default the installer will place the files into the directory
 				Can be changed with \textsf{int \prefix set\tu board\tu id\allowbreak(\prefix device *device, int board\tu id)}.\par
 			}
 
-			\cronvar{\tu \tu int64}{buffer\tu size\ifxHPTDC{}{[8]}}\\
+			\cronvar{\longlong}{buffer\tu size\ifxHPTDC{}{[8]}}\\
 			The minimum size of the DMA buffer.\\
 			If set to 0 the default size of 16~MByte is used. 
 			\ifxHPTDC{}{For the \deviceName\ only the first entry is used.}\par
@@ -131,7 +133,7 @@ By default the installer will place the files into the directory
 				\end{description}
 			
 
-				\cronvar{\tu \tu int64}{buffer\tu address}\\
+				\cronvar{\longlong}{buffer\tu address}\\
 				This is set by \prefix init() to the start address of the reserved memory.\\ 
 				The buffers will be allocated with the sizes given above. Make sure that the memory is large enough.\par
 			}
@@ -190,19 +192,38 @@ By default the installer will place the files into the directory
 		then modify the structure as needed for the user application and use the result to configure the device.\par
 
 
-		\ttvar{int}{configure(}\deviceconfig, \\ \cronvar{\prefix \ifxHPTDC{manager\tu }{}configuration}{*config)}\\
+		\ttvar{int}{configure(}\deviceconfig, \lb \cronvar{\prefix \ifxHPTDC{manager\tu }{}configuration}{*config)}\\
 		Configures the \textsf{\prefix manager}.\par
 
-		\ttvar{int}{get\tu current\tu configuration(}\deviceconfig, \\ \cronvar{\prefix \ifxHPTDC{manager\tu }{}configuration}{*config)}\\
+		\ttvar{int}{get\tu current\tu configuration(}\deviceconfig, \lb \cronvar{\prefix \ifxHPTDC{manager\tu }{}configuration}{*config)}\\
 		Gets current configuration. Copies the current configuration to the specified config pointer.\par
 
-		\ttvar{int}{get\tu default\tu configuration(}\deviceconfig, \\ \cronvar{\prefix \ifxHPTDC{manager\tu }{}configuration}{*config)}\\
+		\ttvar{int}{get\tu default\tu configuration(}\deviceconfig, \lb \cronvar{\prefix \ifxHPTDC{manager\tu }{}configuration}{*config)}\\
 		Gets default configuration. Copies the default configuration to the specified config pointer.\par
 
 
 	%%%%%%%%%%%%%%%%% configuration structure mostly shared between devices
 	\input{common/StructConfig.tex}
 
+
+	%%%%%%%%%%%%%%
+
+	\ifxHPTDC{
+       \section{User Data Storage}
+	   There is a 64kiByte flash memory on each board that users can utilize to store any type of data. 
+	   A typical use case would be calibration data for the \deviceName\ or the detectors that the device is connected to.
+	   Also serial numbers of instruments built with the \deviceName\ can be stored here. Write operations allways erase the whole memory block.\par 
+
+	   \ttdef{USER\tu FLASH\tu SIZE 0x10000}\\*     
+	   The size of the flash memory in bytes.\\
+
+	   \ttvar{int}{read\tu user\tu flash(\device,  \cronvar{int}{index}, \lb \cronvar{\uchar *}{flash\tu data}, \cronvar{size\tu t size}{size})} \\*
+	   \ttvar{int}{write\tu user\tu flash(\device,  \cronvar{int}{index}, \lb \cronvar{\uchar *}{flash\tu data}, \cronvar{size\tu t size}{size})} \\*
+	   Read from or write to the user flash of a board identified by \textsf{index}. 
+	   \textsf{flash\tu data} must point to a buffer allocated by the user. 
+	   \textsf{size} must specify the size of that buffer in bytes. 
+	   We recommend to always allocat a buffer of the size of the flash memory given by \textsf{\PREFIX\tu FLASH\tu SIZE} to clarify that allways the full buffer is overwritten.\par
+	}{}
 
 
 	

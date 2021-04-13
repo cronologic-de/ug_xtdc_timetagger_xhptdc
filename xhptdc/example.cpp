@@ -6,8 +6,6 @@
 #include "crono_interface.h"
 #include "xHPTDC8_interface.h"
 
-typedef unsigned int uint32;
-typedef unsigned __int64 uint64;
 int exit_on_fail(xhptdc8_manager hMgr, int status, const char* message);
 const int MAX_TRYS_TO_READ_HITS = 1000;
 
