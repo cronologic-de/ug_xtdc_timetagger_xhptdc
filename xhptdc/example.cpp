@@ -20,7 +20,7 @@ xhptdc8_manager initialize_xhptdc8(int buffer_size) {
 	int error_code;
 	char* error_msg;
 	xhptdc8_manager hMgr;
-	xhptdc8_init(&hMgr, &params, &error_code, (const char**)&error_msg); 
+	hMgr = xhptdc8_init(&params, &error_code, (const char**)&error_msg);	
 	exit_on_fail(hMgr, error_code, error_msg);
 	return hMgr;
 }
@@ -121,6 +121,7 @@ int poll_for_hits(xhptdc8_manager xhptdc8_man, TDCHit* hit_buffer, size_t events
 	}
 	if (trys_to_read_hits == MAX_TRYS_TO_READ_HITS)
 		printf("not enough data, check trigger source and device configuration\n");
+	return trys_to_read_hits;
 }
 
 
