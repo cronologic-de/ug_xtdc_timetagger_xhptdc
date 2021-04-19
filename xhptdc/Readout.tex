@@ -30,14 +30,9 @@ Read a multitude of hits into a buffer provided by the user. Returns the number 
 If grouping is enabled a single group is read. 
 If the group is too large for the buffer the remaining hits of the group are discarded.\\*
 If grouping is disabled, all availabe data is read up to the size of the buffer. \\
-The method always returns immediately. If no hits are read it of is beneficial to call \textsf{sleep()} 
+The method always returns immediately. If no hits are read it is beneficial to call \textsf{sleep()} 
 or yield the CPU to another process instead of trying again immediately.\\
 Make sure to set \textsf{size} to the number of elemenst that fit into the buffer.\\*
 
 This function is not thread safe. 
 If you want to process the read data in multiple threads the data needs to be copied to a seperate buffer for each thread.
-
-
-
-
-
