@@ -55,7 +55,7 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 	Furthermore, three inter-board connectors can be found at the top edge of the \deviceName\ board, 
 	as displayed in Figure \ref{fig:schematics}. 
 	Connector J25 is reserved for future use. The pinout of connector J12 is shown in Table \ref{J12} and the pinout of connector J6 is depicted in Table \ref{J6}.
-	\ifxHPTDC{Connector J2 is a coax clock input that must receive a 10 MHz clock if multiple boards are used in together as described in section \ref{multiboard}.}{}
+	\ifxHPTDC{Connector J2 is a coax clock input that must receive a 10 MHz clock if multiple boards are used together as described in section \ref{multiboard}.}{}
 
 	\begin{table}
 	\begin{small}
@@ -129,7 +129,7 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 \ifxHPTDC{
 	\section{Synchronizing multiple boards}
 		\label{multiboard}
-		If more than eight TDC inputs are required, up to eight boards can be synchronises within a system. 
+		If more than eight TDC inputs are required, up to eight boards can be synchronized within a system. 
 		
 		The \deviceName\ API described in chapter \ref{cp:api} manages up to eight boards automatically
 		and provides a single data stream that contains sorted hit data from all boards in chronological order. 
@@ -144,13 +144,13 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 			\begin{figure*}[ht]
 				\begin{center}
 					\includegraphics[width=1\textwidth]{xhptdc/figures/multiboard.pdf}				
-					\caption{Synchronising multiple boards with a ClockBox.\label{fig:multiboard}}
+					\caption{Synchronizing multiple boards with a ClockBox.\label{fig:multiboard}}
 				\end{center} 
 			\end{figure*}
 			%
 		\subsection{ClockBox}
 			For systems of up to four boards cronologic offers the ClockBox product that conveniently makes four clock signals evailable 
-			inside the PC enclosure. For use with the \deviceName, jumper JP3 of the CLockBox must be set as shown in Figure \ref{fig:clockbox} to set the clock frequency to 10~MHz. 
+			inside the PC enclosure. For use with the \deviceName, jumper JP3 of the ClockBox must be set as shown in Figure \ref{fig:clockbox} to set the clock frequency to 10~MHz. 
 			%
 			\begin{figure*}[ht]
 				\begin{center}
@@ -162,13 +162,9 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 		
 		\subsection{Crates for multiple boards}
 			Most PC mainboards don't have enough PCIe slots to support eight \deviceName s. 
-			We offer external enclosure called "Ndigo Crate" that PCIe-over-cable technology to extend the number of available slots in a system.
-			The extension is fully transparent to the host system. There are no additional drivers require. 
-			Please see the \href{https://www.cronologic.de/products/pcie/pcie-crates}{product page} at our website \url{www.cronologic.de}.  
-		
-
-	
-
+			We offer an external enclosure called "Ndigo Crate" that uses PCIe-over-cable technology to extend the number of available slots in a system.
+			The extension is fully transparent to the host system. There are no additional drivers required. 
+			Please see the \href{https://www.cronologic.de/products/pcie/pcie-crates}{product page} at our website \url{www.cronologic.de}.
 }{}
 
 
