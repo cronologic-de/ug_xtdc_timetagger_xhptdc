@@ -59,7 +59,7 @@ Figure \ref{fig:matrix} shows how the TiGer blocks are connected. They can be tr
 including the auto trigger. Each TiGer can drive its output to its corresponding LEMO connector. This turns the connector into an output. 
 
 When there is an ADC trigger pulse on the TRG connector, either of the two on board ADCs is triggered in an unpredictable pattern. 
-If the TRG input shall be used as a trigger the trigger sources must be contain both \textsf{ADC1\tu CNV} and \textsf{ADC21\tu CNV}.
+If the TRG input shall be used as a trigger the trigger sources must be contain both \textsf{ADC1\tu CNV} and \textsf{ADC2\tu CNV}.
 
 The trigger sources with names ending in \textsf{\tu sync} are managed by the driver for multi board setups and must be left unchanged by the user.
 
@@ -102,7 +102,7 @@ The trigger sources with names ending in \textsf{\tu sync} are managed by the dr
 
 	\section{Gating}
 		Each TDC channel has a second TiGer block that functions as a gate as shown in figure \ref{fig:matrix}. 
-		Hits are recorded in a channel only while the output of the gating block is active  .
+		Hits are recorded in a channel only while the output of the gating block is active.
 		If the block is negated hits are only recorded while the gating block is inactive.
 		
 		This is a useful feature in setups where the trigger creates a lot of noise.
@@ -119,7 +119,7 @@ The trigger sources with names ending in \textsf{\tu sync} are managed by the dr
 		The ADC trigger also is connected to the output of a TiGer block. 
 		This can be used to to trigger the ADC periodical or relative to one of the TDC input as described in section \ref{adctiger}
 
-		The ADC triggers should not be closer than 300ns apart.
+		The ADC triggers should not be closer than 300~ns apart.
 
 		There are two interleaved ADCs  to ensure that there is always an ADC available even during readout. 
 		This is exposed to the user both in the output data format and in the TiGer and Gating trigger sources.
