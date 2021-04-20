@@ -5,7 +5,7 @@
 	The number of bytes occupied by the structure.\par
 
 	\cronvar{int}{version}\\
-	A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
+	A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar.\par
 
 	\cronvar{\prefix device\tu configuration}{device\tu configs[\PREFIX DEVICES\tu MAX]}\\
 	A structure with the configuration for an individual \deviceName\ board as defined in ssection \ref{structconfig}.
@@ -15,7 +15,7 @@
 	Structure with the parameters for grouping. 
 	See section \ref{structgrouping} for the definition of the structure and section \ref{grouping} for more information on grouping.\par
 
-	\cronvar{void}{*bin\tu to\tu ps}\\
+	\cronvar{\longlong}{*bin\tu to\tu ps(\longlong)}\\
 	Reserved for future use.
 	
 }{}
@@ -26,13 +26,13 @@
 	\ifxHPTDC{}{ % xHPTDC8 uses TDC manager instead
 		It is used in conjunction with \textsf{\prefix get\tu default\tu configuration()}, \textsf{\prefix get\tu current\tu configuration()} and \textsf{\prefix configure()}.\par
 	}
-	It uses the multiple substructures to configure various aspects of the board. 
+	It uses multiple substructures to configure various aspects of the board. 
 
 	\cronvar{int}{size}\\
 	The number of bytes occupied by the structure.\par
 
 	\cronvar{int}{version}\\
-	A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
+	A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar.\par
 
 	% autotrigger was reordered for the xHPTDC so we need to be able to use it in conditionally
 	\newcommand{\autotrigger}{			
@@ -151,7 +151,7 @@
 
 	\ifxHPTDC{
 		\cronvar{\prefix channel}{adc\tu channel}\\
-		Configure the ADC channel.\par
+		Configuration of the ADC channel.\par
 
  		\cronvar{crono\tu bool\tu t}{skip\tu alignment}\\
 		If set,  the phase of the two TDC chips is not realigned when capturing is restartet.\par
@@ -214,11 +214,12 @@
 			\ttdef{TIGER \tu BIPOLAR} & 3 & Output is driven with 1~V bidirectional pulses.\\*
 									&   & $start = stop -1$\\*
 		\end{tabular}
+		
 		The gating blocks are only used internally and produce no pulses accessible to the user.		
-		Gating blocks interpret any value that is not 0 as as enable.\\*
+		Gating blocks interpret any value that is not 0 as enable.\\*
 		\begin{tabular}{lrl}
 			\ttdef{GATE \tu OFF} & 0 & No gating, alle hits are captured. \\*
-			\ttdef{GATE \tu ON} & 1 & No hits are captured while the gate is active.\\*
+			\ttdef{GATE \tu ON} & 1 & No hits are captured while the gate is inactive.\\*
 		\end{tabular}
 	
 	}{
@@ -228,7 +229,7 @@
 
 	\cronvar{crono\tu bool\tu t}{negate}\\
 	Inverts output polarity. Default is set to false.
-	\ifxHPTDC{For gating blocks, a value of false blocks inputs between start and stop, a value of true blocks outputs outside that interval.
+	\ifxHPTDC{For gating blocks, a value of false enables inputs between start and stop, a value of true blocks outputs inside that interval.
 	The TiGer creates a high pulse from \textsf{start} to \textsf{stop} unless negated.}{}\par
 
 	\cronvar{crono\tu bool\tu t}{retrigger}\\
@@ -277,6 +278,7 @@
 			\ttdef{TRIGGER\tu SOURCE\tu TDC\tu EXT\tu SYNC} & 0x00000400\\
 			\ttdef{TRIGGER\tu SOURCE\tu ADC1\tu CONV} & 0x00000800\\
 			\ttdef{TRIGGER\tu SOURCE\tu ADC2\tu CONV} & 0x00001000\\
+			\ttdef{TRIGGER\tu SOURCE\tu SOFTWARE} & 0x00002000\\
 			\ttdef{TRIGGER\tu SOURCE\tu AUTO} & 0x00004000\\
 			\ttdef{TRIGGER\tu SOURCE\tu ONE}  & 0x00008000	
 		}{
@@ -310,7 +312,7 @@
 			See section \ref{difficulthits} for more information on hits with varying resolution.
 		}{
 			Select which edge of the signal is measured by the TDC. 
-			The TiGer and gating blocks use a separate configuration that allows to use both edges simultaneously on each input. See section \ref{structtrigger}
+			The TiGer and gating blocks use a separate configuration that allows to use both edges simultaneously on each input. See section \ref{structtrigger}.
 		}\par
 
 		\txh{}{ %only for xTDC4
@@ -364,7 +366,6 @@
 	\subsection{Structure \prefix grouping\tu configuration}	
 	\label{structgrouping}
 	This structure configures the behaviour of the grouping functionality. See section \ref{grouping}.
-	Grouping is enabled with the \textsf{tdc\tu mode} paramter defined in the top level of the config structure.
 
 	In this structure intervals are always provided in picoseconds, independently of the bin size of the TDC.
 
@@ -376,7 +377,7 @@
 
 	\cronvar{int}{zero\tu channel}\\
 	Optionally a different channel can be used to calculate the relative timestamps in a group. 
-	This is disabled per default by setting this paramteer to $-1$.\par
+	This is disabled per default by setting this parameter to $-1$.\par
 	
 	\cronvar{\longlong}{zero\tu channel\tu offset}\\
 	This offset in picoseconds is added to relative timestamps within a group.\par
@@ -405,7 +406,7 @@
 	A window defined by \textsf{veto\tu start} and \textsf{veto\tu stop} can be used to suppress hits. 
 	The functionality is very similar to the gating blocks but is defined in software. 
 	While gating blocks can only work locally on the information available within each board the veto function is applied globally accross all boards.
-	This feature can not be used to improve FIFO usage or PCIe bandwidth usage. 
+	This feature cannot be used to improve FIFO usage or PCIe bandwidth usage. 
 	 \\*
 	Either data inside or outside the veto window can be suppressed.\\*
 	\begin{tabular}{lc}

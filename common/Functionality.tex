@@ -16,7 +16,7 @@ The standard deviation of the timestamps is approx. $8$~ps.
 The timestamps are recorded in integer multiples of a bin size of $5000/(3\cdot 128) = 13.0208\overline{3}$~ps. 
 The data acquisition can be limited to rising or falling signal transitions. 
 
-The maximum trigger rate on the start channel is 4~MHz.
+The maximum trigger rate on the start channel is $4$~MHz.
 
 \subsection{Handling of Difficult Hits}
     \label{difficulthits}
@@ -30,7 +30,7 @@ The maximum trigger rate on the start channel is 4~MHz.
     Between multiple hits on a stop channel a deadtime of approximately $5$~ns is required for full resolution. 
     Hits that are closer together will only be reported with a resolution of $5/6~ns = 833,\overline{3}~ps$. For these hits both bits 6 and 7 are set.
 
-    Data is copied from the 15-entry L0 FIFO to the larger downstream FIFOs at a reate of about $12$~MHz per channel. 
+    Data is copied from the 15-entry L0 FIFO to the larger downstream FIFOs at a rate of about $12$~MHz per channel. 
     If the L0 FIFO overflows the hig resolution measurement of some hits will be discarded. 
     In this case a measurement from an alternative TDC wil be used that has a resolution of about $150$~ps. 
     For these hits bit 6 in the data word will be set
@@ -41,5 +41,5 @@ The maximum trigger rate on the start channel is 4~MHz.
     For each channel it can be selected individually whether rising or falling edges are recorded. It is not possible to record both edges of the same channel. 
     The timestamps are recorded in integer multiples of a bin size of $5000/(3\cdot 128) = 13.0208\overline{3}$~ps. 
     There must be at least 5~ns between consecutive hits on the same input channel to be detected reliably. 
-    The \deviceName\ records events without dead time at a readout rate of about 48MHits/s.
+    The \deviceName\ records events without dead time at a readout rate of about $48$~MHits/s.
 }

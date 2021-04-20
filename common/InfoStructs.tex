@@ -9,10 +9,10 @@
         The information is provided on a per board basis. The parameter \textsf{index} selects which board is queried.
     }{}
 
-    \ttvar{int}{get\tu device\tu type}(\device)\\
+    \ttvar{int}{get\tu device\tu type}(\device\ifxHPTDC{,\lb \cronvar{int}{index}}{})\\
     Returns the type of the device as \textsf{CRONO\tu DEVICE\tu \txh{TIMETAGGER4}{XTDC4}{XHPTDC8}}.\par
 
-    \ttvar{const char*}{get\tu last\tu error\tu message(\device)\ifxHPTDC{,\lb \cronvar{int}{index = -1}}{}}\\
+    \ttvar{const char*}{get\tu last\tu error\tu message(\device\ifxHPTDC{,\lb \cronvar{int}{index}}{})}\\
     Returns most recent error message.
     \ifxHPTDC{If index is negative the last error message from the \textsf{\prefix manager} is returned. 
     Otherwise the last error message of the selected board is returned. }{}
@@ -57,7 +57,7 @@ This structure contains information about the board that does not change during 
 The number of bytes occupied by the structure.
 
 \cronvar{int}{version}\\
-A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
+A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar.\par
 
 \cronvar{int}{board\tu id}\\
 ID of the board.\\
@@ -85,7 +85,7 @@ The board revision number can be read from a register. It is a four-bit number t
 
 \cronvar{int}{board\tu configuration}\\
 Describes the schematic configuration of the board.\\
-The same board schematic can be populated in multiple variants. This is a four bit-code that can be read from a register.
+The same board schematic can be populated in multiple variants. This is an eight-bit code that can be read from a register.
 
 \cronvar{int}{subversion\tu revision}\\
 Subversion revision id of the FPGA configuration source code.
@@ -105,14 +105,14 @@ Subversion revision id of the FPGA configuration source code.
 Serial number.\\
 With year and running number in 8.24 format. The number is identical to the one printed on the silvery sticker on the board.\par
 
-\cronvar{unsigned int}{flash\tu serial\tu high}\\
-\cronvar{unsigned int}{flash\tu serial\tu low}\\
+\cronvar{\uint}{flash\tu serial\tu high}\\
+\cronvar{\uint}{flash\tu serial\tu low}\\
 64-bit manufacturer serial number of the flash chip
 
 \cronvar{crono\tu bool\tu t}{flash\tu valid}\\
 If not 0 the driver found valid calibration data in the flash on the board and is using it.\par
 
-\cronvar{int}{calibration\tu date}\\
+\cronvar{char}{calibration\tu date[20]}\\
 DIN EN ISO 8601 string YYYY-MM-DD HH:DD describing the time when the card was calibrated.
 
 %%%%%%%%%%%%%%%%%%%%%%%% param info
@@ -124,7 +124,7 @@ This struct contains configuration changes provided by \textsf{\prefix get\tu pa
 The number of bytes occupied by the structure. \par
 
 \cronvar{int}{version}\\
-A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
+A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar.\par
 
 
 \cronvar{double}{binsize}\\
@@ -144,7 +144,7 @@ Fixed at \ifxHPTDC{8}{4}.\par
 Bit assignment of each enabled input channel.\\
 Bit $0 \leq n < \ifxHPTDC{8}{4}$ is set if channel $n$ is enabled. \par
 
-\cronvar{long long}{total\tu buffer}\\
+\cronvar{\longlong}{total\tu buffer}\\
 The total amount of DMA buffer in bytes.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% fast info
@@ -156,8 +156,7 @@ The number of bytes occupied by the structure. \par
 
 \cronvar{int}{version}\\
 A version number that is increased when the definition of the structure is changed. 
-The increment can be larger than one to match driver version numbers or similar. 
-Currently only version 0 is defined.\par
+The increment can be larger than one to match driver version numbers or similar.\par
 
 \ifxHPTDC{} {
     \cronvar{int}{tdc\tu rpm}\\
@@ -185,7 +184,7 @@ Number of PCIe lanes the card uses. Should always be 1 for the \deviceName. \par
 Maximum size in bytes for one PCIe transaction. Depends on system configuration.\par
 
 \cronvar{int}{state}\\
-The state the \textsf{\prefix manager} is in.
+The state the \deviceName\ is in.
 
 \begin{tabular}{lc}
     \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CREATED} & 0  \\*
@@ -200,19 +199,16 @@ The state the \textsf{\prefix manager} is in.
 
 \ifxHPTDC{
     \subsection{Structure \prefix temperature\tu info}
-        This structure provide the values of temperature measurements of three of the chips on the board.
+        This structure provide the values of temperature measurements of various chips on the board.
 
         \cronvar{int}{size}\\
         The number of bytes occupied by the structure. \par
 
         \cronvar{int}{version}\\
-        A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
+        A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar.\par
 
         \cronvar{float}{tdc[2]}\\
         Temperature for each of the TDC chips in °C
-
-        \cronvar{float}{fpga}
-        Temperature in °C read from the FPGA's internal sensor.
 
     %%%%%%%%%%%%%%%%%%%%% clock info
 
@@ -223,7 +219,7 @@ The state the \textsf{\prefix manager} is in.
         The number of bytes occupied by the structure. \par
 
         \cronvar{int}{version}\\
-        A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar. Currently only version 0 is defined.\par
+        A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar.\par
 
         \cronvar{crono\tu bool\tu t}{cdce\tu locked}\\
         Set if the jitter cleaning PLL clock synthesizer achieved lock.
@@ -232,8 +228,8 @@ The state the \textsf{\prefix manager} is in.
         Version information from the CDCE62005 clock synthesizer.\\
         
         \cronvar{crono\tu bool\tu t}{use\tu ext\tu clock}\\
-        Source for the clock synthesizer is usually the 10MHz on board oscillator. During initialisation alternatively  an external clock on J2 can be selected.
-        When multiple boards are synchonised all board use a common external clock. See section \ref{multiboard} for details.
+        Source for the clock synthesizer is usually the 10~MHz on board oscillator. During initialization alternatively an external clock on J2 can be selected.
+        When multiple boards are synchonized all board use a common external clock. See section \ref{multiboard} for details.
         \\       
 
     

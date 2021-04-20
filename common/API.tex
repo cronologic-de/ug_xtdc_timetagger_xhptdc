@@ -1,5 +1,5 @@
 \ifxHPTDC{
-	\newcommand{\device}{\cronvar{\prefix manager}{*xhptdc8\tu mgr}}
+	\newcommand{\device}{\cronvar{\prefix manager}{mgr}}
 	\newcommand{\deviceindex}{\device, \cronvar{int}{index}}
 	\newcommand{\deviceconfig}{\device}
 	\newcommand{\initparameters}{xhptdc8\tu manager\tu init\tu parameters}
@@ -85,20 +85,20 @@ Error codes are set by the API functions to this value if there has been no erro
 		\ttvar{int}{close(}\device )\\
 		Finalizes the driver for this device.
 
-		\ttvar{int}{get\tu default\tu init\tu parameters(}\cronvar{\initparameters}{ *init)}\\
+		\ttvar{int}{get\tu default\tu init\tu parameters(}\cronvar{\initparameters}{*init)}\\
 		Sets up the standard parameters. Gets a set of default parameters for \textsf{\prefix init()}. 
 		This must always be used to initialize the \textsf{\initparameters} structure before modifying it 
 		and passing it to \textsf{\prefix init}.\par
 
-		\cronvar{\prefix \ifxHPTDC{manager}{device} *}{\prefix init(}\cronvar{\initparameters}{*params}, \\ 
+		\cronvar{\prefix \ifxHPTDC{manager}{device}}{\prefix init(}\cronvar{\initparameters}{*params}, \\ 
 		\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
-		Opens and initializes the \deviceName. 
-		\ifxHPTDC{boardss}{board with the given index}. \\
+		Opens and initializes the \deviceName\ 
+		\ifxHPTDC{boards}{board with the given index}. \\
 		\textsf{error\tu code} shall point to an integer where the driver can write the the error code. \\
 		\textsf{error\tu message} must point to a pointer to char. 
 		The driver will allocate a buffer for zero terminated error message and store the address of the buffer in the location provided by the user.\par
 
-		The paramter \textsf{params} is a structure of type \textsf{\initparameters} that must be completely initialized.\par
+		The paramter \textsf{params} is a pointer to a structure of type \textsf{\initparameters} that must be completely initialized.\par
 
 %%%%%%%%%%%%%%%%% struct init_parameters
 
@@ -164,7 +164,7 @@ Error codes are set by the API functions to this value if there has been no erro
 				Set if multiple devices shall be synchronized. Also sets the clock source to external.\par
 	
 				\cronvar{crono\tu bool\tu t}{use\tu ext\tu clock}\\
-				If set use the external 10 MHz reference on J2, otherwise the internal clock source is used. 
+				If set use the external 10~MHz reference on J2, otherwise the internal clock source is used. 
 				When \textsf{multiboard} is set this parameter is ignored and the external clock is used. \par
 
 				\cronvar{crono\tu bool\tu t}{ignore\tu calibration}\\
@@ -172,7 +172,7 @@ Error codes are set by the API functions to this value if there has been no erro
 		
 			}{
 				\cronvar{int}{use\tu ext\tu clock}\\
-				If set to 1 use external 10 MHz reference. If set to 0 use internal reference.\par	
+				If set to 1 use external 10~MHz reference. If set to 0 use internal reference.\par	
 			}
 	
 
@@ -210,19 +210,19 @@ Error codes are set by the API functions to this value if there has been no erro
 
 	\ifxHPTDC{
        \section{User Data Storage}
-	   There is a 64kiByte flash memory on each board that users can utilize to store any type of data. 
+	   There is a 64~kiByte flash memory on each board that users can utilize to store any type of data. 
 	   A typical use case would be calibration data for the \deviceName\ or the detectors that the device is connected to.
-	   Also serial numbers of instruments built with the \deviceName\ can be stored here. Write operations allways erase the whole memory block.\par 
+	   Also serial numbers of instruments built with the \deviceName\ can be stored here. Write operations always erase the whole memory block.\par 
 
 	   \ttdef{USER\tu FLASH\tu SIZE 0x10000}\\*     
 	   The size of the flash memory in bytes.\\
 
-	   \ttvar{int}{read\tu user\tu flash(\device,  \cronvar{int}{index}, \lb \cronvar{\uchar *}{flash\tu data}, \cronvar{size\tu t size}{size})} \\*
-	   \ttvar{int}{write\tu user\tu flash(\device,  \cronvar{int}{index}, \lb \cronvar{\uchar *}{flash\tu data}, \cronvar{size\tu t size}{size})} \\*
+	   \ttvar{int}{read\tu user\tu flash(\device,  \cronvar{int}{index}, \lb \cronvar{\uchar *}{flash\tu data}, \cronvar{\uint}{size})} \\*
+	   \ttvar{int}{write\tu user\tu flash(\device,  \cronvar{int}{index}, \lb \cronvar{\uchar *}{flash\tu data}, \cronvar{\uint}{size})} \\*
 	   Read from or write to the user flash of a board identified by \textsf{index}. 
 	   \textsf{flash\tu data} must point to a buffer allocated by the user. 
 	   \textsf{size} must specify the size of that buffer in bytes. 
-	   We recommend to always allocat a buffer of the size of the flash memory given by \textsf{\PREFIX\tu FLASH\tu SIZE} to clarify that allways the full buffer is overwritten.\par
+	   We recommend to always allocate a buffer of the size of the flash memory given by \textsf{\PREFIX\tu FLASH\tu SIZE} to clarify that always the full buffer is overwritten.\par
 	}{}
 
 
