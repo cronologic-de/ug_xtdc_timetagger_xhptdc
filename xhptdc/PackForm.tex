@@ -5,7 +5,7 @@ For each measured edge the \deviceName\ creates a 12 byte data structure TDCHit 
 \cronvar{int64\_t}{time}\\
 The time stamp of the hit in picoseconds. 
 
-If grouping is disabled the timestamps are continuously counting up from the call to \textsf{start\tu capture()}.
+If grouping is disabled the timestamps are continuously counting up from the call to \textsf{\prefix start\tu capture()}.
 
 If grouping is enabled the timestamps are relative to the trigger or the separate zero reference of the group. 
 The first TDCHit of a group has channel number 255 and provides the absolute time of the group. 
@@ -37,7 +37,7 @@ If the hit is a TDC measurement on channels A to H the following flags are defin
     \indent Hits missing due to L1 FIFO overflow&\\
     \crondef{\HTYPE ERROR\tu ROLLOVER\tu LOST}  & 0x08\\
     \indent Invalid timestamp due to internal error&\\
-    \crondef{\HTYPE ERROR\tu PACKET\tu LOST}  & 0x10\\
+    \crondef{\HTYPE ERROR\tu PACKETS\tu LOST}  & 0x10\\
     \indent Hits missing due to a lost DMA packet&\\
     \crondef{\HTYPE ERROR\tu SHORTENED}  & 0x20\\
     \indent Hits missing due to a shortened DMA packet&\\
