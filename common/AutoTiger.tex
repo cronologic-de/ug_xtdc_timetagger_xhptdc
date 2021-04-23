@@ -37,8 +37,8 @@ The trigger can be used as a source for the TiGer unit (see Section \ref{cp:tige
 
 
 \section{Timing Generator (TiGer)\label{cp:tiger}}
-Each digital LEMO-00 input can be used as a \ifxHPTDC{AC coupled}{LVCMOS} trigger output. 
-The TiGer function can be configured independently for each connector. 
+Each digital LEMO-00 input can be used as an \ifxHPTDC{AC coupled}{LVCMOS} trigger output. 
+The TiGer functionality can be configured independently for each connector. 
 See Section \ref{cp:tigerblock} for a full description of the configuration options.
 % 
 \begin{figure*}[ht]
@@ -56,17 +56,9 @@ See Section \ref{cp:tigerblock} for a full description of the configuration opti
 %
 
 Figure \ref{fig:matrix} shows how the TiGer blocks are connected. They can be triggered by an OR of an arbitrary combination of inputs, 
-including the auto trigger. Each TiGer can drive its output to its corresponding LEMO connector. This turns the connector into an output. 
-
-When there is an ADC trigger pulse on the TRG connector, either of the two on board ADCs is triggered in an unpredictable pattern. 
-If the TRG input shall be used as a trigger the trigger sources must be contain both \textsf{ADC1\tu CNV} and \textsf{ADC2\tu CNV}.
-
-The trigger sources with names ending in \textsf{\tu sync} are managed by the driver for multi board setups and must be left unchanged by the user.
+including the auto trigger \ifxHPTDC{and the ADC}{}. Each TiGer can drive its output to its corresponding LEMO connector. This turns the connector into an output. 
 
 \ifxHPTDC{
-The Trigger source \textsf{\PREFIX TRIGGER\tu SOURCE\tu SOFTWARE} can be used to trigger a TiGer or gating block by a call to the driver function
-\textsf{\prefix software\tu trigger()}.
-
 	The TiGer outputs are AC coupled to the connector. They can be operated in one of the following modes:
 	\paragraph*{\textsf{\PREFIX TIGER\tu OFF}} 
 		No signal is output to the connetor. 
@@ -89,9 +81,37 @@ The Trigger source \textsf{\PREFIX TRIGGER\tu SOURCE\tu SOFTWARE} can be used to
 	Pulses that are short enough for the input AC coupling are available as input signals to the \deviceName. 
 	This can be used to measure exact time differences between the generated output signals and input signals on other channels.
 }
-\ttinput{Tiger_Example.tex}	
 
 \ifxHPTDC{
+	\newpage
+	\subsection{Trigger Sources}
+	\label{triggersources}
+	Trigger sources for TiGer and gating blocks are configured by a bitmask. You can combine any number of trigger source with a bitwise or. 
+	The block will be trigger when any of the select trigger input is active.
+
+	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu NONE}} \leavevmode \\
+		Empty pattern that selects no trigger source.
+	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu A to \tu H}} \leavevmode \\
+	 	TDC lemo inputs.   
+	 \paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu TDC1\tu SYNC}} \leavevmode \\
+		Same as \textsf{\PREFIX TRIGGER\tu SOURCE\tu TDC2\tu SYNC}.\\*
+		Clock signal with $150~MHz/1024\approx 146.5~kHz$. 
+	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu TDC\tu EXT\tu SYNC}} \leavevmode \\
+		Clock signal with 125~kHz. 
+	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu AUTO}} \leavevmode \\
+		Periodic or random trigger pulses from the auto trigger block.
+	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu ADC1\tu CONV}} \leavevmode \\
+		Same as \textsf{\PREFIX TRIGGER\tu SOURCE\tu ADC2\tu CONV}. When there is an ADC trigger pulse on the TRG connector, either of the two on board ADCs is triggered in an unpredictable pattern. 
+		If the TRG input shall be used as a trigger the trigger sources must be contain both \textsf{ADC1\tu CNV} and \textsf{ADC2\tu CNV}.
+	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu SOFTWARE}} \leavevmode \\
+		Set for one clock cycle by a call to the driver function
+		\textsf{\prefix software\tu trigger()}.
+	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu ONE}} \leavevmode \\
+		Trigger that is active on every clock cycle.
+	
+	\ttinput{Tiger_Example.tex}	
+
+
 	\subsection{Triggering the ADC with the TiGer}
 		\label{adctiger}
 		There is a ninth TiGer that is connected to the trigger input of the ADC. See section \ref{adc} for additional information on the ADC. 
@@ -103,6 +123,7 @@ The Trigger source \textsf{\PREFIX TRIGGER\tu SOURCE\tu SOFTWARE} can be used to
 		stop should be set to at least 45 to ensure that the sample period criterion is met even when pulses
 		arrive in quick succession. A typical application would be to sample some slow control voltage once per start signal.
 
+\newpage
 	\section{Gating}
 		Each TDC channel has a second TiGer block that functions as a gate as shown in figure \ref{fig:matrix}. 
 		Hits are recorded in a channel only while the output of the gating block is active.

@@ -1,4 +1,4 @@
-\subsubsection{TiGer Example: Generate 200 kHz Start Pulse}
+\subsection{TiGer Example: Generate 200 kHz Start Pulse}
 The AutoTrigger is used to generate a 200 kHz period. The TiGer generates a 200 kHz signal with $12 ns$ pulse width on LEMO-00 output Start.
 \begin{lstlisting}[frame=tlrb]
 // generate an internal 200 kHz trigger
@@ -17,7 +17,7 @@ config.tiger_block[0].sources = XTDC4_TRIGGER_SOURCE_AUTO;
 config.dc_offset[0] = XTDC4_DC_OFFSET_P_LVCMOS_18; 
 \end{lstlisting}
 
-\subsubsection{TiGer Example: Generate Common-Start from Stops}
+\subsection{TiGer Example: Generate Common-Start from Stops}
 A trigger event on any Stop channel is used to generate the next event on the Start channel. 
 The start value of the TiGer block should be set so that the pulse occurs after the last stop event of the group.
 \begin{lstlisting}[frame=tlrb]

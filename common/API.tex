@@ -201,6 +201,13 @@ Error codes are set by the API functions to this value if there has been no erro
 		\ttvar{int}{get\tu default\tu configuration(}\deviceconfig, \lb \cronvar{\prefix \ifxHPTDC{manager\tu }{}configuration}{*config)}\\
 		Gets default configuration. Copies the default configuration to the specified config pointer.\par
 
+	\ifxHPTDC{
+		\subsection{YAML config files}
+		\label{yaml}
+		There exist a community maintained utility library for the \deviceName\ that contains a convenience function that can modify configuration structures from a YAML config string.
+		This can significantly shorten code required to setup the TDC. \\*
+		See \href{https://github.com/cronologic-de/xhptdc8_babel/tree/main/util}{github.com/cronologic-de/xhptdc8\tu babel/tree/main/util} for details.  
+	}{} 
 
 	%%%%%%%%%%%%%%%%% configuration structure mostly shared between devices
 	\input{common/StructConfig.tex}
