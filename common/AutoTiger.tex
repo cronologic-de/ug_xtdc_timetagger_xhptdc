@@ -64,6 +64,9 @@ If the TRG input shall be used as a trigger the trigger sources must be contain 
 The trigger sources with names ending in \textsf{\tu sync} are managed by the driver for multi board setups and must be left unchanged by the user.
 
 \ifxHPTDC{
+The Trigger source \textsf{\PREFIX TRIGGER\tu SOURCE\tu SOFTWARE} can be used to trigger a TiGer or gating block by a call to the driver function
+\textsf{\prefix software\tu trigger()}.
+
 	The TiGer outputs are AC coupled to the connector. They can be operated in one of the following modes:
 	\paragraph*{\textsf{\PREFIX TIGER\tu OFF}} 
 		No signal is output to the connetor. 
@@ -77,9 +80,9 @@ The trigger sources with names ending in \textsf{\tu sync} are managed by the dr
 		Use short pulses to keep the propability of collision and the effect on the baseline low.	
 	\paragraph*{\textsf{\PREFIX TIGER\tu BIPOLAR}} 
 		In this mode the connector creates bipolar pulses with 1~V amplitude. The connector can still be used as an input. 
-		The pulses have no effect on the baseline offset. 
+		Pulses have no effect on the baseline offset. 
 		TiGer should be configured with $stop = start$ for minimum width bipolar pulses of $2 \times 6.\overline{6}~ns$. 
-		The maximum bipolar pulse width is \textsf{XHPTDC8\tu TIGER\tu MAX\tu BIPOLAR\tu PULSE\tu LENGTH = 15}.    
+		The maximum bipolar pulse width is \textsf{XHPTDC8\tu TIGER\tu MAX\tu BIPOLAR\tu PULSE\tu LENGTH=15}.    
 }{
 	The TiGer is DC coupled to the connector. Connected hardware must not drive any signals to connectors used as outputs, 
 	as doing so could damage both the \deviceName\  and the external hardware.

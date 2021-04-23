@@ -20,7 +20,11 @@
 		\ttvar{int}{start\tu tiger(}\device, \cronvar{int}{index})\\
 		\ttvar{int}{stop\tu tiger(}\device, \cronvar{int}{index})\\
 		Start and stop the timing generator of an individual board. 
-		This can be done independently of the state of the data acquisition.\par	
+		This can be done independently of the state of the data acquisition.\par
+		
+		\ttvar{int}{software\tu trigger(}\device, \cronvar{int}{index})\\
+		Sets the software trigger for one clock cycle. 
+		This can be configured for the TiGer and for the gating blocks as trigger source \textsf{\PREFIX TRIGGER\tu SOURCE\tu SOFTWARE}. 
 
 
 \section{Readout}
