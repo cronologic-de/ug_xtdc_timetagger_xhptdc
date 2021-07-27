@@ -12,14 +12,13 @@ xtdc4_device * initialize_xtdc4(int buffer_size, int board_id, int card_index) {
 
 	xtdc4_get_default_init_parameters(&params);
 	params.buffer_size[0] = buffer_size;		// size of the packet buffer
-	params.board_id = 0;						// value copied to "card" field of every packet, allowed range 0..255
-	params.card_index = 0;						// which of the xTDC4 board found in the system to be used
+	params.board_id = board_id;					// value copied to "card" field of every packet, allowed range 0..255
+	params.card_index = card_index;				// which of the xTDC4 board found in the system to be used
 
 	int error_code;
 	const char * err_message;
 	xtdc4_device * device = xtdc4_init(&params, &error_code, &err_message);
-	if (error_code != CRONO_OK)
-	{
+	if (error_code != CRONO_OK) {
 		printf("Could not init xTDC4 compatible board: %s\n", err_message);
 		return nullptr;
 	}
@@ -55,7 +54,7 @@ int configure_xtdc4(xtdc4_device * device) {
 	config.trigger[0].rising = 0;	// disable packet generation on rising edge of start pulse
 
 	// generate an internal 200 kHz trigger
-	config.auto_trigger_period = 750;
+	config.auto_trigger_period = 750;           // multiples of 6.666 ns
 	config.auto_trigger_random_exponent = 0;
 
 	// setup TiGeR
@@ -80,8 +79,7 @@ int configure_xtdc4(xtdc4_device * device) {
 	return xtdc4_configure(device, &config);
 }
 
-double get_binsize(xtdc4_device * device)
-{
+double get_binsize(xtdc4_device * device) {
 	xtdc4_param_info parinfo;
 	xtdc4_get_param_info(device, &parinfo);
 	return parinfo.binsize;
@@ -120,7 +118,7 @@ void print_hit(uint32 hit, double binsize) {
 _int64 process_packet(_int64 group_abs_time_old, volatile crono_packet *p, int update_count, double binsize) {
 	// do something with the data, e.g. calculate current rate
 	_int64 group_abs_time = p->timestamp;
-	// group timestamp increments at 2 GHz
+	// group timestamp increments at 600 MHz
 	double rate = (600000000 / ((double)(group_abs_time - group_abs_time_old) / (double)update_count));
 	printf("\r%.2f kHz ", rate / 1000.0);
 
@@ -142,15 +140,13 @@ _int64 process_packet(_int64 group_abs_time_old, volatile crono_packet *p, int u
 	return group_abs_time;
 }
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
 	printf("cronologic xtdc4_user_guide_example using driver: %s\n", xtdc4_get_driver_revision_str());
 
 	xtdc4_device * device = initialize_xtdc4(8 * 1024 * 1024, 0, 0);
 
 	int status = configure_xtdc4(device);
-	if (status != CRONO_OK)
-	{
+	if (status != CRONO_OK) {
 		printf("Could not configure xTDC4: %s", xtdc4_get_last_error_message(device));
 		xtdc4_close(device);
 		return status;
@@ -196,8 +192,7 @@ int main(int argc, char* argv[])
 	{
 		// get pointers to acquired packets
 		status = xtdc4_read(device, &read_config, &read_data);
-		if (status != CRONO_OK)
-		{
+		if (status != CRONO_OK) {
 			Sleep(100);
 			printf(" - No data! -\n");
 		}
