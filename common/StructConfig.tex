@@ -369,12 +369,15 @@
 
 	In this structure intervals are always provided in picoseconds, independently of the bin size of the TDC.
 
-	\cronvar{crono\tu bool\tu t}{enable}
+	\cronvar{crono\tu bool\tu t}{enabled}
 	Enable grouping. Defaults to \textsf{false}.
 
 	\cronvar{int}{trigger\tu channel}\\
 	Channel number that is used to trigger the creation of a group.\par
 
+	\cronvar{u\longlong}{trigger\tu channel\tu bitmask}\\
+	Use this to define additional trigger channels. There is an OR-disjuction with the \textsf{trigger\tu channel}.\par
+        
 	\cronvar{int}{zero\tu channel}\\
 	Optionally a different channel can be used to calculate the relative timestamps in a group. 
 	This is disabled per default by setting this parameter to $-1$.\par
@@ -382,8 +385,8 @@
 	\cronvar{\longlong}{zero\tu channel\tu offset}\\
 	This offset in picoseconds is added to relative timestamps within a group.\par
 
-	\cronvar{\longlong}{range\tu start}\\
-	\cronvar{\longlong}{range\tu stop}\\
+	\cronvar{\longlong}{range\tu start} Start of group range relative to the \textsf{trigger\tu channel}.\\
+	\cronvar{\longlong}{range\tu stop} End of group range relative to the \textsf{trigger\tu channel}.\\
 	Values in the interval from \textsf{range\tu start} to \textsf{range\tu stop} are included in the group. 
 	Either or both values can be negative to create common-stop behaviour. 
 	\[
@@ -393,8 +396,10 @@
 	\cronvar{\longlong}{trigger\tu deadtime}\\
 	After a trigger was detected additional triggers will be suppressed for this interval. Must not be negative.\par
 
-	\cronvar{crono\tu bool\tu t}{require\tu windows\tu hit}\\
-	If set a group is only created if there is at least one hit in the window defined by \textsf{window\tu start} and \textsf{window\tu stop}.\par
+	\cronvar{u\longlong}{window\tu hit\tu channels}\\
+	Set a bitmask of channels. A group is only created, if there is at least one hit in the windows 
+	defined by \textsf{window\tu start} and \textsf{window\tu stop}.
+	Usage is equivalent to \textsf{trigger\tu channel\tu bitmask}.\par
 
 	\cronvar{\longlong}{window\tu start}\\
 	\cronvar{\longlong}{window\tu stop}\\
@@ -421,8 +426,15 @@
 		-2^{63} \le veto\_ start \le veto\_ stop < 2^{63} 
 	\]\par
 
+	\cronvar{u\longlong}{veto\tu active\tu channels}\\
+	If veto is enabled, veto filtering is active for channels defined by a channel bitmask. 
+	As default, filtering is active for all channels.\par
+
 	\cronvar{crono\tu bool\tu t}{veto\tu relative\tu zero}\\
 	If set, the veto window is defined relative to the zero channel. Otherwise the window is defined relative to the trigger.\par 
+
+	\cronvar{crono\tu bool\tu t}{ignore\tu empty\tu events}\\
+	Discard groups which contained only a trigger signal.\par
 
 	\cronvar{crono\tu bool\tu t}{overlap}\\
 	Unsupported, must remain \textsf{false}.
