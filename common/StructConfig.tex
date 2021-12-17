@@ -65,7 +65,7 @@
 	{
 		\cronvar{crono\tu bool\tu t}{start\tu rising}
 		\itett{
-			Not applicable for the \deviceName. Rising and/or falling edge are configured using \prefix trigger\tu block. See section \ref{structtrigger}.
+			Not applicable for the \deviceName. Rising and/or falling edge are configured using the \prefix trigger structure. See section \ref{structtrigger}.
 		}{
 			Selects whether the rising or falling edge of the start signal is used to start a group.
 		}\par
@@ -178,7 +178,7 @@
 %%%%%%%%% trigger
 	\subsection{Structure \prefix trigger}
 	\label{structtrigger}
-	For each input this structure determines whether rising or falling edges on the inputs create trigger events for the TiGer \ifxHPTDC{and gating}{} blocks.
+	For each input this structure determines whether rising or falling edges on the inputs create trigger events for the TiGer \ifxHPTDC{and gating }{}blocks.
 
 	\cronvar{crono\tu bool\tu t}{falling}\\
 	\cronvar{crono\tu bool\tu t}{rising}\\
@@ -301,7 +301,7 @@
 
 		\cronvar{crono\tu bool\tu t}{rising}\\
 		\txh{
-			Not applicable for \deviceName. Rising and/or falling edge are configured using \prefix trigger\tu block. See section \ref{structtrigger}.
+			Not applicable for \deviceName. Rising and/or falling edge are configured using the \prefix trigger structure. See section \ref{structtrigger}.
 		}{
 			Select which edge of the signal is used for full resolution measurements.
 			\textsf{xtdc4\tu trigger.rising} and \textsf{xtdc4\tu trigger.falling} described on page \pageref{structtrigger} are used
