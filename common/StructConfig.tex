@@ -9,24 +9,24 @@
 
 	\cronvar{\prefix device\tu configuration}{device\tu configs[\PREFIX DEVICES\tu MAX]}\\
 	A structure with the configuration for an individual \deviceName\ board as defined in ssection \ref{structconfig}.
-	Use the function \textsf{\prefix count\tu devices()} to query how many entries contain valid information. See section \ref{countdevices} for details on the function. \par 
+	Use the function \textsf{\prefix count\tu devices()} to query how many entries contain valid information. See section \ref{countdevices} for details on the function. \par
 
 	\cronvar{\prefix grouping\tu configuration}{grouping}\\
-	Structure with the parameters for grouping. 
+	Structure with the parameters for grouping.
 	See section \ref{structgrouping} for the definition of the structure and section \ref{grouping} for more information on grouping.\par
 
 	\cronvar{\longlong}{*bin\tu to\tu ps(\longlong)}\\
 	Reserved for future use.
-	
+
 }{}
 %%%%%%%%%%%%%% struct device_configuration
 \subsection{Structure \prefix \ifxHPTDC{device\tu}{}configuration}
 	\label{structconfig}
-	This is the structure containing the configuration information. 
+	This is the structure containing the configuration information.
 	\ifxHPTDC{}{ % xHPTDC8 uses TDC manager instead
 		It is used in conjunction with \textsf{\prefix get\tu default\tu configuration()}, \textsf{\prefix get\tu current\tu configuration()} and \textsf{\prefix configure()}.\par
 	}
-	It uses multiple substructures to configure various aspects of the board. 
+	It uses multiple substructures to configure various aspects of the board.
 
 	\cronvar{int}{size}\\
 	The number of bytes occupied by the structure.\par
@@ -35,7 +35,7 @@
 	A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar.\par
 
 	% autotrigger was reordered for the xHPTDC so we need to be able to use it in conditionally
-	\newcommand{\autotrigger}{			
+	\newcommand{\autotrigger}{
 		\cronvar{int}{auto\tu trigger\tu period}\\
 		\cronvar{int}{auto\tu trigger\tu random\tu exponent}\\
 		Create a trigger either periodically or randomly. There are two parameters $M = \text{auto\tu trigger\tu period}$ and $N = \text{random\tu exponent}$ that result in a distance between triggers of $T$ clock cycles.
@@ -46,26 +46,26 @@
 			&0 \leq N < 32
 		\end{align}
 
-		\noindent There is no enable or reset. The auto trigger is running continously. 
+		\noindent There is no enable or reset. The auto trigger is running continously.
 		The usage of this trigger can be configured in the TiGer block source field.\par
 	}
 	\ifxHPTDC{
 		\autotrigger
 	}{}
 
-	\ifxHPTDC{ %see xhptdc8_grouping_configuration.enable	
+	\ifxHPTDC{ %see xhptdc8_grouping_configuration.enable
 	}{
 		\cronvar{int}{tdc\tu mode}\\
 		TDC mode. Can be grouped or continuous.
-		Currently only \textsf{\PREFIX TDC\tu MODE\tu GROUPED} is supported. 
+		Currently only \textsf{\PREFIX TDC\tu MODE\tu GROUPED} is supported.
 		This is set per default by \textsf{\prefix get\tu current\tu configuration()} and should be left unchanged.
 	}\par
 
 	\ifxHPTDC{} % does not exist for xHPTDC8
 	{
-		\cronvar{crono\tu bool\tu t}{start\tu rising} 
+		\cronvar{crono\tu bool\tu t}{start\tu rising}
 		\itett{
-			Not applicable for the \deviceName.
+			Not applicable for the \deviceName. Rising and/or falling edge are configured using \prefix trigger\tu block. See section \ref{structtrigger}.
 		}{
 			Selects whether the rising or falling edge of the start signal is used to start a group.
 		}\par
@@ -73,11 +73,11 @@
 
 	\label{apidcoffset}
 	\ifxHPTDC{
-		\cronvar{double}{threshold[\PREFIX TDC\tu CHANNEL\tu COUNT]}\\	
-		Set the threshold voltage for the input channels \ifxHPTDC{A \ldots H}{S, A \ldots D} (see figure \ref{fig:dcoffset1}).	
+		\cronvar{double}{threshold[\PREFIX TDC\tu CHANNEL\tu COUNT]}\\
+		Set the threshold voltage for the input channels \ifxHPTDC{A \ldots H}{S, A \ldots D} (see figure \ref{fig:dcoffset1}).
 	}{
-		\cronvar{double}{dc\tu offset[\PREFIX TDC\tu CHANNEL\tu COUNT]}\\	
-		Set the threshold voltage for the input channels \ifxHPTDC{A \ldots H}{S, A \ldots D} (see figure \ref{fig:dcoffset1}).	
+		\cronvar{double}{dc\tu offset[\PREFIX TDC\tu CHANNEL\tu COUNT]}\\
+		Set the threshold voltage for the input channels \ifxHPTDC{A \ldots H}{S, A \ldots D} (see figure \ref{fig:dcoffset1}).
 		\begin{itemize}
 			\item dc\tu offset[0] : threshold for channel Start
 			\item dc\tu offset[1 - 4] : threshold for channels A \ldots D
@@ -112,9 +112,9 @@
 		\ttdef{\DCOFFSET N\tu SSTL\tu 3} & -1.32\\
 		\ttdef{\DCOFFSET N\tu SSTL\tu 2} & -1.25\\
 	\end{tabular}\par
-		\noindent The inputs are AC coupled. Thus, the absolute voltage is not important for pulse inputs. 
-		It is the relative pulse amplitude that causes the input circuits to switch. 
-		The parameter must be set to the relative switching voltage for the input standard in use. 
+		\noindent The inputs are AC coupled. Thus, the absolute voltage is not important for pulse inputs.
+		It is the relative pulse amplitude that causes the input circuits to switch.
+		The parameter must be set to the relative switching voltage for the input standard in use.
 		If the pulses are negative, a negative switching threshold must be set and vice versa.
 	\begin{figure}
 		\begin{center}
@@ -124,7 +124,7 @@
 				\includegraphics[width=0.3\textwidth]{figures/InputCircuit.pdf}
 			}
 			\caption{Input circuit for each of the input channels. \label{fig:dcoffset1}}
-		\end{center} 
+		\end{center}
 	\end{figure}
 %%			\begin{figure}
 %%				\begin{center}
@@ -143,7 +143,7 @@
 
 	\ifxHPTDC{
 		\cronvar{\prefix tiger\tu block}{gating\tu block[\PREFIX GATE\tu COUNT]}\\
-		Configuration of the gating blocks.	
+		Configuration of the gating blocks.
 	}{} % only for xHPTDC8
 
 	\cronvar{\prefix channel}{channel[\PREFIX CHANNEL\tu COUNT]}\\
@@ -154,7 +154,7 @@
 		Configuration of the ADC channel.\par
 
  		\cronvar{crono\tu bool\tu t}{skip\tu alignment}\\
-		If set,  the phase of the two TDC chips is not realigned when capturing is restartet.\par
+		If set, the phase of the two TDC chips is not realigned when capturing is restartet.\par
 
 		\cronvar{crono\tu bool\tu t}{alignment\tu source}\\
 		Define a signal source that is used for phase alignment. Should usually be left unchanged.
@@ -163,41 +163,39 @@
 			\ttdef{ALIGN\tu PIN} & 1\\
 			\ttdef{ALIGN\tu RESERVED} & 2\\
 		\end{tabular}\par
-		
+
 	}{
 		\ttvar{\prefix low-res\tu channel}{low-res\tu channel[\PREFIX LOWRES\tu CHANNEL\tu COUNT]}\\
 		\itett{
-			Not applicable for \deviceName. 
+			Not applicable for \deviceName.
 		}{
 			Only applicable to the xTDC4-Sciex. Configures the additional digital low-res inputs.
 		}\par
 		\autotrigger
-	
 	}
 
-	
 
 %%%%%%%%% trigger
 	\subsection{Structure \prefix trigger}
 	\label{structtrigger}
-	For each input this structure determines wheter rising or falling edges on the inputs create trigger events for the TiGer \ifxHPTDC{and gating}{} blocks.
+	For each input this structure determines whether rising or falling edges on the inputs create trigger events for the TiGer \ifxHPTDC{and gating}{} blocks.
 
 	\cronvar{crono\tu bool\tu t}{falling}\\
 	\cronvar{crono\tu bool\tu t}{rising}\\
 	Select for which edges a trigger event is created inside the FPGA.
 	\txh{
-		Set the corresponding flag for one of the edges or both edges then using the input with a TiGer.
+		Set the corresponding flag for one of the edges or both edges when using the input with a TiGer.
 	}{
-		The \deviceName can output measurements with a reduced bin size of $5/6~ns = 833,\overline{3}~ps$ for one or both edges of input signals. 
+		The \deviceName can output measurements with a reduced bin size of $5/6~ns = 833,\overline{3}~ps$ for one or both edges of input signals.
 		See section \ref{difficulthits} for more information on hits with varying resolution.
 		Use \textsf{xtdc4\tu channel.rising} on page \pageref{structchannel} to select which edge is measured with full resolution.
 		The edge that is selected for full resolution measurement must also be enabled for low resolution measurement.
 	}{
-		While the TDC can only measure either rising or falling edges, the gating blocks and the TiGer are more flexible. 
+		While the TDC can only measure either rising or falling edges, the gating blocks and the TiGer are more flexible.
 		Set the corresponding flag for one of the edges or both edges when using the input with a TiGer or gating block.
 	}\par
 
-%%%%% tiger_block			
+%%%%% tiger_block
     \newpage
 	\subsection{Structure \prefix tiger\tu block\label{cp:tigerblock}}
 	See section \ref{cp:tiger} for additional information.\\
@@ -214,14 +212,14 @@
 			\ttdef{TIGER \tu BIPOLAR} & 3 & Output is driven with 1~V bidirectional pulses.\\*
 									&   & $start = stop -1$\\*
 		\end{tabular}
-		
-		The gating blocks are only used internally and produce no pulses accessible to the user.		
+
+		The gating blocks are only used internally and produce no pulses accessible to the user.
 		Gating blocks interpret any value that is not 0 as enable.\\*
 		\begin{tabular}{lrl}
 			\ttdef{GATE \tu OFF} & 0 & No gating, alle hits are captured. \\*
 			\ttdef{GATE \tu ON} & 1 & No hits are captured while the gate is inactive.\\*
 		\end{tabular}
-	
+
 	}{
 		\cronvar{crono\tu bool\tu t}{enable}\\
 		Activates the timing generator (TiGer).\par
@@ -241,9 +239,9 @@
 
 	\ifxHPTDC{}{
 		\cronvar{crono\tu bool\tu t}{enable\tu lemo\tu output}\\
-		Enables the LEMO output. Drive the TiGer Signal to the corresponding Lemo connector as an output. 
+		Enables the LEMO output. Drive the TiGer Signal to the corresponding Lemo connector as an output.
 		This is DC coupled, so make sure that you do not any devices connected as inputs.
-		Pulses created by the TiGer are visible at the \deviceName inputs and can be measured again to get the exact timing.  
+		Pulses created by the TiGer are visible at the \deviceName inputs and can be measured again to get the exact timing.
 	}
 
 	\cronvar{int}{start}\\
@@ -256,10 +254,10 @@
 	The time during which the TiGer output is set, relative to the trigger input. The parameters \textsf{start} and \textsf{stop} must fulfill the following conditions:
 	\[ 0 <= start <= stop <= 2^{16}-1 \]
 	If retriggering is enabled, the timer is reset to the value of the start parameter whenever the input signal is set while waiting for the stop time. \par
-	
+
 
 	\cronvar{int}{sources}\\
-	A bit mask with a bit set for all trigger sources that can trigger this TiGer block. 
+	A bit mask with a bit set for all trigger sources that can trigger this TiGer block.
 	Default is \textsf{\PREFIX TRIGGER\tu SOURCE\tu \ifxHPTDC{A}{S}}.\par
 
 	\begin{tabular}{lc}
@@ -280,7 +278,7 @@
 			\ttdef{TRIGGER\tu SOURCE\tu ADC2\tu CONV} & 0x00001000\\
 			\ttdef{TRIGGER\tu SOURCE\tu SOFTWARE} & 0x00002000\\
 			\ttdef{TRIGGER\tu SOURCE\tu AUTO} & 0x00004000\\
-			\ttdef{TRIGGER\tu SOURCE\tu ONE}  & 0x00008000	
+			\ttdef{TRIGGER\tu SOURCE\tu ONE}  & 0x00008000
 		}{
 				\ttdef{TRIGGER\tu SOURCE\tu S} & 0x00000001\\
 				\ttdef{TRIGGER\tu SOURCE\tu A} & 0x00000002\\
@@ -290,7 +288,7 @@
 				\ttdef{TRIGGER\tu SOURCE\tu AUTO} & 0x00004000\\
 				\ttdef{TRIGGER\tu SOURCE\tu ONE} & 0x00008000
 		}
-	\end{tabular} 
+	\end{tabular}
 
 %%%%%%%%%%%%%%%%%%%%%%%% channel
 
@@ -303,15 +301,15 @@
 
 		\cronvar{crono\tu bool\tu t}{rising}\\
 		\txh{
-			Not applicable for \deviceName.
+			Not applicable for \deviceName. Rising and/or falling edge are configured using \prefix trigger\tu block. See section \ref{structtrigger}.
 		}{
-			Select which edge of the signal is used for full resolution measurements. 
-			\textsf{xtdc4\tu trigger.rising} and \textsf{xtdc4\tu trigger.falling} described on page \pageref{structtrigger} are used 
-			to select which edges are recorded for low resolution measurement. 
+			Select which edge of the signal is used for full resolution measurements.
+			\textsf{xtdc4\tu trigger.rising} and \textsf{xtdc4\tu trigger.falling} described on page \pageref{structtrigger} are used
+			to select which edges are recorded for low resolution measurement.
 			The edge that is selected for full resolution measurement must also be enabled for low resolution measurement.
 			See section \ref{difficulthits} for more information on hits with varying resolution.
 		}{
-			Select which edge of the signal is measured by the TDC. 
+			Select which edge of the signal is measured by the TDC.
 			The TiGer and gating blocks use a separate configuration that allows to use both edges simultaneously on each input. See section \ref{structtrigger}.
 		}\par
 
@@ -320,7 +318,7 @@
 			Enable carry chain TDC. This is set to \emph{true} by default and should be left unchanged. \par
 
 			\cronvar{crono\tu bool\tu t}{cc\tu same\tu edge}\\
-			Sets whether the carry chain TDC records the same or opposite edge as the TDC chip. 
+			Sets whether the carry chain TDC records the same or opposite edge as the TDC chip.
 			If the same edge is selected, that carry chain TDC acts  as a backup if the chip misses hits due to FIFO overflows or short input pulses.
 			If opposite edges are selected, both edges of a pulse can be measured with reasonable resolution. See section \ref{difficulthits} for more information.\par
 
@@ -350,11 +348,11 @@
 
 	\cronvar{crono\tu bool\tu t}{watchdog\tu readout}\\
 	Include periodic ADC measurements in the output data. Watchdog measurements do not inhibit ADC  triggers occuring at the same time.\par
-	
+
 	\cronvar{int}{watchdog\tu interval}\\
-	Number of 150~MHz clock cycles within one watchdog period. 
+	Number of 150~MHz clock cycles within one watchdog period.
 	\[ 100 <= watchdog\_interval  <= 7500\]
-	
+
 	\cronvar{double}{trigger\tu threshold}\\
 	Threshold voltage for the TRG input. See the description for the \textsf{channel.trigger\tu threshold} in section \ref{apidcoffset}.
 
@@ -363,7 +361,7 @@
 %%%%%%%%%%%%%%%%%%%%% grouping, only fpr xHPTDC8
 
 \ifxHPTDC{
-	\subsection{Structure \prefix grouping\tu configuration}	
+	\subsection{Structure \prefix grouping\tu configuration}
 	\label{structgrouping}
 	This structure configures the behaviour of the grouping functionality. See section \ref{grouping}.
 
@@ -377,41 +375,41 @@
 
 	\cronvar{u\longlong}{trigger\tu channel\tu bitmask}\\
 	Use this to define additional trigger channels. There is an OR-disjuction with the \textsf{trigger\tu channel}.\par
-        
+
 	\cronvar{int}{zero\tu channel}\\
-	Optionally a different channel can be used to calculate the relative timestamps in a group. 
+	Optionally a different channel can be used to calculate the relative timestamps in a group.
 	This is disabled per default by setting this parameter to $-1$.\par
-	
+
 	\cronvar{\longlong}{zero\tu channel\tu offset}\\
 	This offset in picoseconds is added to relative timestamps within a group.\par
 
 	\cronvar{\longlong}{range\tu start} Start of group range relative to the \textsf{trigger\tu channel}.\\
 	\cronvar{\longlong}{range\tu stop} End of group range relative to the \textsf{trigger\tu channel}.\\
-	Values in the interval from \textsf{range\tu start} to \textsf{range\tu stop} are included in the group. 
-	Either or both values can be negative to create common-stop behaviour. 
+	Values in the interval from \textsf{range\tu start} to \textsf{range\tu stop} are included in the group.
+	Either or both values can be negative to create common-stop behaviour.
 	\[
-		-2^{63} \le range\_start \le range\_stop < 2^{63} 
+		-2^{63} \le range\_start \le range\_stop < 2^{63}
 	\]\par
 
 	\cronvar{\longlong}{trigger\tu deadtime}\\
 	After a trigger was detected additional triggers will be suppressed for this interval. Must not be negative.\par
 
 	\cronvar{u\longlong}{window\tu hit\tu channels}\\
-	Set a bitmask of channels. A group is only created, if there is at least one hit in the windows 
+	Set a bitmask of channels. A group is only created, if there is at least one hit in the windows
 	defined by \textsf{window\tu start} and \textsf{window\tu stop}.
 	Usage is equivalent to \textsf{trigger\tu channel\tu bitmask}.\par
 
 	\cronvar{\longlong}{window\tu start}\\
 	\cronvar{\longlong}{window\tu stop}\\
 	\[
-		-2^{63} \le window\_ start \le window\_ stop < 2^{63} 
+		-2^{63} \le window\_ start \le window\_ stop < 2^{63}
 	\]\par
 
 	\cronvar{int}{veto\tu mode}\\
-	A window defined by \textsf{veto\tu start} and \textsf{veto\tu stop} can be used to suppress hits. 
-	The functionality is very similar to the gating blocks but is defined in software. 
+	A window defined by \textsf{veto\tu start} and \textsf{veto\tu stop} can be used to suppress hits.
+	The functionality is very similar to the gating blocks but is defined in software.
 	While gating blocks can only work locally on the information available within each board the veto function is applied globally accross all boards.
-	This feature cannot be used to improve FIFO usage or PCIe bandwidth usage. 
+	This feature cannot be used to improve FIFO usage or PCIe bandwidth usage.
 	 \\*
 	Either data inside or outside the veto window can be suppressed.\\*
 	\begin{tabular}{lc}
@@ -423,15 +421,15 @@
 	\cronvar{\longlong}{veto\tu start}\\
 	\cronvar{\longlong}{veto\tu stop}\\
 	\[
-		-2^{63} \le veto\_ start \le veto\_ stop < 2^{63} 
+		-2^{63} \le veto\_ start \le veto\_ stop < 2^{63}
 	\]\par
 
 	\cronvar{u\longlong}{veto\tu active\tu channels}\\
-	If veto is enabled, veto filtering is active for channels defined by a channel bitmask. 
+	If veto is enabled, veto filtering is active for channels defined by a channel bitmask.
 	As default, filtering is active for all channels.\par
 
 	\cronvar{crono\tu bool\tu t}{veto\tu relative\tu zero}\\
-	If set, the veto window is defined relative to the zero channel. Otherwise the window is defined relative to the trigger.\par 
+	If set, the veto window is defined relative to the zero channel. Otherwise the window is defined relative to the trigger.\par
 
 	\cronvar{crono\tu bool\tu t}{ignore\tu empty\tu events}\\
 	Discard groups which contained only a trigger signal.\par
