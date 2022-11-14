@@ -20,10 +20,10 @@
 	extendedchars=true,
 }
 
-\section{Auto Triggering Function Generator\label{cp:AutoTriggeringFunctionGenerator}}
+\section{Auto-Triggering Function Generator\label{cp:AutoTriggeringFunctionGenerator}}
 Some applications require internal periodic or random triggering. The \deviceName\ function generator provides this functionality.\par
 
-The delay between two trigger pulses of this trigger generator is the sum of two components: A fixed value M and a pseudo random value given by the exponent N. \par
+The delay between two trigger pulses of this trigger generator is the sum of two components: A fixed value M and a pseudo-random value with a range given by the exponent N. \par
 
 The period is
 
@@ -56,7 +56,7 @@ See Section \ref{cp:tigerblock} for a full description of the configuration opti
 %
 
 Figure \ref{fig:matrix} shows how the TiGer blocks are connected. They can be triggered by an OR of an arbitrary combination of inputs, 
-including the auto trigger \ifxHPTDC{and the ADC}{}. Each TiGer can drive its output to its corresponding LEMO connector. This turns the connector into an output. 
+including the auto-trigger \ifxHPTDC{and the ADC}{}. Each TiGer can drive its output to its corresponding LEMO connector. This turns the connector into an output. 
 
 \ifxHPTDC{
 	The TiGer outputs are AC coupled to the connector. They can be operated in one of the following modes:
@@ -69,7 +69,7 @@ including the auto trigger \ifxHPTDC{and the ADC}{}. Each TiGer can drive its ou
 		This mode can be used as a clock output with a frequency of $75/N$~MHz for integer $N$.
 	\paragraph*{\textsf{\PREFIX TIGER\tu BIDI}} 
 		In this mode the TiGer creates unipolar pulses with 1~V amplitude. The connector can still be used as an input. 
-		Use short pulses to keep the propability of collision and the effect on the baseline low.	
+		Use short pulses to keep the probability of collision and the effect on the baseline low.	
 	\paragraph*{\textsf{\PREFIX TIGER\tu BIPOLAR}} 
 		In this mode the connector creates bipolar pulses with 1~V amplitude. The connector can still be used as an input. 
 		Pulses have no effect on the baseline offset. 
@@ -99,10 +99,10 @@ including the auto trigger \ifxHPTDC{and the ADC}{}. Each TiGer can drive its ou
 	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu TDC\tu EXT\tu SYNC}} \leavevmode \\
 		Clock signal with 125~kHz. 
 	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu AUTO}} \leavevmode \\
-		Periodic or random trigger pulses from the auto trigger block.
+		Periodic or random trigger pulses from the auto-trigger block.
 	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu ADC1\tu CONV}} \leavevmode \\
-		Same as \textsf{\PREFIX TRIGGER\tu SOURCE\tu ADC2\tu CONV}. When there is an ADC trigger pulse on the TRG connector, either of the two on board ADCs is triggered in an unpredictable pattern. 
-		If the TRG input shall be used as a trigger the trigger sources must be contain both \textsf{ADC1\tu CNV} and \textsf{ADC2\tu CNV}.
+		Same as \textsf{\PREFIX TRIGGER\tu SOURCE\tu ADC2\tu CONV}. When there is an ADC trigger pulse on the TRG connector, either of the two onboard ADCs is triggered in an unpredictable pattern. 
+		If the TRG input shall be used as a trigger, the trigger sources must contain both \textsf{ADC1\tu CNV} and \textsf{ADC2\tu CNV}.
 	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu SOFTWARE}} \leavevmode \\
 		Set for one clock cycle by a call to the driver function
 		\textsf{\prefix software\tu trigger()}.
@@ -119,15 +119,15 @@ including the auto trigger \ifxHPTDC{and the ADC}{}. Each TiGer can drive its ou
 		The ADC TiGer can be used with retrigger enabled to periodically sample ADC data. 
 		The period should be no shorter than 300~ns or 45 TiGer clocks.
 
-		The ADC TiGer can also be used to sample voltages at a time relative to one of the TDC inputs. In this case 
-		stop should be set to at least 45 to ensure that the sample period criterion is met even when pulses
+		The ADC TiGer can also be used to sample voltages at a time relative to one of the TDC inputs. In this case, 
+		\textsf{stop} should be set to at least 45 to ensure that the sample period criterion is met even when pulses
 		arrive in quick succession. A typical application would be to sample some slow control voltage once per start signal.
 
 \newpage
 	\section{Gating}
-		Each TDC channel has a second TiGer block that functions as a gate as shown in figure \ref{fig:matrix}. 
+		Each TDC channel has a second, identical TiGer block that functions as a gate as shown in figure \ref{fig:matrix}. In driver configuration structure these are accessible as \textsf{gating\tu block[channel]}.
 		Hits are recorded in a channel only while the output of the gating block is active.
-		If the block is negated hits are only recorded while the gating block is inactive.
+		If the block is negated in the configuration, hits are only recorded while the gating block is inactive.
 		
 		This is a useful feature in setups where the trigger creates a lot of noise.
 		A suitable configuration of the gating block can reduce the bandwidth and buffer usage significantly.
@@ -148,7 +148,7 @@ including the auto trigger \ifxHPTDC{and the ADC}{}. Each TiGer can drive its ou
 		There are two interleaved ADCs  to ensure that there is always an ADC available even during readout. 
 		This is exposed to the user both in the output data format and in the TiGer and Gating trigger sources.
 		When using the ADC trigger as a trigger for Gating or TiGer both trigger sources shall be set to the same value.
-		During readout the user shall not distinguish between data from the two ADCs unless advanced calibration is 
-		desired for the ADC data. In that case the two ADCs should be treated separately.   
+		During readout, the user shall not distinguish between data from the two ADCs unless advanced calibration is 
+		desired for the ADC data. In that case, the two ADCs should be treated separately.   
 
 }{}

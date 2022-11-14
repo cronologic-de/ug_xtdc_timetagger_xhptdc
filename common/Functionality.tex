@@ -7,7 +7,7 @@ The measurements are quantized to $500$~ps for -2G devices and tp $1000$~ps for 
 The timestamps are recorded in integer multiples of a bin size of $500$~ps for both board types to simplifiy setups where data from differnt board types is combined.
 Transitions of the input signals are called hits. To reliably detect hits the signal has to be stable for more than one quantisation interval before and after the edge.  
 Triggers on the start channel must not occur less than 5ns apart. The \deviceName\ records events without dead time at a readout rate of about 48MHits/s.
-} { %xTDC4 Version
+} { %xTDC4 and xHPTDC8 Version
 The \deviceName\ is a ``classic'' common start time-to-digital converter. 
 
 It records the time difference between leading or trailing edges on the start input and the stop inputs. 
@@ -38,7 +38,7 @@ The maximum trigger rate on the start channel is $4$~MHz.
     The \deviceName\ is a streaming time-to-digital converter. It records the timestamps of changes at the inputs A-H in an infinite stream. 
     A flexible grouping mode is available that can emulate common-start or common-stop behaviour. See section \ref{grouping} for details.
 
-    For each channel it can be selected individually whether rising or falling edges are recorded. It is not possible to record both edges of the same channel. 
+    For each channel, it can be selected individually whether rising or falling edges are recorded. It is not possible to record both edges of the same channel. 
     The timestamps are recorded in integer multiples of a bin size of $5000/(3\cdot 128) = 13.0208\overline{3}$~ps. 
     There must be at least 5~ns between consecutive hits on the same input channel to be detected reliably. 
     The \deviceName\ records events without dead time at a readout rate of about $48$~MHits/s.

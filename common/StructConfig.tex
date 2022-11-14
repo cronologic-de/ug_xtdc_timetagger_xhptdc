@@ -8,7 +8,7 @@
 	A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar.\par
 
 	\cronvar{\prefix device\tu configuration}{device\tu configs[\PREFIX DEVICES\tu MAX]}\\
-	A structure with the configuration for an individual \deviceName\ board as defined in ssection \ref{structconfig}.
+	A structure with the configuration for an individual \deviceName\ board as defined in section \ref{structconfig}.
 	Use the function \textsf{\prefix count\tu devices()} to query how many entries contain valid information. See section \ref{countdevices} for details on the function. \par
 
 	\cronvar{\prefix grouping\tu configuration}{grouping}\\
@@ -46,7 +46,7 @@
 			&0 \leq N < 32
 		\end{align}
 
-		\noindent There is no enable or reset. The auto trigger is running continously.
+		\noindent There is no enable or reset. The auto-trigger is running continuously.
 		The usage of this trigger can be configured in the TiGer block source field.\par
 	}
 	\ifxHPTDC{
@@ -84,7 +84,7 @@
 		\end{itemize}
 	}
 
-	Supported range is -1.32V to +1.18V. This should be close to 50\% of the height of the input pulse. Examples for various signaling standards are defined as follows:\par
+	The supported range is -1.32V to +1.18V. This should be close to 50\% of the height of the input pulse. Examples for various signaling standards are defined as follows:\par
 	\ifxHPTDC{
 		\newcommand{\DCOFFSET}{THRESHOLD\tu}
 	}{
@@ -154,7 +154,7 @@
 		Configuration of the ADC channel.\par
 
  		\cronvar{crono\tu bool\tu t}{skip\tu alignment}\\
-		If set, the phase of the two TDC chips is not realigned when capturing is restartet.\par
+		If set, the phase of the two TDC chips is not realigned when capturing is restarted.\par
 
 		\cronvar{crono\tu bool\tu t}{alignment\tu source}\\
 		Define a signal source that is used for phase alignment. Should usually be left unchanged.
@@ -178,7 +178,7 @@
 %%%%%%%%% trigger
 	\subsection{Structure \prefix trigger}
 	\label{structtrigger}
-	For each input this structure determines whether rising or falling edges on the inputs create trigger events for the TiGer \ifxHPTDC{and gating }{}blocks.
+	For each input, this structure determines whether rising or falling edges on the inputs create trigger events for the TiGer \ifxHPTDC{and gating }{}blocks.
 
 	\cronvar{crono\tu bool\tu t}{falling}\\
 	\cronvar{crono\tu bool\tu t}{rising}\\
@@ -216,7 +216,7 @@
 		The gating blocks are only used internally and produce no pulses accessible to the user.
 		Gating blocks interpret any value that is not 0 as enable.\\*
 		\begin{tabular}{lrl}
-			\ttdef{GATE \tu OFF} & 0 & No gating, alle hits are captured. \\*
+			\ttdef{GATE \tu OFF} & 0 & No gating, all hits are captured. \\*
 			\ttdef{GATE \tu ON} & 1 & No hits are captured while the gate is inactive.\\*
 		\end{tabular}
 
@@ -297,7 +297,7 @@
 		Contains TDC channel settings.\par
 
 		\cronvar{crono\tu bool\tu t}{enable\ifxHPTDC{}{d}}\\
-		Enable TDC channel.\par
+		Enable the TDC channel.\par
 
 		\cronvar{crono\tu bool\tu t}{rising}\\
 		\txh{
@@ -341,13 +341,13 @@
 	\newpage
 	\subsection{Structure adc\tu channel}
 	\label{structadcchannel}
-	This structure configures the ADC intput and the corresponding trigger input. See section \ref{adc}.
+	This structure configures the ADC input and the corresponding trigger input. See section \ref{adc}.
 
 	\cronvar{crono\tu bool\tu t}{enable}\\
 	Enable acquisition of ADC data.\par
 
 	\cronvar{crono\tu bool\tu t}{watchdog\tu readout}\\
-	Include periodic ADC measurements in the output data. Watchdog measurements do not inhibit ADC  triggers occuring at the same time.\par
+	Include periodic ADC measurements in the output data. Watchdog measurements do not inhibit ADC  triggers occurring at the same time.\par
 
 	\cronvar{int}{watchdog\tu interval}\\
 	Number of 150~MHz clock cycles within one watchdog period.
@@ -429,7 +429,7 @@
 	As default, filtering is active for all channels.\par
 
 	\cronvar{crono\tu bool\tu t}{veto\tu relative\tu zero}\\
-	If set, the veto window is defined relative to the zero channel. Otherwise the window is defined relative to the trigger.\par
+	If set, the veto window is defined relative to the zero channel. Otherwise, the window is defined relative to the trigger.\par
 
 	\cronvar{crono\tu bool\tu t}{ignore\tu empty\tu events}\\
 	Discard groups which contained only a trigger signal.\par

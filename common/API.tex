@@ -20,11 +20,11 @@ When running your program the dynamic link library containing the actual driver 
 The file for the DLL is called \textsf{\prefix driver.dll} for x86 and \textsf{\prefix driver\tu 64.dll} for x64.
 
 All these files are provided with the driver installer that can be downloaded from the product website \url{https://www.cronologic.de}. 
-By default the installer will place the files into the directory 
+By default, the installer will place the files into the directory 
 \textsf{C:\filesep program files\filesep cronologic\filesep \deviceName\filesep driver}.
 
 \ifxHPTDC{
-	There exist an open source community project that intends to provide some convenient extensions to the driver, code examples 
+	There exist an open-source community project that intends to provide some convenient extensions to the driver, code examples, 
 	and wrappers to make the driver usable with various programming languages like Python and LabView. 
 	The project is hosted at \url{https://github.com/cronologic-de/xhptdc8_babel}.
 }{}
@@ -93,12 +93,12 @@ Error codes are set by the API functions to this value if there has been no erro
 		\cronvar{\prefix \ifxHPTDC{manager}{device}}{\prefix init(}\cronvar{\initparameters}{*params}, \\ 
 		\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\\
 		Opens and initializes the \deviceName\ 
-		\ifxHPTDC{boards}{board with the given index}. \\
-		\textsf{error\tu code} shall point to an integer where the driver can write the the error code. \\
+		\ifxHPTDC{boards in the system}{board with the given index}. \\
+		\textsf{error\tu code} shall point to an integer where the driver can write the error code. \\
 		\textsf{error\tu message} must point to a pointer to char. 
-		The driver will allocate a buffer for zero terminated error message and store the address of the buffer in the location provided by the user.\par
+		The driver will allocate a buffer for zero-terminated error message and store the address of the buffer in the location provided by the user.\par
 
-		The paramter \textsf{params} is a pointer to a structure of type \textsf{\initparameters} that must be completely initialized.\par
+		The parameter \textsf{params} is a pointer to a structure of type \textsf{\initparameters} that must be completely initialized.\par
 
 %%%%%%%%%%%%%%%%% struct init_parameters
 
