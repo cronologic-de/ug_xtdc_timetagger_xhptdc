@@ -15,6 +15,7 @@ To update the xHPTDC8 source code example to the latest version from its [reposi
 git fetch https://github.com/cronologic-de/xhptdc8_babel.git
 git checkout FETCH_HEAD -- ug_example/ug_example_msvscpp/ug_example_msvscpp/xhptdc8_user_guide_example.cpp
 mv .\ug_example\ug_example_msvscpp\ug_example_msvscpp\xhptdc8_user_guide_example.cpp .\xhptdc\
+git restore --staged .\ug_example\ug_example_msvscpp\ug_example_msvscpp\xhptdc8_user_guide_example.cpp
 ```
 
 ## License
