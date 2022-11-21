@@ -9,7 +9,12 @@ To compile run
 pdflatex xHPTDC8_User_Guide.tex
 pdflatex xTDC4_User_Guide.tex
 pdflatex TimeTagger4_User_Guide.tex
-
+```
+To update the xHPTDC8 source code example to the latest version from its [repository](https://github.com/cronologic-de/xhptdc8_babel/tree/main/ug_example), you should execute the following commands before compiling:
+```shell
+git fetch https://github.com/cronologic-de/xhptdc8_babel.git
+git checkout FETCH_HEAD -- ug_example/ug_example_msvscpp/ug_example_msvscpp/xhptdc8_user_guide_example.cpp
+mv .\ug_example\ug_example_msvscpp\ug_example_msvscpp\xhptdc8_user_guide_example.cpp .\xhptdc\
 ```
 
 ## License
