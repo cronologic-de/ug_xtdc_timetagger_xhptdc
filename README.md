@@ -6,10 +6,12 @@ The interface of the two devices is almost identical. Therefore both user guides
 
 To compile run
 ```shell
-pdflatex xHPTDC8_User_Guide.tex
-pdflatex xTDC4_User_Guide.tex
-pdflatex TimeTagger4_User_Guide.tex
+xelatex xHPTDC8_User_Guide.tex
+xelatex xTDC4_User_Guide.tex
+xelatex TimeTagger4_User_Guide.tex
 ```
+XeLaTeX can be replaced by LuaLaTeX if desired.
+
 To update the xHPTDC8 source code example to the latest version from its [repository](https://github.com/cronologic-de/xhptdc8_babel/tree/main/ug_example), you should execute the following commands before compiling:
 ```shell
 git fetch https://github.com/cronologic-de/xhptdc8_babel.git
