@@ -22,7 +22,7 @@
 \documentclass[10pt,notitlepage]{scrreprt}
 \usepackage{cronologicug}
 
-% this file creates three similar user guides depending on the commend \deviceName
+% this file creates two similar user guides depending on the commend \deviceName
  
 %source files that differ between versions can be input with \ttinput
 %this will prefix the include with TT4_ or xTDC4, depending on versoin
@@ -99,10 +99,10 @@
 \hyphenation{Time-Tagger xTDC xHPTDC cronologic}
 
 
-\newcommand{\ttvar}[2]{\noindent\textsf{\textbf{\textcolor{crongray}{#1} \prefix #2}}}%for variable declaration
-\newcommand{\ttdef}[1]{\noindent\textsf{\textcolor{crongray}{\#{}define} \PREFIX #1}}%for definitions
+\newcommand{\ttvar}[2]{\noindent\textsf{\textbf{\textcolor{crongrey}{#1} \prefix #2}}}%for variable declaration
+\newcommand{\ttdef}[1]{\noindent\textsf{\textcolor{crongrey}{\#{}define} \PREFIX #1}}%for definitions
 
-\newcommand{\ugrev}{{1.8.7}}
+\newcommand{\ugrev}{{1.8.8rc}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
  
 \begin{document}  
@@ -147,7 +147,7 @@
 
 	\chapter{Revision History} 
 		\noindent
-		User Guide \hyperlink{ugrev}{\ugrev} as of 2022-11-23\\  % needs also be updated in UgRev.tex
+		User Guide \hyperlink{ugrev}{\ugrev} as of 2023-03-15\\  % needs also be updated in UgRev.tex
 		\\
 		cronologic GmbH \& Co. KG\\
 		Jahnstraße 49\\

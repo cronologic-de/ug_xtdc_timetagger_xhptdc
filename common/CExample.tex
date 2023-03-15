@@ -1,36 +1,30 @@
-% SVN Info:
-% $Date: 2021-01-31 20:06:56 +0100 (So, 31 Jan 2021) $
-% $Rev: 1040 $
-% $Author: kolja $
+The following C++ source code shows how to initializes a \adeviceName\ board, configure it and loop over incoming packets.	
 
-	The following C++ source code shows how to initializes a \adeviceName\ board, configure it and loop over incoming packets.	
+If you are reading this documentation in portable document format, the source code of the C example is also embedded as an
+\txh{
+	\textattachfile[color=cronlightgreen, description={Example Source Code}]{"timetagger/example.cpp"}{attachment}
+	to the file. You can open it in an external viewer or save it to disk by clicking on it.
+	\lstinputlisting{timetagger/example.cpp}
+}{
+	\textattachfile[color=cronlightgreen, description={Example Source Code}]{xtdc/example.cpp}{attachment}
+	to the file. You can open it in an external viewer or save it to disk by clicking on it.
+	\lstinputlisting{xtdc/example.cpp}
+}{	
+	\textattachfile[color=cronlightgreen, description={Example Source Code}]{"xhptdc/example.cpp"}{attachment}
+	to this file. You can open it in an external viewer or save it to disk by clicking on it.
 
-	If you are reading this documentation in portable document format, the source code of the C example is also embedded as an
-	\txh{
-		\textattachfile[color=cronblue, description={Example Source Code}]{"timetagger/example.cpp"}{attachment}
-		to the file. You can open it in an external viewer or save it to disk by clicking on it.
-		\lstinputlisting{timetagger/example.cpp}
-	}{
-		\textattachfile[color=cronblue, description={Example Source Code}]{xtdc/example.cpp}{attachment}
-		to the file. You can open it in an external viewer or save it to disk by clicking on it.
-		\lstinputlisting{xtdc/example.cpp}
-	}{	
-		\textattachfile[color=cronblue, description={Example Source Code}]{"xhptdc/example.cpp"}{attachment}
-		to this file. You can open it in an external viewer or save it to disk by clicking on it.
+	The example code is managed as open-source on GitHub at 
+	\href{https://github.com/cronologic-de/xhptdc8_babel/tree/main/ug_example}{https://github.com/cronologic-de/xhptdc8\tu babel}. 
+	The repository contains a complete project for Microsoft Visual Studio that you can use to compile the example.
+	Examples for more programming languages such as Golang, Rust, Python, and LabView will be added to the repository over time.
 
-		The example code is managed as open-source on GitHub at 
-		\href{https://github.com/cronologic-de/xhptdc8_babel/tree/main/ug_example}{https://github.com/cronologic-de/xhptdc8\tu babel}. 
-		The repository contains a complete project for Microsoft Visual Studio that you can use to compile the example.
-		Examples for more programming languages such as Golang, Rust, Python, and LabView will be added to the repository over time.
+	At the time this document is written, the following source code can be found in the repository:
+	\begin{itemize}
+		\item \href{https://github.com/cronologic-de/xhptdc8_babel/tree/main/dummy}{dummy library} to be able to develop code for the \deviceName\ without a physical board beeing present
+		\item \href{https://github.com/cronologic-de/xhptdc8_babel/tree/main/util}{utility library} to configure the device from YAML strings or YAML files 
+		\item \href{https://github.com/cronologic-de/xhptdc8_babel/tree/main/go/info}{command line info tool} to list information about all \deviceName\ boards in the system. This tool is written in Go.
+	\end{itemize}
 
-		At the time this document is written, the following source code can be found in the repository:
-		\begin{itemize}
-			\item \href{https://github.com/cronologic-de/xhptdc8_babel/tree/main/dummy}{dummy library} to be able to develop code for the \deviceName\ without a physical board beeing present
-			\item \href{https://github.com/cronologic-de/xhptdc8_babel/tree/main/util}{utility library} to configure the device from YAML strings or YAML files 
-			\item \href{https://github.com/cronologic-de/xhptdc8_babel/tree/main/go/info}{command line info tool} to list information about all \deviceName\ boards in the system. This tool is written in Go.
-		\end{itemize}
-
-		\lstinputlisting{xhptdc/example.cpp}
-	}
-	% there were problems with underscores in file names so we removed them
+	\lstinputlisting{xhptdc/example.cpp}
+}
 
