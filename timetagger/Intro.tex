@@ -10,20 +10,40 @@ The relative timestamps of all stop pulses that occur within a configurable rang
 \section{Features}
 	\begin{itemize}
 		\item 4-channel common start TDC
-		\item Bin Size 500~ps (-2G) or 1~ns (-1G)
+		\item Measurement bin size 100~ps to 1000~ps
 		\item Standard Range: 4.194~ms (23~bits)
 		\item Extended Range: 1.073~s (31~bits)
-		\item Bin size: 500~ps
-		\item Double-pulse resolution: 1~ns (-2G) or 2~ns (1-G)
+		\item Double-pulse resolution: two measurement bins 
 		\item Dead time between groups: none
 		\item Minimum interval between starts: 4~ns
 		\item L0 FIFO: 1000~words/channel
 		\item L1 FIFO: 1000~words shared between channels
-		\item PCIe~1.1~x1 with 200~MB/s throughput
+		\item PCIe~x1 interface
 	\end{itemize} 
 
+	The TimeTagger4 exists variants with different resolution from TimeTagger4-1G to TimeTagger4-10G.  
+
+	\noindent
+	\begin{tabularx}{\textwidth}{|X|c|c|c|c|c|c|}
+		\hline
+		Parameter & -1G & -2G & -1.25G & -2.5G & -5G & -10G\\
+		\hline\hline
+		Quantisation & 1000 ps & 500 ps & 800 ps & 400 ps & 200 ps & 100 ps \\
+		\hline
+		Data Format Bin Size & 500 ps & 500 ps & 100 ps & 100 ps & 100 ps & 100 ps \\
+		\hline 
+		DNL and INL & 0.01 LSB & 0.01 LSB & 0.01 LSB & 0.01 LSB & 0.01 LSB & 0.3 LSB \\
+		\hline 
+		PCIe line rate & Gen 1 & Gen 1 & Gen 2 & Gen 2 & Gen 2 & Gen 2\\  
+		\hline 
+		Readout Rate & 200 MB/s & 200 MB/s & 400 MB/s & 400 MB/s & 400 MB/s & 400 MB/s\\ 
+		\hline 
+		Status & end of life & end of life & active & active & active & active \\
+		\hline
+	\end{tabularx}
+
 \section{Applications}
-	The \deviceName\  can be used in all time measurement applications where a common-start setup with 500~ps resolution is sufficient. 
+	The \deviceName\  can be used in all time measurement applications where a common-start setup with 100~ps resolution is sufficient. 
 	For alternatives with higher resolution, more channels or higher readout rates check our TDC website \href{https://www.cronologic.de/produkte/products-overview#tdcdata}{www.cronologic.de}.
 
 	The \deviceName\ is well suited for the following applications:
