@@ -26,17 +26,17 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v3
       - name: Compile TimeTagger4 User Guide
-        uses: xua-cheng/latex-action@v2
+        uses: xu-cheng/latex-action@v2
         with:
           root_file: TimeTagger4_User_guide.tex
           latexmk_use_xelatex: true
       - name: Compile xTDC4 User Guide
-        uses: xua-cheng/latex-action@v2
+        uses: xu-cheng/latex-action@v2
         with:
           root_file: xTDC4_User_guide.tex
           latexmk_use_xelatex: true
       - name: Compile xHPTDC8 User Guide
-        uses: xua-cheng/latex-action@v2
+        uses: xu-cheng/latex-action@v2
         with:
           root_file: xHPTDC8_User_guide.tex
           latexmk_use_xelatex: true
