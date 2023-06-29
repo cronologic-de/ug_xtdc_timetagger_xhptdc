@@ -7,48 +7,48 @@ Timestamps of leading or trailing edges (or both) of digital pulses are recorded
 The \deviceName\ produces a stream of output packets, each containing data from a single start event. 
 The relative timestamps of all stop pulses that occur within a configurable range are grouped into one packet.
 
-\section{Features}
+\section{Features} \label{sec:features}
 	\begin{itemize}
 		\item 4-channel common start TDC
-		\item Measurement bin size 100~ps to 1000~ps
-		\item Standard Range: 4.194~ms (23~bits)
-		\item Extended Range: 1.073~s (31~bits)
+		\item Measurement bin size \SIrange{100}{1000}{\pico\second}
+		\item Standard Range: \SI{8.388}{\milli\second} for Gen\,1 and \SI{1.677}{\milli\second} for Gen\,2 (24\,bits)
+		\item Extended Range: \SI{1.073}{\second} for Gen\,1 and \SI{0.214}{\second} for Gen\,2 (31\,bits)
 		\item Double-pulse resolution: two measurement bins 
 		\item Dead time between groups: none
-		\item Minimum interval between starts: 4~ns
-		\item L0 FIFO: 1000~words/channel
-		\item L1 FIFO: 1000~words shared between channels
+		\item Minimum interval between starts: \SI{4}{\nano\second} for Gen\,1 and \SI{3.2}{\nano\second} for Gen\,2
+		\item L0 FIFO: 1000~words/channel for Gen\,1 and 4000~words/channel for Gen\,2
+		\item L1 FIFO: 4000~words shared between channels
 		\item PCIe~x1 interface
 	\end{itemize} 
 
-	The TimeTagger4 exists variants with different resolution from TimeTagger4-1G to TimeTagger4-10G.  
+	The \deviceName\ exists in different variants and resolutions from \deviceName-1G to \deviceName-10G.  
 
 	\noindent
 	\begin{tabularx}{\textwidth}{|X|c|c|c|c|c|c|}
 		\hline
 		Parameter & -1G & -2G & -1.25G & -2.5G & -5G & -10G\\
 		\hline\hline
-		Quantisation & 1000 ps & 500 ps & 800 ps & 400 ps & 200 ps & 100 ps \\
+		Quantisation & \SI{1000}{\pico\second} & \SI{500}{\pico\second} & \SI{800}{\pico\second} & \SI{400}{\pico\second} & \SI{200}{\pico\second} & \SI{100}{\pico\second} \\
 		\hline
-		Data Format Bin Size & 500 ps & 500 ps & 100 ps & 100 ps & 100 ps & 100 ps \\
+		Data Format Bin Size & \SI{500}{\pico\second} & \SI{500}{\pico\second} & \SI{100}{\pico\second} & \SI{100}{\pico\second} & \SI{100}{\pico\second} & \SI{100}{\pico\second} \\
 		\hline 
-		DNL and INL & 0.01 LSB & 0.01 LSB & 0.01 LSB & 0.01 LSB & 0.01 LSB & 0.3 LSB \\
+		DNL and INL & 0.01\,LSB & 0.01\,LSB & 0.01\,LSB & 0.01\,LSB & 0.01\,LSB & 0.3\,LSB \\
 		\hline 
-		PCIe line rate & Gen 1 & Gen 1 & Gen 2 & Gen 2 & Gen 2 & Gen 2\\  
+		PCIe line rate & Gen\,1 & Gen\,1 & Gen\,2 & Gen\,2 & Gen\,2 & Gen\,2\\  
 		\hline 
-		Readout Rate & 200 MB/s & 200 MB/s & 400 MB/s & 400 MB/s & 400 MB/s & 400 MB/s\\ 
+		Readout Rate & 200\,MB/s & 200\,MB/s & 400\,MB/s & 400\,MB/s & 400\,MB/s & 400\,MB/s\\ 
 		\hline 
 		Status & end of life & end of life & active & active & active & active \\
 		\hline
-	\end{tabularx}
+   \end{tabularx}  
 
 \section{Applications}
-	The \deviceName\  can be used in all time measurement applications where a common-start setup with 100~ps resolution is sufficient. 
+	The \deviceName\  can be used in all time measurement applications where a common-start setup with \SI{100}{\pico\second} resolution is sufficient. 
 	For alternatives with higher resolution, more channels or higher readout rates check our TDC website \href{https://www.cronologic.de/produkte/products-overview#tdcdata}{www.cronologic.de}.
 
 	The \deviceName\ is well suited for the following applications:
 	\begin{itemize}
-		\item LIDAR down to 8~cm resolution
+		\item LIDAR down to \SI{8}{\centi\meter} resolution
 		\item blade oscillation measurements
 		\item reciprocal counters
 		\item coincidence measurements

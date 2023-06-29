@@ -1,0 +1,13 @@
+We found undesired behaviour for Gen\,1 devices of the \deviceName.\par
+If there are three or more edges close together (within \SI{6.6}{\nano\second}) and the user did only enable rising or falling edges but not both, some of the edges are reported with the wrong polarity. \itett{}{To trigger this behaviour you need to violate the \textsf{t\subscript{DPfull}} parameter of the board that states that for full resolution you may not have more than one pulse within a \SI{5}{\nano\second} interval.}\
+
+If your configuration enables both edges all output data is correct.\
+If you only need one type of edge (rising or falling) there are three simple workarounds:\ 
+
+\begin{itemize}
+    \item[a)] update the Firmware of your Gen\,1 device to \itett{svn1187}{svn1192} or later.
+    \item[b)] enable both edges.\par
+    All output words will be correct and your software can ignore all data that doesn't have the desired polarity.
+    \item[c)] enable only the desired edge polarity\par 
+    Ignore the polarity flag in the output data. You can trust that only edges with the desired polarity are output, even if the flag in the data word states the wrong polarity.
+\end{itemize}

@@ -11,57 +11,58 @@
 			\hline
 			Symbol & Parameter & Min & Typical & Max & Units\\
 			\hline\hline
-			P & Total power consumption & & & 27& W\\
+			P & Total power consumption & & & 27& \si{\watt}\\
 			\hline
-			I & PCIe 3,3V rail input current & & &1.8& A\\
+			I & PCIe \SI{3.3}{\volt} rail input current & & &1.8& \si{\ampere}\\
 			\hline
-			VCC & PCIe 3,3V rail power supply voltage &3.1&3.3&3.5& V\\
+			VCC & PCIe \SI{3.3}{\volt} rail power supply voltage &3.1&3.3&3.5& \si{\volt}\\
 			\hline
-			I & PCIe 12V rail input current & & & 1.9 & A\\
+			I & PCIe \SI{12}{\volt} rail input current & & & 1.9 & \si{\ampere}\\
 			\hline
-			VCC & PCIe 12V rail power supply voltage &11.1&12.0&12.9& V\\
+			VCC & PCIe \SI{12}{\volt} rail power supply voltage &11.1&12.0&12.9& \si{\volt}\\
 			\hline
-			I & PCIe 3,3VAux rail input current &&0&& A\\
+			I & PCIe 3.3\,V\subscript{Aux} rail input current &&0&& \si{\ampere}\\
 			\hline
-			VCC & PCIe 3,3VAux rail power supply voltage &&3.3&& V\\
+			VCC & PCIe 3.3\,V\subscript{Aux} rail power supply voltage &&3.3&& \si{\volt}\\
 			\hline
 		\end{tabularx}
 
 	\subsection{TDC Inputs}
 
-		The \deviceName's inputs are single-ended AC-coupled with 50$\Omega$ termination.
+		The \deviceName's inputs are single-ended AC-coupled with \SI{50}{\ohm} termination.
 
 		\noindent
 		\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
 			\hline
 			Symbol & Parameter & Min & Typical & Max & Units\\
 			\hline\hline
-			V\subscript{Base} & Input Baseline & 0 & & 5 & V\\
+			V\subscript{Base} & Input Baseline & 0 & & 5 & \si{\volt}\\
 			\hline
-			V\subscript{Threshold} & Trigger Level & V\subscript{Base} - 1.32 & & V\subscript{Base} + 1.18 & V\\
+			V\subscript{Threshold} & Trigger Level & V\subscript{Base} - 1.32 & & V\subscript{Base} + 1.18 & \si{\volt}\\
 			\hline
-			t\subscript{Pulse} & Pulse Length & 2 & 5 & 200 & ns\\
+			t\subscript{Pulse} & Pulse Length & 2 & 5 & 200 & \si{\nano\second}\\
 			\hline
-			t\subscript{Rise} & Pulse Edge 20\% to 80\%  &  &  & 10 & ns\\
+			t\subscript{Rise} & Pulse Edge 20\% to 80\%  &  &  & 10 & \si{\nano\second}\\
 			\hline
-			t\subscript{Fall} & Pulse Edge 80\% to 20\%  &  &  & 10 & ns\\
+			t\subscript{Fall} & Pulse Edge 80\% to 20\%  &  &  & 10 & \si{\nano\second}\\
 			\hline
-			Z\subscript{P} & Input Impedance && 50 && $\Omega$\\
+			Z\subscript{P} & Input Impedance && 50 && \si{\ohm}\\
 			\hline
-			I\subscript{Term} & Termination Current & -50 & -20 & 50 & mA\\
+			I\subscript{Term} & Termination Current & -50 & -20 & 50 & \si{\milli\ampere}\\
 			\hline
 		\end{tabularx}
 
 	All inputs are AC-coupled. The inputs have very high input bandwidth requirements and therefore there are no circuits that provide over-voltage protection for these signals. 
-	Any voltage on the inputs above 5V or below -5V relative to the voltage of the slot cover can result in permanent damage to the board.
-	
+	Any voltage on the inputs above \SI{5}{\volt} or below -\SI{5}{\volt} relative to the voltage of the slot cover can result in permanent damage to the board.\par 
+    Keep in mind, that the input baseline \textsf{V\subscript{Base}} is affected by the ratio of pulse length \textsf{t\subscript{Pulse}} to average pulse distance (for continuous signals the term is called duty cycle).\par
 	\ifxHPTDC{
 		All digital inputs can output AC coupled pulses from the TiGer. 
 		Special care should be taken not to enable the TiGer output when sensitive equipment is connected that could be damaged by the pulses. 
 	}{
-		Make sure not to drive the inputs when the connector is configured as a TiGer output. 
+Make sure not to drive the inputs when the connector is configured as a TiGer output.\par 
 	}
-	See Section \ref{cp:tiger}. 
+See Section \ref{cp:tiger}. 
+
 %%%%%%%%%%% ADC input
 	\ifxHPTDC{
 	\newpage
@@ -142,7 +143,7 @@ The \deviceName\ is a product of:\
 		\hline
 		Symbol & Parameter & Min & Typical & Max & Units\\
 		\hline\hline
-		T & ambient temperature & -30 && 60 & $^{\circ}$C\\
+		T & ambient temperature & -30 && 60 & \si{\degreeCelsius}\\
 		\hline
 		RH & relative humidity at 31$^{\circ}$C noncondensing & 10 && 70 & \%\\
 		\hline
@@ -157,7 +158,7 @@ The \deviceName\ is a product of:\
 		\hline
 		Symbol & Parameter & Min & Typical & Max & Units\\
 		\hline\hline
-		T & ambient temperature & 5 && 40 & $^{\circ}$C\\
+		T & ambient temperature & 5 && 40 & \si{\degreeCelsius}\\
 		\hline
 		RH & relative humidity at 31$^{\circ}$C & 20 && 75 & \%\\
 		\hline

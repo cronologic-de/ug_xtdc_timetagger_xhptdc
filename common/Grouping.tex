@@ -17,7 +17,7 @@ on the stop channels are recorded. Hits occurring outside of that time window ar
 \ifxHPTDC{
     The start and stop values for grouping can also be negative. This allows to configure the \deviceName\ for common-start, common-stop or for groups that extend into both directions.
 
-    The values are configured in picoseconds.
+    The values are configured in \si{\pico\second}.
     \[ -2^{31} <= start <= stop <= 2^{31}-1 \]
 }{
      Different ranges can be set for each of the stop channels by setting corresponding values for \textsf{channel[i].start} and \textsf{channel[i].stop} values.
@@ -29,12 +29,12 @@ on the stop channels are recorded. Hits occurring outside of that time window ar
  \ifxHPTDC{
     In single-board setups, it is recommended to also configure the gating blocks to similar parameters as the grouping functionality. 
     This prevents data from being read out that is discarded by the grouping code anyway. 
-    Please note that the grouping parameters are given in picoseconds while the gating blocks are configured in cycles of the 150~MHz clock.
+    Please note that the grouping parameters are given in \si{\pico\second} while the gating blocks are configured in cycles of the \SI{150}{\mega\hertz} clock.
 
     
-    In grouping mode, each call to \textsf{xhptdc8\tu read\tu hits()} will return a group of timestamps relative to some trigger event. 
+    In grouping mode, each call to \textsf{xHPTDC8\tu read\tu hits()} will return a group of timestamps relative to some trigger event. 
     At the beginning of each group, an additional hit with channel number 255 is returned. This hit contains the absolute time of the group. 
     The absolute time of the remaining hits can be obtained by adding this value to the relative time of each hit.
 
-    Otherwise the call returns all available timestamps as absolute timestamps counting upwards from \textsf{xhptdc8\tu start\tu capture()}
+    Otherwise the call returns all available timestamps as absolute timestamps counting upwards from \textsf{xHPTDC8\tu start\tu capture()}
 }{}   

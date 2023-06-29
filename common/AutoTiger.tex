@@ -23,19 +23,32 @@
 \section{Auto-Triggering Function Generator\label{cp:AutoTriggeringFunctionGenerator}}
 Some applications require internal periodic or random triggering. The \deviceName\ function generator provides this functionality.\par
 
-The delay between two trigger pulses of this trigger generator is the sum of two components: A fixed value M and a pseudo-random value with a range given by the exponent N. \par
+The delay between two trigger pulses of this trigger generator is the sum of two components: A fixed value $M$ and a pseudo-random value with a range given by the exponent $N$. \par
 
 The period is
 
 \begin{align}
-    T = 1 + M + [1...2^N]
+    T = M + [1...2^N] - 1
 \end{align}
 
-clock cycles \ifxHPTDC{of the 150~MHz clock}{with a duration of $4~ns$ per cycle}.\par
+clock cycles\ifxHPTDC{of the \SI{150}{\mega\hertz}}{
+\itett{
+with a duration of \SI{4}{\nano\second} per cycle for Gen\,1 and \SI{3.2}{\nano\second} for Gen\,2 \deviceName. The standard values of $M = 62500$ and $N = 0$ result in a frequencies of \SI{4}{\kilo\hertz} for \deviceName\ Gen\,1 and \SI{5}{\kilo\hertz} for Gen\,2 devices.
+}{
+with a duration of \SI{4}{\nano\second} per cycle.
+}
+}\par
 
-The trigger can be used as a source for the TiGer unit (see Section \ref{cp:tiger}).
+The trigger can be used as a source for the TiGer unit (see Section \ref{cp:tiger}) \txh{and defines the period for the continuous mode (see Section \ref{cp:continousmode})}{}{}.
+\txh{
+\section{Continuous Mode\label{cp:continousmode}}
+This feature is only available for Gen\,2 devices of the \deviceName.\par
+The \deviceName\ continuously records stop signals even without a start signal connected. The data stream contains periodic packets with an absolute timestamp of 64 bits, followed by a list of stops relative to this timestamp. The period of the timestamps can be adjusted using the Auto-Triggering Function Generator (see Section \ref{cp:AutoTriggeringFunctionGenerator}) to adapt them to your evaluation interval.
 
-
+\section{Configurable Input Delay\label{cp:configurabledelay}}
+This feature is only available for Gen\,2 devices of the \deviceName.\par
+Each of the five input channels of the \deviceName\ can be delayed for up to \SI{204.6}{\nano\second} with a \SI{200}{\pico\second} granularity.
+}{}{}
 \section{Timing Generator (TiGer)\label{cp:tiger}}
 Each digital LEMO-00 input can be used as an \ifxHPTDC{AC coupled}{LVCMOS} trigger output. 
 The TiGer functionality can be configured independently for each connector. 
@@ -48,7 +61,7 @@ See Section \ref{cp:tigerblock} for a full description of the configuration opti
             %ps2pdf.exe -dEPSCrop xhptdc8_trigger_matrix.ps
             \includegraphics[width=0.6\textwidth]{xhptdc/figures/xhptdc8_trigger_matrix.pdf}
         }{
-            \includegraphics[width=0.7\textwidth]{figures/xTDC4_tiger_matrix.pdf}
+            \includegraphics[width=0.8\textwidth]{figures/xTDC4_tiger_matrix.pdf}
         }
         \caption{TiGer blocks can generate outputs that are also available on inputs.\label{fig:matrix}} 
     \end{center}
@@ -61,23 +74,23 @@ including the auto-trigger \ifxHPTDC{and the ADC}{}. Each TiGer can drive its ou
 \ifxHPTDC{
 	The TiGer outputs are AC coupled to the connector. They can be operated in one of the following modes:
 	\paragraph*{\textsf{\PREFIX TIGER\tu OFF}} 
-		No signal is output to the connetor. 
+		No signal is output to the connector. 
 	\paragraph*{\textsf{\PREFIX TIGER\tu OUTPUT}} 
-		In this mode the connector is output only. Pulses are unipolar with 2V amplitude. 
+		In this mode the connector is output only. Pulses are unipolar with \SI{2}{\volt} amplitude. 
 		Connected hardware must not drive any signals to connectors used as outputs, as doing so could damage both the \deviceName\ and the external hardware. 
 		We recommend to only use short pulses to avoid undesirable baseline shift due to the AC coupling, but the device does not pose any restrictions on the duty cycle. 
-		This mode can be used as a clock output with a frequency of $75/N$~MHz for integer $N$.
+		This mode can be used as a clock output with a frequency of $75/N$\si{\mega\hertz}for integer $N$.
 	\paragraph*{\textsf{\PREFIX TIGER\tu BIDI}} 
 		In this mode the TiGer creates unipolar pulses with 1~V amplitude. The connector can still be used as an input. 
 		Use short pulses to keep the probability of collision and the effect on the baseline low.	
 	\paragraph*{\textsf{\PREFIX TIGER\tu BIPOLAR}} 
 		In this mode the connector creates bipolar pulses with 1~V amplitude. The connector can still be used as an input. 
 		Pulses have no effect on the baseline offset. 
-		TiGer should be configured with $stop = start$ for minimum width bipolar pulses of $2 \times 6.\overline{6}~ns$. 
+		TiGer should be configured with $stop = start$ for minimum width bipolar pulses of $2 * 6.\overline{6}$\si{\nano\second}. 
 		The maximum bipolar pulse width is \textsf{XHPTDC8\tu TIGER\tu MAX\tu BIPOLAR\tu PULSE\tu LENGTH=15}.    
 }{
 	The TiGer is DC coupled to the connector. Connected hardware must not drive any signals to connectors used as outputs, 
-	as doing so could damage both the \deviceName\  and the external hardware.
+	as doing so could damage both the \deviceName\ and the external hardware.
 	Pulses that are short enough for the input AC coupling are available as input signals to the \deviceName. 
 	This can be used to measure exact time differences between the generated output signals and input signals on other channels.
 }
@@ -86,18 +99,18 @@ including the auto-trigger \ifxHPTDC{and the ADC}{}. Each TiGer can drive its ou
 	\newpage
 	\subsection{Trigger Sources}
 	\label{triggersources}
-	Trigger sources for TiGer and gating blocks are configured by a bitmask. You can combine any number of trigger source with a bitwise or. 
+	Trigger sources for TiGer and gating blocks are configured by a bit mask. You can combine any number of trigger source with a bit wise or. 
 	The block will be trigger when any of the select trigger input is active.
 
 	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu NONE}} \leavevmode \\
 		Empty pattern that selects no trigger source.
 	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu A to \tu H}} \leavevmode \\
-	 	TDC lemo inputs.   
-	 \paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu TDC1\tu SYNC}} \leavevmode \\
-		Same as \textsf{\PREFIX TRIGGER\tu SOURCE\tu TDC2\tu SYNC}.\\*
-		Clock signal with $150~MHz/1024\approx 146.5~kHz$. 
+	 	TDC LEMO inputs.   
+	  \paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu TDC1\tu SYNC}} \leavevmode \\
+		Same as \textsf{\PREFIX TRIGGER\tu SOURCE\tu TDC2\tu SYNC}.\\
+	    Clock signal with $150/1024$\,\si{\mega\hertz} $\approx$ \SI{146.5}{\kilo\hertz}. 
 	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu TDC\tu EXT\tu SYNC}} \leavevmode \\
-		Clock signal with 125~kHz. 
+		Clock signal with \SI{125}{\kilo\hertz}. 
 	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu AUTO}} \leavevmode \\
 		Periodic or random trigger pulses from the auto-trigger block.
 	\paragraph*{\textsf{\PREFIX TRIGGER\tu SOURCE\tu ADC1\tu CONV}} \leavevmode \\
@@ -117,7 +130,7 @@ including the auto-trigger \ifxHPTDC{and the ADC}{}. Each TiGer can drive its ou
 		There is a ninth TiGer that is connected to the trigger input of the ADC. See section \ref{adc} for additional information on the ADC. 
 
 		The ADC TiGer can be used with retrigger enabled to periodically sample ADC data. 
-		The period should be no shorter than 300~ns or 45 TiGer clocks.
+		The period should be no shorter than \SI{300}{\nano\second} or 45 TiGer clocks.
 
 		The ADC TiGer can also be used to sample voltages at a time relative to one of the TDC inputs. In this case, 
 		\textsf{stop} should be set to at least 45 to ensure that the sample period criterion is met even when pulses
@@ -143,7 +156,7 @@ including the auto-trigger \ifxHPTDC{and the ADC}{}. Each TiGer can drive its ou
 		The ADC trigger also is connected to the output of a TiGer block. 
 		This can be used to to trigger the ADC periodical or relative to one of the TDC input as described in section \ref{adctiger}
 
-		The ADC triggers should not be closer than 300~ns apart.
+		The ADC triggers should not be closer than \SI{300}{\nano\second} apart.
 
 		There are two interleaved ADCs  to ensure that there is always an ADC available even during readout. 
 		This is exposed to the user both in the output data format and in the TiGer and Gating trigger sources.

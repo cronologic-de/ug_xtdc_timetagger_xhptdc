@@ -29,7 +29,7 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 	\end{figure*}
 	%
 
-	Lemo-00 connectors are used for input connection. The inputs are AC-coupled and have an impedance of 50$\Omega$. 
+	LEMO-00 connectors are used for input connection. The inputs are AC-coupled and have an impedance of \SI{50}{\ohm}. 
 	A schematic of the input circuit is shown in Figure \ref{fig:inputcirc}. 
 	The digital threshold for any input can be adjusted to comply with a multitude of single-ended signaling standards.
 	The threshold can also be used to configure the input for either positive or negative pulses.
@@ -37,7 +37,7 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 	
 	The connectors can also be used as outputs. 
 	\ifxHPTDC{AC-coupled}{DC-coupled} output pulses for automatic internal triggering and control of external devices 
-	can be generated using the TiGer timing pattern generator. See section \ref{cp:tiger} for details on TiGer. 
+	can be generated using the TiGer timing pattern generator. See section \ref{cp:tiger} for details on the TiGer. 
 	%
 		\begin{figure*}[ht]
 			\begin{center}
@@ -47,15 +47,19 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 					\includegraphics[width=0.7\textwidth]{figures/xTDC4_schematic.pdf}
 				}
 				
-				\caption{Schematic view of \adeviceName\ board showing the inter-board connectors.\label{fig:schematics}}
+				\caption{Schematic view of \adeviceName\ Gen\,1 board showing the inter-board connectors.\label{fig:schematics}}
 			\end{center} 
 		\end{figure*}
 	%
-
-	Furthermore, three inter-board connectors can be found near the top edge of the \deviceName\ board, 
+    \ifxHPTDC{
+	Furthermore three inter-board connectors can be found near the top edge of the \deviceName\ board, 
 	as displayed in Figure \ref{fig:schematics}. 
 	Connector J25 is reserved for future use. The pinout of connector J12 is shown in Table \ref{J12} and the pinout of connector J6 is depicted in Table \ref{J6}.
-	\ifxHPTDC{Connector J2 is a coax clock input that must receive a 10~MHz clock if multiple boards are used together as described in section \ref{multiboard}.}{}
+	Connector J2 is a coax clock input that must receive a 10~MHz clock if multiple boards are used together as described in section \ref{multiboard}.}{
+    %TT4 & xTDC4
+    Furthermore, for Gen\,1 boards three inter-board connectors can be found near the top edge of the \deviceName\ board, as displayed in Figure \ref{fig:schematics}. 
+	Connector J25 is reserved for future use. The pinout of connector J12 is shown in Table \ref{J12} and the pinout of connector J6 is depicted in Table \ref{J6}. Gen\,2 boards do not posses these three connectors.
+    }
 
 	\begin{table}
 	\begin{small}
@@ -112,7 +116,7 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 				\hline
 				Pin & Name\\
 				\hline\hline
-				1 & +3.3 V\\
+				1 & +\SI{3.3}{\volt}\\
 				\hline
 				2 - 9 & reserved/NC\\
 				\hline
@@ -137,7 +141,7 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 		The \textsf{board\tu index} is assigned to the boards in the order of the serial numbers starting at 0.
 
 		\subsection{Connecting multiple boards}
-			The boards must each receive a common 10~MHz clock on connector J2. The connector is inside the PC enclosure. 
+			The boards must each receive a common \SI{10}{\mega\hertz} clock on connector J2. The connector is inside the PC enclosure. 
 			Connectors J12 of all boards must be connected with a flat band cable with a terminator at each end. 
 			Cable and Terminator are available from cronologic. See figure \ref{fig:multiboard} for a wiring example.
 			%
@@ -150,12 +154,12 @@ Make sure the PC is powered off and the main power connector is disconnected whi
 			%
 		\subsection{ClockBox}
 			For systems of up to four boards cronologic offers the ClockBox product that conveniently makes four clock signals available 
-			inside the PC enclosure. For use with the \deviceName, jumper JP3 of the ClockBox must be set as shown in Figure \ref{fig:clockbox} to set the clock frequency to 10~MHz. 
+			inside the PC enclosure. For use with the \deviceName, jumper JP3 of the ClockBox must be set as shown in Figure \ref{fig:clockbox} to set the clock frequency to \SI{10}{\mega\hertz}. 
 			%
 			\begin{figure*}[ht]
 				\begin{center}
 					\includegraphics[width=0.5\textwidth]{xhptdc/figures/clockbox.pdf}				
-					\caption{ClockBox jumper setting for 10~MHz.\label{fig:clockbox}}
+					\caption{ClockBox jumper setting for \SI{10}{\mega\hertz}.\label{fig:clockbox}}
 				\end{center} 
 			\end{figure*}
 			%

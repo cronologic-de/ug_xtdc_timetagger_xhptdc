@@ -107,8 +107,13 @@
  
 \begin{document}  
 \cronofront{\titlefile}
- 
+
 % 
+    \ifxHPTDC{}{
+    \chapter*{Erratum}
+        \input{common/erratum.tex}
+    }
+    
 	\chapter{Introduction}
 		\ttinput{Intro.tex}
 

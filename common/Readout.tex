@@ -41,13 +41,13 @@ All of these functions return quickly with very little overhead, but they are no
 
 	\subsection{Input Structure \prefix read\tu in}
 
-		\ttvar{\prefix bool\tu t}{acknowledge\tu last\tu read}\\
+		\cronvar{crono\tu bool\tu t}{acknowledge\tu last\tu read}\\
 		If set \textsf{\prefix read()} automatically acknowledges packets from the last read. 
-		Otherwise \textsf{\prefix acknowledge()} needs to be called explicitely be the user. 
+		Otherwise \textsf{\prefix acknowledge()} needs to be called explicitly by the user. 
 
 	\subsection{Input Structure \prefix read\tu out}
 		\cronvar{crono\tu packet}{*first\tu packet}\\
-		Pointer to the first packet that was captureed by the call of \textsf{\prefix read()}.\par
+		Pointer to the first packet that was captured by the call of \textsf{\prefix read()}.\par
 
 		\cronvar{crono\tu packet}{*last\tu packet}\\
 		Address of header of the last packet in the buffer.\par

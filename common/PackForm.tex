@@ -3,37 +3,38 @@
 
 \section{Output Structure crono\tu packet}
 
-	\cronvar{unsigned char}{channel}\\
-	Unused, always 0.\par
+	\cronvar{uint8\tu t}{channel}\\
+	Number of the source channel of the data.\par
 
-	\cronvar{unsigned char}{card}\\
+	\cronvar{uint8\tu t}{card}\\
 	Identifies the source card in case there are multiple boards present. 
-	Defaults to 0 if no value is assigned to the parameter \textsf{board\tu id} in Structure \textsf{ndigo\tu init\tu parameters}.\par
+	Defaults to 0 if no value is assigned to the parameter \textsf{board\tu id} in Structure \textsf{timetagger4\tu init\tu parameters}.\par
 
-	\cronvar{unsigned char}{type}\\
+	\cronvar{uint8\tu t}{type}\\
 	The data stream consists of 32-bit unsigned data as signified by a value of 6.\par
 
-	\cronvar{unsigned char}{flags}\\
+	\cronvar{uint8\tu t}{flags}\\
+    Bit field of \textsf{CRONO\tu PACKET\tu FLAG\tu*}\,bits.\par
 	\indent\ttdef{ PACKET\tu FLAG\tu ODD\tu HITS} 1\\
-	\indent The last data word in the data array consists of one timestamp only which is located in the lower 32 bits of the 64-bit data word (little endian).\par
+	  \indent The last data word in the data array consists of one timestamp only which is located in the lower \indent 32 bits of the 64-bit data word (little endian).\par
 	\indent\ttdef{ PACKET\tu FLAG\tu SLOW\tu SYNC} 2\\
-	\indent Start pulse distance is larger than the extended timestamp counter range.\par
+	  \indent Start pulse distance is larger than the extended timestamp counter range.\par
 	\indent\ttdef{ PACKET\tu FLAG\tu START\tu MISSED} 4\\
 	\indent The trigger unit has discarded packets due to a full FIFO.\par
 	\indent\ttdef{ PACKET\tu FLAG\tu SHORTENED} 8\\
-	\indent The trigger unit has shortened the current packet due to full FIFO.\par
+	\indent The trigger unit has shortened the current packet due to a full pipeline FIFO.\par
 	\indent\ttdef{ PACKET\tu FLAG\tu DMA\tu FIFO\tu FULL} 16\\
 	\indent The internal DMA FIFO was full. Might or might not result in dropped packets.\par
 	\indent\ttdef{ PACKET\tu FLAG\tu HOST\tu BUFFER\tu FULL} 32\\
 	\indent The host buffer was full. Might or might not result in dropped packets.\par
 
-	\cronvar{unsigned int}{length}\\
+	\cronvar{uint32\tu t}{length}\\
 	Number of 64-bit elements (each containing up to 2 TDC hits) in the data array.\par
 
-	\cronvar{unsigned long long}{timestamp}\\
-	Coarse timestamp of the start pulse. Values are given in multiples of \itett{$500$~ps}{$5/3=1.\overline{6}$~ns}.\par
+	\cronvar{uint64\tu t}{timestamp}\\
+	Coarse timestamp of the start pulse. Values are given in multiples of \itett{\SI{500}{\pico\second}}{$5/3=1.\overline{6}$\,\si{\nano\second}}.\par
 
-	\cronvar{unsigned long long}{data[1]}\\
+	\cronvar{uint64\tu t}{data[1]}\\
 	TDC hits. the user can cast the array to uint32* to directly operate on the TDC hits.
 
 	\noindent
@@ -46,16 +47,23 @@
 	\end{small}
 
 	The timestamp of the hit is stored in bits 31 down to 8 in multiples of 
-	\itett{500~ps. For the -1G Variant bit 8 is always 0.}{
-		$5/(3*128) = 13.0208\overline{3}$~ps
+	\itett{\SI{500}{\pico\second}. For the -1G Variant bit 8 is always 0.}{
+		$5/(3*128) = 13.0208\overline{3}$\,\si{\pico\second}
 	}\\
 	
 	\label{flags}
-	Bits 7 down to 4 are hit flags:\par
+	Bits 7 down to 4 are hit flags and equivalent to the following definitions:\par
 	\itett{
-		Bit 7: Always 0.\par
-		Bit 6: Always 1.\par
+        \indent\ttdef{HIT\tu FLAG\tu COARSE\tu TIMESTAMP}~4~$\leftrightarrow$ Bit\,6\\
+        \indent\ttdef{HIT\tu FLAG\tu TIME\tu OVERFLOW}~2~$\leftrightarrow$ Bit\,5\\
+        \indent\ttdef{HIT\tu FLAG\tu RISING}~1~$\leftrightarrow$ Bit\,4\par
+        Bit 7: Not applicable for the \deviceName\ and therefore always 0.\par
+		Bit 6: Always 1 for the \deviceName.\par
 	} {
+        \indent\ttdef{HIT\tu FLAG\tu FPGA\tu MISSING}~8~$\leftrightarrow$ Bit\,7\\
+        \indent\ttdef{HIT\tu FLAG\tu COARSE\tu TIMESTAMP}~4~$\leftrightarrow$ Bit\,6\\
+        \indent\ttdef{HIT\tu FLAG\tu TIME\tu OVERFLOW}~2~$\leftrightarrow$ Bit\,5\\
+        \indent\ttdef{HIT\tu FLAG\tu RISING}~1~$\leftrightarrow$ Bit\,4\par
 		Bit 7, 6: Resolution of this measurement. \ifxHPTDC{}{See section \ref{difficulthits}}.\\
 		\noindent
 		\begin{small}
@@ -63,18 +71,18 @@
 			\hline
 			bit 7 & bit 6 & Measurement Type \\\hline\hline
 			0 & 0 &  Normal full resolution measurement.\\\hline
-			0 & 1 &  Measurement performed with carry chain TDC at about 150~ps resolution.\\\hline
+			0 & 1 &  Measurement performed with carry chain TDC at about \SI{150}{\pico\second} resolution.\\\hline
 			1 & 0 &  Full resolution measurement that might in the wrong place in the data stream.\\\hline
-			1 & 1 &  Measurement with only $5/6~ns = 833.\overline{3}~ps$ resolution. \\\hline
+			1 & 1 &  Measurement with only $5/6$\,\si{\nano\second} = $833.\overline{3}$\si{\pico\second} resolution. \\\hline
 		\end{tabular}
 		\end{small}
 		
 	}
-	Bit 5: Rollover. The time since start pulse exceeded the \itett{23}{24}-bit range that can be encoded in a data word. This word does not encode a measurement. 
+	Bit 5: Rollover. The time since start pulse exceeded the 24-bit range that can be encoded in a data word. This word does not encode a measurement. 
 	Instead the readout software should increment a rollover counter that can be used as the upper bits of consecutive time stamps.  
 	The counters should be reset for each packet.
 	The total offset of a hit in picoseconds can be computed by
-	\[	\Delta T_{hit} = \mathrm{(\#\ rollovers \cdot 2^{\itett{23}{24}} + TDC\_ DATA_{hit}) \cdot \itett{timetagger4}{xtdc4}\_param\_info.binsize} \]
+	\[	\Delta T_{hit} = \mathrm{(\#\ rollovers \cdot 2^{24} + TDC\_ DATA_{hit}) \cdot \itett{timetagger4}{xtdc4}\_param\_info.binsize} \]
 	\indent
 	Bit 4: Set if this word encodes a rising edge. Otherwise, this word belongs to a falling edge.
 	The channel number is given in the lowest nibble of the data word. A value of 0 corresponds to channel A, a value of 3 to channel D.\par

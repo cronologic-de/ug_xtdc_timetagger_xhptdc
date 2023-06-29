@@ -24,7 +24,7 @@
 	\label{structconfig}
 	This is the structure containing the configuration information.
 	\ifxHPTDC{}{ % xHPTDC8 uses TDC manager instead
-		It is used in conjunction with \textsf{\prefix get\tu default\tu configuration()}, \textsf{\prefix get\tu current\tu configuration()} and \textsf{\prefix configure()}.\par
+        It is used in conjunction with \textsf{\prefix get\tu default\tu configuration()}, \textsf{\prefix get\tu current\tu configuration()} and \textsf{\prefix configure()}.\par
 	}
 	It uses multiple substructures to configure various aspects of the board.
 
@@ -34,8 +34,7 @@
 	\cronvar{int}{version}\\
 	A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar.\par
 
-	% autotrigger was reordered for the xHPTDC so we need to be able to use it in conditionally
-	\newcommand{\autotrigger}{
+	\ifxHPTDC{
 		\cronvar{int}{auto\tu trigger\tu period}\\
 		\cronvar{int}{auto\tu trigger\tu random\tu exponent}\\
 		Create a trigger either periodically or randomly. There are two parameters $M = \text{auto\tu trigger\tu period}$ and $N = \text{random\tu exponent}$ that result in a distance between triggers of $T$ clock cycles.
@@ -45,22 +44,24 @@
 			&0 \leq M < 2^{32}\\
 			&0 \leq N < 32
 		\end{align}
-
+    
 		\noindent There is no enable or reset. The auto-trigger is running continuously.
 		The usage of this trigger can be configured in the TiGer block source field.\par
-	}
-	\ifxHPTDC{
-		\autotrigger
 	}{}
 
 	\ifxHPTDC{ %see xhptdc8_grouping_configuration.enable
 	}{
 		\cronvar{int}{tdc\tu mode}\\
-		TDC mode. Can be grouped or continuous.
-		Currently only \textsf{\PREFIX TDC\tu MODE\tu GROUPED} is supported.
-		This is set per default by \textsf{\prefix get\tu current\tu configuration()} and should be left unchanged.
-	}\par
-
+		TDC mode. Can be grouped or continuous defined as follows:\par
+        \begin{tabular}{ll}
+            \ttdef{TDC\tu MODE\tu GROUPED} & 0\\
+		      \ttdef{TDC\tu MODE\tu CONTINUOUS} & 1\\
+	    \end{tabular}\par
+     The \textsf{auto\tu trigger\tu period} needs to be set appropriately and
+     channel[i].stop must be larger than \textsf{auto\tu trigger\tu period} (respecting 
+     the different periods, or can be set to maximum of 0xFFFFFFFF), if all events
+     need to be captured.\par
+    }
 	\ifxHPTDC{} % does not exist for xHPTDC8
 	{
 		\cronvar{crono\tu bool\tu t}{start\tu rising}
@@ -76,7 +77,7 @@
 		\cronvar{double}{threshold[\PREFIX TDC\tu CHANNEL\tu COUNT]}\\
 		Set the threshold voltage for the input channels \ifxHPTDC{A \ldots H}{S, A \ldots D} (see figure \ref{fig:dcoffset1}).
 	}{
-		\cronvar{double}{dc\tu offset[\PREFIX TDC\tu CHANNEL\tu COUNT]}\\
+		\cronvar{double}{dc\tu offset[\PREFIX TDC\tu CHANNEL\tu COUNT + 1]}\\
 		Set the threshold voltage for the input channels \ifxHPTDC{A \ldots H}{S, A \ldots D} (see figure \ref{fig:dcoffset1}).
 		\begin{itemize}
 			\item dc\tu offset[0] : threshold for channel Start
@@ -84,7 +85,7 @@
 		\end{itemize}
 	}
 
-	The supported range is -1.32V to +1.18V. This should be close to 50\% of the height of the input pulse. Examples for various signaling standards are defined as follows:\par
+	The supported range is \SIrange{-1.32}{1.18}{\volt}. This should be close to 50\,\% of the height of the input pulse. Examples for various signaling standards are defined as follows:\par
 	\ifxHPTDC{
 		\newcommand{\DCOFFSET}{THRESHOLD\tu}
 	}{
@@ -146,7 +147,7 @@
 		Configuration of the gating blocks.
 	}{} % only for xHPTDC8
 
-	\cronvar{\prefix channel}{channel[\PREFIX CHANNEL\tu COUNT]}\\
+	\cronvar{\prefix channel}{channel[\PREFIX TDC\tu CHANNEL\tu COUNT]}\\
 		Configuration of the TDC channels.
 
 	\ifxHPTDC{
@@ -165,14 +166,42 @@
 		\end{tabular}\par
 
 	}{
-		\ttvar{\prefix low-res\tu channel}{low-res\tu channel[\PREFIX LOWRES\tu CHANNEL\tu COUNT]}\\
+		\ttvar{\prefix lowres\tu channel}{lowres\tu channel[\PREFIX LOWRES\tu CHANNEL\tu COUNT]}\\        
 		\itett{
 			Not applicable for \deviceName.
 		}{
 			Only applicable to the xTDC4-Sciex. Configures the additional digital low-res inputs.
 		}\par
-		\autotrigger
-	}
+		\cronvar{uint32\tu t}{auto\tu trigger\tu period}\\
+		\cronvar{uint32\tu t}{auto\tu trigger\tu random\tu exponent}\\
+		Create a trigger either periodically or randomly. There are two parameters $M = \text{auto\tu trigger\tu period}$ and $N = \text{random\tu exponent}$ that result in a distance between triggers of $T$ clock cycles.
+
+        \itett{ 
+        %TT4
+        \begin{align}
+			T &= M + [1...2^N] - 1\\
+			&31 \leq M < 78.125.000\\
+			&0 \leq N < 32
+		\end{align}
+       }{
+        %xTDC4        
+		\begin{align}
+			T &= M + [1...2^N] - 1\\
+			&0 \leq M < 2^{32}\\
+			&0 \leq N < 32
+		\end{align} 
+        }
+		\noindent There is no enable or reset. The auto-trigger is running continuously.
+		The usage of this trigger can be configured in the TiGer block source field.\par
+    }
+    \ifxHPTDC{}{
+        \itett{
+            \ttvar{\prefix delay\tu config}{delay\tu config[\PREFIX TDC\tu CHANNEL\tu COUNT+1]}\\   
+            Configuration of the channel delay values
+        }{
+        %not applicable for xTDC4
+        }
+    }
 
 
 %%%%%%%%% trigger
@@ -186,9 +215,9 @@
 	\txh{
 		Set the corresponding flag for one of the edges or both edges when using the input with a TiGer.
 	}{
-		The \deviceName can output measurements with a reduced bin size of $5/6~ns = 833,\overline{3}~ps$ for one or both edges of input signals.
+		The \deviceName can output measurements with a reduced bin size of $5/6$\,\si{\nano\second} = \SI{833.333}{\pico\second} for one or both edges of input signals.
 		See section \ref{difficulthits} for more information on hits with varying resolution.
-		Use \textsf{xtdc4\tu channel.rising} on page \pageref{structchannel} to select which edge is measured with full resolution.
+		Use \textsf{xTDC4\tu channel.rising} on page \pageref{structchannel} to select which edge is measured with full resolution.
 		The edge that is selected for full resolution measurement must also be enabled for low resolution measurement.
 	}{
 		While the TDC can only measure either rising or falling edges, the gating blocks and the TiGer are more flexible.
@@ -205,11 +234,11 @@
 		Enables the desired mode of operation for the tiger. \\*
 		\begin{tabular}{lrl}
 			\ttdef{TIGER \tu OFF} & 0 & No operation \\
-			\ttdef{TIGER \tu OUTPUT} & 1 & Output is driven with 2V amplitude. \\*
+			\ttdef{TIGER \tu OUTPUT} & 1 & Output is driven with \SI{2}{\volt} amplitude. \\*
 										&   &There must be no input connected \\
-			\ttdef{TIGER \tu BIDI} & 2 & Output is driven with 1V amplitude. \\*
+			\ttdef{TIGER \tu BIDI} & 2 & Output is driven with \SI{1}{\volt} amplitude. \\*
 									&   & Pulse rate should be low. \\*
-			\ttdef{TIGER \tu BIPOLAR} & 3 & Output is driven with 1~V bidirectional pulses.\\*
+			\ttdef{TIGER \tu BIPOLAR} & 3 & Output is driven with \SI{1}{\volt} bidirectional pulses.\\*
 									&   & $start = stop -1$\\*
 		\end{tabular}
 
@@ -239,17 +268,17 @@
 
 	\ifxHPTDC{}{
 		\cronvar{crono\tu bool\tu t}{enable\tu lemo\tu output}\\
-		Enables the LEMO output. Drive the TiGer Signal to the corresponding Lemo connector as an output.
+		Enables the LEMO output. Drive the TiGer Signal to the corresponding LEMO connector as an output.
 		This is DC coupled, so make sure that you do not any devices connected as inputs.
-		Pulses created by the TiGer are visible at the \deviceName inputs and can be measured again to get the exact timing.
+		Pulses created by the TiGer are visible at the inputs of the \deviceName\ and can be measured again to get the exact timing.
 	}
 
-	\cronvar{int}{start}\\
-	\cronvar{int}{stop}\\
+	\cronvar{uint32\tu t}{start}\\
+	\cronvar{uint32\tu t}{stop}\\
 	\itett{
-		In multiples of $4~ns$.
+		In multiples of \SI{4}{\nano\second} for Gen\,1 and \SI{3.2}{\nano\second} for Gen\,2 \deviceName.
 	}{
-		In multiples of $20~ns/3 = 6.\overline{6}~ns$
+		In multiples of $20/3$\,\si{\nano\second} = \SI{6.666}{\nano\second}
 	}
 	The time during which the TiGer output is set, relative to the trigger input. The parameters \textsf{start} and \textsf{stop} must fulfill the following conditions:
 	\[ 0 <= start <= stop <= 2^{16}-1 \]
@@ -301,7 +330,7 @@
 
 		\cronvar{crono\tu bool\tu t}{rising}\\
 		\txh{
-			Not applicable for \deviceName. Rising and/or falling edge are configured using the \prefix trigger structure. See section \ref{structtrigger}.
+			Not applicable for \deviceName. Rising and/or falling edge are configured using the \textsf{\prefix trigger} structure. See section \ref{structtrigger}.
 		}{
 			Select which edge of the signal is used for full resolution measurements.
 			\textsf{xtdc4\tu trigger.rising} and \textsf{xtdc4\tu trigger.falling} described on page \pageref{structtrigger} are used
@@ -327,15 +356,27 @@
 		}{}
 
 		\ifxHPTDC{}{
-			\cronvar{int}{start}\\
-			\cronvar{int}{stop}\\
+			\cronvar{uint32\tu t}{start}\\
+			\cronvar{uint32\tu t}{stop}\\
 			Veto function for grouping of hits into packets in multiples of the binsize. Only hits between start and stop are read out.
 			The parameters must adhere to the following relations:
 			\[
 				0 <= start <= stop < 2^{ \itett{31}{30}}
 			\]
 		}
-
+%%%%%%%%%%%%%%%%%%%%%% delay config
+\ifxHPTDC{}{
+    \itett{\subsection{Structure \prefix delay\tu config}
+    \label{structdelayconfig}
+    Contains configurable delay value for \deviceName. See section \ref{cp:configurabledelay}.\par
+    \cronvar{uint32\tu t}{delay}\\
+    Delay in \textsf{static\tu info.delay\tu bin\tu size} (currently \SI{200}{\pico\second}) for a channel. The possible values are described below:
+    \[
+				0 <= delay <= 1023
+    \]
+  }
+  {}
+}    
 %%%%%%%%%%%%%%%%%%%%%% adc channel
 \ifxHPTDC{
 	\newpage
