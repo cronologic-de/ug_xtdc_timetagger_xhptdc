@@ -161,9 +161,18 @@ The total amount of DMA buffer in bytes.
 \ifxHPTDC{}{
 \cronvar{double}{packet\tu binsize}\\
 \itett{ %tt4
-For \deviceName\ the packet binsize depends on the card variant.
+For \deviceName\ the packet binsize is equal to the binsize and depends on the Generation of the card. Gen\,1 boards have a packet binsize of \SI{500}{\pico\second}, while Gen\,2 boards have \SI{100}{\pico\second}.
 }{ %xtdc4
 For \deviceName\ this is \SI{1666.6}{\pico\second}
+}
+}
+
+\ifxHPTDC{}{
+\cronvar{double}{quantisation}\\
+\itett{ %tt4
+Quantisation or measurement resolution. Depending on the board variant this ranges from \SIrange{100}{500}{\pico\second}.
+}{ %xtdc4
+Quantisation or measurement resolution. For \deviceName\ this is \SI{13.0208}{\pico\second}
 }
 }
 
