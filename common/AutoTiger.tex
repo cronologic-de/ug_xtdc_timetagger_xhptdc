@@ -44,6 +44,7 @@ The trigger can be used as a source for the TiGer unit (see Section \ref{cp:tige
 \section{Continuous Mode\label{cp:continousmode}}
 This feature is only available for Gen\,2 devices of the \deviceName.\par
 The \deviceName\ continuously records stop signals even without a start signal connected. The data stream contains periodic packets with an absolute timestamp of 64 bits, followed by a list of stops relative to this timestamp. The period of the timestamps can be adjusted using the Auto-Triggering Function Generator (see Section \ref{cp:AutoTriggeringFunctionGenerator}) to adapt them to your evaluation interval.
+Lower frequencies will create larger packets and have therefore a larger latency for receiving packets, potentially overflowing the buffers. Frequencies lower or equal to \SI{600}{\hertz} will contain rollover. Apart from that the choice is arbitrary.
 
 \section{Configurable Input Delay\label{cp:configurabledelay}}
 This feature is only available for Gen\,2 devices of the \deviceName.\par

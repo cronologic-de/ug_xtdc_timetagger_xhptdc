@@ -21,7 +21,7 @@ The file for the DLL is called \textsf{xTDC4\tu driver\tu 64.dll}.
 
 All these files are provided with the driver installer that can be downloaded from the product website \url{https://www.cronologic.de}. 
 By default, the installer will place the files into the directory 
-\textsf{C:\filesep program files\filesep cronologic\filesep \deviceName\filesep driver}. A coding example can be found on \url{https://github.com/cronologic-de/xtdc_babel/tree/main/timetagger4_user_guide_example}.
+\textsf{C:\filesep Program Files\filesep cronologic\filesep \deviceName\filesep driver}. A coding example can be found on \url{https://github.com/cronologic-de/xtdc_babel/tree/main/timetagger4_user_guide_example}.
 
 \ifxHPTDC{
 	There exist an open-source community project that intends to provide some convenient extensions to the driver, code examples, 
@@ -76,13 +76,14 @@ Error codes are set by the API functions to this value if there has been no erro
 	Returns the driver version including SVN build revision as a string. 
 
 	\ttvar{int}{count\tu devices(}\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\label{countdevices}\\
-	Returns the number of boards present in the system that are supported by this driver.\par
+	Pointers to an error code variable to an error code and variable have to be provided. If error\tu code does not equal \ttdef{OK} = 0, the error message will contain what went wrong. Example crono kernel was not properly installed. Returns the number of boards present in the system that are supported by this driver.\par
 
 
 \section {Initialization}
-
-		\ttvar{int}{close(}\device )\\
-		Finalizes the driver for this device.
+        The card must be initialized first before reading data. Normally the process is
+        to get the default init parameters and change some values. E.g. choose one of
+        multiple cards by the index or use a larger buffer.
+		
 
 		\ttvar{int}{get\tu default\tu init\tu parameters(}\cronvar{\initparameters}{*init)}\\
 		Sets up the standard parameters. Gets a set of default parameters for \textsf{\prefix init()}. 
@@ -97,7 +98,10 @@ Error codes are set by the API functions to this value if there has been no erro
 		\textsf{error\tu message} must point to a pointer to char. 
 		The driver will allocate a buffer for zero-terminated error message and store the address of the buffer in the location provided by the user.\par
 
-		The parameter \textsf{params} is a pointer to a structure of type \textsf{\initparameters} that must be completely initialized.\par
+		The parameter \textsf{params} is a pointer to a structure of type \textsf{\initparameters} that must be completely initialized by get\tu default\tu init\tu parameters\par
+
+        \ttvar{int}{close(}\device )\\
+		Closes the devices, releasing all resources. 
 
 %%%%%%%%%%%%%%%%% struct init_parameters
 

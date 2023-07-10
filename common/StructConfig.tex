@@ -57,10 +57,16 @@
             \ttdef{TDC\tu MODE\tu GROUPED} & 0\\
 		      \ttdef{TDC\tu MODE\tu CONTINUOUS} & 1\\
 	    \end{tabular}\par
-     The \textsf{auto\tu trigger\tu period} needs to be set appropriately and
+     \begin{itemize}
+			\item Grouped functionality is explained in section \ref{grouping}.
+		\item Continuous mode is explained in section \ref{cp:continousmode}. 
+             The \textsf{auto\tu trigger\tu period} needs to be set appropriately and
      channel[i].stop must be larger than \textsf{auto\tu trigger\tu period} (respecting 
-     the different periods, or can be set to maximum of 0xFFFFFFFF), if all events
-     need to be captured.\par
+     the different periods or can be set to maximum of 0xFFFFFFFF), if all events
+     need to be captured. 
+		\end{itemize}
+     
+      
     }
 	\ifxHPTDC{} % does not exist for xHPTDC8
 	{
@@ -136,11 +142,11 @@
 %%			\end{figure}
 
 	\cronvar{\prefix trigger}{trigger[\PREFIX TRIGGER\tu COUNT]}\\
-	Configuration of the polarity of the external trigger sources.
+	Configuration of the polarity of the external trigger sources. See section \ref{structtrigger}
 	These are used as inputs for the TiGer blocks and as inputs to the time measurement unit.\par
 
 	\cronvar{\prefix tiger\tu block}{tiger\tu block[\PREFIX TIGER\tu COUNT]}\\
-	Configuration of the timing generators (TiGer).
+	Configuration of the timing generators (TiGer). See section \ref{cp:tigerblock}
 
 	\ifxHPTDC{
 		\cronvar{\prefix tiger\tu block}{gating\tu block[\PREFIX GATE\tu COUNT]}\\
@@ -176,11 +182,18 @@
 		\cronvar{uint32\tu t}{auto\tu trigger\tu random\tu exponent}\\
 		Create a trigger either periodically or randomly. There are two parameters $M = \text{auto\tu trigger\tu period}$ and $N = \text{random\tu exponent}$ that result in a distance between triggers of $T$ clock cycles.
 
-        \itett{ 
+        \itett{ If the autotrigger is used for the continuous mode the following boundaries apply. 
         %TT4
         \begin{align}
 			T &= M + [1...2^N] - 1\\
 			&31 \leq M < 78.125.000\\
+			&0 \leq N < 32
+		\end{align}
+
+        Otherwise the parameters can be used with the following boundaries.
+        \begin{align}
+			T &= M + [1...2^N] - 1\\
+			&0 \leq M < 2^{32}\\
 			&0 \leq N < 32
 		\end{align}
        }{
@@ -368,7 +381,7 @@
 \ifxHPTDC{}{
     \itett{\subsection{Structure \prefix delay\tu config}
     \label{structdelayconfig}
-    Contains configurable delay value for \deviceName. See section \ref{cp:configurabledelay}.\par
+    Contains configurable delay value for \deviceName \ Gen\,2. See section \ref{cp:configurabledelay}.\par
     \cronvar{uint32\tu t}{delay}\\
     Delay in \textsf{static\tu info.delay\tu bin\tu size} (currently \SI{200}{\pico\second}) for a channel. The possible values are described below:
     \[
