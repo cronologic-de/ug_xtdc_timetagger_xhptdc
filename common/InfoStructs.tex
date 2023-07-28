@@ -171,6 +171,16 @@ For \deviceName\ this is \SI{1666.6}{\pico\second}
 \cronvar{double}{quantisation}\\
 \itett{ %tt4
 Quantisation or measurement resolution. Depending on the board variant this ranges from \SIrange{100}{1000}{\pico\second}.
+
+\begin{tabular} {|l|l|l|l|l|l|l}
+\hline
+ 1G & 2G & 1.25G & 2.5G & 5G & 10G \\
+\hline
+ 1000 ps & 500 ps & 800 ps & 400 ps & 200 ps & 100 ps\\
+\hline
+\end{tabular}
+
+     This means, that for 1.25G the lower 3 bits in the timestamps are zero.
 }{ %xtdc4
 Quantisation or measurement resolution. For \deviceName\ this is \SI{13.0208}{\pico\second}
 }

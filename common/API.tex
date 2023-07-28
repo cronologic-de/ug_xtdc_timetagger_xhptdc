@@ -76,7 +76,8 @@ Error codes are set by the API functions to this value if there has been no erro
 	Returns the driver version including SVN build revision as a string. 
 
 	\ttvar{int}{count\tu devices(}\cronvar{int}{*error\tu code}, \cronvar{char}{**error\tu message)}\label{countdevices}\\
-	Pointers to an error code variable to an error code and variable have to be provided. If error\tu code does not equal \ttdef{OK} = 0, the error message will contain what went wrong. Example crono kernel was not properly installed. Returns the number of boards present in the system that are supported by this driver.\par
+    Returns the number of boards present in the system that are supported by this driver.
+	Pointers to an error code and message variable have to be provided. If error\tu code does not equal \ttdef{OK} = 0, the error message will contain what went wrong. For E.g. crono kernel was not properly installed. \par
 
 
 \section {Initialization}
