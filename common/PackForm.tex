@@ -91,7 +91,7 @@
 			1 & 0 &  Full resolution measurement that might in the wrong place in the data stream.\\\hline
 			1 & 1 &  Measurement with only $5/6$\,\si{\nano\second} = $833.\overline{3}$\si{\pico\second} resolution. \\\hline
 		\end{tabular}
-		\end{small}
+		\end{small} \\
         \indent\ttdef{HIT\tu FLAG\tu TIME\tu OVERFLOW}~2~$\leftrightarrow$ Bit\,5\\
         Bit 5: Rollover. The time since start pulse exceeded the 24-bit range that can be encoded in a data word. This word does not encode a measurement. 
 	Instead the readout software should increment a rollover counter that can be used as the upper bits of consecutive time stamps.  

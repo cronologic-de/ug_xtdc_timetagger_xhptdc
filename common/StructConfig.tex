@@ -57,14 +57,19 @@
             \ttdef{TDC\tu MODE\tu GROUPED} & 0\\
 		      \ttdef{TDC\tu MODE\tu CONTINUOUS} & 1\\
 	    \end{tabular}\par
-     \begin{itemize}
-			\item Grouped functionality is explained in section \ref{grouping}.
-		\item Continuous mode is explained in section \ref{cp:continousmode}. 
+     \itett{\begin{itemize}
+			\item Grouped functionality is explained in section \ref{sec:grouping}.  
+		      \item Continuous mode is explained in section \ref{cp:continousmode}. 
              The \textsf{auto\tu trigger\tu period} needs to be set appropriately and
      channel[i].stop must be larger than \textsf{auto\tu trigger\tu period} (respecting 
      the different periods or can be set to maximum of 0xFFFFFFFF), if all events
      need to be captured. 
-		\end{itemize}
+		\end{itemize}}
+    {\begin{itemize}
+			\item Grouped functionality is explained in section \ref{sec:grouping}.  
+		      \item Not applicable for \deviceName.              
+		\end{itemize}}
+     
      
       
     }

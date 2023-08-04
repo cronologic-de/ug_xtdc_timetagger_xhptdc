@@ -93,7 +93,8 @@ including the auto-trigger \ifxHPTDC{and the ADC}{}. Each TiGer can drive its ou
 	The TiGer is DC coupled to the connector. Connected hardware must not drive any signals to connectors used as outputs, 
 	as doing so could damage both the \deviceName\ and the external hardware.
 	Pulses that are short enough for the input AC coupling are available as input signals to the \deviceName. 
-	This can be used to measure exact time differences between the generated output signals and input signals on other channels.
+	This can be used to measure exact time differences between the generated output signals and input signals on other channels. 
+    \itett{When using one of the input channels as a source for the TiGer, the expected latency between signal input and TiGer output is roughly \SI{95}{\nano\second}.}{}
 }
 
 \ifxHPTDC{
