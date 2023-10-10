@@ -4,39 +4,43 @@
 
 %\DeclareOption*{\newcommand{\deviceName}{\CurrentOption}}
 
-% Kolja believes that usepackage should be replace by RequirePackage, but could not get it to work
-\usepackage[utf8]{inputenc}
-\usepackage[usenames, dvipsnames]{color}
-\usepackage{graphicx} %for including figures
-\usepackage{scrhack}  % avoid float@addtolist warning in package "listing"
-\usepackage{tabularx}
-\usepackage{amsmath} %for math environments
-\usepackage{siunitx}  % SI Unit package
-\usepackage[left=25mm, right=25mm, top=25mm, bottom=25mm]{geometry} %for page properties (pagestyle)
-\usepackage[section,subsection,subsubsection]{extraplaceins} %for binding figures to a (sub-)section
-\usepackage{listings}%for code in latex document, might be the source of the float@addtolist warning
-\usepackage{textcomp}%for code in latex document
-\usepackage{balance}%for two-column layout
-\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
-\usepackage{array} %for centered AND constant width columns
-\usepackage{longtable}
-\usepackage[footsepline=1pt]{scrlayer-scrpage}%for header, footer
-\usepackage{makecell}  % multi line table cells
-\usepackage[T1]{fontenc}  % fix warning for availability of bold slanted fonts
-\usepackage{fontspec}
-\usepackage{attachfile2} 
-\usepackage{xcolor}
+\PassOptionsToPackage{utf8}{inputenc}
+\RequirePackage{inputenc}
+\PassOptionsToPackage{usenames, dvipsnames}{xcolor}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx} %for including figures
+\RequirePackage{tabularx}
+\RequirePackage{scrhack}  % avoid float@addtolist warning in package "listing"
+\RequirePackage{amsmath} %for math environments
+\RequirePackage{siunitx}  % SI Unit package
+\PassOptionsToPackage{left=25mm, right=25mm, top=25mm, bottom=25mm}{geometry}
+\RequirePackage{geometry} %for page properties (pagestyle)
+\PassOptionsToPackage{section,subsection,subsubsection}{extraplaceins}
+\RequirePackage{extraplaceins} %for binding figures to a (sub-)section
+\RequirePackage{listings}%for code in latex document, might be the source of the float@addtolist warning
+\RequirePackage{textcomp}%for code in latex document
+\RequirePackage{balance}%for two-column layout
+\RequirePackage{array} %for centered AND constant width columns
+\RequirePackage{longtable}
+\PassOptionsToPackage{footsepline=1pt}{scrlayer-scrpage}
+\RequirePackage{scrlayer-scrpage}%for header, footer
+\RequirePackage{makecell}  % multi line table cells
+\PassOptionsToPackage{T1}{fontenc}
+\RequirePackage{fontenc}  % fix warning for availability of bold slanted fonts
+\RequirePackage{fontspec}
+\RequirePackage{attachfile2} 
 
 % \usepackage{auto-pst-pdf} % this enables postscript graphics for PDF
 
-
-\usepackage{incgraph} % to include the title page
+\RequirePackage{incgraph} % to include the title page
 
 % double line border support
-\usepackage{tikz}
+\RequirePackage{tikz}
 \usetikzlibrary{calc}
-\usepackage{eso-pic}
+\RequirePackage{eso-pic}
 
+\PassOptionsToPackage{colorlinks=true,linkcolor=blue}{hyperref}
+\RequirePackage{hyperref}
  
 %%%%%%%%%% Defitinions for the whole document 
  
