@@ -1,67 +1,82 @@
-For each measured edge, the \deviceName\ creates a 12-byte data structure TDCHit that contains a 64-bit timestamp in picoseconds and three fields with additional information. 
+For each measured edge, the \deviceName\ creates a 12-byte data structure
+TDCHit that contains a 64-bit timestamp in picoseconds and three fields with
+additional information. 
 
 \section{Structure TDCHit}
 \label{TDCHit}
-\cronvar{int64\_t}{time}\\
-The timestamp of the hit in picoseconds. 
+\begin{description}[style=nextline]
+    \item[\cronvar{int64\_t}{time}]
+    The timestamp of the hit in picoseconds. 
 
-If grouping is disabled the timestamps are continuously counting up from the call to \textsf{\prefix start\tu capture()}.
+    If grouping is disabled the timestamps are continuously counting up from
+    the call to \texttt{\prefix start\tu capture()}.
 
-If grouping is enabled the timestamps are relative to the trigger or the separate zero reference of the group. 
-The first TDCHit of a group has channel number 255 and provides the absolute time of the group. 
-The absolute time of each of the hits can be obtained by adding this value to each of the relative timestamps.
+    If grouping is enabled the timestamps are relative to the trigger or the
+    separate zero reference of the group.  The first TDCHit of a group has
+    channel number 255 and provides the absolute time of the group.  The
+    absolute time of each of the hits can be obtained by adding this value to
+    each of the relative timestamps.
 
-\cronvar{uint8\_t}{channel}\\
-For the first board in the system, this is 0 to 7 for the TDC channels A to H, or 8 to 9 for ADC data. Data from channels 8 and 9 should usually be treated as data from the same channel. 
-For the other boards, the channel number is incremented by $board\_id \cdot 10$.
-In grouping mode, the first hit of each group has channel number 255 and contains the absolute time of the group.
+    \item[\cronvar{uint8\_t}{channel}]
+    For the first board in the system, this is 0 to 7 for the TDC channels A
+    to H, or 8 to 9 for ADC data. Data from channels 8 and 9 should usually be
+    treated as data from the same channel.  For the other boards, the channel
+    number is incremented by $\texttt{board\_id} \times 10$.  In grouping
+    mode, the first hit of each group has channel number 255 and contains the
+    absolute time of the group.
 
-\cronvar{uint8\_t}{type}\\
-Additional information on the type of hit recorded. See section \ref{hittypes}.
+    \item[\cronvar{uint8\_t}{type}]
+    Additional information on the type of hit recorded
+    (see~Section~\ref{hittypes}).
 
-\cronvar{uint16\_t}{bin}\\
-For ADC hits this contains the sampled voltage. For TDC hits the content is undefined.
+    \item[\cronvar{uint16\_t}{bin}]
+    For ADC hits this contains the sampled voltage. For TDC hits the content
+    is undefined.
+\end{description}
 
-\newpage
 \subsection{TDCHit Types \label{hittypes}}
 \newcommand{\HTYPE}{\PREFIX TDCHIT\tu TYPE\tu}
 
-\paragraph*{Type information for TDC measurements}
-If the hit is a TDC measurement on channels A to H the following flags are defined for the \textsf{type} field of the TDCHit structure:\\*
-\begin{tabular}{lc}
-    \crondef{\HTYPE RISING} & 0x01\\
-    \indent Rising edge &\\
-    \crondef{\HTYPE ERROR}  & 0x02\\
-    \indent any type of error& \\
-    \crondef{\HTYPE ERROR\tu TIMESTAMP\tu LOST}  & 0x04\\
-    \indent Hits missing due to L1 FIFO overflow&\\
-    \crondef{\HTYPE ERROR\tu ROLLOVER\tu LOST}  & 0x08\\
-    \indent Invalid timestamp due to internal error&\\
-    \crondef{\HTYPE ERROR\tu PACKETS\tu LOST}  & 0x10\\
-    \indent Hits missing due to a lost DMA packet&\\
-    \crondef{\HTYPE ERROR\tu SHORTENED}  & 0x20\\
-    \indent Hits missing due to a shortened DMA packet&\\
-    \crondef{\HTYPE ERROR\tu DMA\tu FIFO\tu FULL}  & 0x40\\
-    \indent Hits missing due to L2 FIFO overflow&\\
-    \crondef{\HTYPE ERROR\tu HOST\tu BUFFER\tu FULL}  & 0x80\\
-    \indent Hits missing due to host buffer overflow &\\
-\end{tabular}
+\subsubsection{Type information for TDC measurements}
+If the hit is a TDC measurement on channels A to H the following flags are
+defined for the \texttt{type} field of the TDCHit structure:\\*
+\begin{description}[style=nextline]
+    \item[\crondef{\HTYPE RISING} 0x01]
+    Rising edge
+    \item[\crondef{\HTYPE ERROR} 0x02]
+    any type of error
+    \item[\crondef{\HTYPE ERROR\tu TIMESTAMP\tu LOST} 0x04]
+    Hits missing due to L1 FIFO overflow
+    \item[\crondef{\HTYPE ERROR\tu ROLLOVER\tu LOST} 0x08]
+    Invalid timestamp due to internal error
+    \item[\crondef{\HTYPE ERROR\tu PACKETS\tu LOST} 0x10]
+    Hits missing due to a lost DMA packet
+    \item[\crondef{\HTYPE ERROR\tu SHORTENED} 0x20]
+    Hits missing due to a shortened DMA packet
+    \item[\crondef{\HTYPE ERROR\tu DMA\tu FIFO\tu FULL} 0x40]
+    Hits missing due to L2 FIFO overflow
+    \item[\crondef{\HTYPE ERROR\tu HOST\tu BUFFER\tu FULL} 0x80]
+    Hits missing due to host buffer overflow
+\end{description}
 
-If hits are missing the error flag is set on the next hit from the same board that is read out.
+If hits are missing the error flag is set on the next hit from the same board
+that is read out.
 
-\paragraph*{Type information for ADC measurements}
-If the hit is an ADC measurement on channels 8 or 9 the following flags are defined for the \textsf{type} field of the TDCHit structure:\\*
-\begin{tabular}{lc}
-    \crondef{\HTYPE ADC\tu INTERNAL} & 0x01\\
-    \indent ADC measurement triggered by internal strobe &\\
-    \crondef{\HTYPE ADC\tu ERROR}  & 0x02\\
-    \indent any type of error& \\
-    \crondef{\HTYPE ADC\tu ERROR\tu INVALID\tu TRIGGER}  & 0x08\\
-    \indent TRG input violated timing requirements. Data may be corrupted&\\
-    \crondef{\HTYPE ADC\tu ERROR\tu DATA\tu LOST}  & 0x10\\
-    \indent ADC measurement missing due to overflow of any buffer&\\
-\end{tabular}
+\subsubsection{Type information for ADC measurements}
+If the hit is an ADC measurement on channels 8 or 9 the following flags are
+defined for the \textsf{type} field of the TDCHit structure:
+\begin{description}[style=nextline]
+    \item[\crondef{\HTYPE ADC\tu INTERNAL} 0x01]
+    \indent ADC measurement triggered by internal strobe
+    \item[\crondef{\HTYPE ADC\tu ERROR} 0x02]
+    \indent any type of error
+    \item[\crondef{\HTYPE ADC\tu ERROR\tu INVALID\tu TRIGGER} 0x08]
+    \indent TRG input violated timing requirements. Data may be corrupted
+    \item[\crondef{\HTYPE ADC\tu ERROR\tu DATA\tu LOST} 0x10]
+    \indent ADC measurement missing due to overflow of any buffer
+\end{description}
 
-If hits are missing the error flag is set on the next hit from the same board that is read out.
+If hits are missing the error flag is set on the next hit from the same board
+that is read out.
 
 

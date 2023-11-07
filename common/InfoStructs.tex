@@ -2,278 +2,347 @@
 	
 
 \subsection{Functions for Information Retrieval}
-    The driver provides functions to retrieve detailed information on the board type, its configuration, settings, and state. 
-    The information is split according to its scope and the computational requirements to query the information from the board.
-    
+The driver provides functions to retrieve detailed information on the
+board type, its configuration, settings, and state.  The information is
+split according to its scope and the computational requirements to query
+the information from the board.
+
+\ifxHPTDC{
+    The information is provided on a per board basis. The parameter
+    \texttt{index} selects which board is queried.
+}{}
+
+\begin{description}[style=nextline]
+    \item[\ttvar{int}{get\tu device\tu type}(\device\ifxHPTDC{, \cronvar{int}{index}}{})]
+    Returns the type of the device as \texttt{CRONO\tu DEVICE\tu
+    \txh{TIMETAGGER4}{XTDC4}{XHPTDC8}}.
+
+    \item[\ttvar{const char*}{get\tu last\tu error\tu
+        message(\device\ifxHPTDC{, \cronvar{int}{index}}{})}]
+    Returns most recent error message.
     \ifxHPTDC{
-        The information is provided on a per board basis. The parameter \textsf{index} selects which board is queried.
+        If index is negative the last error message from the \\
+        \texttt{\prefix manager} is returned.  Otherwise the last error message
+        of the selected board is returned.
     }{}
 
-    \ttvar{int}{get\tu device\tu type}(\device\ifxHPTDC{,\lb \cronvar{int}{index}}{})\\
-    Returns the type of the device as \textsf{CRONO\tu DEVICE\tu \txh{TIMETAGGER4}{XTDC4}{XHPTDC8}}.\par
+    \item[\ttvar{int}{get\tu fast\tu info(}\deviceindex,
+        \cronvar{\prefix fast\tu info}{*info)}]
+    Returns fast dynamic information.\par
+    This call gets a structure that contains dynamic information that can be
+    obtained within a few microseconds.
 
-    \ttvar{const char*}{get\tu last\tu error\tu message(\device\ifxHPTDC{,\lb \cronvar{int}{index}}{})}\\
-    Returns most recent error message.
-    \ifxHPTDC{If index is negative the last error message from the \textsf{\prefix manager} is returned. 
-    Otherwise the last error message of the selected board is returned. }{}
-    \par
-
-    \ttvar{int}{get\tu fast\tu info(}\deviceindex, \cronvar{\prefix fast\tu info}{*info)}\\
-    Returns fast dynamic information.\\
-    This call gets a structure that contains dynamic information that can be obtained within a few microseconds.\par
-
-    \ttvar{int}{get\tu param\tu info(}\deviceindex, \cronvar{\prefix param\tu info}{*info)}\\
-    Returns configuration changes.\\
-    Gets a structure that contains information that changes indirectly due to configuration changes.\par
+    \item[\ttvar{int}{get\tu param\tu info(}\deviceindex, \cronvar{\prefix
+        param\tu info}{*info)}]
+    Returns configuration changes.\par
+    Gets a structure that contains information that changes indirectly due to
+    configuration changes.
 
 
-    \ttvar{int}{get\tu static\tu info(}\deviceindex, \cronvar{\prefix static\tu info}{*info)}\\
-    Contains static information.\\
-    Gets a structure that contains information about the board that does not change during run time.\par 
+    \item[\ttvar{int}{get\tu static\tu info(}\deviceindex, \cronvar{\prefix
+        static\tu info}{*info)}]
+    Contains static information.\par
+    Gets a structure that contains information about the board that does not
+    change during run time.
 
-   \ifxHPTDC{
-        \ttvar{int}{get\tu temperature\tu info(}\deviceindex, \cronvar{\prefix temperature\tu info}{*info)}\\
+    \ifxHPTDC{
+        \item[\protect{\parbox[b]{\linewidth}{
+            \ttvar{int}{get\tu temperature\tu info(}\deviceindex,\\
+            \cronvar{\prefix temperature\tu info}{*info)}}}]
         Get temperature measurements from multiple sources on the board.
 
-        \ttvar{int}{get\tu clock\tu info(}\deviceindex, \cronvar{\prefix clock\tu info}{*info)}\\
+        \item[\ttvar{int}{get\tu clock\tu info(}\deviceindex, \cronvar{\prefix
+            clock\tu info}{*info)}]
         Get information on clocking configuration and status.
 
-        \ttvar{const char *}{device\tu state\tu to \tu str(}\cronvar{int state)}\\
-        Convert the state value from \textsf{\prefix fast\tu info.state} into a human readable string. 
-   }{} 
+        \item[\ttvar{const char*}{device\tu state\tu to \tu
+            str(}\cronvar{int}{state)}]
+        Convert the state value from \texttt{\prefix fast\tu info.state} into
+        a human-readable string. 
+    }{} 
+\end{description}
 
 %%%%%%%%%%%%%%%%% static info
 
 \subsection{Structure \prefix static\tu info}
 
-This structure contains information about the board that does not change during run time. It is provided by the function \textsf{\prefix get\tu static\tu info()}.\par
+This structure contains information about the board that does not change during
+run time. It is provided by the function
+\texttt{\prefix get\tu static\tu info()}.
 
-\cronvar{int}{size}\\
-The number of bytes occupied by the structure.
+\begin{description}[style=nextline]
+    \item[\cronvar{int}{size}]
+    The number of bytes occupied by the structure.
 
-\cronvar{int}{version}\\
-A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar.\par
+    \item[\cronvar{int}{version}]
+    A version number that is increased when the definition of the structure is
+    changed. The increment can be larger than one to match driver version
+    numbers or similar.
 
-\cronvar{int}{board\tu id}\\
-ID of the board.\\
-\ifxHPTDC{
-    All \deviceName\ boards in the system are numbered in the order of their serial numbers starting at zero.
-    Channel A of a board has channel number $index \cdot 10$.
-}{}
+    \item[\cronvar{int}{board\tu id}]
+    ID of the board.\par
+    \ifxHPTDC{
+        All \deviceName\ boards in the system are numbered in the order of
+        their serial numbers starting at zero.  Channel A of a board has
+        channel number $index \cdot 10$.
+    }{}
 
-\cronvar{int}{driver\tu revision}\\
-Encoded version number for the driver.\\
-The lower three bytes contain a triple-level hierarchy of version numbers, e.g. 0x010103 encodes version 1.1.3.\\
-The version adheres to the Semantic Versioning scheme as defined at \href{https://semver.org}{https://semver.org}. A change in the first digit generally requires a recompilation of user applications. 
-Changes in the second digit denote significant improvements or changes that don't break compatibility 
-and the third digit increments with minor bug fixes and similar updates that do not affect the API.
+    \item[\cronvar{int}{driver\tu revision}]
+    Encoded version number for the driver.\par
+    The lower three bytes contain a triple-level hierarchy of version numbers,
+    e.g., \texttt{0x010103} encodes version 1.1.3.\par
+    The version adheres to the Semantic Versioning scheme as defined at
+    \href{https://semver.org}{https://semver.org}. A change in the first digit
+    generally requires a recompilation of user applications.  Changes in the
+    second digit denote significant improvements or changes that don't break
+    compatibility and the third digit increments with minor bug fixes and
+    similar updates that do not affect the API.
 
-\cronvar{int}{driver\tu build\tu revision}\\
-Build number of the driver according to cronologic's internal versioning system.
+    \item[\cronvar{int}{driver\tu build\tu revision}]
+    Build number of the driver according to cronologic's internal versioning
+    system.
 
-\cronvar{int}{firmware\tu revision}\\
-Revision number of the FPGA configuration.
+    \item[\cronvar{int}{firmware\tu revision}]
+    Revision number of the FPGA configuration.
 
-\cronvar{int}{board\tu revision}\\
-Board revision number.\\
-The board revision number can be read from a register. It is a four-bit number that changes when the schematic of the board is changed. This should match the revision number printed on the board.
+    \item[\cronvar{int}{board\tu revision}]
+    Board revision number.\par
+    The board revision number can be read from a register. It is a four-bit
+    number that changes when the schematic of the board is changed. This should
+    match the revision number printed on the board.
 
-\cronvar{int}{board\tu configuration}\\
-Describes the schematic configuration of the board.\\
-The same board schematic can be populated in multiple variants. This is an eight-bit code that can be read from a register.
+    \item[\cronvar{int}{board\tu configuration}]
+    Describes the schematic configuration of the board.\par
+    The same board schematic can be populated in multiple variants. This is an
+    8-bit code that can be read from a register.
 
-\cronvar{int}{subversion\tu revision}\\
-Subversion revision id of the FPGA configuration source code.
+    \item[\cronvar{int}{subversion\tu revision}]
+    Subversion revision id of the FPGA configuration source code.
 
-\txh{
-    \cronvar{int}{chip\tu id}\\
-    Reserved.
-}{
-    \cronvar{int}{chip\tu id}\\
-    16 bit factory ID of the TDC chip.
-}{
-    \cronvar{int}{chip\tu id[2]}\\
-    16 bit factory ID for each of the TDC chips.
-}\par
+    \txh{
+        \item[\cronvar{int}{chip\tu id}]
+        Reserved.
+    }{
+        \item[\cronvar{int}{chip\tu id}]
+        16 bit factory ID of the TDC chip.
+    }{
+        \item[\cronvar{int}{chip\tu id[2]}]
+        16 bit factory ID for each of the TDC chips.
+    }
 
-\cronvar{int}{board\tu serial}\\
-Serial number.\\
-Year and running number are concatenated in 8.24 format. The number is identical to the one printed on the silvery sticker on the board.\par
+    \item[\cronvar{int}{board\tu serial}]
+    Serial number.\par
+    Year and running number are concatenated in 8.24 format. The number is
+    identical to the one printed on the silvery sticker on the board.
 
-\cronvar{\uint}{flash\tu serial\tu high}\\
-\cronvar{\uint}{flash\tu serial\tu low}\\
-64-bit manufacturer serial number of the flash chip
+    \item[\protect{\parbox[b]{0.8\linewidth}{
+        \cronvar{\uint}{flash\tu serial\tu high}\\
+        \cronvar{\uint}{flash\tu serial\tu low}}}]
+    64-bit manufacturer serial number of the flash chip
 
-\cronvar{crono\tu bool\tu t}{flash\tu valid}\\
-If not 0 the driver found valid calibration data in the flash on the board and is using it. This value is not applicable for the \deviceName. \par
+    \item[\cronvar{crono\tu bool\tu t}{flash\tu valid}]
+    If not \texttt{0}, the driver found valid calibration data in the flash on
+    the board and is using it. This value is not applicable for the
+    \deviceName.
 
-\cronvar{char}{calibration\tu date[20]}\\
-DIN EN ISO 8601 string YYYY-MM-DD HH:MM describing the time when the card was calibrated.\par
+    \item[\cronvar{char}{calibration\tu date[20]}]
+    DIN EN ISO 8601 string YYYY-MM-DD HH:MM of the time when the card
+    was calibrated.
 
-\cronvar{char}{bitstream\tu date[20]}\\
-DIN EN ISO 8601 string YYYY-MM-DD HH:MM describing the time when the bitstream on the card was created.\par
+    \item[\cronvar{char}{bitstream\tu date[20]}]
+    DIN EN ISO 8601 string YYYY-MM-DD HH:MM of the time when the bitstream on
+    the card was created.
 
-\txh{
-\cronvar{double}{delay\tu bin\tu size}\\   
-Bin size of delay in \si{\pico\second}. The increment of the \textsf{delay\tu config.delay} field for \deviceName.\par
+    \txh{
+        \item[\cronvar{double}{delay\tu bin\tu size}]
+        Bin size of delay in picoseconds. The increment of the
+        \texttt{delay\tu config.delay} field for the \deviceName.
 
-\cronvar{double}{auto\tu trigger\tu ref\tu clock}\\ 
-Auto trigger clock frequency. The clock frequency of the auto trigger in Hz used for calculating the \textsf{auto\tu trigger\tu period}.\par
+        \item[\cronvar{double}{auto\tu trigger\tu ref\tu clock}]
+        Auto trigger clock frequency. The clock frequency of the auto trigger
+        in Hertz used for calculating the \texttt{auto\tu trigger\tu period}.
 
-\cronvar{uint32\tu t}{rollover\tu period}\\ 
-The number of bins in a rollover period. This is a power of two (the maximum value of a hit timestamp is this value minus -1)
-}{   
-}{    
-}\par
+        \item[\cronvar{uint32\tu t}{rollover\tu period}]
+        The number of bins in a rollover period. This is a power of 2 (the
+        maximum value of a hit timestamp is this value minus 1)
+    }{}{}
+\end{description}
 
 %%%%%%%%%%%%%%%%%%%%%%%% param info
-
 \subsection{Structure \prefix param\tu info}
-This structure contains configuration changes provided by \textsf{\prefix get\tu param\tu info()}.
+This structure contains configuration changes provided by \texttt{\prefix
+get\tu param\tu info()}.
 
-\cronvar{int}{size}\\
-The number of bytes occupied by the structure. \par
+\begin{description}[style=nextline]
+    \item[\cronvar{int}{size}]
+    The number of bytes occupied by the structure.
 
-\cronvar{int}{version}\\
-A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar.\par
+    \item[\cronvar{int}{version}]
+    A version number that is increased when the definition of the structure is
+    changed. The increment can be larger than one to match driver version
+    numbers or similar.
 
+    \item[\cronvar{double}{binsize}]
+    Bin size (in \si{\pico\second}) of the measured TDC data.
 
-\cronvar{double}{binsize}\\
-Bin size (in \si{\pico\second}) of the measured TDC data.
+    \ifxHPTDC{}{ %board ID is found in the static_info structure for .
+        \item[\cronvar{int}{board\tu id}]
+        Board ID.\par
+        The board uses this ID to identify itself in the output data stream.
+        The ID takes values between \texttt{0} and \texttt{255}.
+    }
 
-\ifxHPTDC{}{ %board ID is found in the static_info structure for .
-    \cronvar{int}{board\tu id}\\
-    Board ID.\\
-    The board uses this ID to identify itself in the output data stream. The ID takes values between 0 and 255.\par
-}
+    \item[\cronvar{int}{channels}]
+    Number of TDC channels of the board.\par
+    Fixed at \texttt{\ifxHPTDC{8}{4}}.
 
-\cronvar{int}{channels}\\
-Number of TDC channels of the board.\\
-Fixed at \ifxHPTDC{8}{4}.\par
+    \item[\cronvar{int}{channel\tu mask}]
+    Bit assignment of each enabled input channel.\par
+    Bit $\texttt{0} \leq n < \texttt{\ifxHPTDC{8}{4}}$ is set if channel $n$ is
+    enabled.
 
-\cronvar{int}{channel\tu mask}\\
-Bit assignment of each enabled input channel.\\
-Bit $0 \leq n < \ifxHPTDC{8}{4}$ is set if channel $n$ is enabled. \par
+    \item[\cronvar{int64\tu t}{total\tu buffer}]
+    The total amount of DMA buffer in bytes.
 
-\cronvar{int64\tu t}{total\tu buffer}\\
-The total amount of DMA buffer in bytes.
+    \ifxHPTDC{}{
+        \item[\cronvar{double}{packet\tu binsize}]
+        \itett{ %tt4
+            For the \deviceName\, the packet binsize is equal to the binsize
+            and depends on the generation of the card. Gen\,1 boards have a
+            packet binsize of \SI{500}{\pico\second}, while Gen\,2 boards have
+            \SI{100}{\pico\second}.
+        }{ %xtdc4
+            For \deviceName\, this is \SI{1666.6}{\pico\second}
+        }
+    }
 
-\ifxHPTDC{}{
-\cronvar{double}{packet\tu binsize}\\
-\itett{ %tt4
-For \deviceName\ the packet binsize is equal to the binsize and depends on the Generation of the card. Gen\,1 boards have a packet binsize of \SI{500}{\pico\second}, while Gen\,2 boards have \SI{100}{\pico\second}.
-}{ %xtdc4
-For \deviceName\ this is \SI{1666.6}{\pico\second}
-}
-}
+    \ifxHPTDC{}{
+        \item[\cronvar{double}{quantisation}]
+        \itett{ %tt4
+            Quantisation or measurement resolution. Depending on the board
+            variant this ranges from \SIrange{100}{1000}{\pico\second}.\par
+            \begin{tabular} {|l|l|l|l|l|l|l}
+            \hline
+            --1G & --2G & --1.25G & --2.5G & --5G & --10G \\
+            \hline
+            1000 ps & 500 ps & 800 ps & 400 ps & 200 ps & 100 ps\\
+            \hline
+            \end{tabular}
 
-\ifxHPTDC{}{
-\cronvar{double}{quantisation}\\
-\itett{ %tt4
-Quantisation or measurement resolution. Depending on the board variant this ranges from \SIrange{100}{1000}{\pico\second}.
-
-\begin{tabular} {|l|l|l|l|l|l|l}
-\hline
- 1G & 2G & 1.25G & 2.5G & 5G & 10G \\
-\hline
- 1000 ps & 500 ps & 800 ps & 400 ps & 200 ps & 100 ps\\
-\hline
-\end{tabular}
-
-     This means, that for 1.25G the lower 3 bits in the timestamps are zero.
-}{ %xtdc4
-Quantisation or measurement resolution. For \deviceName\ this is \SI{13.0208}{\pico\second}
-}
-}
+            This means, that for --1.25G the lower 3 bits in the timestamps are
+            zero.
+        }{ %xtdc4
+            Quantisation or measurement resolution. For the \deviceName\, this
+            is \SI{13.0208}{\pico\second}
+        }
+    }
+\end{description}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% fast info
 
-\subsection{Structure \prefix fast\tu info}
-\label{structfastinfo}
-\cronvar{int}{size}\\
-The number of bytes occupied by the structure. \par
+\subsection{Structure \prefix fast\tu info} \label{structfastinfo}
+\begin{description}[style=nextline]
+    \item[\cronvar{int}{size}]
+    The number of bytes occupied by the structure. 
 
-\cronvar{int}{version}\\
-A version number that is increased when the definition of the structure is changed. 
-The increment can be larger than one to match driver version numbers or similar.\par
+    \item[\cronvar{int}{version}]
+    A version number that is increased when the definition of the structure is
+    changed.  The increment can be larger than one to match driver version
+    numbers or similar.
 
-\ifxHPTDC{} {
-    \cronvar{int}{tdc\tu rpm}\\
-    Speed of the TDC fan in rounds per minute. Reports 0 if no fan is present.\par
-}
-\cronvar{int}{fpga\tu rpm}\\
-Speed of the FPGA fan in rounds per minute. Reports 0 if no fan is present.\par
+    \ifxHPTDC{} {
+        \item[\cronvar{int}{tdc\tu rpm}]
+        Speed of the TDC fan in rounds per minute. Reports \texttt{0} if no fan
+        is present.
+    }
 
-\cronvar{int}{alerts}\\
-Alert bits from the temperature sensor and the system monitor.
-\itett{
-    The TimeTagger4 does not implement any temperature alerts.
-}{
-    Bit 0 is set if the TDC temperature exceeds \SI{140}{\degreeCelsius}. 
-    In this case the TDC did shut down and the device needs to be reinitialized. 
-}\par
+    \item[\cronvar{int}{fpga\tu rpm}]
+    Speed of the FPGA fan in rounds per minute. Reports \texttt{0} if no fan is
+    present.
 
-\cronvar{int}{pcie\tu pwr\tu mgmt}\\
-Always 0. \par
+    \item[\cronvar{int}{alerts}]
+    Alert bits from the temperature sensor and the system monitor.
+    \itett{
+        The TimeTagger4 does not implement any temperature alerts.
+    }{
+        Bit 0 is set if the TDC temperature exceeds \SI{140}{\degreeCelsius}. 
+        In this case the TDC did shut down and the device needs to be
+        reinitialized. 
+    }
 
-\cronvar{int}{pcie\tu link\tu width}\\
-Number of PCIe lanes the card uses. Should always be 1 for the \deviceName. \par
+    \item[\cronvar{int}{pcie\tu pwr\tu mgmt}]
+    Always \texttt{0}.
 
-\cronvar{int}{pcie\tu max\tu payload}\\
-Maximum size in bytes for one PCIe transaction. Depends on system configuration.\par
+    \item[\cronvar{int}{pcie\tu link\tu width}]
+    Number of PCIe lanes the card uses. Should always be \texttt{10} for the
+    \deviceName.
 
-\ifxHPTDC{
-\cronvar{int}{state}\\
-Current state of the \deviceName. \par
+    \item[\cronvar{int}{pcie\tu max\tu payload}]
+    Maximum size in bytes for one PCIe transaction. Depends on system
+    configuration.
 
-\begin{tabular}{lc}
-    \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CREATED} & 0  \\*
-    \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu INITIALIZED} & 1  \\*
-    \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CONFIGURED} & 2  \\*
-    \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CAPTURING} & 3  \\*
-    \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu PAUSED} & 4  \\*
-    \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CLOSED} & 5  \\*
-\end{tabular}\par
-}{}
+    \ifxHPTDC{
+    \item[\cronvar{int}{state}]
+    Current state of the \deviceName. 
+
+    \begin{tabular}{lc}
+        \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CREATED} & \texttt{0}  \\*
+        \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu INITIALIZED} & \texttt{1}  \\*
+        \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CONFIGURED} & \texttt{2}  \\*
+        \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CAPTURING} & \texttt{3}  \\*
+        \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu PAUSED} & \texttt{4}  \\*
+        \cronvar{const static int}{\PREFIX DEVICE\tu STATE\tu CLOSED} & \texttt{5}  \\*
+    \end{tabular}
+    }{}
+\end{description}
 %%%%%%%%%%%%%%%%%%%%%%% temperature info
 
 \ifxHPTDC{
     \subsection{Structure \prefix temperature\tu info}
-        This structure provide the values of temperature measurements of various chips on the board.
+    This structure provide the values of temperature measurements of
+    various chips on the board.
 
-        \cronvar{int}{size}\\
-        The number of bytes occupied by the structure. \par
+    \begin{description}[style=nextline]
+        \item[\cronvar{int}{size}]
+        The number of bytes occupied by the structure.
 
-        \cronvar{int}{version}\\
-        A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar.\par
+        \item[\cronvar{int}{version}]
+        A version number that is increased when the definition of the
+        structure is changed. The increment can be larger than one to match
+        driver version numbers or similar.
 
-        \cronvar{float}{tdc[2]}\\
+        \item[\cronvar{float}{tdc[2]}]
         Temperature for each of the TDC chips in \si{\degreeCelsius}.
+    \end{description}
 
     %%%%%%%%%%%%%%%%%%%%% clock info
 
     \subsection{Structure \prefix clock\tu info}
-        This structure provides information about the clock network of the device. 
+    This structure provides information about the clock network of the
+    device. 
 
-        \cronvar{int}{size}\\
-        The number of bytes occupied by the structure. \par
+    \begin{description}[style=nextline]
+        \item[\cronvar{int}{size}]
+        The number of bytes occupied by the structure.
 
-        \cronvar{int}{version}\\
-        A version number that is increased when the definition of the structure is changed. The increment can be larger than one to match driver version numbers or similar.\par
+        \item[\cronvar{int}{version}]
+        A version number that is increased when the definition of the structure
+        is changed. The increment can be larger than one to match driver
+        version numbers or similar.\par
 
-        \cronvar{crono\tu bool\tu t}{cdce\tu locked}\\
+        \item[\cronvar{crono\tu bool\tu t}{cdce\tu locked}]
         Set if the jitter cleaning PLL clock synthesizer achieved lock.
 
-        \cronvar{int}{cdce\tu version}\\
-        Version information from the CDCE62005 clock synthesizer.\\
+        \item[\cronvar{int}{cdce\tu version}]
+        Version information from the CDCE62005 clock synthesizer.
         
-        \cronvar{crono\tu bool\tu t}{use\tu ext\tu clock}\\
-        Source for the clock synthesizer is usually the 10~MHz onboard oscillator. During initialization, alternatively an external clock on J2 can be selected.
-        When multiple boards are synchronized all board use a common external clock. See section \ref{multiboard} for details.
-        \\       
-
+        \item[\cronvar{crono\tu bool\tu t}{use\tu ext\tu clock}]
+        Source for the clock synthesizer is usually the 10~MHz onboard
+        oscillator. During initialization, alternatively an external clock
+        on J2 can be selected.  When multiple boards are synchronized all board
+        use a common external clock. See section \ref{multiboard} for details.
     
-        \cronvar{crono\tu bool\tu t}{fpga\tu locked}\\
-        Set if the FPGA datapath PLL achieved lock.\\
-    
+        \item[\cronvar{crono\tu bool\tu t}{fpga\tu locked}]
+        Set if the FPGA datapath PLL achieved lock.
+    \end{description}
 }{}

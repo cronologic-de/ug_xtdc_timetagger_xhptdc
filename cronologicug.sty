@@ -1,94 +1,384 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{cronologicug}
+\ProvidesPackage{cronologic}
 \author{cronologic GmbH \& Co KG}
 
-%\DeclareOption*{\newcommand{\deviceName}{\CurrentOption}}
+\RequirePackage{ifthen}
+\RequirePackage{xstring}
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{family=crono, prefix=crono@}
 
-\PassOptionsToPackage{utf8}{inputenc}
-\RequirePackage{inputenc}
-\PassOptionsToPackage{usenames, dvipsnames}{xcolor}
+% options provided with the sphinxcronologic package, e.g.
+
+\DeclareStringOption[montserrat]{font} % montserrat, fira, avenirnext, default
+
+% is sphinx being used to compile the PDF?
+\DeclareBoolOption[false]{sphinx}
+
+% draw fancy frame around pages
+\DeclareBoolOption{drawframe}
+
+\ProcessKeyvalOptions{crono}
+
+\newlength\cronoleft
+\newlength\cronoright
+\newlength\cronotop
+\newlength\cronobottom
+\setlength\cronoleft{1.5cm}
+\setlength\cronoright{1.5cm}
+\setlength\cronotop{1.85cm}
+\setlength\cronobottom{1.40cm}
+
+\newlength\cronoframemargin
+\newlength\cronoframeoffset
+\newlength\cronoframelinesep
+\newlength\cronoframelinewidth
+\setlength{\cronoframemargin}{1.25cm}
+\setlength{\cronoframeoffset}{0.8cm}
+\setlength{\cronoframelinesep}{0.18pt}
+\setlength{\cronoframelinewidth}{0.8pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% colors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\PassOptionsToPackage{usenames,dvipsnames}{xcolor}
 \RequirePackage{xcolor}
-\RequirePackage{graphicx} %for including figures
+\definecolor{cronogrey}{gray}{0.5}
+\definecolor{crongrey}{gray}{0.5}
+\definecolor{cronolightgrey}{RGB}{221,221,221}
+\definecolor{cronlightgrey}{RGB}{221,221,221}
+\definecolor{cronoverylightgrey}{RGB}{244,244,244}
+\definecolor{cronoorange}{RGB}{237, 120, 0}
+\definecolor{cronorange}{RGB}{237, 120, 0}
+\definecolor{cronoblue}{RGB}{55, 110, 181}
+\definecolor{cronoblack}{RGB}{0,0,0}
+\definecolor{cronolightgreen}{RGB}{86,159,214}
+\definecolor{cronlightgreen}{RGB}{86,159,214}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% miscellaneous
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{graphicx}
 \RequirePackage{tabularx}
-\RequirePackage{scrhack}  % avoid float@addtolist warning in package "listing"
-\RequirePackage{amsmath} %for math environments
-\RequirePackage{siunitx}  % SI Unit package
-\PassOptionsToPackage{left=25mm, right=25mm, top=25mm, bottom=25mm}{geometry}
-\RequirePackage{geometry} %for page properties (pagestyle)
-\PassOptionsToPackage{section,subsection,subsubsection}{extraplaceins}
-\RequirePackage{extraplaceins} %for binding figures to a (sub-)section
-\RequirePackage{listings}%for code in latex document, might be the source of the float@addtolist warning
-\RequirePackage{textcomp}%for code in latex document
-\RequirePackage{balance}%for two-column layout
-\RequirePackage{array} %for centered AND constant width columns
-\RequirePackage{longtable}
-\PassOptionsToPackage{footsepline=1pt}{scrlayer-scrpage}
-\RequirePackage{scrlayer-scrpage}%for header, footer
-\RequirePackage{makecell}  % multi line table cells
-\PassOptionsToPackage{T1}{fontenc}
-\RequirePackage{fontenc}  % fix warning for availability of bold slanted fonts
-\RequirePackage{fontspec}
-\RequirePackage{attachfile2} 
+\RequirePackage{siunitx}
+\RequirePackage{fancyhdr}
 
-% \usepackage{auto-pst-pdf} % this enables postscript graphics for PDF
-
-\RequirePackage{incgraph} % to include the title page
-
-% double line border support
-\RequirePackage{tikz}
-\usetikzlibrary{calc}
-\RequirePackage{eso-pic}
-
-\PassOptionsToPackage{colorlinks=true,linkcolor=blue}{hyperref}
-\RequirePackage{hyperref}
- 
-%%%%%%%%%% Defitinions for the whole document 
- 
-% color definitions
-\definecolor{listinggray}{gray}{0.9}  
-\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
-\definecolor{crondarkgreen}{RGB}{32, 90, 133} %1. Überschrift
-\definecolor{crondarkblue}{RGB}{43, 119, 177} %2. Überschrift
-\definecolor{cronlightgreen}{RGB}{86,159,214} %3. Überschrift
-\definecolor{crongrey}{gray}{0.32} %Variablendeklaration API
-%
-%
-\addtokomafont{chapter}{\color{crondarkgreen}}
-\addtokomafont{section}{\color{crondarkblue}}
-\addtokomafont{subsection}{\color{cronlightgreen}}
-%
-
-%import a title PDF and create TOC
-\newcommand{\cronofront}[1]{
-	\pagenumbering{Alph}   %this is invisible but avoids a warning for duplicate hyperlink targets
-	\newpage
-	\pagestyle{empty}
-	\incgraph[a4paper][width=\paperwidth]{#1}
-	\newpage     
-	\tableofcontents
-	\newpage
-	\pagestyle{scrheadings}
-	\pagenumbering{arabic}
+\RequirePackage{enumitem} % customized list layouts
+\setlist[description]{
+  font={\ttfamily\bfseries}
 }
 
+\RequirePackage{polyglossia}
+\RequirePackage{pdfpages} % include pdfs with, e.g.,
+                          % \includepdf[pages={-}]{fname}
+\setdefaultlanguage{english}
+\RequirePackage{xpatch} % pretend and append to cmd using xpre/apptocmd
+\RequirePackage{ragged2e} % provide RaggedRight, RaggedLeft
+\RequirePackage{tikz} % double line border support
+\RequirePackage{array} %for centered AND constant width columns
+\RequirePackage{makecell}  % multi line table cells
+\RequirePackage{incgraph} % to include the title page
+\RequirePackage{attachfile2} 
+
+\RequirePackage{listings}
+\definecolor{lstgreen}{RGB}{0, 112, 33}
+\definecolor{lstred}{RGB}{142, 33, 0}
+\definecolor{lstblue}{RBG}{5, 40, 124}
+\definecolor{lstndigo}{RGB}{63, 127, 142}
+\lstset{
+  language=[Visual]C++,
+  backgroundcolor=\color{cronoverylightgrey},
+  keywordstyle=\bfseries\ttfamily\color{lstred},
+  identifierstyle={},
+  commentstyle=\color{lstgreen},
+  stringstyle=\color{lstgreen},
+  showstringspaces=false,
+  basicstyle=\ttfamily\small,
+  numberstyle=\tiny,
+  numbers=left,
+  stepnumber=1,
+  numbersep=10pt,
+  tabsize=2,
+  breaklines=true,
+  prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+  breakatwhitespace=false,
+  aboveskip={1.5\baselineskip},
+  columns=fixed,
+  upquote=true,
+  extendedchars=true,
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Text setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{microtype} % better textblock layout
+
+\PassOptionsToPackage{section,subsection,subsubsection}{extraplaceins}
+\RequirePackage{extraplaceins} %for binding figures to a (sub-)section
+
+\RequirePackage{caption}
+\DeclareCaptionFont{cronocaptionlabelfont}{\bfseries\color{cronogrey}}
+\DeclareCaptionFont{cronocaptionfont}{\color{cronogrey}}
+\captionsetup{
+    format=hang,
+    width=0.8\textwidth,
+    labelsep=space,
+    labelfont=cronocaptionlabelfont,
+    textfont=cronocaptionfont,
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Font and text setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{fontspec}
+
+\RequirePackage{unicode-math}[
+    mathrm=sym,
+    math-style=ISO,
+    bold-style=upright
+]
+
+\defaultfontfeatures{Scale=MatchLowercase}
+
+% font option "montserrat"
+% since Montserrat doesn't have a Mono/Math font, set up different math fonts
+% for that
+\ifthenelse{\equal{\crono@font}{montserrat}}
+{
+    \setmainfont[
+        ItalicFont={Montserrat-Italic.otf},
+        BoldFont={Montserrat-Bold.otf},
+        BoldItalicFont={Montserrat-BoldItalic.otf}
+    ]{Montserrat-Regular.otf}
+    \setsansfont[
+        ItalicFont={Montserrat-Italic.otf},
+        BoldFont={Montserrat-Bold.otf},
+        BoldItalicFont={Montserrat-BoldItalic.otf}
+    ]{Montserrat-Regular.otf}
+
+    \setmonofont[
+        ItalicFont={AnonymousPro-Italic.ttf},
+        BoldFont={AnonymousPro-Bold.ttf},
+        BoldItalicFont={AnonymousPro-BoldItalic.ttf}
+    ]{AnonymousPro-Regular.ttf}
+
+    \setmathfont[Scale=MatchUppercase]{Latin Modern Math}
+
+    \setmathfont[range=up/{latin,Latin,num}]{Montserrat-Regular.otf}
+    \setmathfont[range=it/{latin,Latin,num}]{Montserrat-Italic.otf}
+    \setmathfont[range=bfup/{latin,Latin,num}]{Montserrat-Bold}
+    \setmathfont[range=bfit/{latin,Latin,num}]{Montserrat-BoldItalic.otf}
+
+    \setmathfont[range=up/{greek,Greek}]{KerkisSans.otf}
+    \setmathfont[range=it/{greek,Greek}]{KerkisSans-Italic.otf}
+    \setmathfont[range=bfup/{greek,Greek}]{KerkisSans-Bold.otf}
+    \setmathfont[range=bfit/{greek,Greek}]{KerkisSans-BoldItalic.otf}
+
+    \newfontfamily\cronoheaderfont[
+        ItalicFont={Montserrat-Italic.otf},
+        BoldFont={Montserrat-Bold.otf},
+        BoldItalicFont={Montserrat-BoldItalic.otf}
+    ]{Montserrat-Regular.otf}
+}{\relax}
+
+% Font option "fira"
+% https://www.ctan.org/tex-archive/fonts/fira
+% https://www.ctan.org/pkg/firamath
+\ifthenelse{\equal{\crono@font}{fira}}
+{
+    \setmainfont[
+        ItalicFont={FiraSans-Italic.otf},
+        BoldFont={FiraSans-Bold.otf},
+        BoldItalicFont={FiraSans-BoldItalic.otf}
+    ]{FiraSans-Regular.otf}
+
+    \setsansfont[
+        ItalicFont={FiraSans-Italic.otf},
+        BoldFont={FiraSans-Bold.otf},
+        BoldItalicFont={FiraSans-BoldItalic.otf}
+    ]{FiraSans-Regular.otf}
+
+    \setmonofont[
+        ItalicFont={FiraMono-Oblique.otf},
+        BoldFont={FiraMono-Bold.otf},
+        BoldItalicFont={FiraMono-BoldOblique.otf}
+    ]{FiraMono-Regular.otf}
+
+    \newfontfamily\cronoheaderfont
+    [
+        ItalicFont={Montserrat-Italic.otf},
+        BoldFont={Montserrat-Bold.otf},
+        BoldItalicFont={Montserrat-BoldItalic.otf}
+    ]
+    {Montserrat-Regular.otf}
+
+    \setmathfont{Fira Math}
+}{\relax}
+
+% font option "avenirnext"
+% The fonts Avenir Next and AvantGarde must be installed on the System
+\ifthenelse{\equal{\crono@font}{avenirnext}}
+{
+    \setmainfont{Avenir Next}
+    \setsansfont{Avenir Next}
+
+    \setmonofont[
+        ItalicFont={FiraMono-Oblique.otf},
+        BoldFont={FiraMono-Bold.otf},
+        BoldItalicFont={FiraMono-BoldOblique.otf}
+    ]{FiraMono-Regular.otf}
+
+    \setmathfont[Scale=MatchUppercase]{Latin Modern Math}
+    % \setmathfont{TeX Gyre Termes Math}
+
+    \setmathfont[
+      range=up/{latin,Latin,num,greek,Greek}
+    ]{Avenir Next}
+    \setmathfont[
+      range=it/{latin,Latin,num,greek,Greek}
+    ]{Avenir Next Italic}
+    \setmathfont[
+      range=bfup/{latin,Latin,num,greek,Greek}
+    ]{Avenir Next Demi Bold}
+    \setmathfont[
+      range=bfit/{latin,Latin,num,greek,Greek}
+    ]{Avenir Next Demi Bold Italic}
+
+    \newfontfamily\cronoheaderfont{Avgardm.ttf}
+}{\relax}
+
+\ifthenelse{\equal{\crono@font}{default}}
+{
+    \newcommand\cronoheaderfont{}
+}{\relax}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definitions for the whole document 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
 \newcommand{\filesep}{\textbackslash\allowbreak}  % used in file pathes
 \newcommand{\lb}{\linebreak}
-\newcommand{\cronvar}[2]{\noindent\textsf{\textbf{\textcolor{crongrey}{#1}~#2}}}%for variable declaration
-\newcommand{\crondef}[1]{\noindent\textsf{\textcolor{crongrey}{\#{}define} #1}}%for definitions
+\newcommand{\cronvar}[2]{\noindent\texttt{\textbf{\textcolor{crongrey}{#1}~#2}}}%for variable declaration
+\newcommand{\crondef}[1]{\noindent\texttt{\textcolor{crongrey}{\#{}define} #1}}%for definitions
 \newcommand{\tu}{\textunderscore}%shorter
 \newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
 \renewcommand{\arraystretch}{1.6} 
 \parskip 8pt
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\PassOptionsToPackage{
+  left=\cronoleft,
+  right=\cronoright,
+  top=\cronotop,
+  bottom=\cronobottom
+}{geometry}
+\RequirePackage{geometry}
+\setlength\headsep{0.35cm}
 
 
-%%%%%%%%%%% Design Footer 
-% https://esc-now.de/_/latex-individuelle-kopf--und-fusszeilen-update
-\setkomafont{footsepline}{\color{cronlightgreen}}
-\pagestyle{scrheadings}
-\clearpairofpagestyles
-\ifoot{cronologic GmbH \& Co. KG}
-\cfoot{\pagemark}
-\ofoot{\deviceName\ User Guide \ugrev} 
-\renewcommand*{\chapterpagestyle}{scrheadings} % The first page of a chapter should not look different
- 
+% headings
+\RequirePackage{titlesec}
+\titleformat{\chapter}%
+    {\cronoheaderfont\LARGE\bfseries\color{cronoorange}}%
+    {\thechapter}{1em}{\thispagestyle{normal}}{}
+\titlespacing*{\chapter}%
+    {0ex}{0ex}{*2}
+
+\titleformat{\section}%
+    {\cronoheaderfont\Large\bfseries\color{cronoorange}}%
+    {\thesection}{1em}{}{}
+
+\titleformat{\subsection}%
+    {\cronoheaderfont\large\bfseries\color{cronoblue}}%
+    {\thesubsection}{1em}{}{}
+
+\titleformat{\subsubsection}%
+    {\cronoheaderfont\bfseries\itshape\color{cronoblue}}%
+    {\thesubsubsection}{1em}{}{}
+    
+% draw frame around text
+\ifthenelse{\boolean{crono@drawframe}}{
+  \RequirePackage{everypage}
+  \RequirePackage{tikzpagenodes}
+  \usetikzlibrary{calc}
+  \AddEverypageHook{\tikz[remember picture,overlay]{%
+    % left lines
+    \draw [line width=\cronoframelinewidth,cronolightgrey] 
+    ($(current page.north west)+(\cronoframemargin,-\cronoframeoffset)$)
+    -- ($(current page.south west)+(\cronoframemargin,\cronoframeoffset)$);
+    \draw [line width=\cronoframelinewidth,cronolightgrey] 
+    ($(current page.north west)+
+      (\cronoframemargin+\cronoframelinesep,-\cronoframeoffset)$)
+    -- 
+    ($(current page.south west)+
+      (\cronoframemargin+\cronoframelinesep,\cronoframeoffset)$);
+    % right lines
+    \draw [line width=\cronoframelinewidth,cronolightgrey] 
+    ($(current page.north east)+(-\cronoframemargin,-\cronoframeoffset)$)
+    -- ($(current page.south east)+(-\cronoframemargin,\cronoframeoffset)$);
+    \draw [line width=\cronoframelinewidth,cronolightgrey] 
+    ($(current page.north east)+
+      (-\cronoframemargin-\cronoframelinesep,-\cronoframeoffset)$)
+    -- 
+    ($(current page.south east)+
+      (-\cronoframemargin-\cronoframelinesep,\cronoframeoffset)$);
+    % top lines
+    \draw [line width=\cronoframelinewidth,cronolightgrey] 
+    ($(current page.north west)+(\cronoframeoffset,-\cronoframemargin)$)
+    -- ($(current page.north east)+(-\cronoframeoffset,-\cronoframemargin)$);
+    \draw [line width=\cronoframelinewidth,cronolightgrey] 
+    ($(current page.north west)+
+      (\cronoframeoffset,-\cronoframemargin-\cronoframelinesep)$)
+    -- 
+    ($(current page.north east)+
+      (-\cronoframeoffset,-\cronoframemargin-\cronoframelinesep)$);
+    % bottom lines
+    \draw [line width=\cronoframelinewidth,cronolightgrey]
+    ($(current page.south west)+(\cronoframeoffset,\cronoframemargin)$)
+    -- ($(current page.south east)+(-\cronoframeoffset,\cronoframemargin)$);
+    \draw [line width=\cronoframelinewidth,cronolightgrey]
+    ($(current page.south west)+(\cronoframeoffset,\cronoframemargin+\cronoframelinesep)$)
+    -- ($(current page.south east)+(-\cronoframeoffset,\cronoframemargin+\cronoframelinesep)$);
+  }}
+}{\relax}
+
+% if sphinx is not used, format headings etc
+\ifthenelse{\boolean{crono@sphinx}}
+{
+  \newcommand{\cronotitle}{\@title\sphinxheadercomma\py@release}
+}
+{ % else, if sphinx is not used, set up page layout
+  \newcommand{\cronotitle}{\@title}
+}
+\fancypagestyle{normal}{
+  \fancyhf{}
+  \fancyfoot[R]{{\color{cronogrey}}}
+  \fancyfoot[L]{{\color{cronogrey}\llap{\hfill\bfseries\thepage\hspace*{10pt}}\href{https://www.cronologic.de}{\footnotesize\textbf{cronologic} GmbH \& Co. KG}}}
+  \fancyfoot[R]{{\footnotesize\color{cronogrey}\cronotitle}}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+\pagestyle{normal}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% hyperref package should be included last
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \PassOptionsToPackage{
+%     colorlinks=true,
+%     linkcolor=cronoblue,
+%     urlcolor=cronogrey
+% }{hyperref}
+\RequirePackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cronoblue,
+  urlcolor=cronogrey,
+  }
+\urlstyle{same}

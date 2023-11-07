@@ -19,8 +19,8 @@
 % configure Visual Studio Code LaTeX Workshop 
 % !TEX root = xHPTDC8_User_guide.tex
   
-\documentclass[10pt,notitlepage]{scrreprt}
-\usepackage{cronologicug}
+\documentclass[12pt,notitlepage,a4paper]{report}
+\usepackage[font=avenirnext,drawframe]{cronologicug}
 
 % this file creates two similar user guides depending on the commend \deviceName
  
@@ -40,6 +40,8 @@
 	\message {\\ WARNING: Undefined device name, TimeTagger4 used}
 	\newcommand{\deviceName}{TimeTagger4}}{}
 \message{\\Device name is \deviceName }
+
+\title{\deviceName{} -- User Guide, Rev. \ugrev}
 
 
 %output the first option for the TimeTagger, the second one otherwise
@@ -96,24 +98,24 @@
 }
 
 
-\hyphenation{Time-Tagger xTDC xHPTDC cronologic}
+\hyphenation{Time-Tagger xTDC xHPTDC cronologic TimeTagger4}
 
 
-\newcommand{\ttvar}[2]{\noindent\textsf{\textbf{\textcolor{crongrey}{#1} \prefix #2}}}%for variable declaration
-\newcommand{\ttdef}[1]{\noindent\textsf{\textcolor{crongrey}{\#{}define} \PREFIX #1}}%for definitions
+\newcommand{\ttvar}[2]{\noindent\texttt{\textbf{\textcolor{crongrey}{#1} \prefix #2}}}%for variable declaration
+\newcommand{\ttdef}[1]{\noindent\texttt{\textcolor{crongrey}{\mbox{\#{}define}} \PREFIX #1}}%for definitions
 
 \newcommand{\ugrev}{{1.8.11rc}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
- 
-\begin{document}  
-\cronofront{\titlefile}
+\begin{document}
+\RaggedRight
+\sloppy % much fewer overhanging lines
+	    % may create ugly block text (which we're not using)
+\includepdf[pages={-}]{\titlefile} % include title page
+\clearpage
+\tableofcontents
+\clearpage
 
 % 
-    \ifxHPTDC{}{
-    \chapter*{Erratum}
-        \input{common/erratum.tex}
-    }
-    
 	\chapter{Introduction}
 		\ttinput{Intro.tex}
 
@@ -149,15 +151,22 @@
 	\chapter{Technical Data}    
 		\ttinput{Tech.tex} 
 		\input{common/DIN.tex}
-
+    
 	\chapter{Revision History} 
 		\noindent
-		User Guide \hyperlink{ugrev}{\ugrev} as of 2023-07-10\\  % needs also be updated in UgRev.tex
-		\\
+		User Guide \hyperlink{ugrev}{\ugrev} as of 2023-11-07\\  % needs also be updated in UgRev.tex
+	%	\\
 		cronologic GmbH \& Co. KG\\
 		Jahnstraße 49\\
 		60318 Frankfurt am Main\\Germany\\
 		\ttinput{FwRev.tex}
 		\ifxHPTDC{\input{xhptdc/DrvRev.tex}}{\input{common/DrvRev.tex}} 
 		\input{common/UGRev.tex}
+
+    \ifxHPTDC{}{
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Erratum}
+    \chapter*{Erratum}
+        \input{common/erratum.tex}
+    }
 \end{document}  

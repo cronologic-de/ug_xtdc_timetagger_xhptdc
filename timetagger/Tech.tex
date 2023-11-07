@@ -3,83 +3,121 @@
 % $Rev: 1041 $
 % $Author: kolja $
 
-Each board is tested against the values listed in the columns `Min' and `Max`. `Typical' is the mean value of the first 10 boards produced or a value that is set by design.
+Each board is tested against the values listed in the columns ``Min'' and
+``Max''. ``Typical'' is the mean value of the first 10 boards produced or a
+value that is set by design.
 
 \section{TDC Characteristics}
+\subsection{TDC measurement Characteristics for Gen~1 \deviceName}
 
-	\subsection{TDC measurement Characteristics for Gen~1 \deviceName}
+\noindent
+\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+    \hline
+    Symbol & Parameter & Min & Typical & Max & Units\\
+    \hline\hline
+    INL & Integral non-linearity &  &  & 0.5 & bins \\
+    \hline
+    DNL & Differential non-linearity & & 0.2 & & bins \\
+    \hline
+    t\subscript{Data} & Data format bin size &  & 500 & & \si{\pico\second} \\
+    \hline
+    t\subscript{Res1} & Double pulse resolution for -1G &  & 1000 & & \si{\pico\second} \\
+    \hline
+    t\subscript{Res2} & Double pulse resolution for -2G &  & 500 & & \si{\pico\second} \\
+    \hline
+    $\Delta$t\subscript{Start} & Interval between consecutive starts & 4 &  & & \si{\nano\second} \\
+    \hline
+    t\subscript{Range} & Measurement range using hits only &  &  & 8.368 & \si{\milli\second} \\
+    \hline
+    t\subscript{Extended} & Extended range using rollovers &  &  & 2.147 & \si{\second} \\
+    \hline
+    f\subscript{Readout} &  Readout rate &  &  & 48 & MHits/s \\			
+    \hline
+\end{tabularx}
 
-		\noindent
-		\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
-			\hline
-			Symbol & Parameter & Min & Typical & Max & Units\\
-			\hline\hline
-			INL & Integral non-linearity &  &  & 0.5 & bins \\
-			\hline
-			DNL & Differential non-linearity & & 0.2 & & bins \\
-			\hline
-			t\subscript{Bin} & Binsize &  & 500 & & \si{\pico\second} \\
-			\hline
-			t\subscript{Res1} & Double pulse resolution for -1G &  & 1000 & & \si{\pico\second} \\
-			\hline
-			t\subscript{Res2} & Double pulse resolution for -2G &  & 500 & & \si{\pico\second} \\
-			\hline
-			$\Delta$t\subscript{Start} & Interval between consecutive starts & 4 &  & & \si{\nano\second} \\
-			\hline
-			t\subscript{Range} & Measurement range using hits only &  &  & 8.368 & \si{\milli\second} \\
-			\hline
-			t\subscript{Extended} & Extended range using rollovers &  &  & 2.147 & \si{\second} \\
-			\hline
-			f\subscript{Readout} &  Readout rate &  &  & 48 & MHits/s \\			
-			\hline
-		\end{tabularx}
+\subsection{TDC measurement Characteristics for Gen~2 TimeTagger4}   
 
-    \subsection{TDC measurement Characteristics for Gen~2 TimeTagger4}   
+\noindent
+\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline
+    Symbol & Parameter & Min & Typical & Max & Units\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline\hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    INL & Integral non-linearity &  &  & 0.5 & bins \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline
+    DNL & 
+        Differential non-linearity \newline
+            \hfill --1.25G to --5G \newline
+            \hfill --10G
+        & & & \makecell[tc]{\mbox{}\\0.01\\0.3} & \makecell[tc]{\mbox{}\\t\subscript{Data}\\} \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline
+    t\subscript{Data} & Data format bin size &  & 100 & & \si{\pico\second} \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline
+    t\subscript{Quant} & 
+        Quantisation \newline
+            \hfill --1.25G \newline
+            \hfill --2.5G \newline
+            \hfill --5G \newline
+            \hfill --10G
+        & & \makecell[tc]{\mbox{}\\800\\400\\200\\100} & & \makecell[tc]{\mbox{}\\ps\\} \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline
+    t\subscript{Res} & Double pulse resolution & & 2 & & t\subscript{Quant} \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline
+    t\subscript{Range} & Measurement range using hits only &  &  & 1.677 & \si{\milli\second} \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline
+    t\subscript{Extended} & Extended range using rollovers &  &  & 0.429 & \si{\second} \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline
+    f\subscript{Start,burst} &
+        Burst rate for up to 4096 starts \newline
+            \hfill --1.25G \newline
+            \hfill --2.5G \newline
+            \hfill --5G \newline
+            \hfill --10G
+        & & & \makecell[tc]{\mbox{}\\0.625\\1.25\\2.5\\5} & \makecell[tc]{\mbox{}\\GHz\\} \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline
+    f\subscript{Start,sust} & Sustained rate of starts & & & 18 & MHz \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline
+    f\subscript{Stop,burst} & 
+        Burst rate for up to 3900 stops\newline
+            \hfill --1.25G \newline
+            \hfill --2.5G \newline
+            \hfill --5G \newline
+            \hfill --10G
+        & & & \makecell[tc]{\mbox{}\\0.625\\1.25\\2.5\\5} & \makecell[tc]{\mbox{}\\GHits/s\\} \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline
+    f\subscript{Readout,single} &  Readout rate per channel &  &  & 40 & MHits/s \\			
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline
+    f\subscript{Readout,all} &  Readout rate of all channels &  &  & 60 & MHits/s \\			
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \hline
+\end{tabularx}
 
-		\noindent
-		\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
-			\hline
-			Symbol & Parameter & Min & Typical & Max & Units\\
-			\hline\hline
-			INL & Integral non-linearity &  &  & 0.5 & bins \\
-			\hline
-			DNL & Differential non-linearity & & 0.2 & 0.3 for 10G & bins \\
-			\hline
-			t\subscript{Bin} & Binsize &  & 100 & & \si{\pico\second} \\
-			\hline
-			t\subscript{Res1} & Double pulse resolution for -1.25G &  & 800 & & \si{\pico\second} \\
-			\hline
-			t\subscript{Res2} & Double pulse resolution for -2.5G &  & 400 & & \si{\pico\second} \\
-			\hline
-            t\subscript{Res3} & Double pulse resolution for -5G &  & 200 & & \si{\pico\second} \\
-			\hline
-            t\subscript{Res4} & Double pulse resolution for -10G &  & 100 & & \si{\pico\second} \\
-			\hline
-			$\Delta$t\subscript{Start} & Interval between consecutive starts & 3.2 &  & & \si{\nano\second} \\
-			\hline
-			t\subscript{Range} & Measurement range using hits only &  &  & 1.677 & \si{\milli\second} \\
-			\hline
-			t\subscript{Extended} & Extended range using rollovers &  &  & 0.429 & \si{\second} \\
-			\hline
-			f\subscript{Readout} &  Readout rate &  &  & 60 & MHits/s \\			
-			\hline
-		\end{tabularx}
-
-
-	\subsection{Time Base}
-
-		\noindent
-		\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
-			\hline
-			Symbol & Parameter & Min & Typical & Max & Units\\
-			\hline\hline
-			 & Temperature stability \SIrange{20}{70}{\degreeCelsius} & & & 25 & ppb \\
-			\hline
-			 & Initial calibration & & & 1 & ppm \\
-			\hline
-			 & Aging first year & & & 2 & ppm \\
-			\hline
-			 & Aging 10 years & & & 8 & ppm \\ 
-			\hline
-		\end{tabularx}
+\subsection{Time Base}
+\noindent
+\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+    \hline
+    Symbol & Parameter & Min & Typical & Max & Units\\
+    \hline\hline
+        ΔT & Temperature stability \SIrange{20}{70}{\degreeCelsius} & & & 25 & ppb \\
+    \hline
+        F & Initial calibration & & & 1 & ppm \\
+    \hline
+        ΔF/F\subscript{1} & Aging first year & & & 2 & ppm \\
+    \hline
+        ΔF/F\subscript{10} & Aging 10 years & & & 8 & ppm \\ 
+    \hline
+\end{tabularx}
 
