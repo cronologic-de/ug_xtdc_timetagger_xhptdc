@@ -192,7 +192,8 @@ corresponding LEMO connector. This turns the connector into an output.
     rising edge on the ADC trigger connector (TRG, see
     Figure~\ref{fig:bracket}), the voltage on the ADC input connector is
     sampled. The result is inserted as a packet with a timestamp and an ADC
-    value into the readout data stream.
+    value into the readout data stream. The timing resolution of the timestamp
+	is 833\,ps.
 
     TRG is also connected to the output of a TiGer block.  This
     can be used  to trigger the ADC periodical or relative to one of the TDC
