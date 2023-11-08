@@ -149,8 +149,8 @@ multiple cards by the index or use a larger buffer.
 
 \subsection{Structure \initparameters}
 \begin{description}[style=nextline]
-    \item[\cronvar{int}{version}]
-    The version number. Must be set to \textsf{\PREFIX API\tu VERSION}.\par
+    \item[\cronvar{int}{version}\txhinits{}{}{\PREFIX API\tu VERSION}]
+    The version number. Must be set to \texttt{\PREFIX API\tu VERSION}.\par
 
     \ifxHPTDC{}{
         \item[\cronvar{int}{card\tu index}]
@@ -173,7 +173,9 @@ multiple cards by the index or use a larger buffer.
         id\allowbreak(\prefix device *device, int board\tu id)}.}
 
 
-    \item[\cronvar{uint64\tu t}{buffer\tu size\ifxHPTDC{}{[8]}}]
+    \item[\cronvar{uint64\tu t}{buffer\tu size\ifxHPTDC{}{[8]}}%
+        \txhinits{}{}{XHPTDC\_DEFAULT\_BUFFER\_SIZE}%
+        \txh{}{}{\normalfont\ttfamily\ // 0x1000000 (16 MB)}]
     The minimum size of the DMA buffer.\\
     If set to \texttt{0} the default size of 16\,MByte is used. 
     \ifxHPTDC{}{For the \deviceName\ only the first entry is used.}\par
@@ -193,11 +195,11 @@ multiple cards by the index or use a larger buffer.
         that the memory is large enough.
     }
 
-    \item[\cronvar{int}{variant}]
+    \item[\cronvar{int}{variant}\txhinits{0}{0}{0}]
     Set to \texttt{0}. Can be used to activate future device variants such as
     different base frequencies.\par
 
-    \item[\cronvar{int}{device\tu type}]
+    \item[\cronvar{int}{device\tu type}\txhinits{}{}{CRONO\_DEVICE\_XHPTDC8}]
     A constant for the different devices of cronologic
     \texttt{CRONO\tu DEVICE\tu *}.\par
     Initialized by \texttt{\prefix get\tu default\tu init\tu parameters()}.
@@ -213,23 +215,25 @@ multiple cards by the index or use a larger buffer.
         \crondef{CRONO\tu DEVICE\tu NDIGO6}      & \ttfamily 0xD \\
     \end{tabular}
 
-    \item[\cronvar{int}{dma\tu read\tu delay}]
+    \item[\cronvar{int}{dma\tu read\tu delay}\txhinits{}{}{250}]
     The update delay of the write pointer after a packet has been sent over
     PCIe. Specified in multiples of \SI{16}{\nano\second}.  Should not be
     changed by the user.
 
     \ifxHPTDC{
-        \item[\cronvar{crono\tu bool\tu t}{multiboard}]
+        \item[\cronvar{crono\tu bool\tu t}{multiboard}\txhinits{}{}{false}]
         Set if multiple devices shall be synchronized. Also sets the clock
         source to external.
 
-        \item[\cronvar{crono\tu bool\tu t}{use\tu ext\tu clock}]
+        \item[\cronvar{crono\tu bool\tu t}{use\tu ext\tu clock}%
+            \txhinits{}{}{false}]
         If set use the external 10\,MHz reference on J2, otherwise the internal
         clock source is used.  When \texttt{multiboard} is set, this parameter
         is ignored and the external clock is used. 
 
-        \item[\cronvar{crono\tu bool\tu t}{ignore\tu calibration}]
-        Leave at false to use device calibration data.
+        \item[\cronvar{crono\tu bool\tu t}{ignore\tu calibration}%
+            \txhinits{}{}{false}]
+        Leave at \texttt{false} to use device calibration data.
 
     }{
         \item[\cronvar{int}{use\tu ext\tu clock}]
@@ -258,14 +262,14 @@ the user application and use the result to configure the device.\par
         \prefix\ifxHPTDC{manager\tu }{}configuration}{*config)}]
     Configures the \texttt{\prefix manager}.
 
-    \item[\protect{\parbox[b]{0.9\linewidth}{
+    \item[\protect{\parbox[b]{1.0\linewidth}{
         \ttvar{int}{get\tu current\tu configuration(}\deviceconfig,\\
         \hspace*{\labelwidth+\itemsep}\cronvar{
             \prefix\ifxHPTDC{manager\tu }{}configuration}{\textbf{*config})}}}]
     Gets current configuration. Copies the current configuration to the
     specified config pointer.
 
-    \item[\protect{\parbox[b]{0.9\linewidth}{
+    \item[\protect{\parbox[b]{1.0\linewidth}{
         \ttvar{int}{get\tu default\tu configuration(}\deviceconfig,\\
         \hspace*{\labelwidth+\itemsep}\cronvar{
             \prefix \ifxHPTDC{manager\tu}{}configuration}{\textbf{*config})}}}]

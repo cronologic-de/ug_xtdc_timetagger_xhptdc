@@ -13,13 +13,13 @@ called ``events'' in some applications).
 %
  
 Figure~\ref{fig:grouping} shows a corresponding timing diagram. The user can
-define the range of a group, i.e. the time window within which hits on the
+define the range of a group, i.e., the time window within which hits on the
 stop channels are recorded. Hits occurring outside of that time window are
 discarded. 
 
 \ifxHPTDC{
     The start and stop values for grouping can also be negative. This allows
-    to configure the \deviceName\ for common-start, common-stop or for groups
+    to configure the \deviceName\ for common-start, common-stop, or for groups
     that extend into both directions.
 
     The values are configured in \si{\pico\second}.
@@ -39,7 +39,7 @@ discarded.
 
      If a second start is recorded within the range of a group, the current
      group is finished and a new group is started. Consecutive stops will
-     be assigned to the new gropu (as long as they are within the group range).
+     be assigned to the new group (as long as they are within the group range).
 }
 
  \ifxHPTDC{
@@ -57,5 +57,5 @@ discarded.
     time of the remaining hits can be obtained by adding this value to the
     relative time of each hit.  Otherwise the call returns all available
     timestamps as absolute timestamps counting upwards from \texttt{xHPTDC8\tu
-    start\tu capture()}
+    start\tu capture().}
 }{}   

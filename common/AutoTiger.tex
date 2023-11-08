@@ -1,4 +1,5 @@
-\section{Auto-Triggering Function Generator\label{cp:AutoTriggeringFunctionGenerator}}
+\section{Auto-Triggering Function Generator}
+\label{cp:AutoTriggeringFunctionGenerator}
 Some applications require internal periodic or random triggering. The
 \deviceName\ function generator provides this functionality.\par
 
@@ -10,15 +11,18 @@ The period is
 \begin{align*}
     T = M + [1...2^N] - 1
 \end{align*}
-clock cycles\ifxHPTDC{of the \SI{150}{\mega\hertz}}{
-\itett{
-    with a duration of \SI{4}{\nano\second} per cycle for Gen\,1 and
-    \SI{3.2}{\nano\second} for Gen\,2 \deviceName. The standard values of $M =
-    62500$ and $N = 0$ result in a frequencies of \SI{4}{\kilo\hertz} for
-    \deviceName\ Gen\,1 and \SI{5}{\kilo\hertz} for Gen\,2 devices.
-}{
-    with a duration of \SI{4}{\nano\second} per cycle.
-}
+clock cycles\ 
+\ifxHPTDC{%
+    of the \SI{150}{\mega\hertz}.}
+{
+    \itett{
+        with a duration of \SI{4}{\nano\second} per cycle for Gen\,1 and
+        \SI{3.2}{\nano\second} for Gen\,2 \deviceName. The standard values of
+        $M = 62500$ and $N = 0$ result in a frequencies of \SI{4}{\kilo\hertz}
+        for \deviceName\ Gen\,1 and \SI{5}{\kilo\hertz} for Gen\,2 devices.
+    }{
+        with a duration of \SI{4}{\nano\second} per cycle.
+    }
 }\par
 
 The trigger can be used as a source for the TiGer unit (see
@@ -53,19 +57,6 @@ trigger output. The TiGer functionality can be configured independently for
 each connector. See Section~\ref{cp:tigerblock} for a full description of the
 configuration options.
 % 
-\begin{figure*}[ht]
-    \centering
-    \ifxHPTDC { 
-        % this is an XCIrcuit drawing  convertex from postscript with 
-        %ps2pdf.exe -dEPSCrop xhptdc8_trigger_matrix.ps
-        \includegraphics[width=0.6\textwidth]{
-            xhptdc/figures/xhptdc8_trigger_matrix.pdf}
-    }{
-        \includegraphics[width=\textwidth]{figures/xTDC4_tiger_matrix.pdf}
-    }
-    \caption{TiGer blocks can generate outputs that are also available on
-        inputs.\label{fig:matrix}} 
-\end{figure*}
 %
 
 Figure~\ref{fig:matrix} shows how the TiGer blocks are connected. They can be
@@ -113,13 +104,26 @@ corresponding LEMO connector. This turns the connector into an output.
         \SI{95}{\nano\second}.
     }{}
 }
+\begin{figure*}[ht]
+    \centering
+    \ifxHPTDC { 
+        % this is an XCIrcuit drawing  convertex from postscript with 
+        %ps2pdf.exe -dEPSCrop xhptdc8_trigger_matrix.ps
+        \includegraphics[width=0.6\textwidth]{
+            xhptdc/figures/xhptdc8_trigger_matrix.pdf}
+    }{
+        \includegraphics[width=\textwidth]{figures/xTDC4_tiger_matrix.pdf}
+    }
+    \caption{TiGer blocks can generate outputs that are also available on
+        inputs.\label{fig:matrix}} 
+\end{figure*}
 
 \ifxHPTDC{
     \newpage
     \subsection{Trigger Sources}
     \label{triggersources}
     Trigger sources for TiGer and gating blocks are configured by a bit mask.
-    You can combine any number of trigger source with a bit wise or.  The
+    You can combine any number of trigger source with a bit-wise OR.  The
     block will be trigger when any of the select trigger input is active.
 
     \begin{description}[style=nextline]
@@ -153,10 +157,11 @@ corresponding LEMO connector. This turns the connector into an output.
 
     \subsection{Triggering the ADC with the TiGer}
     \label{adctiger}
-    There is a ninth TiGer that is connected to the trigger input of the
-    ADC. See section \ref{adc} for additional information on the ADC. 
+    There is a ninth TiGer that is connected to the trigger input (TRG, see
+    Figure~\ref{fig:bracket}) of the ADC. See Section~\ref{adc} for additional
+    information on the ADC. 
 
-    The ADC TiGer can be used with retrigger enabled to periodically
+    With retrigger enabled, the ADC TiGer can be used to periodically
     sample ADC data.  The period should be no shorter than
     \SI{300}{\nano\second} or 45 TiGer clocks.
 
@@ -169,11 +174,12 @@ corresponding LEMO connector. This turns the connector into an output.
     \newpage
     \section{Gating}
     Each TDC channel has a second, identical TiGer block that functions as a
-    gate as shown in Figure~\ref{fig:matrix}. In driver configuration
-    structure these are accessible as \textsf{gating\tu block[channel]}.  Hits
-    are recorded in a channel only while the output of the gating block is
-    active.  If the block is negated in the configuration, hits are only
-    recorded while the gating block is inactive.
+    gate as shown in Figure~\ref{fig:matrix}. In the driver configuration
+    structure (see Section~\ref{structchannel}), these are accessible as
+    \mbox{\texttt{gating\tu block[channel]}}.  Hits are recorded in a channel
+    only while the output of the gating block is active.  If the block is
+    negated in the configuration, hits are only recorded while the gating
+    block is inactive.
     
     This is a useful feature in setups where the trigger creates a lot of
     noise.  A suitable configuration of the gating block can reduce the
@@ -183,20 +189,24 @@ corresponding LEMO connector. This turns the connector into an output.
     \section{Triggerable ADC}
     \label{adc}
     The \deviceName\ is equipped with a triggerable ADC.  Whenever there is a
-    rising edge on the ADC trigger connector, the voltage on the ADC input
-    connector is sampled.  The result is inserted as a packet with timestamp
-    and ADC value into the readout data stream.
+    rising edge on the ADC trigger connector (TRG, see
+    Figure~\ref{fig:bracket}), the voltage on the ADC input connector is
+    sampled. The result is inserted as a packet with a timestamp and an ADC
+    value into the readout data stream.
 
-    The ADC trigger also is connected to the output of a TiGer block.  This
-    can be used to to trigger the ADC periodical or relative to one of the TDC
-    input as described in Section~\ref{adctiger}
+    TRG is also connected to the output of a TiGer block.  This
+    can be used  to trigger the ADC periodical or relative to one of the TDC
+    inputs as described in Section~\ref{adctiger}
 
-    The ADC triggers should not be closer than \SI{300}{\nano\second} apart.
+    The ADC triggers should be separated by at least 300\,ns.
 
-    There are two interleaved ADCs  to ensure that there is always an ADC
-    available even during readout.  This is exposed to the user both in the
+    The width of the ADC input pulse should be larger than 13.2\,ns and
+    smaller than 35\,ns.
+
+    There are two interleaved ADCs to ensure that there is always an ADC
+    available even during readout. This is exposed to the user both in the
     output data format and in the TiGer and Gating trigger sources.  When
-    using the ADC trigger as a trigger for Gating or TiGer both trigger
+    using the ADC trigger as a trigger for Gating or TiGer, both trigger
     sources shall be set to the same value.  During readout, the user shall
     not distinguish between data from the two ADCs unless advanced calibration
     is desired for the ADC data. In that case, the two ADCs should be treated

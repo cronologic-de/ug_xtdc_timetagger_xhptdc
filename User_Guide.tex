@@ -20,7 +20,7 @@
 % !TEX root = xHPTDC8_User_guide.tex
   
 \documentclass[12pt,notitlepage,a4paper]{report}
-\usepackage[font=avenirnext,drawframe]{cronologicug}
+\usepackage[font=montserrat,drawframe]{cronologicug}
 
 % this file creates two similar user guides depending on the commend \deviceName
  
@@ -57,12 +57,13 @@
 \ifthenelse{\equal{\deviceName}{xHPTDC8}} {\newcommand{\ifxHPTDC}[2]{#1}}{\newcommand{\ifxHPTDC}[2]{#2}}
 \ifxHPTDC{\message{\\XHPTDC8\\}}{\message{\\NO XHPTDC\\}}
  
-  
- 
 % output code for the TimeTagger4, xTDC4 or xHPTDC8
 % example: 
 % \txh{THIS IS A TimeTagger4}{THIS IS AN xTDC4}{THIS IS AN xHPTDC8}
 \itett{\newcommand{\txh}[3]{#1}}{\ifxHPTDC{\newcommand{\txh}[3]{#3}} {\newcommand{\txh}[3]{#2}}}
+
+% set default values in API's description lists
+\newcommand{\txhinits}[3]{\normalfont\ttfamily\txh{#1}{#2}{\ =\ #3;}}
  
 \txh{ % TimeTagger4
 	\message{Generating User Guide for TimeTagger4}
@@ -104,7 +105,7 @@
 \newcommand{\ttvar}[2]{\noindent\texttt{\textbf{\textcolor{crongrey}{#1} \prefix #2}}}%for variable declaration
 \newcommand{\ttdef}[1]{\noindent\texttt{\textcolor{crongrey}{\mbox{\#{}define}} \PREFIX #1}}%for definitions
 
-\newcommand{\ugrev}{{1.8.11rc}}
+\newcommand{\ugrev}{{1.8.11}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{document}
 \RaggedRight
@@ -154,7 +155,7 @@
     
 	\chapter{Revision History} 
 		\noindent
-		User Guide \hyperlink{ugrev}{\ugrev} as of 2023-11-07\\  % needs also be updated in UgRev.tex
+		User Guide \hyperlink{ugrev}{\ugrev} as of 2023-11-08\\  % needs also be updated in UgRev.tex
 	%	\\
 		cronologic GmbH \& Co. KG\\
 		Jahnstraße 49\\

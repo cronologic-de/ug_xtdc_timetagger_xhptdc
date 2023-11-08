@@ -47,8 +47,10 @@ It uses multiple substructures to configure various aspects of the board.
     numbers or similar.\par
 
     \ifxHPTDC{
-        \item[\cronvar{int}{auto\tu trigger\tu period}]
-        \item[\cronvar{int}{auto\tu trigger\tu random\tu exponent}]
+        \item[\protect{\parbox[b]{\linewidth}{
+            \cronvar{int}{auto\tu trigger\tu period}\txhinits{}{}{300000000}\\
+            \cronvar{int}{auto\tu trigger\tu random\tu exponent}%
+                \txhinits{}{}{0}}}]
         Create a trigger either periodically or randomly. There are two
         parameters
         \begin{align*}
@@ -112,7 +114,8 @@ It uses multiple substructures to configure various aspects of the board.
 
     \label{apidcoffset}
     \ifxHPTDC{
-        \item[\cronvar{double}{threshold[\PREFIX TDC\tu CHANNEL\tu COUNT]}]
+        \item[\cronvar{double}{threshold[\PREFIX TDC\tu CHANNEL\tu COUNT]}%
+            \txhinits{}{}{-0.35}]
         Set the threshold voltage for the input channels
         \ifxHPTDC{A \ldots H}{S, A \ldots D} (see Figure~\ref{fig:dcoffset1}).
     }{
@@ -199,11 +202,13 @@ It uses multiple substructures to configure various aspects of the board.
         \item[\cronvar{\prefix channel}{adc\tu channel}]
         Configuration of the ADC channel.
 
-        \item[\cronvar{crono\tu bool\tu t}{skip\tu alignment}]
+        \item[\cronvar{crono\tu bool\tu t}{skip\tu alignment}%
+            \txhinits{}{}{false}]
         If set, the phase of the two TDC chips is not realigned when capturing
         is restarted.
 
-        \item[\cronvar{crono\tu bool\tu t}{alignment\tu source}]
+        \item[\cronvar{int}{alignment\tu source}%
+            \txhinits{}{}{1}]
         Define a signal source that is used for phase alignment. Should
         usually be left unchanged.\par
         \begin{tabular}{ll}
@@ -211,9 +216,18 @@ It uses multiple substructures to configure various aspects of the board.
             \ttdef{ALIGN\tu PIN}      & \texttt{1}\\
             \ttdef{ALIGN\tu RESERVED} & \texttt{2}\\
         \end{tabular}\par
+
+        \item[\cronvar{int}{alignment\_off\_state}\txhinits{}{}{0}]
+        Select TDC alignment pin state when not in use.\par
+        \begin{tabular}{ll}
+            \texttt{0} & GND\\
+            \texttt{1} & VCCIO\\
+            \texttt{2} & high-Z\\
+        \end{tabular}
     }{
-        \item[\ttvar{\prefix lowres\tu channel}{
-            lowres\tu channel[\PREFIX LOWRES\tu CHANNEL\tu COUNT]}]
+        \item[\protect{\parbox[b]{\linewidth}{
+            \ttvar{\prefix lowres\tu channel\\\hspace*{\labelwidth+\itemsep}}{%
+            lowres\tu channel[\PREFIX LOWRES\tu CHANNEL\tu COUNT]}}}]
         \itett{
             Not applicable for the \deviceName.
         }{
@@ -260,8 +274,9 @@ It uses multiple substructures to configure various aspects of the board.
     }
     \ifxHPTDC{}{
         \itett{
-            \item[\ttvar{\prefix delay\tu config}{
-                delay\tu config[\PREFIX TDC\tu CHANNEL\tu COUNT+1]}]
+            \item[\protect{\parbox[b]{\linewidth}{
+            \ttvar{\prefix delay\tu config\\\hspace*{\labelwidth+\itemsep}}{%
+                delay\tu config[\PREFIX TDC\tu CHANNEL\tu COUNT+1]}}}]
             Configuration of the channel delay values
         }{} %not applicable for xTDC4
     }
@@ -276,8 +291,8 @@ the inputs create trigger events for the TiGer \ifxHPTDC{and gating }{}blocks.
 
 \begin{description}[style=nextline]
     \item[\protect{\parbox[b]{0.8\linewidth}{
-        \cronvar{crono\tu bool\tu t}{falling}\\
-        \cronvar{crono\tu bool\tu t}{rising}}}]
+        \cronvar{crono\tu bool\tu t}{falling}\txhinits{}{}{true}\\
+        \cronvar{crono\tu bool\tu t}{rising}\txhinits{}{}{false}}}]
     Select for which edges a trigger event is created inside the FPGA.
     \txh{ %TT4
         Set the corresponding flag for one of the edges or both edges when
@@ -305,7 +320,7 @@ See Section~\ref{cp:tiger} for additional information.
 
 \begin{description}[style=nextline]
     \ifxHPTDC{
-        \item[\cronvar{int}{mode}]
+        \item[\cronvar{int}{mode}\txhinits{}{}{0}]
         Enables the desired mode of operation for the tiger.\par
         \begin{tabular}{lrl}
             \ttdef{TIGER \tu OFF}     & \texttt{0} & No operation \\
@@ -330,7 +345,7 @@ See Section~\ref{cp:tiger} for additional information.
         Activates the timing generator (TiGer).
     }
 
-    \item[\cronvar{crono\tu bool\tu t}{negate}]
+    \item[\cronvar{crono\tu bool\tu t}{negate}\txhinits{}{}{false}]
     Inverts output polarity. Default is set to \texttt{false}. \par
     \ifxHPTDC{
         For gating blocks, a value of \texttt{false} enables inputs between
@@ -339,13 +354,13 @@ See Section~\ref{cp:tiger} for additional information.
         \textit{start} to \textit{stop} unless negated.
     }{}
 
-    \item[\cronvar{crono\tu bool\tu t}{retrigger}]
+    \item[\cronvar{crono\tu bool\tu t}{retrigger}\txhinits{}{}{false}]
     Enables retrigger setting.\par
     If enabled the timer is reset to the value of the \textit{start}
     parameter, whenever the input signal is set while waiting to reach the
     \textit{stop} time.
 
-    \item[\cronvar{crono\tu bool\tu t}{extend}]
+    \item[\cronvar{crono\tu bool\tu t}{extend}\txhinits{}{}{true}]
     Not implemented.
 
     \ifxHPTDC{}{
@@ -358,8 +373,8 @@ See Section~\ref{cp:tiger} for additional information.
     }
 
     \item[\protect{\parbox[b]{0.8\linewidth}{
-        \cronvar{uint32\tu t}{start}\\
-        \cronvar{uint32\tu t}{stop}}}]
+        \cronvar{uint32\tu t}{start}\txhinits{}{}{0}\\
+        \cronvar{uint32\tu t}{stop}\txhinits{}{}{1000}}}]
     \itett{
         In multiples of \SI{4}{\nano\second} for Gen\,1 and
         \SI{3.2}{\nano\second} for Gen\,2 \deviceName.
@@ -375,7 +390,7 @@ See Section~\ref{cp:tiger} for additional information.
     If retriggering is enabled, the timer is reset to the value of the start
     parameter whenever the input signal is set while waiting for the stop time.
 
-    \item[\cronvar{int}{sources}]
+    \item[\cronvar{int}{sources}\txhinits{}{}{0x00000001}]
     A bit mask with a bit set for all trigger sources that can trigger this TiGer block.
     Default is \\ \texttt{\PREFIX TRIGGER\tu SOURCE\tu \ifxHPTDC{A}{S}}.\par
     \begin{tabular}{lc}
@@ -416,10 +431,11 @@ See Section~\ref{cp:tiger} for additional information.
 Contains TDC channel settings.
 
 \begin{description}[style=nextline]
-    \item[\cronvar{crono\tu bool\tu t}{enable\ifxHPTDC{}{d}}]
+    \item[\cronvar{crono\tu bool\tu t}{enable\ifxHPTDC{}{d}}%
+        \txhinits{}{}{false}]
     Enable the TDC channel.\par
 
-    \item[\cronvar{crono\tu bool\tu t}{rising}]
+    \item[\cronvar{crono\tu bool\tu t}{rising}\txhinits{}{}{false}]
     \txh{
         Not applicable for \deviceName. Rising and/or falling edge are
         configured using the \\ \texttt{\prefix trigger} structure (see
@@ -497,20 +513,21 @@ Contains TDC channel settings.
     input. See section \ref{adc}.
 
     \begin{description}[style=nextline]
-        \item[\cronvar{crono\tu bool\tu t}{enable}]
+        \item[\cronvar{crono\tu bool\tu t}{enable}\txhinits{}{}{false}]
         Enable acquisition of ADC data.
 
-        \item[\cronvar{crono\tu bool\tu t}{watchdog\tu readout}]
+        \item[\cronvar{crono\tu bool\tu t}{watchdog\tu readout}%
+            \txhinits{}{}{false}]
         Include periodic ADC measurements in the output data. Watchdog
         measurements do not inhibit ADC triggers occurring at the same time.
 
-        \item[\cronvar{int}{watchdog\tu interval}]
+        \item[\cronvar{int}{watchdog\tu interval}\txhinits{}{}{6144}]
         Number of 150-MHz clock cycles within one watchdog period.
         \begin{align*}
             100 \le \texttt{watchdog\_interval}  \le 7500
         \end{align*}
 
-        \item[\cronvar{double}{trigger\tu threshold}]
+        \item[\cronvar{double}{trigger\tu threshold}\txhinits{}{}{-0.35}]
         Threshold voltage for the TRG input. See the description for the
         \texttt{channel.trigger\tu threshold} in Section~\ref{apidcoffset}.
     \end{description}
@@ -528,55 +545,61 @@ Contains TDC channel settings.
     independently of the bin size of the TDC.
 
     \begin{description}[style=nextline]
-        \item[\cronvar{crono\tu bool\tu t}{enabled}]
-        Enable grouping. Defaults to \texttt{false}.
+        \item[\cronvar{crono\tu bool\tu t}{enabled}\txhinits{}{}{false}]
+        Enable grouping.
 
-        \item[\cronvar{int}{trigger\tu channel}]
+        \item[\cronvar{int}{trigger\tu channel}\txhinits{}{}{0}]
         Channel number that is used to trigger the creation of a group.
 
-        \item[\cronvar{u\longlong}{trigger\tu channel\tu bitmask}]
+        \item[\cronvar{u\longlong}{trigger\tu channel\tu bitmask}%
+            \txhinits{}{}{0ull}]
         Use this to define additional trigger channels. There is an
         OR-disjuction with the \mbox{\texttt{trigger\tu channel}}.
 
-        \item[\cronvar{int}{zero\tu channel}]
+        \item[\cronvar{int}{zero\tu channel}\txhinits{}{}{0}]
         Optionally a different channel can be used to calculate the relative
         timestamps in a group.  This is disabled per default by setting this
         parameter to \texttt{-1}.
 
-        \item[\cronvar{\longlong}{zero\tu channel\tu offset}]
+        \item[\cronvar{\longlong}{zero\tu channel\tu offset}%
+            \txhinits{}{}{0}]
         This offset in picoseconds is added to relative timestamps within a
         group.
 
-        \item[\cronvar{\longlong}{range\tu start}]
+        \item[\cronvar{\longlong}{range\tu start}\txhinits{}{}{-1500}]
             Start of group range relative to the \texttt{trigger\tu channel}.
-        \item[\cronvar{\longlong}{range\tu stop}]
+
+        \item[\cronvar{\longlong}{range\tu stop}\txhinits{}{}{1500}]
             End of group range relative to the \texttt{trigger\tu channel}.\par
-            Values in the interval from \textsf{range\tu start} to \textsf{range\tu stop} are included in the group.
+            Values in the interval from \texttt{range\tu start} to
+            \texttt{range\tu stop} are included in the group.
             Either or both values can be negative to create common-stop behaviour.
             \begin{align*}
                 -2^{63} \le \texttt{range\_start} \le
                     \texttt{range\_stop} < 2^{63}
             \end{align*}
 
-        \item[\cronvar{\longlong}{trigger\tu deadtime}]
+        \item[\cronvar{\longlong}{trigger\tu deadtime}\txhinits{}{}{0}]
         After a trigger was detected additional triggers will be suppressed
         for this interval. Must not be negative.
 
-        \item[\cronvar{u\longlong}{window\tu hit\tu channels}]
+        \item[\cronvar{u\longlong}{window\tu hit\tu channels}%
+            \txhinits{}{}{0ull}]
         Set a bitmask of channels. A group is only created, if there is at
         least one hit in the windows defined by \texttt{window\tu start} and
         \texttt{window\tu stop}.  Usage is equivalent to \texttt{trigger\tu
         channel\tu bitmask}.
 
         \item[\protect{\parbox[b]{0.8\linewidth}{
-            \cronvar{\longlong}{window\tu start}\\
-            \cronvar{\longlong}{window\tu stop}}}]
+            \cronvar{\longlong}{window\tu start}\txhinits{}{}{0}\\
+            \cronvar{\longlong}{window\tu stop}\txhinits{}{}{%
+                    grouping.window\_start + 1}}}]
         \begin{align*}
             -2^{63} \le \texttt{window\_start}
                 \le \texttt{window\_stop} < 2^{63}
         \end{align*}
 
-        \item[\cronvar{int}{veto\tu mode}]
+        \item[\cronvar{int}{veto\tu mode}\txhinits{}{}{0}]
         A window defined by \texttt{veto\tu start} and \texttt{veto\tu stop}
         can be used to suppress hits.  The functionality is very similar to
         the gating blocks but is defined in software.  While gating blocks can
@@ -591,24 +614,28 @@ Contains TDC channel settings.
         \end{tabular}
 
         \item[\protect{\parbox[b]{0.8\linewidth}{
-        \cronvar{\longlong}{veto\tu start}\\
-        \cronvar{\longlong}{veto\tu stop}}}]
+        \cronvar{\longlong}{veto\tu start}\txhinits{}{}{0}\\
+        \cronvar{\longlong}{veto\tu stop}\txhinits{}{}{0}}}]
         \begin{align*}
             -2^{63} \le \texttt{veto\_start} \le \texttt{veto\_stop} < 2^{63}
         \end{align*}
 
-        \item[\cronvar{u\longlong}{veto\tu active\tu channels}]
+        \item[\cronvar{u\longlong}{veto\tu active\tu channels}%
+            \txhinits{}{}{0xffffffffffffffffull}]
         If veto is enabled, veto filtering is active for channels defined by a
         channel bitmask. As default, filtering is active for all channels.
 
-        \item[\cronvar{crono\tu bool\tu t}{veto\tu relative\tu zero}]
+        \item[\cronvar{crono\tu bool\tu t}{veto\tu relative\tu zero}%
+            \txhinits{}{}{0}]
         If set, the veto window is defined relative to the zero channel.
         Otherwise, the window is defined relative to the trigger.
 
-        \item[\cronvar{crono\tu bool\tu t}{ignore\tu empty\tu events}]
+        \item[\cronvar{crono\tu bool\tu t}{ignore\tu empty\tu events}%
+            \txhinits{}{}{0}]
         Discard groups which contained only a trigger signal.
 
-        \item[\cronvar{crono\tu bool\tu t}{overlap}]
+        \item[\cronvar{crono\tu bool\tu t}{overlap}%
+            \txhinits{}{}{0}]
         Unsupported, must remain \texttt{false}.
     \end{description}
 }{}

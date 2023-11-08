@@ -18,8 +18,8 @@ additional information.
     each of the relative timestamps.
 
     \item[\cronvar{uint8\_t}{channel}]
-    For the first board in the system, this is 0 to 7 for the TDC channels A
-    to H, or 8 to 9 for ADC data. Data from channels 8 and 9 should usually be
+    For the first board in the system, this is \texttt{0} to \texttt{7} for the TDC channels A
+    to H, or \texttt{8} to \texttt{9} for ADC data. Data from channels 8 and 9 should usually be
     treated as data from the same channel.  For the other boards, the channel
     number is incremented by $\texttt{board\_id} \times 10$.  In grouping
     mode, the first hit of each group has channel number 255 and contains the
@@ -63,8 +63,8 @@ If hits are missing the error flag is set on the next hit from the same board
 that is read out.
 
 \subsubsection{Type information for ADC measurements}
-If the hit is an ADC measurement on channels 8 or 9 the following flags are
-defined for the \textsf{type} field of the TDCHit structure:
+If the hit is an ADC measurement on channels 8 or 9, the following flags are
+defined for the \texttt{type} field of the TDCHit structure:
 \begin{description}[style=nextline]
     \item[\crondef{\HTYPE ADC\tu INTERNAL} 0x01]
     \indent ADC measurement triggered by internal strobe
