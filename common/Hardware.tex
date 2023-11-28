@@ -168,11 +168,11 @@ disconnected while installing the board.\par
 \ifxHPTDC{
     \section{Synchronizing multiple boards}
         \label{multiboard}
-        If more than eight TDC inputs are required, up to eight boards can be
+        If more than eight TDC inputs are required, up to six boards can be
         synchronized within a system. 
         
         The \deviceName\ API described in Chapter~\ref{cp:api} manages up to
-        eight boards automatically and provides a single data stream that
+        six boards automatically and provides a single data stream that
         contains sorted hit data from all boards in chronological order. 
         Channel A of each board is assigned channel number $\texttt{board\tu
         index} \times 10$.  The \texttt{board\tu index} is assigned to the
@@ -212,7 +212,7 @@ disconnected while installing the board.\par
             %
         
         \subsection{Crates for multiple boards}
-            Most PC mainboards don't have enough PCIe slots to support eight
+            Most PC mainboards don't have enough PCIe slots to support six
             \deviceName s.  We offer an external enclosure called ``Ndigo
             Crate'' that uses PCIe-over-cable technology to extend the number
             of available slots in a system.  The extension is fully
