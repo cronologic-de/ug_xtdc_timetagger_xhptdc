@@ -278,6 +278,10 @@ It uses multiple substructures to configure various aspects of the board.
             \ttvar{\prefix delay\tu config\\\hspace*{\labelwidth+\itemsep}}{%
                 delay\tu config[\PREFIX TDC\tu CHANNEL\tu COUNT+1]}}}]
             Configuration of the channel delay values
+
+            \item[\cronvar{uint32\_t}{ignore\_empty\_packets}]
+            If enabled (any value but \texttt{0}), do not write empty packets
+            to the output stream. Disabled by default.
         }{} %not applicable for xTDC4
     }
     \end{description}
