@@ -1,9 +1,6 @@
-*.atfi
-*.aux
-*.log
-*.pdf
-*.toc
-*.synctex.gz
-*.synctex(busy)
-*.fdb_latexmk
-*.fls
+.vscode/
+User_Guide.*
+TimeTagger4_User_Guide.*
+xHPTDC8_User_Guide.*
+xTDC4_User_Guide.*
+!*.tex

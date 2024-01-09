@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{cronologic}
+\ProvidesPackage{cronologicug}
 \author{cronologic GmbH \& Co KG}
 
 \RequirePackage{ifthen}
@@ -83,7 +83,7 @@
 \RequirePackage{listings}
 \definecolor{lstgreen}{RGB}{0, 112, 33}
 \definecolor{lstred}{RGB}{142, 33, 0}
-\definecolor{lstblue}{RBG}{5, 40, 124}
+\definecolor{lstblue}{RGB}{5, 40, 124}
 \definecolor{lstndigo}{RGB}{63, 127, 142}
 \lstset{
   language=[Visual]C++,
@@ -151,10 +151,12 @@
     \setmainfont[
         ItalicFont={Montserrat-Italic.otf},
         BoldFont={Montserrat-Bold.otf},
-        BoldItalicFont={Montserrat-BoldItalic.otf}
+        BoldItalicFont={Montserrat-BoldItalic.otf},
+        Numbers=Tabular,
     ]{Montserrat-Regular.otf}
     \setsansfont[
         ItalicFont={Montserrat-Italic.otf},
+        Numbers=Tabular,
         BoldFont={Montserrat-Bold.otf},
         BoldItalicFont={Montserrat-BoldItalic.otf}
     ]{Montserrat-Regular.otf}
@@ -168,10 +170,10 @@
 
     \setmathfont[Scale=MatchUppercase]{Latin Modern Math}
 
-    \setmathfont[range=up/{latin,Latin,num}]{Montserrat-Regular.otf}
-    \setmathfont[range=it/{latin,Latin,num}]{Montserrat-Italic.otf}
-    \setmathfont[range=bfup/{latin,Latin,num}]{Montserrat-Bold}
-    \setmathfont[range=bfit/{latin,Latin,num}]{Montserrat-BoldItalic.otf}
+    \setmathfont[range=up/{latin,Latin,num},Numbers=Tabular]{Montserrat-Regular.otf}
+    \setmathfont[range=it/{latin,Latin,num},Numbers=Tabular]{Montserrat-Italic.otf}
+    \setmathfont[range=bfup/{latin,Latin,num},Numbers=Tabular]{Montserrat-Bold}
+    \setmathfont[range=bfit/{latin,Latin,num},Numbers=Tabular]{Montserrat-BoldItalic.otf}
 
     \setmathfont[range=up/{greek,Greek}]{KerkisSans.otf}
     \setmathfont[range=it/{greek,Greek}]{KerkisSans-Italic.otf}
