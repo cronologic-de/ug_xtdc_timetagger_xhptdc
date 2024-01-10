@@ -225,8 +225,8 @@
 % The fonts Avenir Next and AvantGarde must be installed on the System
 \ifthenelse{\equal{\crono@font}{avenirnext}}
 {
-    \setmainfont{Avenir Next}
-    \setsansfont{Avenir Next}
+    \setmainfont[Numbers=Tabular]{Avenir Next}
+    \setsansfont[Numbers=Tabular]{Avenir Next}
 
     \setmonofont[
       Scale=MatchLowercase,
@@ -239,15 +239,19 @@
     % \setmathfont{TeX Gyre Termes Math}
 
     \setmathfont[
+      Numbers=Tabular,
       range=up/{latin,Latin,num,greek,Greek}
     ]{Avenir Next}
     \setmathfont[
+      Numbers=Tabular,
       range=it/{latin,Latin,num,greek,Greek}
     ]{Avenir Next Italic}
     \setmathfont[
+      Numbers=Tabular,
       range=bfup/{latin,Latin,num,greek,Greek}
     ]{Avenir Next Demi Bold}
     \setmathfont[
+      Numbers=Tabular,
       range=bfit/{latin,Latin,num,greek,Greek}
     ]{Avenir Next Demi Bold Italic}
 
