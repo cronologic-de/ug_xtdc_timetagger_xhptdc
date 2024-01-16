@@ -2,6 +2,14 @@
 \ProvidesPackage{cronologicug}
 \author{cronologic GmbH \& Co KG}
 
+\RequirePackage{iftex}
+\ifLuaTeX 
+  \directlua{pdf.setminorversion(7)}
+\fi
+\ifxetex
+  \special{pdf:minorversion 7}
+\fi
+
 \RequirePackage{ifthen}
 \RequirePackage{xstring}
 \RequirePackage{kvoptions}
@@ -171,9 +179,9 @@
     \setmathfont[Scale=MatchUppercase]{Latin Modern Math}
 
     \setmathfont[range=up/{latin,Latin,num},Numbers=Tabular]{Montserrat-Regular.otf}
-    \setmathfont[range=it/{latin,Latin,num},Numbers=Tabular]{Montserrat-Italic.otf}
+    \setmathfont[range=it/{latin,Latin},Numbers=Tabular]{Montserrat-Italic.otf}
     \setmathfont[range=bfup/{latin,Latin,num},Numbers=Tabular]{Montserrat-Bold}
-    \setmathfont[range=bfit/{latin,Latin,num},Numbers=Tabular]{Montserrat-BoldItalic.otf}
+    \setmathfont[range=bfit/{latin,Latin},Numbers=Tabular]{Montserrat-BoldItalic.otf}
 
     \setmathfont[range=up/{greek,Greek}]{KerkisSans.otf}
     \setmathfont[range=it/{greek,Greek}]{KerkisSans-Italic.otf}
@@ -244,7 +252,7 @@
     ]{Avenir Next}
     \setmathfont[
       Numbers=Tabular,
-      range=it/{latin,Latin,num,greek,Greek}
+      range=it/{latin,Latin,greek,Greek}
     ]{Avenir Next Italic}
     \setmathfont[
       Numbers=Tabular,
@@ -252,7 +260,7 @@
     ]{Avenir Next Demi Bold}
     \setmathfont[
       Numbers=Tabular,
-      range=bfit/{latin,Latin,num,greek,Greek}
+      range=bfit/{latin,Latin,greek,Greek}
     ]{Avenir Next Demi Bold Italic}
 
     \newfontfamily\cronoheaderfont{Avgardm.ttf}
@@ -378,11 +386,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % hyperref package should be included last
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \PassOptionsToPackage{
-%     colorlinks=true,
-%     linkcolor=cronoblue,
-%     urlcolor=cronogrey
-% }{hyperref}
 \RequirePackage{hyperref}
 \hypersetup{
   colorlinks=true,

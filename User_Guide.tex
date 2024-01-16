@@ -37,17 +37,22 @@
 
   
 \ifthenelse{\isundefined{\deviceName}}{ 
-	\message {\\ WARNING: Undefined device name, TimeTagger4 used}
-	\newcommand{\deviceName}{TimeTagger4}}{}
+	\message {\\ WARNING: Undefined device name, TimeTagger4 used}%
+	\newcommand{\deviceName}{TimeTagger4}%
+	\newcommand{\adeviceName}{a TimeTagger4}%
+	}{}
 \message{\\Device name is \deviceName }
 
 \title{\deviceName{} -- User Guide, Rev. \ugrev}
 
-
 %output the first option for the TimeTagger, the second one otherwise
 % example: 
 % \itett{THIS IS A TimeTagger4}{THIS IS NOT}
-\ifthenelse{\equal{\deviceName}{TimeTagger4}}{\newcommand{\itett}[2]{#1}}{\newcommand{\itett}[2]{#2}}
+\ifthenelse{\equal{\deviceName}{TimeTagger4}}{
+	\newcommand{\itett}[2]{#1}
+}{
+	\newcommand{\itett}[2]{#2}
+}
 \itett{\message{\\TIMETAGGER\\}}{\message{\\NO TIMETAGGER\\}}
 
 % output code only for the xHPTDC8 
@@ -55,7 +60,7 @@
 % \ifXHPTDC{THIS IS AN xHPTDC8} {THIS IS NOT}
 % NOTE: Macro names may not contain digits
 \ifthenelse{\equal{\deviceName}{xHPTDC8}} {\newcommand{\ifxHPTDC}[2]{#1}}{\newcommand{\ifxHPTDC}[2]{#2}}
-\ifxHPTDC{\message{\\XHPTDC8\\}}{\message{\\NO XHPTDC\\}}
+\ifxHPTDC{\message{\\XHPTDC8\\}}{\message{\\NO XHPTDC8\\}}
  
 % output code for the TimeTagger4, xTDC4 or xHPTDC8
 % example: 
@@ -99,7 +104,7 @@
 }
 
 
-\hyphenation{Time-Tagger xTDC xHPTDC cronologic TimeTagger4 time-stamps time-stamp}
+\hyphenation{Time-Tagger xTDC xHPTDC cronologic TimeTagger time-stamps time-stamp}
 
 
 \newcommand{\ttvar}[2]{\noindent\texttt{\textbf{\textcolor{crongrey}{#1} \prefix #2}}}%for variable declaration
