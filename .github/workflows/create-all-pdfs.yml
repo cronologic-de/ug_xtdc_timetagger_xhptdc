@@ -29,25 +29,25 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: TimeTagger4_User_Guide.tex
-          latexmk_use_xelatex: true
+          latexmk_use_lualatex: true
           # work_in_root_file_dir: true
           working_directory: .
       - name: Compile xTDC4 User Guide
         uses: xu-cheng/latex-action@v2
         with:
           root_file: xTDC4_User_Guide.tex
-          latexmk_use_xelatex: true
-          work_in_root_file_dir: true
+          latexmk_use_lualatex: true
+          # work_in_root_file_dir: true
       - name: Compile xHPTDC8 User Guide
         uses: xu-cheng/latex-action@v2
         with:
           root_file: xHPTDC8_User_Guide.tex
-          latexmk_use_xelatex: true
-          work_in_root_file_dir: true
+          latexmk_use_lualatex: true
+          # work_in_root_file_dir: true
       - name: Upload User Guides as Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: xTDC-and-TimeTagger-User-Guides
+          name: xTDC-TimeTagger-xHPTDC8-User-Guides
           path: "*_User_Guide.pdf"
 
  
