@@ -24,6 +24,7 @@
 
 % draw fancy frame around pages
 \DeclareBoolOption{drawframe}
+\DeclareBoolOption{drawframenew}
 
 \ProcessKeyvalOptions{crono}
 
@@ -42,8 +43,8 @@
 \newlength\cronoframelinewidth
 \setlength{\cronoframemargin}{1.25cm}
 \setlength{\cronoframeoffset}{0.8cm}
-\setlength{\cronoframelinesep}{0.18pt}
-\setlength{\cronoframelinewidth}{0.8pt}
+\setlength{\cronoframelinesep}{0.6pt}
+\setlength{\cronoframelinewidth}{0.3pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % colors
@@ -297,7 +298,6 @@
 \RequirePackage{geometry}
 \setlength\headsep{0.35cm}
 
-
 % headings
 \RequirePackage{titlesec}
 \titleformat{\chapter}%
@@ -320,10 +320,11 @@
     
 % draw frame around text
 \ifthenelse{\boolean{crono@drawframe}}{
-  \RequirePackage{everypage}
-  \RequirePackage{tikzpagenodes}
+  % \RequirePackage{everypage}
+  % \RequirePackage{tikzpagenodes}
   \usetikzlibrary{calc}
-  \AddEverypageHook{\tikz[remember picture,overlay]{%
+  \AddToHook{shipout/background}{
+    \begin{tikzpicture}[remember picture,overlay]%
     % left lines
     \draw [line width=\cronoframelinewidth,cronolightgrey] 
     ($(current page.north west)+(\cronoframemargin,-\cronoframeoffset)$)
@@ -361,8 +362,10 @@
     \draw [line width=\cronoframelinewidth,cronolightgrey]
     ($(current page.south west)+(\cronoframeoffset,\cronoframemargin+\cronoframelinesep)$)
     -- ($(current page.south east)+(-\cronoframeoffset,\cronoframemargin+\cronoframelinesep)$);
-  }}
+    \end{tikzpicture}
+  }
 }{\relax}
+
 
 % if sphinx is not used, format headings etc
 \ifthenelse{\boolean{crono@sphinx}}
