@@ -30,17 +30,18 @@ jobs:
         with:
           root_file: TimeTagger4_User_guide.tex
           latexmk_use_xelatex: true
-          work_in_root_file_dir: true
+          # work_in_root_file_dir: true
+          working_directory: .
       - name: Compile xTDC4 User Guide
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: xTDC4_User_guide.tex
+          root_file: ./xTDC4_User_guide.tex
           latexmk_use_xelatex: true
           work_in_root_file_dir: true
       - name: Compile xHPTDC8 User Guide
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: xHPTDC8_User_guide.tex
+          root_file: ./xHPTDC8_User_guide.tex
           latexmk_use_xelatex: true
           work_in_root_file_dir: true
       - name: Upload User Guides as Artifacts
