@@ -53,16 +53,13 @@
 \PassOptionsToPackage{usenames,dvipsnames}{xcolor}
 \RequirePackage{xcolor}
 \definecolor{cronogrey}{gray}{0.5}
-\definecolor{crongrey}{gray}{0.5}
 \definecolor{cronolightgrey}{RGB}{221,221,221}
-\definecolor{cronlightgrey}{RGB}{221,221,221}
 \definecolor{cronoverylightgrey}{RGB}{244,244,244}
 \definecolor{cronoorange}{RGB}{237, 120, 0}
-\definecolor{cronorange}{RGB}{237, 120, 0}
 \definecolor{cronoblue}{RGB}{55, 110, 181}
 \definecolor{cronoblack}{RGB}{0,0,0}
 \definecolor{cronolightgreen}{RGB}{86,159,214}
-\definecolor{cronlightgreen}{RGB}{86,159,214}
+% \definecolor{cronlightgreen}{RGB}{86,159,214}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % miscellaneous
@@ -279,8 +276,8 @@
  
 \newcommand{\filesep}{\textbackslash\allowbreak}  % used in file pathes
 \newcommand{\lb}{\linebreak}
-\newcommand{\cronvar}[2]{\noindent\texttt{\textbf{\textcolor{crongrey}{#1}~#2}}}%for variable declaration
-\newcommand{\crondef}[1]{\noindent\texttt{\textcolor{crongrey}{\#{}define} #1}}%for definitions
+\newcommand{\cronvar}[2]{\noindent\texttt{\textbf{\textcolor{cronogrey}{#1}~#2}}}%for variable declaration
+\newcommand{\crondef}[1]{\noindent\texttt{\textcolor{cronogrey}{\#{}define} #1}}%for definitions
 \newcommand{\tu}{\textunderscore}%shorter
 \newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
 \renewcommand{\arraystretch}{1.6} 
