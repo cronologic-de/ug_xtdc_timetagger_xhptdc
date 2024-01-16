@@ -1,4 +1,4 @@
-# ug_xtdc4_timetagger
+# ug_xtdc4_timetagger_xhptdc
 Userguides for the xTDC4 and TimeTagger4 time to digital converters
 
 This is a LaTeX2e project that creates the userguides for the [xHPTDC8](https://www.cronologic.de/products/tdcs/xhptdc8-pcie), [xTDC4](https://www.cronologic.de/products/tdcs/xtdc4-pcie) and [TimeTagger4](https://www.cronologic.de/products/tdcs/timetagger) time-to-digital converters by cronologic GmbH & Co. KG.
