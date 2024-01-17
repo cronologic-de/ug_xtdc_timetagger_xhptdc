@@ -1,15 +1,15 @@
 % User guide for the cronologic GmbH & Co. KG TimeTagger4 and xTDC4 boards.
 %
-% to create user guides with the correct filenames run the parent configuration files like this
-% pdflatex xTDC4_User_Guide.tex
-% pdflatex TimeTagger4_User_Guide.tex
+% To create user guides with the correct filenames run the parent configuration
+% files like this
+% lualatex xTDC4_User_Guide.tex
+% lualatex TimeTagger4_User_Guide.tex
+% lualatex xHPTDC8_User_Guide.tex
 % 
-% Visit www.cronologic.de for ready made PDFs of these user guides
-% https://www.cronologic.de/products/tdcs/xtdc4-pcie 
-% https://www.cronologic.de/products/tdcs/timetagger
+% Visit https://docs.cronologic.de for ready made PDFs of these user guides
 %
 % You can contribute to this documentation at
-% https://github.com/cronologic-de/ug_xtdc4_timetagger
+% https://github.com/cronologic-de/ug_xtdc_timetagger_xhptdc/
 %
 % the whole user guide is provided by cronologic GmbH & Co. KG under a
 % Creative Commons Attribution-NoDerivatices 4.0 International License
@@ -21,21 +21,7 @@
   
 \documentclass[12pt,notitlepage,a4paper]{report}
 \usepackage[font=montserrat,drawframe]{cronologicug}
-
-% this file creates two similar user guides depending on the commend \deviceName
  
-%source files that differ between versions can be input with \ttinput
-%this will prefix the include with TT4_ or xTDC4, depending on versoin
-
-\usepackage{ifthen}
-% instead of setting \devicename in a top level file you can also provide it at the command line
-% pdflatex "\newcommand{\deviceName}{xTDC4} \input{User_Guide.tex}"
-
-% or define it here
-%\newcommand{\deviceName}{TimeTagger4}
-%\newcommand{\deviceName}{xTDC4}
-
-  
 \ifthenelse{\isundefined{\deviceName}}{ 
 	\message {\\ WARNING: Undefined device name, TimeTagger4 used}%
 	\newcommand{\deviceName}{TimeTagger4}%
@@ -45,7 +31,7 @@
 
 \title{\deviceName{} -- User Guide, Rev. \ugrev}
 
-%output the first option for the TimeTagger, the second one otherwise
+% output the first option for the TimeTagger, the second one otherwise
 % example: 
 % \itett{THIS IS A TimeTagger4}{THIS IS NOT}
 \ifthenelse{\equal{\deviceName}{TimeTagger4}}{
@@ -57,15 +43,27 @@
 
 % output code only for the xHPTDC8 
 % example: 
-% \ifXHPTDC{THIS IS AN xHPTDC8} {THIS IS NOT}
+% \ifXHPTDC{THIS IS AN xHPTDC8}{THIS IS NOT}
 % NOTE: Macro names may not contain digits
-\ifthenelse{\equal{\deviceName}{xHPTDC8}} {\newcommand{\ifxHPTDC}[2]{#1}}{\newcommand{\ifxHPTDC}[2]{#2}}
+\ifthenelse{\equal{\deviceName}{xHPTDC8}}{
+	\newcommand{\ifxHPTDC}[2]{#1}
+}{
+	\newcommand{\ifxHPTDC}[2]{#2}
+}
 \ifxHPTDC{\message{\\XHPTDC8\\}}{\message{\\NO XHPTDC8\\}}
  
 % output code for the TimeTagger4, xTDC4 or xHPTDC8
 % example: 
 % \txh{THIS IS A TimeTagger4}{THIS IS AN xTDC4}{THIS IS AN xHPTDC8}
-\itett{\newcommand{\txh}[3]{#1}}{\ifxHPTDC{\newcommand{\txh}[3]{#3}} {\newcommand{\txh}[3]{#2}}}
+\itett{
+	\newcommand{\txh}[3]{#1}
+}{
+	\ifxHPTDC{
+		\newcommand{\txh}[3]{#3}
+	}{
+		\newcommand{\txh}[3]{#2}
+	}
+}
 
 % set default values in API's description lists
 \newcommand{\txhinits}[3]{\normalfont\ttfamily\txh{#1}{#2}{\ =\ #3;}}
@@ -176,4 +174,4 @@
     \chapter*{Erratum}
         \input{common/erratum.tex}
     }
-\end{document}  
+\end{document}

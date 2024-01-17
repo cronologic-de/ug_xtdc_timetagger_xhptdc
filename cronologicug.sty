@@ -10,39 +10,39 @@
   \special{pdf:minorversion 7}
 \fi
 
-\RequirePackage{ifthen}
-\SetupKeyvalOptions{family=crono, prefix=crono@}
-
-\DeclareKeys[crono]{
-  font.store   = \@crono@font     ,
-  sphinx.if    = @crono@sphinx    ,
-  drawframe.if = @crono@drawframe ,
-
+\DeclareKeys{
+  font.store   = \@crono@font,
+  sphinx.if    = @crono@sphinx,
+  drawframe.if = @crono@drawframe,
+  left.store   = \@crono@left,
+  right.store  = \@crono@right,
+  top.store    = \@crono@top,
+  bottom.store = \@crono@bottom,
+  framemargin.store    = \@crono@framemargin,
+  frameoffset.store    = \@crono@frameoffset,
+  framelinesep.store   = \@crono@framelinesep,
+  framelinewidth.store = \@crono@framelinewidth
 }
 
-\newlength\cronoleft
-\newlength\cronoright
-\newlength\cronotop
-\newlength\cronobottom
-\setlength\cronoleft{1.5cm}
-\setlength\cronoright{1.5cm}
-\setlength\cronotop{1.85cm}
-\setlength\cronobottom{1.40cm}
+\SetKeys{
+  font   = montserrat,
+  left   = 1.5cm,
+  right  = 1.5cm,
+  top    = 1.85cm,
+  bottom = 1.4cm,
+  framemargin    = 1.25cm,
+  frameoffset    = 0.8cm,
+  framelinesep   = 0.6pt,
+  framelinewidth = 0.3pt
+}
 
-\newlength\cronoframemargin
-\newlength\cronoframeoffset
-\newlength\cronoframelinesep
-\newlength\cronoframelinewidth
-\setlength{\cronoframemargin}{1.25cm}
-\setlength{\cronoframeoffset}{0.8cm}
-\setlength{\cronoframelinesep}{0.6pt}
-\setlength{\cronoframelinewidth}{0.3pt}
+\ProcessKeyOptions
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % colors
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\PassOptionsToPackage{usenames,dvipsnames}{xcolor}
+\PassOptionsToPackage{dvipsnames}{xcolor}
 \RequirePackage{xcolor}
 \definecolor{cronogrey}{gray}{0.5}
 \definecolor{cronolightgrey}{RGB}{221,221,221}
@@ -59,6 +59,7 @@
 \RequirePackage{tabularx}
 \RequirePackage{siunitx}
 \RequirePackage{fancyhdr}
+\RequirePackage{ifthen}
 
 \RequirePackage{enumitem} % customized list layouts
 \setlist[description]{
@@ -132,18 +133,19 @@
 
 \RequirePackage{fontspec}
 
-\RequirePackage{unicode-math}[
+\PassOptionsToPackage{unicode-math}{
     mathrm=sym,
     math-style=ISO,
     bold-style=upright
-]
+}
+\RequirePackage{unicode-math}
 
 \defaultfontfeatures{Scale=MatchLowercase}
 
 % font option "montserrat"
-% since Montserrat doesn't have a Mono/Math font, set up different math fonts
+% since Montserrat doesn't have a Mono/Math font, set up different fonts
 % for that
-\ifthenelse{\equal{\crono@font}{montserrat}}
+\ifthenelse{\equal{\@crono@font}{montserrat}}
 {
     \setmainfont[
         ItalicFont={Montserrat-Italic.otf},
@@ -187,7 +189,7 @@
 % Font option "fira"
 % https://www.ctan.org/tex-archive/fonts/fira
 % https://www.ctan.org/pkg/firamath
-\ifthenelse{\equal{\crono@font}{fira}}
+\ifthenelse{\equal{\@crono@font}{fira}}
 {
     \setmainfont[
         ItalicFont={FiraSans-Italic.otf},
@@ -220,7 +222,7 @@
 
 % font option "avenirnext"
 % The fonts Avenir Next and AvantGarde must be installed on the System
-\ifthenelse{\equal{\crono@font}{avenirnext}}
+\ifthenelse{\equal{\@crono@font}{avenirnext}}
 {
     \setmainfont[Numbers=Tabular]{Avenir Next}
     \setsansfont[Numbers=Tabular]{Avenir Next}
@@ -255,7 +257,7 @@
     \newfontfamily\cronoheaderfont{Avgardm.ttf}
 }{\relax}
 
-\ifthenelse{\equal{\crono@font}{default}}
+\ifthenelse{\equal{\@crono@font}{default}}
 {
     \newcommand\cronoheaderfont{}
 }{\relax}
@@ -278,10 +280,10 @@
 % formatting
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \PassOptionsToPackage{
-  left=\cronoleft,
-  right=\cronoright,
-  top=\cronotop,
-  bottom=\cronobottom
+  left=\@crono@left,
+  right=\@crono@right,
+  top=\@crono@top,
+  bottom=\@crono@bottom
 }{geometry}
 \RequirePackage{geometry}
 \setlength\headsep{0.35cm}
@@ -307,62 +309,59 @@
     {\thesubsubsection}{1em}{}{}
     
 % draw frame around text
-\ifthenelse{\boolean{crono@drawframe}}{
-  % \RequirePackage{everypage}
-  % \RequirePackage{tikzpagenodes}
+\if@crono@drawframe
   \usetikzlibrary{calc}
   \AddToHook{shipout/background}{
     \begin{tikzpicture}[remember picture,overlay]%
     % left lines
-    \draw [line width=\cronoframelinewidth,cronolightgrey] 
-    ($(current page.north west)+(\cronoframemargin,-\cronoframeoffset)$)
-    -- ($(current page.south west)+(\cronoframemargin,\cronoframeoffset)$);
-    \draw [line width=\cronoframelinewidth,cronolightgrey] 
+    \draw [line width=\@crono@framelinewidth,cronolightgrey] 
+    ($(current page.north west)+(\@crono@framemargin,-\@crono@frameoffset)$)
+    -- ($(current page.south west)+(\@crono@framemargin,\@crono@frameoffset)$);
+    \draw [line width=\@crono@framelinewidth,cronolightgrey] 
     ($(current page.north west)+
-      (\cronoframemargin+\cronoframelinesep,-\cronoframeoffset)$)
+      (\@crono@framemargin+\@crono@framelinesep,-\@crono@frameoffset)$)
     -- 
     ($(current page.south west)+
-      (\cronoframemargin+\cronoframelinesep,\cronoframeoffset)$);
+      (\@crono@framemargin+\@crono@framelinesep,\@crono@frameoffset)$);
     % right lines
-    \draw [line width=\cronoframelinewidth,cronolightgrey] 
-    ($(current page.north east)+(-\cronoframemargin,-\cronoframeoffset)$)
-    -- ($(current page.south east)+(-\cronoframemargin,\cronoframeoffset)$);
-    \draw [line width=\cronoframelinewidth,cronolightgrey] 
+    \draw [line width=\@crono@framelinewidth,cronolightgrey] 
+    ($(current page.north east)+(-\@crono@framemargin,-\@crono@frameoffset)$)
+    -- ($(current page.south east)+(-\@crono@framemargin,\@crono@frameoffset)$);
+    \draw [line width=\@crono@framelinewidth,cronolightgrey] 
     ($(current page.north east)+
-      (-\cronoframemargin-\cronoframelinesep,-\cronoframeoffset)$)
+      (-\@crono@framemargin-\@crono@framelinesep,-\@crono@frameoffset)$)
     -- 
     ($(current page.south east)+
-      (-\cronoframemargin-\cronoframelinesep,\cronoframeoffset)$);
+      (-\@crono@framemargin-\@crono@framelinesep,\@crono@frameoffset)$);
     % top lines
-    \draw [line width=\cronoframelinewidth,cronolightgrey] 
-    ($(current page.north west)+(\cronoframeoffset,-\cronoframemargin)$)
-    -- ($(current page.north east)+(-\cronoframeoffset,-\cronoframemargin)$);
-    \draw [line width=\cronoframelinewidth,cronolightgrey] 
+    \draw [line width=\@crono@framelinewidth,cronolightgrey] 
+    ($(current page.north west)+(\@crono@frameoffset,-\@crono@framemargin)$)
+    -- ($(current page.north east)+(-\@crono@frameoffset,-\@crono@framemargin)$);
+    \draw [line width=\@crono@framelinewidth,cronolightgrey] 
     ($(current page.north west)+
-      (\cronoframeoffset,-\cronoframemargin-\cronoframelinesep)$)
+      (\@crono@frameoffset,-\@crono@framemargin-\@crono@framelinesep)$)
     -- 
     ($(current page.north east)+
-      (-\cronoframeoffset,-\cronoframemargin-\cronoframelinesep)$);
+      (-\@crono@frameoffset,-\@crono@framemargin-\@crono@framelinesep)$);
     % bottom lines
-    \draw [line width=\cronoframelinewidth,cronolightgrey]
-    ($(current page.south west)+(\cronoframeoffset,\cronoframemargin)$)
-    -- ($(current page.south east)+(-\cronoframeoffset,\cronoframemargin)$);
-    \draw [line width=\cronoframelinewidth,cronolightgrey]
-    ($(current page.south west)+(\cronoframeoffset,\cronoframemargin+\cronoframelinesep)$)
-    -- ($(current page.south east)+(-\cronoframeoffset,\cronoframemargin+\cronoframelinesep)$);
+    \draw [line width=\@crono@framelinewidth,cronolightgrey]
+    ($(current page.south west)+(\@crono@frameoffset,\@crono@framemargin)$)
+    -- ($(current page.south east)+(-\@crono@frameoffset,\@crono@framemargin)$);
+    \draw [line width=\@crono@framelinewidth,cronolightgrey]
+    ($(current page.south west)+(\@crono@frameoffset,\@crono@framemargin+\@crono@framelinesep)$)
+    -- ($(current page.south east)+(-\@crono@frameoffset,\@crono@framemargin+\@crono@framelinesep)$);
     \end{tikzpicture}
   }
-}{\relax}
+\fi
 
 
 % if sphinx is not used, format headings etc
-\ifthenelse{\boolean{crono@sphinx}}
-{
+\if@crono@sphinx
   \newcommand{\cronotitle}{\@title\sphinxheadercomma\py@release}
-}
-{ % else, if sphinx is not used, set up page layout
+\else
   \newcommand{\cronotitle}{\@title}
-}
+\fi
+
 \fancypagestyle{normal}{
   \fancyhf{}
   \fancyfoot[R]{{\color{cronogrey}}}
