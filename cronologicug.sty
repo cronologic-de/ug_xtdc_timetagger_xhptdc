@@ -13,7 +13,7 @@
 \DeclareKeys{
   font.store   = \@crono@font,
   sphinx.if    = @crono@sphinx,
-  drawframe.if = @crono@drawframe,
+  noframe.if   = @crono@noframe,
   left.store   = \@crono@left,
   right.store  = \@crono@right,
   top.store    = \@crono@top,
@@ -26,6 +26,7 @@
 
 \SetKeys{
   font   = montserrat,
+  noframe = false,
   left   = 1.5cm,
   right  = 1.5cm,
   top    = 1.85cm,
@@ -309,7 +310,7 @@
     {\thesubsubsection}{1em}{}{}
     
 % draw frame around text
-\if@crono@drawframe
+\unless\if@crono@noframe
   \usetikzlibrary{calc}
   \AddToHook{shipout/background}{
     \begin{tikzpicture}[remember picture,overlay]%
