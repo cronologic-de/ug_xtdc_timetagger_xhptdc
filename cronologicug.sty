@@ -1,4 +1,4 @@
-\NeedsTeXFormat{LaTeX2e}
+\NeedsTeXFormat{LaTeX2e}[2022-06-01]
 \ProvidesPackage{cronologicug}
 \author{cronologic GmbH \& Co KG}
 
@@ -11,9 +11,15 @@
 \fi
 
 \RequirePackage{ifthen}
-\RequirePackage{xstring}
-\RequirePackage{kvoptions}
-\SetupKeyvalOptions{family=crono, prefix=crono@}
+% \RequirePackage{xstring}
+% \RequirePackage{kvoptions}
+% \SetupKeyvalOptions{family=crono, prefix=crono@}
+
+\DeclareKeys[crono]{
+  font.store   = \@crono@font
+  sphinx.if    = @crono@sphinx
+  drawframe.if = @crono@drawframe 
+}
 
 % options provided with the sphinxcronologic package, e.g.
 
@@ -59,7 +65,6 @@
 \definecolor{cronoblue}{RGB}{55, 110, 181}
 \definecolor{cronoblack}{RGB}{0,0,0}
 \definecolor{cronolightgreen}{RGB}{86,159,214}
-% \definecolor{cronlightgreen}{RGB}{86,159,214}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % miscellaneous
