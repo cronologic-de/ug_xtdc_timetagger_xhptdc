@@ -11,28 +11,14 @@
 \fi
 
 \RequirePackage{ifthen}
-% \RequirePackage{xstring}
-% \RequirePackage{kvoptions}
-% \SetupKeyvalOptions{family=crono, prefix=crono@}
+\SetupKeyvalOptions{family=crono, prefix=crono@}
 
 \DeclareKeys[crono]{
-  font.store   = \@crono@font
-  sphinx.if    = @crono@sphinx
-  drawframe.if = @crono@drawframe 
+  font.store   = \@crono@font     ,
+  sphinx.if    = @crono@sphinx    ,
+  drawframe.if = @crono@drawframe ,
+
 }
-
-% options provided with the sphinxcronologic package, e.g.
-
-\DeclareStringOption[montserrat]{font} % montserrat, fira, avenirnext, default
-
-% is sphinx being used to compile the PDF?
-\DeclareBoolOption[false]{sphinx}
-
-% draw fancy frame around pages
-\DeclareBoolOption{drawframe}
-\DeclareBoolOption{drawframenew}
-
-\ProcessKeyvalOptions{crono}
 
 \newlength\cronoleft
 \newlength\cronoright
