@@ -14,6 +14,7 @@
   font.store   = \@crono@font,
   sphinx.if    = @crono@sphinx,
   noframe.if   = @crono@noframe,
+  monofontdescriptions.if = @crono@monofontdescriptions,
   left.store   = \@crono@left,
   right.store  = \@crono@right,
   top.store    = \@crono@top,
@@ -21,7 +22,9 @@
   framemargin.store    = \@crono@framemargin,
   frameoffset.store    = \@crono@frameoffset,
   framelinesep.store   = \@crono@framelinesep,
-  framelinewidth.store = \@crono@framelinewidth
+  framelinewidth.store = \@crono@framelinewidth,
+  headsep.store = \@crono@headsep,
+  footskip.store = \@crono@footskip,
 }
 
 \SetKeys{
@@ -29,12 +32,14 @@
   noframe = false,
   left   = 1.5cm,
   right  = 1.5cm,
-  top    = 1.85cm,
-  bottom = 1.4cm,
+  top    = 1.5cm,
+  bottom = 1.5cm,
   framemargin    = 1.25cm,
   frameoffset    = 0.8cm,
   framelinesep   = 0.6pt,
-  framelinewidth = 0.3pt
+  framelinewidth = 0.3pt,
+  headsep = 0.35cm,
+  footskip = 18pt,
 }
 
 \ProcessKeyOptions
@@ -62,10 +67,12 @@
 \RequirePackage{fancyhdr}
 \RequirePackage{ifthen}
 
-\RequirePackage{enumitem} % customized list layouts
-\setlist[description]{
-  font={\ttfamily\bfseries}
-}
+\if@crono@monofontdescriptions
+  \RequirePackage{enumitem} % customized list layouts
+  \setlist[description]{
+    font={\ttfamily\bfseries}
+  }
+\fi
 
 \RequirePackage{polyglossia}
 \RequirePackage{pdfpages} % include pdfs with, e.g.,
@@ -280,14 +287,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % formatting
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\PassOptionsToPackage{
+\RequirePackage{geometry}
+\geometry{
   left=\@crono@left,
   right=\@crono@right,
   top=\@crono@top,
-  bottom=\@crono@bottom
-}{geometry}
-\RequirePackage{geometry}
-\setlength\headsep{0.35cm}
+  bottom=\@crono@bottom,
+  headsep=\@crono@headsep,
+}
+\setlength\footskip\@crono@footskip
+\RequirePackage{layout}
 
 % headings
 \RequirePackage{titlesec}
