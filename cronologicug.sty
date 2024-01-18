@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[2022-06-01]
-\ProvidesPackage{cronologicug}[2024-01-17]
+\ProvidesPackage{cronologicug}[2024-01-18]
 \author{cronologic GmbH \& Co KG}
 
 \RequirePackage{iftex}
@@ -11,10 +11,13 @@
 \fi
 
 \DeclareKeys{
-  font.store   = \@crono@font,
-  sphinx.if    = @crono@sphinx,
-  noframe.if   = @crono@noframe,
+  font.store              = \@crono@font,
+  sphinx.if               = @crono@sphinx,
+  noframe.if              = @crono@noframe,
   monofontdescriptions.if = @crono@monofontdescriptions,
+  pdfsubject.store  = \@crono@subject,
+  pdfkeywords.store = \@crono@keywords,
+  pdflang.store     = \@crono@language,
   left.store   = \@crono@left,
   right.store  = \@crono@right,
   top.store    = \@crono@top,
@@ -28,18 +31,19 @@
 }
 
 \SetKeys{
-  font   = montserrat,
+  font    = montserrat,
   noframe = false,
-  left   = 1.5cm,
-  right  = 1.5cm,
-  top    = 1.5cm,
-  bottom = 1.5cm,
+  pdflang = en,
+  left    = 1.5cm,
+  right   = 1.5cm,
+  top     = 1.5cm,
+  bottom  = 1.5cm,
   framemargin    = 1.25cm,
   frameoffset    = 0.8cm,
   framelinesep   = 0.6pt,
   framelinewidth = 0.3pt,
-  headsep = 0.35cm,
-  footskip = 18pt,
+  headsep        = 0.35cm,
+  footskip       = 18pt,
 }
 
 \ProcessKeyOptions
@@ -393,3 +397,14 @@
   urlcolor=cronogrey,
   }
 \urlstyle{same}
+
+% set pdf attributes
+\AtBeginDocument{
+  \hypersetup{
+    pdfauthor   = {\@author},
+    pdftitle    = {\@title},
+    pdfkeywords = {\@crono@keywords},
+    pdfsubject  = {\@crono@subject},
+    pdflang     = {\@crono@language},
+  }
+}
