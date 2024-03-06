@@ -13,50 +13,43 @@ the information from the board.
 }{}
 
 \begin{description}[style=nextline]
-    \item[\ttvar{int}{get\tu device\tu type}(\device\ifxHPTDC{, \cronvar{int}{index}}{})]
+    \item[\ttvar{int}{get\tu device\tu type}(\deviceindex)]
     Returns the type of the device as \texttt{CRONO\tu DEVICE\tu
     \txh{TIMETAGGER4}{XTDC4}{XHPTDC8}}.
 
-    \item[\ttvar{const char*}{get\tu last\tu error\tu
-        message(\device\ifxHPTDC{, \cronvar{int}{index}}{})}]
+    \item[\ttvar{const char*}{get\tu last\tu error\tu message(\deviceindex)}]
     Returns most recent error message.
     \ifxHPTDC{
         If index is negative the last error message from the \\
-        \texttt{\prefix manager} is returned.  Otherwise the last error message
+        \texttt{\prefix manager} is returned. Otherwise, the last error message
         of the selected board is returned.
     }{}
 
-    \item[\ttvar{int}{get\tu fast\tu info(}\deviceindex,
-        \cronvar{\prefix fast\tu info}{*info)}]
+    \item[\ttvar{int}{get\tu fast\tu info(}\deviceindex, \cronvar{\prefix fast\tu info}{*info)}]
     Returns fast dynamic information.\par
     This call gets a structure that contains dynamic information that can be
     obtained within a few microseconds.
 
-    \item[\ttvar{int}{get\tu param\tu info(}\deviceindex, \cronvar{\prefix
-        param\tu info}{*info)}]
+    \item[\ttvar{int}{get\tu param\tu info(}\deviceindex, \cronvar{\prefix param\tu info}{*info)}]
     Returns configuration changes.\par
     Gets a structure that contains information that changes indirectly due to
     configuration changes.
 
 
-    \item[\ttvar{int}{get\tu static\tu info(}\deviceindex, \cronvar{\prefix
-        static\tu info}{*info)}]
+    \item[\ttvar{int}{get\tu static\tu info(}\deviceindex, \cronvar{\prefix static\tu info}{*info)}]
     Contains static information.\par
     Gets a structure that contains information about the board that does not
     change during run time.
 
     \ifxHPTDC{
-        \item[\protect{\parbox[b]{\linewidth}{
-            \ttvar{int}{get\tu temperature\tu info(}\deviceindex,\\
-            \cronvar{\prefix temperature\tu info}{*info)}}}]
+        \item[\ttvar{int}{get\tu temperature\tu info(}\deviceindex, \cronvar{\prefix temperature\tu info}{*info)}]
         Get temperature measurements from multiple sources on the board.
 
         \item[\ttvar{int}{get\tu clock\tu info(}\deviceindex, \cronvar{\prefix
             clock\tu info}{*info)}]
         Get information on clocking configuration and status.
 
-        \item[\ttvar{const char*}{device\tu state\tu to \tu
-            str(}\cronvar{int}{state)}]
+        \item[\ttvar{const char*}{device\tu state\tu to \tu str(}\cronvar{int}{state)}]
         Convert the state value from \texttt{\prefix fast\tu info.state} into
         a human-readable string. 
     }{} 
