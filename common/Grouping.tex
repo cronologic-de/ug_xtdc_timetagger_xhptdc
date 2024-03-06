@@ -44,11 +44,14 @@ discarded.
 
  \ifxHPTDC{
     In single-board setups, it is recommended to also configure the gating
-    blocks to similar parameters as the grouping functionality.  This prevents
-    data from being read out that is discarded by the grouping code anyway. 
+    blocks (see Page~\pageref{member:gating_block}) to similar parameters as
+    the grouping functionality.
+    This prevents data from being read out that is discarded by the grouping 
+    code anyway. 
     Please note that the grouping parameters are given in \si{\pico\second}
     while the gating blocks are configured in cycles of the
-    \SI{150}{\mega\hertz} clock.
+    \SI{150}{\mega\hertz} clock. For more information on the gating 
+    functionality, see Section~\ref{cp:gating}.
     
     In grouping mode, each call to \texttt{xHPTDC8\tu read\tu hits()} will
     return a group of timestamps relative to some trigger event.  At the
