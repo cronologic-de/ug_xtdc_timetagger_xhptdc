@@ -66,8 +66,7 @@ corresponding LEMO connector. This turns the connector into an output.
 
 \ifxHPTDC{
     The TiGer outputs are AC coupled to the connector. They can be operated in
-    one of the following modes:
-    \begin{description}[style=nextline]
+    one of the following modes: \begin{description}[style=nextline]
     \item[\PREFIX TIGER\tu OFF]
         No signal is output to the connector. 
     \item[\PREFIX TIGER\tu OUTPUT]
@@ -108,11 +107,10 @@ corresponding LEMO connector. This turns the connector into an output.
     \centering
     \ifxHPTDC { 
         % this is an XCIrcuit drawing  convertex from postscript with 
-        %ps2pdf.exe -dEPSCrop xhptdc8_trigger_matrix.ps
+        %ps2pdf.exe -dEPSCrop xhptdc8_trigger_matrix.ps 
         \includegraphics[width=0.6\textwidth]{
             xhptdc/figures/xhptdc8_trigger_matrix.pdf}
-    }{
-        \includegraphics[width=\textwidth]{figures/xTDC4_tiger_matrix.pdf}
+    }{ \includegraphics[width=\textwidth]{figures/xTDC4_tiger_matrix.pdf}
     }
     \caption{TiGer blocks can generate outputs that are also available on
         inputs.\label{fig:matrix}} 
@@ -124,9 +122,7 @@ corresponding LEMO connector. This turns the connector into an output.
     \label{triggersources}
     Trigger sources for TiGer and gating blocks are configured by a bit mask.
     You can combine any number of trigger source with a bit-wise OR.  The
-    block will be trigger when any of the select trigger input is active.
-
-    \begin{description}[style=nextline]
+    block will be trigger when any of the select trigger input is active. \begin{description}[style=nextline]
     \item[\PREFIX TRIGGER\tu SOURCE\tu NONE]
         Empty pattern that selects no trigger source.
     \item[\PREFIX TRIGGER\tu SOURCE\tu A to \tu H]
@@ -178,14 +174,45 @@ corresponding LEMO connector. This turns the connector into an output.
     gate as shown in Figure~\ref{fig:matrix}. In the driver configuration
     structure (see Section~\ref{structchannel}), these are accessible as
     \mbox{\texttt{gating\tu block[channel]}}.  Hits are recorded in a channel
-    only while the output of the gating block is active.  If the block is
-    negated in the configuration, hits are only recorded while the gating
-    block is inactive.
+    only while the output of the gating block is active. Analogously, if the 
+    gating block is negated in the configuration, hits are only recorded while
+    the block is inactive.
     
     This is a useful feature in setups where the trigger creates a lot of
     noise.  A suitable configuration of the gating block can reduce the
     bandwidth and buffer usage significantly.  Gating is performed before the
     L0 buffer. Grouping is performed in software after readout. 
+
+    Note that the gating logic is not instant but takes about six to seven
+    clock cycles due to board-internal signal processing. 
+    This means that there is a constant offset between the time an
+    external trigger event is detected and the time the gating logic is
+    enabled of up to about 50~ns.
+    This offset does not exist if the (internal) auto-trigger functionality
+    is utilized.
+
+    When setting up the gating range, it is recommended to conservatively 
+    choose the range (i.e., choose a bigger range than ultimately necessary).
+    This is because at the edges of the gate, it is possible
+    to create false timestamps due to how the gating logic is implemented: 
+    The gate stores the state of the input channel from the last time the
+    gate was active and updates the state once the gate is re-enabled. This
+    update may be interpreted as an edge, at which point a timestamp is
+    created that does not necessarily correspond to a real edge of an input
+    signal (see also Figure~\ref{fig:gatingcaviat}).
+    However, timestamps of signals that are not spanning over the edge of the 
+    gate will always be correct.
+
+    \begin{figure}[tbh]
+        \centering \includegraphics[width=0.6\linewidth]{figures/template.png}
+        \caption{Example of a gating configuration. 
+            At the edges of a gate, wrong timestamps may be created.
+            The gate keeps the last state from when it was active (low signal
+            level in the example) and updates it once it re-activates 
+            (high signal level), which may be recorded as an edge.}
+        \label{fig:gatingcaviat}
+    \end{figure}
+
         
     \section{Triggerable ADC}
     \label{adc}
