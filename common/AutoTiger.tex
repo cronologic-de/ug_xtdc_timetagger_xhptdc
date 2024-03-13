@@ -173,12 +173,41 @@ corresponding LEMO connector. This turns the connector into an output.
     Each TDC channel has a second, identical TiGer block that functions as a
     gate as shown in Figure~\ref{fig:matrix}. In the driver configuration
     structure (see Section~\ref{structchannel}), these are accessible as
-    \mbox{\texttt{gating\tu block[channel]}}.  Hits are recorded in a channel
-    only while the output of the gating block is active. Analogously, if the 
-    gating block is negated in the configuration, hits are only recorded while
-    the block is inactive.
+    \mbox{\texttt{gating\tu block[channel]}}.  
+
+    Hits in a channel are only recorded while the gating block is open, which
+    is configured by \emph{Gate Start}, \emph{Gate Stop}, \emph{negate}, and
+    \emph{retrigger}.
+    \emph{Gate Start}, \emph{Gate Stop}, and \emph{retrigger} manipulate when
+    the gate is \emph{active} or \emph{inactive}; \emph{negate} manipulates 
+    if the gate is open while it is active or while it is inactive.
+    If \emph{negate} is false, the gate is open while its output is active.
+    If \emph{negate} is true, the gate is closed while its output is active.
     
-    This is a useful feature in setups where the trigger creates a lot of
+    If retriggering is enabled, the timer of the gate is reset when a second
+    trigger event is recorded while the gate is active, i.e., the time while
+    the gate is active is extended. If the second trigger event is recorded
+    \textit{before} the gate activates, the gate-timer is reset to zero, i.e.,
+    it will take the whole \textit{Gate~Start} time until the gate activates.
+    If retriggering is disabled, all secondary trigger events will be ignored
+    until the \textit{Gate~Stop} time is reached.
+
+    An overview of different combinations of \emph{retrigger} and \emph{negate}
+    is shown in Figure~\ref{fig:gatingprinciple}.
+
+    \begin{figure}[bth]
+        \centering
+        \includegraphics[width=1.0\linewidth]{figures/gating_principle.pdf}
+        \caption{Principle of a gating block.
+            Packets (PKT) are only recorded
+            while the gate is open.
+            \emph{Gate Start}, \emph{Gate Stop},
+            \emph{retrigger}, and \emph{negate} influence when that is the 
+            case.}
+        \label{fig:gatingprinciple}
+    \end{figure}
+    
+    Gating is a useful feature in setups where the trigger creates a lot of
     noise.  A suitable configuration of the gating block can reduce the
     bandwidth and buffer usage significantly.  Gating is performed before the
     L0 buffer. Grouping is performed in software after readout. 
@@ -204,12 +233,13 @@ corresponding LEMO connector. This turns the connector into an output.
     gate will always be correct.
 
     \begin{figure}[tbh]
-        \centering \includegraphics[width=0.6\linewidth]{figures/template.png}
-        \caption{Example of a gating configuration. 
-            At the edges of a gate, wrong timestamps may be created.
+        \centering
+        \includegraphics[width=1.0\linewidth]{figures/gating_caveat.pdf}
+        \caption{Example of a gating configuration that can lead to wrong
+            timestamps at the gate-edges. 
             The gate keeps the last state from when it was active (low signal
             level in the example) and updates it once it re-activates 
-            (high signal level), which may be recorded as an edge.}
+            (high signal level) which may be recorded as an edge.}
         \label{fig:gatingcaviat}
     \end{figure}
 
