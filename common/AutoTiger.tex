@@ -223,7 +223,8 @@ corresponding LEMO connector. This turns the connector into an output.
     When setting up the gating range, it is recommended to conservatively 
     choose the range (i.e., choose a bigger range than ultimately necessary).
     This is because at the edges of the gate, it is possible
-    to create false timestamps due to how the gating logic is implemented: 
+    to create timestamps that do not correspond to a real signal edge
+    due to how the gating logic is implemented: 
     The gate stores the state of the input channel from the last time the
     gate was active and updates the state once the gate is re-enabled. This
     update may be interpreted as an edge, at which point a timestamp is
@@ -235,8 +236,9 @@ corresponding LEMO connector. This turns the connector into an output.
     \begin{figure}[tbh]
         \centering
         \includegraphics[width=1.0\linewidth]{figures/gating_caveat.pdf}
-        \caption{Example of a gating configuration that can lead to wrong
-            timestamps at the gate-edges. 
+        \caption{Example of a gating configuration that can lead to 
+            timestamps that do not correspond to a signal edge at the 
+            gate-edges. 
             The gate keeps the last state from when it was active (low signal
             level in the example) and updates it once it re-activates 
             (high signal level) which may be recorded as an edge.}

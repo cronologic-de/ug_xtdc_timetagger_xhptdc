@@ -317,10 +317,8 @@ the user application and use the result to configure the device.\par
         The size of the flash memory in bytes.\\
 
         \item[\protect{\parbox[b]{1.0\linewidth}{
-            \ttvar{int}{read\tu user\tu flash(\device, \cronvar{int}{index},\\
-                \hspace*{\labelwidth+\itemsep}\cronvar{\uchar *}{flash\tu data}, \cronvar{\uint}{size})}\\
-            \ttvar{int}{write\tu user\tu flash(\device, \cronvar{int}{index},\\
-                \hspace*{\labelwidth+\itemsep}\cronvar{\uchar *}{flash\tu data}, \cronvar{\uint}{size})}
+            \ttvar{int}{read\tu user\tu flash(\cronvar{int}{index}, \cronvar{\uchar *}{flash\tu data}, \cronvar{\uint}{size})}\\
+            \ttvar{int}{write\tu user\tu flash(\cronvar{int}{index}, \cronvar{\uchar *}{flash\tu data}, \cronvar{\uint}{size})}
         }}]
         Read from or write to the user flash of a board identified by
         \texttt{index}.  \texttt{flash\tu data} must point to a buffer

@@ -51,4 +51,10 @@ little overhead, but they are not guaranteed to be thread safe.
     This function is not thread-safe.  If you want to process the read data in
     multiple threads the data needs to be copied to a separate buffer for each
     thread.
+
+    \ifxHPTDC{
+        \item[\ttvar{int}{get\tu current\tu timestamp(}\cronvar{int}{index,} \cronvar{int64\_t}{*timestamp})]
+        Return current internal timestamp counter value of the selected 
+        \deviceName{} in picoseconds.
+    }{}
 \end{description}
