@@ -13,50 +13,58 @@ the information from the board.
 }{}
 
 \begin{description}[style=nextline]
-    \item[\ttvar{int}{get\tu device\tu type}(\device\ifxHPTDC{, \cronvar{int}{index}}{})]
+    \item[\ttvar{int}{get\tu device\tu type}(\deviceindex)]
     Returns the type of the device as \texttt{CRONO\tu DEVICE\tu
     \txh{TIMETAGGER4}{XTDC4}{XHPTDC8}}.
 
-    \item[\ttvar{const char*}{get\tu last\tu error\tu
-        message(\device\ifxHPTDC{, \cronvar{int}{index}}{})}]
+    \item[\ttvar{const char*}{get\tu last\tu error\tu message(\deviceindex)}]
     Returns most recent error message.
     \ifxHPTDC{
         If index is negative the last error message from the \\
-        \texttt{\prefix manager} is returned.  Otherwise the last error message
+        \texttt{\prefix manager} is returned. Otherwise, the last error message
         of the selected board is returned.
     }{}
 
-    \item[\ttvar{int}{get\tu fast\tu info(}\deviceindex,
-        \cronvar{\prefix fast\tu info}{*info)}]
+    \item[\ttvar{int}{get\tu fast\tu info(}\deviceindex, \cronvar{\prefix fast\tu info}{*info)}]
     Returns fast dynamic information.\par
     This call gets a structure that contains dynamic information that can be
     obtained within a few microseconds.
 
-    \item[\ttvar{int}{get\tu param\tu info(}\deviceindex, \cronvar{\prefix
-        param\tu info}{*info)}]
+    \item[\ttvar{int}{get\tu param\tu info(}\deviceindex, \cronvar{\prefix param\tu info}{*info)}]
     Returns configuration changes.\par
     Gets a structure that contains information that changes indirectly due to
     configuration changes.
 
 
-    \item[\ttvar{int}{get\tu static\tu info(}\deviceindex, \cronvar{\prefix
-        static\tu info}{*info)}]
+    \item[\ttvar{int}{get\tu static\tu info(}\deviceindex, \cronvar{\prefix static\tu info}{*info)}]
     Contains static information.\par
     Gets a structure that contains information about the board that does not
     change during run time.
 
+    \item[\ttvar{int}{get\_pcie\_info(}\deviceindex, \cronvar{crono\_pcie\_info}{*pcie\_info)}]
+    Read PCIe information.\par
+    Gets a structure that contains information about the PCIe state, like
+    correctable or uncorrectable errors.
+
+    \item[\ttvar{int}{clear\_pcie\_errors(}\deviceindex, \cronvar{int}{flags)}]
+    Clear PCIe errors.\par
+    Only useful for PCIe debugging.
+    \texttt{flags} is one of the following:
+    \begin{tabular}{ll}
+        \crondef{CRONO\_PCIE\_CORRECTABLE\_FLAG}   & \texttt{1}  \\*
+        \crondef{CRONO\_PCIE\_UNCORRECTABLE\_FLAG} & \texttt{2}  \\*
+    \end{tabular}
+
+
     \ifxHPTDC{
-        \item[\protect{\parbox[b]{\linewidth}{
-            \ttvar{int}{get\tu temperature\tu info(}\deviceindex,\\
-            \cronvar{\prefix temperature\tu info}{*info)}}}]
+        \item[\ttvar{int}{get\tu temperature\tu info(}\deviceindex, \cronvar{\prefix temperature\tu info}{*info)}]
         Get temperature measurements from multiple sources on the board.
 
         \item[\ttvar{int}{get\tu clock\tu info(}\deviceindex, \cronvar{\prefix
             clock\tu info}{*info)}]
         Get information on clocking configuration and status.
 
-        \item[\ttvar{const char*}{device\tu state\tu to \tu
-            str(}\cronvar{int}{state)}]
+        \item[\ttvar{const char*}{device\tu state\tu to \tu str(}\cronvar{int}{state)}]
         Convert the state value from \texttt{\prefix fast\tu info.state} into
         a human-readable string. 
     }{} 
@@ -295,6 +303,66 @@ get\tu param\tu info()}.
     \end{tabular}
     }{}
 \end{description}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PCIe Info
+\subsection{Structure crono\_pcie\_info}
+\begin{description}[style=nextline]
+    \item[\cronvar{uint32\_t}{pwr\_mgmt}]
+    Organizes power supply of PCIe lanes.
+
+    \item[\cronvar{uint32\_t}{link\_width}]
+    Number of PCIe lanes that the card uses.\par
+
+    \item[\cronvar{uint32\_t}{max\_payload}]
+    Maximum size in bytes for one PCIe transaction.\par
+    Depends on the system configuration.
+
+    \item[\cronvar{uint32\_t}{link\_speed}]
+    Data rate of the PCIe card.\par
+    Depends on the system configuration.
+
+    \item[\cronvar{uint32\_t}{error\_status\_supported}]
+    Different from 0 if the PCIe error status is supported for this device.
+
+    \item[\cronvar{uint32\_t}{correctable\_error\_status}]
+    Correctable error status flags, directly from the PCIe config register.\par
+    Useful for debugging PCIe problems.
+
+    \begin{tabular}{ll}
+        \crondef{CRONO\_PCIE\_RX\_ERROR} & \texttt{1 << 0}  \\*
+        \crondef{CRONO\_PCIE\_BAD\_TLP} & \texttt{1 << 6}  \\*
+        \crondef{CRONO\_PCIE\_BAD\_DLLP} & \texttt{1 << 7}  \\*
+        \crondef{CRONO\_PCIE\_REPLAY\_NUM\_ROLLOVER} & \texttt{1 << 8}  \\*
+        \crondef{CRONO\_PCIE\_REPLAY\_TIMER\_TIMEOUT} & \texttt{1 << 12}  \\*
+        \crondef{CRONO\_PCIE\_ADVISORY\_NON\_FATAL} & \texttt{1 << 13}  \\*
+        \crondef{CRONO\_PCIE\_CORRECTED\_INTERNAL\_ERROR} & \texttt{1 << 14}  \\*
+        \crondef{CRONO\_PCIE\_HEADER\_LOG\_OVERFLOW} & \texttt{1 << 15}  \\*
+    \end{tabular}
+
+    \item[\cronvar{uint32\_t}{correctable\_error\_status}]
+    Uncorrectable error status flags, directly from the PCIe config register.
+
+    Useful for debugging PCIe problems.
+
+    \begin{tabular}{ll}
+        \crondef{CRONO\_PCIE\_UNC\_UNDEFINED}                      & \texttt{1 << 0}  \\*
+        \crondef{CRONO\_PCIE\_UNC\_DATA\_LINK\_PROTOCOL\_ERROR}    & \texttt{1 << 4}  \\*
+        \crondef{CRONO\_PCIE\_UNC\_SURPRISE\_DOWN\_ERROR}          & \texttt{1 << 5}  \\*
+        \crondef{CRONO\_PCIE\_UNC\_POISONED\_TLP}                  & \texttt{1 << 12}  \\*
+        \crondef{CRONO\_PCIE\_UNC\_FLOW\_CONTROL\_PROTOCOL\_ERROR} & \texttt{1 << 13}  \\*
+        \crondef{CRONO\_PCIE\_UNC\_COMPLETION\_TIMEOUT}            & \texttt{1 << 14}  \\*
+        \crondef{CRONO\_PCIE\_UNC\_COMPLETER\_ABORT}               & \texttt{1 << 15}  \\*
+        \crondef{CRONO\_PCIE\_UNC\_UNEXPECTED\_COMPLETION}         & \texttt{1 << 16}  \\*
+        \crondef{CRONO\_PCIE\_UNC\_RECEIVER\_OVERFLOW\_ERROR}      & \texttt{1 << 17}  \\*
+        \crondef{CRONO\_PCIE\_UNC\_MALFORMED\_TLP}                 & \texttt{1 << 18}  \\*
+        \crondef{CRONO\_PCIE\_UNC\_ECRC\_ERROR}                    & \texttt{1 << 19}  \\*
+        \crondef{CRONO\_PCIE\_UNC\_UNSUPPROTED\_REQUEST\_ERROR}    & \texttt{1 << 20}  \\*
+    \end{tabular}
+
+\end{description}
+
+
 %%%%%%%%%%%%%%%%%%%%%%% temperature info
 
 \ifxHPTDC{

@@ -190,6 +190,7 @@ It uses multiple substructures to configure various aspects of the board.
     Section~\ref{cp:tigerblock}).
 
     \ifxHPTDC{ % only for xHPTDC8
+        \label{member:gating_block}
         \item[\cronvar{\prefix tiger\tu block}{
             gating\tu block[\PREFIX GATE\tu COUNT]}]
         Configuration of the gating blocks.
@@ -386,7 +387,15 @@ See Section~\ref{cp:tiger} for additional information.
         In multiples of $20/3$\,\si{\nano\second} = \SI{6.666}{\nano\second}
     }
     The time during which the TiGer output is set, relative to the trigger
-    input. The parameters \texttt{start} and \texttt{stop} must fulfill the
+    input. 
+    
+    \ifxHPTDC{
+        For gating blocks, there is a constant offset of about six to seven 
+        cycles between \textit{start/stop} and the time an external input 
+        signal is detected (see also Section~\ref{cp:gating}).
+    }{}
+    
+    The parameters \texttt{start} and \texttt{stop} must fulfill the
     following conditions
     \begin{align*}
         0 \le \texttt{start} \le \texttt{stop} \le 2^{16}-1 \ .

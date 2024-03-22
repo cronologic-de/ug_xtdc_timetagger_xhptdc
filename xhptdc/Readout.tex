@@ -5,29 +5,29 @@ the behaviour of the devices.  All of these functions return quickly with very
 little overhead, but they are not guaranteed to be thread safe.
 
 \begin{description}[style=nextline]
-    \item[\ttvar{int}{start\tu capture(}\device)]
+    \item[\ttvar{int}{start\tu capture(})]
     Start data acquisition.
 
-    \item[\ttvar{int}{pause\tu capture(}\device)]
+    \item[\ttvar{int}{pause\tu capture(})]
     Pause a started data acquisition. 
     Pause and continue have less overhead than start and stop but don't allow
     for a configuration change.
 
-    \item[\ttvar{int}{continue\tu capture(}\device)]
+    \item[\ttvar{int}{continue\tu capture(})]
     Call this to resume data acquisition after a call to
     \texttt{\prefix pause\tu capture()}.  Pause and continue have less overhead
     than start and stop but don't allow for a configuration change.
 
-    \item[\ttvar{int}{stop\tu capture(}\device)]
+    \item[\ttvar{int}{stop\tu capture(})]
     Stop data acquisition.
 
     \item[\protect{\parbox[b]{\linewidth}{
-    \ttvar{int}{start\tu tiger(}\device, \cronvar{int}{index})\\
-    \ttvar{int}{stop\tu tiger(}\device, \cronvar{int}{index})}}]
+    \ttvar{int}{start\tu tiger(}\cronvar{int}{index})\\
+    \ttvar{int}{stop\tu tiger(}\cronvar{int}{index})}}]
     Start and stop the timing generator of an individual board. 
     This can be done independently of the state of the data acquisition.
     
-    \item[\ttvar{int}{software\tu trigger(}\device, \cronvar{int}{index})]
+    \item[\ttvar{int}{software\tu trigger(}\cronvar{int}{index})]
     Sets the software trigger for one clock cycle.  This can be configured for
     the TiGer and for the gating blocks as trigger source
     \texttt{\PREFIX TRIGGER\tu SOURCE\tu SOFTWARE}. 
@@ -35,7 +35,7 @@ little overhead, but they are not guaranteed to be thread safe.
 
 \section{Readout}
 \begin{description}[style=nextline]
-    \item[\ttvar{int}{read\tu hits(}\device, \cronvar{TDCHit}{*hit\tu buf,} \cronvar{size\tu t}{size})]
+    \item[\ttvar{int}{read\tu hits(}\cronvar{TDCHit}{*hit\tu buf,} \cronvar{size\tu t}{size})]
     Read a multitude of hits into a buffer provided by the user. Returns the
     number of read hits.\par
     If grouping is enabled a single group is read.  If the group is too large
@@ -51,4 +51,10 @@ little overhead, but they are not guaranteed to be thread safe.
     This function is not thread-safe.  If you want to process the read data in
     multiple threads the data needs to be copied to a separate buffer for each
     thread.
+
+    \ifxHPTDC{
+        \item[\ttvar{int}{get\tu current\tu timestamp(}\cronvar{int}{index,} \cronvar{int64\_t}{*timestamp})]
+        Return current internal timestamp counter value of the selected 
+        \deviceName{} in picoseconds.
+    }{}
 \end{description}
