@@ -13,19 +13,19 @@
     \hline
     Symbol & Parameter & Min & Typical & Max & Units\\
     \hline\hline
-    P\subscript{total} & Total power consumption & & & 27& \si{\watt}\\
+    P\subscript{total} & Total power consumption & & & \ifxHPTDC{20}{10}& \si{\watt}\\
     \hline
     VCC\subscript{3.3} & PCIe \SI{3.3}{\volt} rail power supply voltage &3.1&3.3&3.5& \si{\volt}\\
     \hline
-    I\subscript{3.3} & PCIe \SI{3.3}{\volt} rail input current & & &1.8& \si{\ampere}\\
+    I\subscript{3.3} & PCIe \SI{3.3}{\volt} rail input current & & &\txh{650}{600}{600}& \si{\milli\ampere}\\
     \hline
     VCC\subscript{12} & PCIe \SI{12}{\volt} rail power supply voltage &11.1&12.0&12.9& \si{\volt}\\
     \hline
-    I\subscript{12} & PCIe \SI{12}{\volt} rail input current & & & 1.9 & \si{\ampere}\\
+    I\subscript{12} & PCIe \SI{12}{\volt} rail input current & & & \txh{550}{650}{1500} & \si{\milli\ampere}\\
     \hline
     VCC\subscript{aux} & PCIe 3.3\,V\subscript{Aux} rail power supply voltage &&3.3&& \si{\volt}\\
     \hline
-    I\subscript{aux} & PCIe 3.3\,V\subscript{Aux} rail input current &&0&& \si{\ampere}\\
+    I\subscript{aux} & PCIe 3.3\,V\subscript{Aux} rail input current &&0&& \si{\milli\ampere}\\
     \hline
 \end{tabularx}
 
