@@ -256,16 +256,17 @@ It uses multiple substructures to configure various aspects of the board.
                 0 &\leq N < 32
             \end{align*}
 
-            Otherwise the parameters can be used with the following boundaries.
+            Otherwise, the parameters can be used with the following boundaries.
             \begin{align*}
                 T &= M + [1...2^N] - 1\\
-                0 &\leq M < 2^{32}\\
+                M_{\mathrm{min}} &\leq M < 2^{32}\\
                 0 &\leq N < 32
             \end{align*}
+            where $M_{\mathrm{min}}$ is 6 for Gen\,1 and 8 for Gen\,2.
        }{%xTDC4        
             \begin{align*}
                 T &= M + [1...2^N] - 1\\
-                0 &\leq M < 2^{32}\\
+                6 &\leq M < 2^{32}\\
                 0 &\leq N < 32
             \end{align*} 
         }
