@@ -1,0 +1,64 @@
+{
+    "latex-workshop.latex.recipe.default": "lastUsed",
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "TT4",
+            "tools": [
+                "lualatex-TT4",
+            ]
+        },
+        {
+            "name": "xTDC4",
+            "tools": [
+                "lualatex-xTDC4",
+            ]
+        },
+        {
+            "name": "xHPTDC8",
+            "tools": [
+                "lualatex-xHPTDC8",
+            ]
+        },
+        {
+            "name": "run all three",
+            "tools": [
+                "lualatex-TT4",
+                "lualatex-xTDC4",
+                "lualatex-xHPTDC8",
+            ]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "lualatex-TT4",
+            "command": "lualatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "TimeTagger4_User_Guide.tex"
+            ]
+        },
+        {
+            "name": "lualatex-xTDC4",
+            "command": "lualatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "xTDC4_User_Guide.tex"
+            ]
+        },
+        {
+            "name": "lualatex-xHPTDC8",
+            "command": "lualatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "xHPTDC8_User_Guide.tex"
+            ]
+        },
+    ]
+}
