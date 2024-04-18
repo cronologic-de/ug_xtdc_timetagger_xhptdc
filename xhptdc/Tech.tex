@@ -27,24 +27,31 @@ Each board is tested against the values listed in the columns `Min' and `Max`. `
             \hline
         \end{tabularx}
 
-    \subsection{Time Base}
+    \subsection{Oscillator Time Base}
 
         \noindent
         \begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
             \hline
             Symbol & Parameter & Min & Typical & Max & Units\\
             \hline\hline
-                ΔT  & Temperature stability 20°C to 70°C & & 10  & 25 & ppb \\
+                ΔT & Stability in temperature range \SIrange{-20}{70}{\degreeCelsius}$^1$ & & & 10 & ppb \\
             \hline
-                F & Initial calibration & & 500 & 1000 & ppb \\
+                F & Initial calibration & & <300 & 500 & ppb \\
             \hline
-                ΔF/F\subscript{1} & Aging per year & & 100 & 200 & ppb \\
+                ΔF/F\subscript{1} & Aging first year & & & 100 & ppb \\
             \hline
-                ΔF/F\subscript{10} & Aging 10 years & & 1000 & 2000 & ppb \\ 
+                ΔF/F\subscript{20} & All inclusive aging 10 years & & & 1000 & ppb \\ 
+            \hline
+                & Warm-up$^2$ & & & 3 & min. \\ 
             \hline
         \end{tabularx}
+        \begingroup
+        \small
+        $^1$Over --40\,°C to +85\,°C; relative to stabilized frequency after 1\,hour of continuous operation\newline
+        $^2$@+25\,°C; within $\pm$100\,ppb of F, where F is the stabilized frequency reached after 1\,hour of continuous operation
+        \endgroup
 
-        \subsection{ADC}
+    \subsection{ADC}
         \noindent
         \begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
             \hline
