@@ -13,7 +13,7 @@ The period is
 \end{align*}
 clock cycles\ 
 \ifxHPTDC{%
-    of the 150\,MHz.}
+    with a duration of 1/150\,MHz = $6.\overline{6}$\,ns per clock cycle.}
 {
     \itett{
         with a duration of \SI{4}{\nano\second} per cycle for Gen\,1 and
@@ -23,7 +23,11 @@ clock cycles\
     }{
         with a duration of \SI{4}{\nano\second} per cycle.
     }
-}\par
+}
+Here, \itett{$M_{\mathrm{min}}\leq M < 2^{32}$}{$6 \leq M < 2^{32}$} and 
+$0 \leq N < 32$\itett{, where $M_{\mathrm{min}} = 6$ for Gen\,1 and 
+$M_{\mathrm{min}} = 8$ for Gen\,2}{}.
+\par
 
 The trigger can be used as a source for the TiGer unit (see
 Section~\ref{cp:tiger}) \txh{and defines the period for the continuous mode

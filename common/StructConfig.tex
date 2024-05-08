@@ -114,7 +114,7 @@ It uses multiple substructures to configure various aspects of the board.
 
     \label{apidcoffset}
     \ifxHPTDC{
-        \item[\cronvar{double}{threshold[\PREFIX TDC\tu CHANNEL\tu COUNT]}%
+        \item[\cronvar{double}{trigger\_threshold[\PREFIX TDC\tu CHANNEL\tu COUNT]}%
             \txhinits{}{}{-0.35}]
         Set the threshold voltage for the input channels
         \ifxHPTDC{A \ldots H}{S, A \ldots D} (see Figure~\ref{fig:dcoffset1}).
@@ -200,7 +200,7 @@ It uses multiple substructures to configure various aspects of the board.
         Configuration of the TDC channels.
 
     \ifxHPTDC{
-        \item[\cronvar{\prefix channel}{adc\tu channel}]
+        \item[\cronvar{\prefix adc\_channel}{adc\tu channel}]
         Configuration of the ADC channel.
 
         \item[\cronvar{crono\tu bool\tu t}{skip\tu alignment}%
@@ -256,16 +256,17 @@ It uses multiple substructures to configure various aspects of the board.
                 0 &\leq N < 32
             \end{align*}
 
-            Otherwise the parameters can be used with the following boundaries.
+            Otherwise, the parameters can be used with the following boundaries.
             \begin{align*}
                 T &= M + [1...2^N] - 1\\
-                0 &\leq M < 2^{32}\\
+                M_{\mathrm{min}} &\leq M < 2^{32}\\
                 0 &\leq N < 32
             \end{align*}
+            where $M_{\mathrm{min}}$ is 6 for Gen\,1 and 8 for Gen\,2.
        }{%xTDC4        
             \begin{align*}
                 T &= M + [1...2^N] - 1\\
-                0 &\leq M < 2^{32}\\
+                6 &\leq M < 2^{32}\\
                 0 &\leq N < 32
             \end{align*} 
         }
@@ -520,7 +521,7 @@ Contains TDC channel settings.
 }
 %%%%%%%%%%%%%%%%%%%%%% adc channel
 \ifxHPTDC{
-    \subsection{Structure adc\tu channel}
+    \subsection{Structure xhptdc8\tu adc\tu channel}
     \label{structadcchannel}
     This structure configures the ADC input and the corresponding trigger
     input. See section \ref{adc}.
@@ -639,16 +640,16 @@ Contains TDC channel settings.
         channel bitmask. As default, filtering is active for all channels.
 
         \item[\cronvar{crono\tu bool\tu t}{veto\tu relative\tu zero}%
-            \txhinits{}{}{0}]
+            \txhinits{}{}{false}]
         If set, the veto window is defined relative to the zero channel.
         Otherwise, the window is defined relative to the trigger.
 
         \item[\cronvar{crono\tu bool\tu t}{ignore\tu empty\tu events}%
-            \txhinits{}{}{0}]
+            \txhinits{}{}{false}]
         Discard groups which contained only a trigger signal.
 
         \item[\cronvar{crono\tu bool\tu t}{overlap}%
-            \txhinits{}{}{0}]
+            \txhinits{}{}{false}]
         Unsupported, must remain \texttt{false}.
     \end{description}
 }{}

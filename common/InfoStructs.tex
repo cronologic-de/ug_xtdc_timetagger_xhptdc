@@ -157,9 +157,11 @@ run time. It is provided by the function
     DIN EN ISO 8601 string YYYY-MM-DD HH:MM of the time when the card
     was calibrated.
 
-    \item[\cronvar{char}{bitstream\tu date[20]}]
-    DIN EN ISO 8601 string YYYY-MM-DD HH:MM of the time when the bitstream on
-    the card was created.
+    \ifxHPTDC{}{
+        \item[\cronvar{char}{bitstream\tu date[20]}]
+        DIN EN ISO 8601 string YYYY-MM-DD HH:MM of the time when the bitstream
+        on the card was created.
+    }
 
     \txh{
         \item[\cronvar{double}{delay\tu bin\tu size}]
