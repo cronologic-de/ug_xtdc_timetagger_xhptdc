@@ -1,5 +1,6 @@
 .vscode/*
 !.vscode/settings.json
+!.vscode/README.md
 User_Guide.*
 TimeTagger4_User_Guide.*
 xHPTDC8_User_Guide.*
