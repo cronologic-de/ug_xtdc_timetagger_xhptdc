@@ -164,6 +164,22 @@ disconnected while installing the board.\par
     \end{small}
     \end{table}
 
+%%%%%%%%%%%%%%% LEDs
+\section{Status LEDs}
+Three status LEDs are present on the board, as seen in 
+Figure~\ref{fig:schematics}.
+\begin{itemize}
+    \item LED1 lights up red during the configuration of the FPGA
+        and turns off afterward. If it stays permanently lit, the
+        configuration failed.
+    \item LED2 lights up green after the board is initialized by the
+        driver and turns off when the device is closed by the
+        software.
+    \item LED3 lights up green when capture is started, yellow after
+        the first start signal was detected and red when groups are
+        missing.
+\end{itemize}
+
 %%%%%%%%%%%%%%% multiboard
 \ifxHPTDC{
     \section{Synchronizing multiple boards}
