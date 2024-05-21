@@ -492,7 +492,8 @@ Contains TDC channel settings.
         \item[\protect{\parbox[b]{0.8\linewidth}{
             \cronvar{uint32\tu t}{start}\\
             \cronvar{uint32\tu t}{stop}}}]
-        Veto function for grouping of hits into packets in multiples of the binsize. Only hits between start and stop are read out.
+        Veto function for grouping of hits into packets in multiples of the
+        binsize. Only hits between start and stop are read out.
         The parameters must adhere to the following relations:
         \begin{align*}
             0 \le \texttt{start} \le \texttt{stop} < 2^{\itett{31}{30}}
@@ -552,7 +553,7 @@ Contains TDC channel settings.
 \ifxHPTDC{
     \subsection{Structure \prefix grouping\tu configuration}
     \label{structgrouping}
-    This structure configures the behaviour of the grouping functionality (see
+    This structure configures the behavior of the grouping functionality (see
     Section~\ref{sec:grouping}).
 
     In this structure intervals are always provided in picoseconds,
@@ -587,7 +588,7 @@ Contains TDC channel settings.
             End of group range relative to the \texttt{trigger\tu channel}.\par
             Values in the interval from \texttt{range\tu start} to
             \texttt{range\tu stop} are included in the group.
-            Either or both values can be negative to create common-stop behaviour.
+            Either or both values can be negative to create common-stop behavior.
             \begin{align*}
                 -2^{63} \le \texttt{range\_start} \le
                     \texttt{range\_stop} < 2^{63}
