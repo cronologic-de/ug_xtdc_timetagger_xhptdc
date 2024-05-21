@@ -2,13 +2,23 @@
 
 \section{User Guide}
 
-\begin{tabularx}{\textwidth}{|c|c|X|}
+\begin{xltabular}{\textwidth}{|c|c|X|}
     \hline
     Revision & Date & Comments \\
     \hline\hline
-    \hypertarget{ugrev}{1.8.16-rc} & 2024-05-16 &
+    \endfirsthead
+
+    \multicolumn{3}{c}{continued from previous page} \\
+
+    \hline
+    Revision & Date & Comments \\
+    \hline\hline
+    \endhead
+
+    \hypertarget{ugrev}{1.8.16-rc} & 2024-05-21 &
     \makecell[l]{
         xTDC4 and TimeTagger4: Added LED documentation\\*
+        xHPTDC8: Fixed default values for zero\_channel\\*
     }\\
     \hline
     {1.8.15} & 2024-05-08 &
@@ -120,4 +130,4 @@
     \hline
     \itett{1.3.0}{1.6.0} & 2019-06-05 & API clarifications \\
     \hline
-\end{tabularx}
+\end{xltabular}
