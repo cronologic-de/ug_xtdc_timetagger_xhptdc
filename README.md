@@ -12,6 +12,14 @@ xelatex TimeTagger4_User_Guide.tex
 ```
 XeLaTeX can be replaced by LuaLaTeX if desired.
 
+If you have `latexmk` on your system, you can build the user guides using the provided `make.bat` script. The script uses `latexmk` and `lualatex`. It has the following options
+```shell
+.\make.bat tt4      // compile TimeTagger4 User Guide
+.\make.bat xtdc4    // compile xTDC4 User Guide
+.\make.bat xhptdc8  // compile xHPTDC8 User Guide
+.\make.bat clean    // delete unnecessary LaTeX files
+```
+
 To update the xHPTDC8 source code example to the latest version from its [repository](https://github.com/cronologic-de/xhptdc8_babel/tree/main/ug_example), you should execute the following commands before compiling:
 ```shell
 git fetch https://github.com/cronologic-de/xhptdc8_babel.git
