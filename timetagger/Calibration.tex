@@ -1,0 +1,28 @@
+\section{Calibration of the 10G variant}
+
+After performing a firmware update, the TimeTagger4-10G has to be re-calibrated.
+This does \emph{only} apply to the 10G variant.
+
+For this purpose, cronologic provides the \texttt{TT4\_10G\_Calibration\_64} command-line tool (located in the driver installation directory TODO).
+
+To perform a calibration, you need a NIM signal with a constant frequency larger than 20\,kHz and smaller than 10\,MHz.
+
+Run the \texttt{TT4\_10G\_Calibration\_64} tool and follow the instructions on-screen, that is:
+
+\begin{itemize}
+    \item Connect the NIM signal to channel Start and press enter. The tool will calibrate the Start channel.
+    \item After Start was successfully calibrated, connect the same NIM signal to channel A and press enter. The tool will calibrate channel A.
+    \item Repeat this process for channels B, C, and D, as well.
+\end{itemize}
+
+After a successful calibration of the TimeTagger4-10G, the message ``Calibrated all channels successfully'' will be displayed.
+You can close the calibration tool.
+
+In case the calibration fails, please check the following:
+\begin{itemize}
+    \item The TimeTagger4-10G is installed properly (see Section~\ref{sec:installation-of-board}).
+    \item A proper NIM signal with a constant frequency larger than 20\,kHz and smaller than 10\,MHz is used.
+    \item The NIM signal was connected to the appropriate input channel (see Figure~\ref{fig:bracket}).
+\end{itemize}
+
+If the calibration still fails, please contact \href{https://www.cronologic.de/contact}{cronologic support}.
