@@ -368,7 +368,7 @@ See Section~\ref{cp:tiger} for additional information.
     }{}
 
     \item[\cronvar{crono\tu bool\tu t}{retrigger}\txhinits{}{}{false}]
-    Enables retrigger setting.\par
+    Enables re-trigger setting.\par
     If enabled the timer is reset to the value of the \textit{start}
     parameter, whenever the input signal is set while waiting to reach the
     \textit{stop} time.
@@ -378,9 +378,9 @@ See Section~\ref{cp:tiger} for additional information.
 
     \ifxHPTDC{}{
         \item[\cronvar{crono\tu bool\tu t}{enable\tu lemo\tu output}]
-        Enables the LEMO output. Drive the TiGer Signal to the corresponding
+        Enables the LEMO output. Drive the TiGer signal to the corresponding
         LEMO connector as an output.  This is DC coupled, so make sure that
-        you do not any devices connected as inputs.  Pulses created by the
+        you do not connect any devices as inputs. Pulses created by the
         TiGer are visible at the inputs of the \deviceName\ and can be
         measured again to get the exact timing. 
     }
@@ -576,7 +576,7 @@ Contains TDC channel settings.
         \item[\cronvar{u\longlong}{trigger\tu channel\tu bitmask}%
             \txhinits{}{}{0ull}]
         Use this to define additional trigger channels. There is an
-        OR-disjuction with the \mbox{\texttt{trigger\tu channel}}.
+        OR-disjunction with the \mbox{\texttt{trigger\tu channel}}.
 
         \item[\cronvar{int}{zero\tu channel}\txhinits{}{}{-1}]
         Optionally a different channel can be used to calculate the relative
@@ -626,7 +626,7 @@ Contains TDC channel settings.
         can be used to suppress hits.  The functionality is very similar to
         the gating blocks but is defined in software.  While gating blocks can
         only work locally on the information available within each board the
-        veto function is applied globally accross all boards.  This feature
+        veto function is applied globally across all boards.  This feature
         cannot be used to improve FIFO usage or PCIe bandwidth usage.\par
         Either data inside or outside the veto window can be suppressed.\par
         \begin{tabular}{lc}

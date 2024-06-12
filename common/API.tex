@@ -106,16 +106,16 @@ these functions.
     this driver.  Pointers to an error code and message variable have to be
     provided. If {\ttfamily error\_code} does not equal
     {\ttfamily\ttdef{OK} = 0}, the error message will contain what went wrong.
-    E.g., crono kernel was not properly installed. \par
+    E.g., the crono kernel was not properly installed. \par
 \end{description}
 
 
 
 
 \section{Initialization}
-The card must be initialized first before reading data. Normally the process is
-to get the default init parameters and change some values. E.g., choose one of
-multiple cards by the index or use a larger buffer.
+The card must be initialized first before reading data. Normally the process is 
+to get the default initialization parameters and change some values. E.g., 
+choose one of multiple cards by the index or use a larger buffer.
     
 
 \begin{description}[style=nextline]
@@ -127,7 +127,7 @@ multiple cards by the index or use a larger buffer.
     \texttt{\prefix init}.
 
     \ifxHPTDC{
-        \item[\ttvar{int}{init(}\cronvar{\initparameters}{*params})]
+        \item[\ttvar{int}{init(}\cronvar{\initparameters}{*params})]%
     }{
         \item[\cronvar{\prefix device}{\prefix
             init(}\cronvar{\initparameters}{*params}, \cronvar{int}{*error\tu
@@ -178,7 +178,7 @@ multiple cards by the index or use a larger buffer.
         \deviceName\ cards are used this number can be set to the
         \texttt{card\tu index}.  If boards of different types that use a
         compatible data format are used in a system each board should get a
-        unique id.  Can be changed with \texttt{int \prefix set\tu board\tu
+        unique ID.  Can be changed with \texttt{int \prefix set\tu board\tu
         id\allowbreak(\prefix device *device, int board\tu id)}.}
 
 
@@ -187,7 +187,7 @@ multiple cards by the index or use a larger buffer.
         \txh{}{}{\normalfont\ttfamily\ // 0x1000000 (16 MB)}]
     The minimum size of the DMA buffer.\\
     If set to \texttt{0} the default size of 16\,MByte is used. 
-    \ifxHPTDC{}{For the \deviceName\ only the first entry is used.}\par
+    \ifxHPTDC{}{For the \deviceName, only the first entry is used.}\par
 
     \ifxHPTDC{}{
         \item[\cronvar{int}{buffer\tu type}]
@@ -226,7 +226,7 @@ multiple cards by the index or use a larger buffer.
 
     \item[\cronvar{int}{dma\tu read\tu delay}\txhinits{}{}{250}]
     The update delay of the write pointer after a packet has been sent over
-    PCIe. Specified in multiples of \SI{16}{\nano\second}.  Should not be
+    PCIe. Specified in multiples of 16\,ns.  Should not be
     changed by the user.
 
     \ifxHPTDC{
@@ -293,7 +293,7 @@ the user application and use the result to configure the device.\par
     There exist a community maintained utility library for the \deviceName\
     that contains a convenience function that can modify configuration
     structures from a YAML config string. This can significantly shorten code
-    required to setup the TDC. \par
+    required to set up the TDC. \par
     See \href{https://github.com/cronologic-de/xhptdc8_babel/tree/main/util}{
         github.com/cronologic-de/xhptdc8\tu babel/tree/main/util} for details.  
 }{} 
@@ -306,9 +306,9 @@ the user application and use the result to configure the device.\par
 
 \ifxHPTDC{
     \section{User Data Storage}
-    There is a 64~kByte flash memory on each board that users can utilize to
+    There is a 64\,kByte flash memory on each board that users can utilize to
     store any type of data.  A typical use case would be calibration data for
-    the \deviceName\ or the detectors that the device is connected to.  Also
+    the \deviceName\ or the detectors that the device is connected to.  Also,
     serial numbers of instruments built with the \deviceName\ can be stored
     here. Write operations always erase the whole memory block.\par
 
