@@ -7,7 +7,7 @@
     The measurements are quantized as shown in Section~\ref{sec:features}. 
     The timestamps are recorded in integer multiples of the corresponding bin
     size.  Transitions of the input signals are called hits. To reliably
-    detect hits the signal has to be stable for more than one quantisation
+    detect hits the signal has to be stable for more than one quantization
     interval before and after the edge.  Triggers on the start channel must
     not occur less than \SI{5}{\nano\second} apart. The \deviceName\ records
     events without dead time at a readout rate of about 48\,MHits/s for Gen\,1
@@ -18,7 +18,7 @@
     It records the time difference between leading or trailing edges on the
     start input and the stop inputs.  Each stop channel A-D can be enabled
     individually.  The standard deviation of the timestamps is approx.
-    \SI{8}{\pico\second}.  The timestamps are recorded in integer multiples of
+    8\,ps. The timestamps are recorded in integer multiples of
     a bin size of $5000/(3\times 128) = 13.0208\overline{3}$\,ps. The data
     acquisition can be limited to rising or falling signal transitions. 
 
@@ -42,7 +42,7 @@
     Between multiple hits on a stop channel a dead time of approximately
     \SI{5}{\nano\second} is required for full resolution.  Hits that are
     closer together will only be reported with a resolution of
-    $5/6$\,\si{\nano\second} = $833.\overline{3}$\,\si{\pico\second}. For these
+    $5/6$\,ns = $833.\overline{3}$\,ps. For these
     hits both bits 6 and 7 are set.
 
     Data is copied from the 15-entry L0 FIFO to the larger downstream FIFOs at
@@ -55,13 +55,13 @@
     The \deviceName\ is a streaming time-to-digital converter. It records the
     timestamps of changes at the inputs A-H in an infinite stream.  A flexible
     grouping mode is available that can emulate common-start or common-stop
-    behaviour. See Section~\ref{sec:grouping} for details.
+    behavior. See Section~\ref{sec:grouping} for details.
 
     For each channel, it can be selected individually whether rising or
     falling edges are recorded. It is not possible to record both edges of the
     same channel.  The timestamps are recorded in integer multiples of a bin
-    size of $5000/(3\times 128) = 13.0208\overline{3}$\,\si{\pico\second}. 
+    size of $5000/(3\times 128) = 13.0208\overline{3}$\,ps. 
     There must be at least \SI{5}{\nano\second} between consecutive hits on
     the same input channel to be detected reliably.  The \deviceName\ records
-    events without dead time at a readout rate of about $48$\,MHits/s.
+    events without dead time at a readout rate of about 48\,MHits/s.
 }

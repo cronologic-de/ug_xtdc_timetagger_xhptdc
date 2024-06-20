@@ -188,6 +188,13 @@ It uses multiple substructures to configure various aspects of the board.
         tiger\tu block[\PREFIX TIGER\tu COUNT]}]
     Configuration of the timing generators (TiGer, see
     Section~\ref{cp:tigerblock}).
+    \ifxHPTDC{
+        \par Indices 0 through 7 refer to channels A through H; index 8
+        to channel TRG.
+    }{
+        \par Index 0 refers to the Start channel; indices 1 through 4 to the
+        Stop channels A through D.
+    }
 
     \ifxHPTDC{ % only for xHPTDC8
         \label{member:gating_block}
@@ -321,7 +328,7 @@ the inputs create trigger events for the TiGer \ifxHPTDC{and gating }{}blocks.
 \end{description}
 
 %%%%% tiger_block
-\subsection{Structure \prefix tiger\tu block\label{cp:tigerblock}}
+\subsection{Structure \prefix tiger\tu block}\label{cp:tigerblock}
 See Section~\ref{cp:tiger} for additional information.
 
 \begin{description}[style=nextline]
@@ -361,7 +368,7 @@ See Section~\ref{cp:tiger} for additional information.
     }{}
 
     \item[\cronvar{crono\tu bool\tu t}{retrigger}\txhinits{}{}{false}]
-    Enables retrigger setting.\par
+    Enables re-trigger setting.\par
     If enabled the timer is reset to the value of the \textit{start}
     parameter, whenever the input signal is set while waiting to reach the
     \textit{stop} time.
@@ -371,9 +378,9 @@ See Section~\ref{cp:tiger} for additional information.
 
     \ifxHPTDC{}{
         \item[\cronvar{crono\tu bool\tu t}{enable\tu lemo\tu output}]
-        Enables the LEMO output. Drive the TiGer Signal to the corresponding
+        Enables the LEMO output. Drive the TiGer signal to the corresponding
         LEMO connector as an output.  This is DC coupled, so make sure that
-        you do not any devices connected as inputs.  Pulses created by the
+        you do not connect any devices as inputs. Pulses created by the
         TiGer are visible at the inputs of the \deviceName\ and can be
         measured again to get the exact timing. 
     }
@@ -492,7 +499,8 @@ Contains TDC channel settings.
         \item[\protect{\parbox[b]{0.8\linewidth}{
             \cronvar{uint32\tu t}{start}\\
             \cronvar{uint32\tu t}{stop}}}]
-        Veto function for grouping of hits into packets in multiples of the binsize. Only hits between start and stop are read out.
+        Veto function for grouping of hits into packets in multiples of the
+        binsize. Only hits between start and stop are read out.
         The parameters must adhere to the following relations:
         \begin{align*}
             0 \le \texttt{start} \le \texttt{stop} < 2^{\itett{31}{30}}
@@ -552,7 +560,7 @@ Contains TDC channel settings.
 \ifxHPTDC{
     \subsection{Structure \prefix grouping\tu configuration}
     \label{structgrouping}
-    This structure configures the behaviour of the grouping functionality (see
+    This structure configures the behavior of the grouping functionality (see
     Section~\ref{sec:grouping}).
 
     In this structure intervals are always provided in picoseconds,
@@ -568,9 +576,9 @@ Contains TDC channel settings.
         \item[\cronvar{u\longlong}{trigger\tu channel\tu bitmask}%
             \txhinits{}{}{0ull}]
         Use this to define additional trigger channels. There is an
-        OR-disjuction with the \mbox{\texttt{trigger\tu channel}}.
+        OR-disjunction with the \mbox{\texttt{trigger\tu channel}}.
 
-        \item[\cronvar{int}{zero\tu channel}\txhinits{}{}{0}]
+        \item[\cronvar{int}{zero\tu channel}\txhinits{}{}{-1}]
         Optionally a different channel can be used to calculate the relative
         timestamps in a group.  This is disabled per default by setting this
         parameter to \texttt{-1}.
@@ -587,7 +595,7 @@ Contains TDC channel settings.
             End of group range relative to the \texttt{trigger\tu channel}.\par
             Values in the interval from \texttt{range\tu start} to
             \texttt{range\tu stop} are included in the group.
-            Either or both values can be negative to create common-stop behaviour.
+            Either or both values can be negative to create common-stop behavior.
             \begin{align*}
                 -2^{63} \le \texttt{range\_start} \le
                     \texttt{range\_stop} < 2^{63}
@@ -618,7 +626,7 @@ Contains TDC channel settings.
         can be used to suppress hits.  The functionality is very similar to
         the gating blocks but is defined in software.  While gating blocks can
         only work locally on the information available within each board the
-        veto function is applied globally accross all boards.  This feature
+        veto function is applied globally across all boards.  This feature
         cannot be used to improve FIFO usage or PCIe bandwidth usage.\par
         Either data inside or outside the veto window can be suppressed.\par
         \begin{tabular}{lc}

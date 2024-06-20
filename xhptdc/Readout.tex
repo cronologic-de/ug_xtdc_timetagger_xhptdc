@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%% run time control
 \section{Controlling the State of the Driver}
 Once the devices are configured the following functions can be used to control
-the behaviour of the devices.  All of these functions return quickly with very
+the behavior of the devices.  All of these functions return quickly with very
 little overhead, but they are not guaranteed to be thread safe.
 
 \begin{description}[style=nextline]
@@ -10,8 +10,7 @@ little overhead, but they are not guaranteed to be thread safe.
 
     \item[\ttvar{int}{pause\tu capture(})]
     Pause a started data acquisition. 
-    Pause and continue have less overhead than start and stop but don't allow
-    for a configuration change.
+    \emph{Pause} and \emph{continue} have less overhead than \emph{start} and \emph{stop} but don't allow for a configuration change.
 
     \item[\ttvar{int}{continue\tu capture(})]
     Call this to resume data acquisition after a call to
@@ -29,7 +28,7 @@ little overhead, but they are not guaranteed to be thread safe.
     
     \item[\ttvar{int}{software\tu trigger(}\cronvar{int}{index})]
     Sets the software trigger for one clock cycle.  This can be configured for
-    the TiGer and for the gating blocks as trigger source
+    the TiGer and for the gating blocks as trigger-source
     \texttt{\PREFIX TRIGGER\tu SOURCE\tu SOFTWARE}. 
 \end{description}
 

@@ -1,3 +1,4 @@
+\label{sec:installation-of-board}
 \section{Installing the Board}
 The \deviceName\ board can be installed in any PCIe-CEM slot with x1 or more
 lanes.  Make sure the PC is powered off and the main power connector is
@@ -79,7 +80,7 @@ disconnected while installing the board.\par
         \end{figure*}
     %
     \ifxHPTDC{
-        Furthermore three inter-board connectors can be found near the top
+        Furthermore, three inter-board connectors can be found near the top
         edge of the \deviceName\ board, as displayed in
         Figure~\ref{fig:schematics}.  Connector J25 is reserved for future
         use. The pinout of connector J12 is shown in Table \ref{J12} and the
@@ -93,7 +94,7 @@ disconnected while installing the board.\par
         Figure~\ref{fig:schematics}.  Connector J25 is reserved for future
         use. The pinout of connector J12 is shown in Table \ref{J12} and the
         pinout of connector J6 is depicted in Table \ref{J6}. \textbf{Gen\,2
-        boards do not posses these three connectors}.
+        boards do not possess these three connectors}.
     }
 
     \begin{table}
@@ -164,6 +165,22 @@ disconnected while installing the board.\par
     \end{small}
     \end{table}
 
+%%%%%%%%%%%%%%% LEDs
+\section{Status LEDs}
+Three status LEDs are present on the board, as seen in 
+Figure~\ref{fig:schematics}.
+\begin{itemize}
+    \item LED1 lights up red during the configuration of the FPGA
+        and turns off afterward. If it stays permanently lit, the
+        configuration failed.
+    \item LED2 lights up green after the board is initialized by the
+        driver and turns off when the device is closed by the
+        software.
+    \item LED3 lights up green when capture is started, yellow after
+        the first start signal was detected and red when groups are
+        missing.
+\end{itemize}
+
 %%%%%%%%%%%%%%% multiboard
 \ifxHPTDC{
     \section{Synchronizing multiple boards}
@@ -180,7 +197,7 @@ disconnected while installing the board.\par
 
         \subsection{Connecting multiple boards}
             The boards must each receive a common \SI{10}{\mega\hertz} clock
-            on connector J2. The connector is inside the PC enclosure. 
+            signal on connector J2. The connector is inside the PC enclosure. 
             Connectors J12 of all boards must be connected with a flat band
             cable with a terminator at each end.  Cable and Terminator are
             available from cronologic. See Figure~\ref{fig:multiboard} for a

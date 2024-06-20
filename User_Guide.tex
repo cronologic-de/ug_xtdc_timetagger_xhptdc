@@ -113,7 +113,7 @@
 \newcommand{\ttvar}[2]{\noindent\texttt{\textbf{\textcolor{cronogrey}{#1} \prefix #2}}}%for variable declaration
 \newcommand{\ttdef}[1]{\noindent\texttt{\textcolor{cronogrey}{\mbox{\#{}define}} \PREFIX #1}}%for definitions
 
-\newcommand{\ugrev}{{1.8.15}}
+\newcommand{\ugrev}{{1.8.16}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{document}
@@ -135,7 +135,10 @@
     \chapter{\deviceName\ Functionality}
         \input{common/Functionality.tex} 
         \input{common/Grouping.tex}
-        \input{common/AutoTiger.tex} 
+        \input{common/AutoTiger.tex}
+        \itett{
+            \input{timetagger/Calibration.tex}
+        }{}
 
     \chapter{Driver Programming API\label{cp:api}} 
         % also includes common/StructConfig.tex and common/InfoStructs.tex
@@ -164,7 +167,7 @@
     
     \chapter{Revision History} 
         \noindent
-        User Guide \hyperlink{ugrev}{\ugrev} as of 2024-05-08\\  % needs also be updated in UgRev.tex
+        User Guide \hyperlink{ugrev}{\ugrev} as of 2024-05-21\\  % needs also be updated in UgRev.tex
     %	\\
         cronologic GmbH \& Co. KG\\
         Jahnstraße 49\\

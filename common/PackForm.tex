@@ -110,7 +110,7 @@ uint32_t channel    =  hit       & 0xF;
             Bit\,5\\
             Bit 5: If set, this hit is a rollover. The time since the
             start pulse exceeded the 24-bit range that can be encoded in a
-            data word. This word does not encode a measurement.  Instead
+            data word. This word does not encode a measurement. Instead,
             the readout software should increment a rollover counter that can
             be used as the upper bits of consecutive time stamps.  The
             counters must be reset for each packet.  The total offset of a hit
@@ -149,8 +149,7 @@ uint32_t channel    =  hit       & 0xF;
             \item\ttdef{HIT\tu FLAG\tu TIME\tu OVERFLOW}~2~$\leftrightarrow$ Bit\,5\\
             Bit 5: Rollover. The time since start pulse exceeded the 24-bit range
             that can be encoded in a data word. This word does not encode a
-            measurement.  Instead the readout software should increment a rollover
-            counter that can be used as the upper bits of consecutive time stamps.
+            measurement.  Instead, the readout software should increment a rollover counter that can be used as the upper bits of consecutive time stamps.
             The counters should be reset for each packet.  The total offset of a
             hit in picoseconds can be computed by
             \begin{align*}

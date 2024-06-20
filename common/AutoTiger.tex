@@ -161,7 +161,7 @@ corresponding LEMO connector. This turns the connector into an output.
     Figure~\ref{fig:bracket}) of the ADC. See Section~\ref{adc} for additional
     information on the ADC. 
 
-    With retrigger enabled, the ADC TiGer can be used to periodically
+    With re-trigger enabled, the ADC TiGer can be used to periodically
     sample ADC data.  The period should be no shorter than
     \SI{300}{\nano\second} or 45 TiGer clocks.
 
@@ -188,12 +188,12 @@ corresponding LEMO connector. This turns the connector into an output.
     If \emph{negate} is false, the gate is open while its output is active.
     If \emph{negate} is true, the gate is closed while its output is active.
     
-    If retriggering is enabled, the timer of the gate is reset when a second
+    If re-triggering is enabled, the timer of the gate is reset when a second
     trigger event is recorded while the gate is active, i.e., the time while
     the gate is active is extended. If the second trigger event is recorded
     \textit{before} the gate activates, the gate-timer is reset to zero, i.e.,
     it will take the whole \textit{Gate~Start} time until the gate activates.
-    If retriggering is disabled, all secondary trigger events will be ignored
+    If re-triggering is disabled, all secondary trigger events will be ignored
     until the \textit{Gate~Stop} time is reached.
 
     An overview of different combinations of \emph{retrigger} and \emph{negate}
