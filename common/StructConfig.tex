@@ -140,7 +140,7 @@ It uses multiple substructures to configure various aspects of the board.
 }{
     \newcommand{\DCOFFSET}{DC\tu OFFSET\tu}
 }
-    \begin{tabular}{ll}
+    \begin{xltabular}{\textwidth}{ll}
         \ttdef{\DCOFFSET P\tu NIM} & \texttt{+0.35}\\
         \ttdef{\DCOFFSET P\tu CMOS} & \texttt{+\dcmax}\\
         \ttdef{\DCOFFSET P\tu LVCMOS\tu 33} & \texttt{+\dcmax}\\
@@ -161,7 +161,7 @@ It uses multiple substructures to configure various aspects of the board.
         \ttdef{\DCOFFSET N\tu LVTTL\tu 25} & \texttt{-1.25}\\
         \ttdef{\DCOFFSET N\tu SSTL\tu 3} & \texttt{-\dcminabs}\\
         \ttdef{\DCOFFSET N\tu SSTL\tu 2} & \texttt{-1.25}\\
-    \end{tabular}\par
+    \end{xltabular}\par
     \noindent The inputs are AC coupled. Thus, the absolute voltage is not
     important for pulse inputs.  It is the relative pulse amplitude that
     causes the input circuits to switch.  The parameter must be set to the
