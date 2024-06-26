@@ -4,13 +4,13 @@
     The \deviceName\ is available as a PCIe plugin board (variant ``-PCIe'', see Ordering Information) or as a desktop solution (variant ``-TBT''). The two variants are shown in Figure~\ref{fig:boards-overview}. For a detailed
     overview of the hardware of the TBT-variant, please refer to our respective \href{https://docs.cronologic.de/projects/tbt2pcie/}{online user guide}.
 
-    \begin{figure}[!htb]
+    \begin{figure}[htb]
         \centering
         \itett{
             \includegraphics[width=0.9\textwidth]{timetagger/figures/board-overview}
         }{
 
-            \includegraphics[width=0.9\textwidth]{xtdc/figure/board-overview}
+            \includegraphics[width=0.9\textwidth]{xtdc/figures/board-overview}
         }
         \caption{Overview of the PCIe (left) and the TBT (right) variant of the \deviceName.\textcolor{red}{TODO}}
         \label{fig:boards-overview}
@@ -26,7 +26,7 @@ lanes.  Make sure that the PC is powered off and that the main power connector i
     Figure~\ref{fig:bracket} shows the location of the inputs on the slot
     bracket.  %
     %
-    \begin{figure*}[hb]
+    \begin{figure*}[htb]
         \centering
             \ifxHPTDC{
                 \includegraphics[width=0.6\textwidth]{%
@@ -46,7 +46,7 @@ lanes.  Make sure that the PC is powered off and that the main power connector i
             }
     \end{figure*}
     %
-    \begin{figure*}[hb]
+    \begin{figure*}[htb]
         \centering
             \ifxHPTDC{
                 \includegraphics[width=0.3\textwidth]{%
@@ -79,20 +79,6 @@ lanes.  Make sure that the PC is powered off and that the main power connector i
     triggering and control of external devices can be generated using the
     TiGer timing pattern generator. See Section~\ref{cp:tiger} for details on
     the TiGer. 
-    %
-        \begin{figure*}[ht]
-            \centering
-                \ifxHPTDC{
-                    \includegraphics[width=0.7\textwidth]{%
-                        xhptdc/figures/xHPTDC8_schematic.pdf}
-                }{
-                    \includegraphics[width=0.7\textwidth]{%
-                        figures/xTDC4_schematic.pdf}
-                }
-                \caption{Schematic view of \adeviceName\ Gen\,1 board showing
-                    the inter-board connectors.\label{fig:schematics}}
-        \end{figure*}
-    %
     \ifxHPTDC{
         Furthermore, three inter-board connectors can be found near the top
         edge of the \deviceName\ board, as displayed in
@@ -110,6 +96,20 @@ lanes.  Make sure that the PC is powered off and that the main power connector i
         pinout of connector J6 is depicted in Table \ref{J6}. \textbf{Gen\,2
         boards do not possess these three connectors}.
     }
+    %
+        \begin{figure*}[htb]
+            \centering
+                \ifxHPTDC{
+                    \includegraphics[width=0.7\textwidth]{%
+                        xhptdc/figures/xHPTDC8_schematic.pdf}
+                }{
+                    \includegraphics[width=0.7\textwidth]{%
+                        figures/xTDC4_schematic.pdf}
+                }
+                \caption{Schematic view of \adeviceName\ Gen\,1 board showing
+                    the inter-board connectors.\label{fig:schematics}}
+        \end{figure*}
+    %
 
     \begin{table}
     \begin{small}
@@ -178,20 +178,23 @@ lanes.  Make sure that the PC is powered off and that the main power connector i
     \end{table}
 
 %%%%%%%%%%%%%%% LEDs
-\section{Status LEDs}
-Three status LEDs are present on the board, as seen in 
-Figure~\ref{fig:schematics}.
-\begin{itemize}
-    \item LED1 lights up red during the configuration of the FPGA
-        and turns off afterward. If it stays permanently lit, the
-        configuration failed.
-    \item LED2 lights up green after the board is initialized by the
-        driver and turns off when the device is closed by the
-        software.
-    \item LED3 lights up green when capture is started, yellow after
-        the first start signal was detected and red when groups are
-        missing.
-\end{itemize}
+\ifxHPTDC{}
+{
+    \section{Status LEDs of the PCIe boards}
+    Three status LEDs are present on the board, as seen in 
+    Figure~\ref{fig:schematics}.
+    \begin{itemize}
+        \item LED1 lights up red during the configuration of the FPGA
+            and turns off afterward. If it stays permanently lit, the
+            configuration failed.
+        \item LED2 lights up green after the board is initialized by the
+            driver and turns off when the device is closed by the
+            software.
+        \item LED3 lights up green when capture is started, yellow after
+            the first start signal was detected and red when groups are
+            missing.
+    \end{itemize}
+}
 
 %%%%%%%%%%%%%%% multiboard
 \ifxHPTDC{
@@ -214,7 +217,7 @@ Figure~\ref{fig:schematics}.
             cable with a terminator at each end.  Cable and Terminator are
             available from cronologic. See Figure~\ref{fig:multiboard} for a
             wiring example.  %
-            \begin{figure*}[ht]
+            \begin{figure*}[htb]
                 \centering
                     \includegraphics[width=1\textwidth]{
                         xhptdc/figures/multiboard.pdf}				
@@ -229,7 +232,7 @@ Figure~\ref{fig:schematics}.
             of the ClockBox must be set as shown in Figure~\ref{fig:clockbox}
             in order to set the clock frequency to \SI{10}{\mega\hertz}. 
             %
-            \begin{figure*}[ht]
+            \begin{figure*}[htb]
                 \centering
                     \includegraphics[width=0.5\textwidth]{
                         xhptdc/figures/clockbox.pdf}				
