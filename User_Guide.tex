@@ -164,10 +164,16 @@
     \chapter{Technical Data}    
         \ttinput{Tech.tex} 
         \input{common/DIN.tex}
+
+    \ifxHPTDC{}{
+    \chapter{Ordering Information} \label{cp:ordering_information}
+        \input{xtdc/ordering_information.tex}
+    }
+
     
     \chapter{Revision History} 
         \noindent
-        User Guide \hyperlink{ugrev}{\ugrev} as of 2024-06-21\\  % needs also be updated in UgRev.tex
+        User Guide \hyperlink{ugrev}{\ugrev} as of 2024-06-26\\  % needs also be updated in UgRev.tex
     %	\\
         cronologic GmbH \& Co. KG\\
         Jahnstraße 49\\

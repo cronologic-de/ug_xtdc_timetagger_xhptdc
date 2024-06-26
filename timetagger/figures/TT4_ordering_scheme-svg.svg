@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="168.81577mm"
+   height="53.199635mm"
+   viewBox="0 0 168.81577 53.199634"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="TT4_ordering_scheme-svg.svg"
+   inkscape:export-filename="TT4_ordering_scheme.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.4778115"
+     inkscape:cx="551.49117"
+     inkscape:cy="-17.931922"
+     inkscape:window-width="3440"
+     inkscape:window-height="1369"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g29">
+    <inkscape:grid
+       id="grid1"
+       units="mm"
+       originx="-45.311253"
+       originy="-200.09097"
+       spacingx="0.99999998"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       dotted="false"
+       gridanglex="30"
+       gridanglez="30"
+       visible="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <rect
+       x="-178.64254"
+       y="-169.16907"
+       width="1046.1415"
+       height="479.76349"
+       id="rect3" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-11.988602,-52.940735)">
+    <g
+       id="g28">
+      <g
+         id="g29">
+        <text
+           xml:space="preserve"
+<<<<<<< HEAD
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:8.46667px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#828282;stroke:none;stroke-width:0.264583;stroke-opacity:0.430396;fill-opacity:1"
+           x="27.373783"
+=======
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:8.46667px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#818181;stroke:none;stroke-width:0.264583;stroke-opacity:0;fill-opacity:1"
+           x="51.715473"
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+           y="58.994404"
+           id="text1"><tspan
+             sodipodi:role="line"
+             id="tspan14"
+             x="27.373783"
+             y="58.994404">TimeTagger4</tspan></text>
+        <text
+           xml:space="preserve"
+<<<<<<< HEAD
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:8.46667px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#828282;stroke:none;stroke-width:0.264583;stroke-opacity:0.430396;fill-opacity:1"
+           x="119.02863"
+=======
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:8.46667px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#818181;stroke:none;stroke-width:0.264583;stroke-opacity:0;fill-opacity:1"
+           x="106.32863"
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+           y="59.146801"
+           id="text1-0"><tspan
+             sodipodi:role="line"
+             id="tspan14-8"
+             x="119.02863"
+             y="59.146801">TBT</tspan></text>
+        <text
+           xml:space="preserve"
+<<<<<<< HEAD
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:12.9501px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#828282;stroke:none;stroke-width:0.404691;stroke-opacity:0.430396;fill-opacity:1"
+           x="52.368694"
+=======
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:12.9501px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#818181;stroke:none;stroke-width:0.404691;stroke-opacity:0;fill-opacity:1"
+           x="44.065594"
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+           y="89.194664"
+           id="text1-6"
+           transform="scale(1.5295427,0.65379018)"><tspan
+             sodipodi:role="line"
+             id="tspan20"
+             x="52.368694"
+             y="89.194664"
+<<<<<<< HEAD
+             style="stroke-width:0.404691;stroke:none;fill:#828282;fill-opacity:1">-</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:12.9501px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#828282;stroke:none;stroke-width:0.404691;stroke-opacity:0.430396;fill-opacity:1"
+           x="73.004494"
+=======
+             style="stroke-width:0.404691;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1">-</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:12.9501px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#818181;stroke:none;stroke-width:0.404691;stroke-opacity:0;fill-opacity:1"
+           x="64.701393"
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+           y="89.194664"
+           id="text1-6-9"
+           transform="scale(1.5295427,0.65379018)"><tspan
+             sodipodi:role="line"
+             id="tspan20-8"
+             x="73.004494"
+             y="89.194664"
+<<<<<<< HEAD
+             style="stroke-width:0.404691;stroke:none;fill:#828282;fill-opacity:1">-</tspan></text>
+=======
+             style="stroke-width:0.404691;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1">-</tspan></text>
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+        <path
+           style="opacity:1;fill:#818181;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:0"
+           d="M 51.557224,61.052109 H 66.305945"
+           id="path14" />
+        <path
+<<<<<<< HEAD
+           style="fill:none;fill-opacity:1;stroke:#828282;stroke-width:0.242202;stroke-dasharray:none;stroke-opacity:1"
+           d="m 134.21612,60.889001 h -7.44345 -7.37188"
+           id="path15-5" />
+        <path
+           style="fill:none;fill-opacity:1;stroke:#828282;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:1"
+           d="M 111.25118,61.199667 H 99.105019 87.075716"
+           id="path15-4" />
+        <path
+           style="fill:none;fill-opacity:1;stroke:#828282;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:1"
+           d="m 126.37607,60.942936 v 6.922246 h 31.71422"
+           id="path16-2" />
+        <path
+           style="fill:none;fill-opacity:1;stroke:#828282;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:1"
+           d="M 99.090914,61.13467 V 82.065858 H 39.772289"
+           id="path16-8" />
+        <g
+           id="g19-0"
+           transform="translate(70.15076,14.059046)"
+           style="stroke:none;fill:#828282;fill-opacity:1">
+          <g
+             id="g20-8"
+             style="stroke:none;fill:#828282;fill-opacity:1">
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:1;fill:#828282;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+=======
+           style="opacity:1;fill:#818181;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0"
+           d="M 66.982317,61.163607 H 58.68433 50.46613"
+           id="path15" />
+        <path
+           style="fill:#818181;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0"
+           d="m 124.53585,60.889001 h -8.88267 -8.79726"
+           id="path15-5" />
+        <path
+           style="fill:#818181;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0"
+           d="M 98.551105,61.199667 H 86.405011 74.375708"
+           id="path15-4" />
+        <path
+           style="opacity:1;fill:none;fill-opacity:1;stroke:#828282;stroke-width:0.264583;stroke-opacity:1"
+           d="m 58.911205,61.230745 v 6.960073 H 38.948551"
+           id="path16" />
+        <path
+           style="fill:none;fill-opacity:1;stroke:#828282;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:1"
+           d="m 115.2635,60.942936 v 6.922246 h 31.71422"
+           id="path16-2" />
+        <path
+           style="fill:none;fill-opacity:1;stroke:#828282;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:1"
+           d="M 86.390906,61.13467 V 82.065858 H 27.072281"
+           id="path16-8" />
+        <g
+           id="g19"
+           transform="translate(-10.570972,1.5824808)"
+           style="stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1">
+          <g
+             id="g20"
+             style="stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1">
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:1;fill:#818181;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:0"
+               x="38.045631"
+               y="71.808472"
+               id="text19"><tspan
+                 sodipodi:role="line"
+                 id="tspan19"
+                 style="font-weight:bold;stroke-width:0.264583;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+                 x="38.045631"
+                 y="71.808472">TimeTagger4</tspan></text>
+          </g>
+        </g>
+        <g
+           id="g19-0"
+           transform="translate(57.450752,1.3590432)"
+           style="stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1">
+          <g
+             id="g20-8"
+             style="stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1">
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:1;fill:#818181;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:0"
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+               x="35.986702"
+               y="71.539917"
+               id="text19-5"><tspan
+                 sodipodi:role="line"
+                 id="tspan19-5"
+<<<<<<< HEAD
+                 style="font-weight:bold;stroke-width:0.264583;stroke:none;fill:#828282;fill-opacity:1"
+                 x="35.986702"
+                 y="71.539917">PCIe<tspan
+   style="font-weight:normal;stroke:none;fill:#828282;fill-opacity:1"
+   id="tspan27">:</tspan> <tspan
+   style="font-weight:normal;stroke:none;fill:#828282;fill-opacity:1"
+   id="tspan26">PCIe CEM x1 plugin board</tspan></tspan></text>
+=======
+                 style="font-weight:bold;stroke-width:0.264583;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+                 x="35.986702"
+                 y="71.539917">PCIe<tspan
+   style="font-weight:normal;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+   id="tspan27">:</tspan> <tspan
+   style="font-weight:normal;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+   id="tspan26"><tspan
+   style="fill:#818181;fill-opacity:1;stroke:none;stroke-opacity:0"
+   id="tspan2">Connect</tspan> via PCIe CEM x1</tspan></tspan></text>
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+          </g>
+        </g>
+        <g
+           id="g19-0-0"
+<<<<<<< HEAD
+           transform="translate(72.587666,1.3833475)"
+           style="stroke:none;fill:#828282;fill-opacity:1">
+          <g
+             id="g20-8-5"
+             style="stroke:none;fill:#828282;fill-opacity:1">
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:1;fill:#828282;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+=======
+           transform="translate(59.887658,7.2041812)"
+           style="stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1">
+          <g
+             id="g20-8-5"
+             style="stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1">
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:1;fill:#818181;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:0"
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+               x="35.654381"
+               y="71.718956"
+               id="text19-5-7"><tspan
+                 sodipodi:role="line"
+<<<<<<< HEAD
+                 style="font-weight:bold;stroke-width:0.264583;stroke:none;fill:#828282;fill-opacity:1"
+                 x="35.654381"
+                 y="71.718956"
+                 id="tspan1">TBT<tspan
+   style="font-weight:normal;stroke:none;fill:#828282;fill-opacity:1"
+   id="tspan28">:</tspan> <tspan
+   style="font-weight:normal;stroke:none;fill:#828282;fill-opacity:1"
+   id="tspan26-5">External device connection </tspan></tspan></text>
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#828282;stroke:none;stroke-width:0;fill-opacity:1"
+               x="47.718483"
+               y="77.039948"
+               id="text3"><tspan
+                 sodipodi:role="line"
+                 id="tspan3"
+                 style="stroke-width:0;stroke:none;fill:#828282;fill-opacity:1"
+                 x="47.718483"
+                 y="77.039948">to Thunderbolt ports</tspan></text>
+=======
+                 id="tspan19-5-6"
+                 style="font-weight:bold;stroke-width:0.264583;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+                 x="35.654381"
+                 y="71.718956">TBT<tspan
+   style="font-weight:normal;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+   id="tspan28">:</tspan> <tspan
+   style="font-weight:normal;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+   id="tspan26-5">Connect via Thunderbolt/USB4</tspan></tspan></text>
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+          </g>
+        </g>
+        <g
+           id="g19-5"
+           transform="translate(13.014579,13.289301)"
+<<<<<<< HEAD
+           style="stroke:none;fill:#828282;fill-opacity:1">
+          <g
+             id="g20-2"
+             style="stroke:none;fill:#828282;fill-opacity:1">
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:1;fill:#828282;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+=======
+           style="stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1">
+          <g
+             id="g20-2"
+             style="stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1">
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:1;fill:#818181;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:0"
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+               x="-1.3420664"
+               y="73.653473"
+               id="text19-6"><tspan
+                 sodipodi:role="line"
+                 id="tspan19-0"
+<<<<<<< HEAD
+                 style="stroke-width:0.264583;stroke:none;fill:#828282;fill-opacity:1"
+                 x="-1.3420664"
+                 y="73.653473"><tspan
+   style="font-weight:bold;stroke:none;fill:#828282;fill-opacity:1"
+   id="tspan22">1.25G</tspan>: 1.25 Gsps / 800 ps binsize</tspan></text>
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#828282;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+=======
+                 style="stroke-width:0.264583;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+                 x="-1.3420664"
+                 y="73.653473"><tspan
+   style="font-weight:bold;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+   id="tspan22">1.25G</tspan>: 1.25 Gsps / 800 ps binsize</tspan></text>
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#818181;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:0"
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+               x="1.8604661"
+               y="79.673431"
+               id="text19-6-6"><tspan
+                 sodipodi:role="line"
+                 id="tspan19-0-5"
+<<<<<<< HEAD
+                 style="stroke-width:0.264583;stroke:none;fill:#828282;fill-opacity:1"
+                 x="1.8604661"
+                 y="79.673431"><tspan
+   style="font-weight:bold;stroke:none;fill:#828282;fill-opacity:1"
+   id="tspan23">2.5G</tspan>: 2.5 Gsps / 400 ps binsize</tspan></text>
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#828282;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+=======
+                 style="stroke-width:0.264583;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+                 x="1.8604661"
+                 y="79.673431"><tspan
+   style="font-weight:bold;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+   id="tspan23">2.5G</tspan>: 2.5 Gsps / 400 ps binsize</tspan></text>
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#818181;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:0"
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+               x="6.5473852"
+               y="85.643578"
+               id="text19-6-6-2"><tspan
+                 sodipodi:role="line"
+                 id="tspan19-0-5-3"
+<<<<<<< HEAD
+                 style="stroke-width:0.264583;stroke:none;fill:#828282;fill-opacity:1"
+                 x="6.5473852"
+                 y="85.643578"><tspan
+   style="font-weight:bold;stroke:none;fill:#828282;fill-opacity:1"
+   id="tspan24">5G</tspan>: 5 Gsps / 200 ps binsize</tspan></text>
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#828282;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+=======
+                 style="stroke-width:0.264583;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+                 x="6.5473852"
+                 y="85.643578"><tspan
+   style="font-weight:bold;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+   id="tspan24">5G</tspan>: 5 Gsps / 200 ps binsize</tspan></text>
+            <text
+               xml:space="preserve"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.9389px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#818181;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:0"
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+               x="3.3516712"
+               y="91.665733"
+               id="text19-6-6-2-9"><tspan
+                 sodipodi:role="line"
+                 id="tspan19-0-5-3-2"
+<<<<<<< HEAD
+                 style="stroke-width:0.264583;stroke:none;fill:#828282;fill-opacity:1"
+                 x="3.3516712"
+                 y="91.665733"><tspan
+   style="font-weight:bold;stroke:none;fill:#828282;fill-opacity:1"
+=======
+                 style="stroke-width:0.264583;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+                 x="3.3516712"
+                 y="91.665733"><tspan
+   style="font-weight:bold;stroke:none;stroke-opacity:0;fill:#818181;fill-opacity:1"
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+   id="tspan25">10G</tspan>: 10 Gsps / 100 ps binsize</tspan></text>
+          </g>
+        </g>
+        <text
+           xml:space="preserve"
+<<<<<<< HEAD
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:8.46667px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:1;fill:#828282;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+           x="86.82341"
+=======
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:8.46667px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:1;fill:#828282;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:0"
+           x="74.123398"
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+           y="59.146801"
+           id="text21"><tspan
+             sodipodi:role="line"
+             id="tspan21"
+<<<<<<< HEAD
+             style="stroke-width:0.264583;stroke:none;fill:#828282;fill-opacity:1"
+             x="86.82341"
+=======
+             style="stroke-width:0.264583;stroke:none;stroke-opacity:0;fill:#828282;fill-opacity:1"
+             x="74.123398"
+>>>>>>> 48f86f9d3e813054e923c48827b33e1e738aec55
+             y="59.146801">1.25G</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>
