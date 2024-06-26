@@ -39,7 +39,7 @@ The \deviceName's inputs are single-ended AC-coupled with 50\,Ω termination.
     \hline\hline
     V\subscript{Base} & Input Baseline & 0 & & 5 & \si{\volt}\\
     \hline
-    V\subscript{Threshold} & Trigger Level & V\subscript{Base} -- 1.27 & & V\subscript{Base} + 1.13 & \si{\volt}\\
+    V\subscript{Threshold} & Trigger Level & V\subscript{Base} $-$ \dcminabs & & V\subscript{Base} + \dcmax & \si{\volt}\\
     \hline
     t\subscript{Pulse} & Pulse Length & 2 & 5 & 200 & \si{\nano\second}\\
     \hline
@@ -49,14 +49,14 @@ The \deviceName's inputs are single-ended AC-coupled with 50\,Ω termination.
     \hline
     Z\subscript{P} & Input Impedance && 50 && Ω\\
     \hline
-    I\subscript{Term} & Termination Current & --50 & -20 & 50 & \si{\milli\ampere}\\
+    I\subscript{Term} & Termination Current & --50 & --20 & 50 & \si{\milli\ampere}\\
     \hline
 \end{tabularx}
 
 All inputs are AC-coupled. The inputs have very high input bandwidth
 requirements and therefore there are no circuits that provide over-voltage
 protection for these signals.  Any voltage on the inputs above \SI{5}{\volt}
-or below -\SI{5}{\volt} relative to the voltage of the slot cover can result
+or below \SI{-5}{\volt} relative to the voltage of the slot cover can result
 in permanent damage to the board.\par Keep in mind, that the input baseline
 \textsf{V\subscript{Base}} is affected by the ratio of pulse length
 \textsf{t\subscript{Pulse}} to average pulse distance (for continuous signals

@@ -72,6 +72,17 @@
 
 % set default values in API's description lists
 \newcommand{\txhinits}[3]{\normalfont\ttfamily\txh{#1}{#2}{\ =\ #3;}}
+
+% dcoffsets are different for xHPTDC8
+\ifxHPTDC{
+    \newcommand{\dcmin}{$-$1.32}
+    \newcommand{\dcminabs}{1.32} % this one is used for \ttfamily 
+    \newcommand{\dcmax}{1.18}
+}{
+    \newcommand{\dcmin}{$-$1.27}
+    \newcommand{\dcminabs}{1.27}
+    \newcommand{\dcmax}{1.13}
+}
  
 \txh{ % TimeTagger4
     \message{Generating User Guide for TimeTagger4}
@@ -113,7 +124,7 @@
 \newcommand{\ttvar}[2]{\noindent\texttt{\textbf{\textcolor{cronogrey}{#1} \prefix #2}}}%for variable declaration
 \newcommand{\ttdef}[1]{\noindent\texttt{\textcolor{cronogrey}{\mbox{\#{}define}} \PREFIX #1}}%for definitions
 
-\newcommand{\ugrev}{{1.8.17}}
+\newcommand{\ugrev}{{1.8.18-rc}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{document}
@@ -167,7 +178,7 @@
     
     \chapter{Revision History} 
         \noindent
-        User Guide \hyperlink{ugrev}{\ugrev} as of 2024-05-21\\  % needs also be updated in UgRev.tex
+        User Guide \hyperlink{ugrev}{\ugrev} as of 2024-06-25\\  % needs also be updated in UgRev.tex
     %	\\
         cronologic GmbH \& Co. KG\\
         Jahnstraße 49\\
