@@ -1,5 +1,23 @@
 \label{sec:installation-of-board}
-\section{Installing the Board}
+
+\ifxHPTDC{}{
+    The \deviceName\ is available as a PCIe plugin board (variant ``-PCIe'', see Ordering Information) or as a desktop solution (variant ``-TBT''). The two variants are shown in Figure~\ref{fig:boards-overview}. For a detailed
+    overview of the hardware of the TBT-variant, please refer to our respective \href{https://docs.cronologic.de/projects/tbt2pcie/}{online user guide}.
+
+    \begin{figure}[!htb]
+        \centering
+        \itett{
+            \includegraphics[width=0.9\textwidth]{timetagger/figures/board-overview}
+        }{
+
+            \includegraphics[width=0.9\textwidth]{xtdc/figure/board-overview}
+        }
+        \caption{Overview of the PCIe (left) and the TBT (right) variant of the \deviceName.\textcolor{red}{TODO}}
+        \label{fig:boards-overview}
+    \end{figure}
+}
+
+\section{Installing the PCIe Board}
 The \deviceName\ board can be installed in any PCIe-CEM slot with x1 or more
 lanes.  Make sure that the PC is powered off and that the main power connector is disconnected while installing the board.\par
 
