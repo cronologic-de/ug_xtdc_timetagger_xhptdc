@@ -129,37 +129,39 @@ It uses multiple substructures to configure various aspects of the board.
         \end{itemize}
     }
 
-    The supported range is \SIrange{-1.32}{1.18}{\volt}. This should be close
-    to 50\% of the height of the input pulse. Examples for various signaling
-    standards are defined as follows:\par
+    The supported range is \dcmin{} to \dcmax{}\,V. This should be close to 50\% of the height of the input pulse. Examples for various signaling standards are defined as follows:\par
+
+    \ifxHPTDC{}{
+        \textbf{Important Note:} The supported range changed for \hyperref[sec:rev_driver_applications]{driver release} 1.10.0. That means, if you use a value for \texttt{dc\_offset} outside the new supported range in your source code, the device configuration will report an error. Adjust your \texttt{dc\_offset} accordingly, preferably using the defines provided below.
+    }
 
 \ifxHPTDC{
     \newcommand{\DCOFFSET}{THRESHOLD\tu}
 }{
     \newcommand{\DCOFFSET}{DC\tu OFFSET\tu}
 }
-    \begin{tabular}{ll}
+    \begin{xltabular}{\textwidth}{ll}
         \ttdef{\DCOFFSET P\tu NIM} & \texttt{+0.35}\\
-        \ttdef{\DCOFFSET P\tu CMOS} & \texttt{+1.18}\\
-        \ttdef{\DCOFFSET P\tu LVCMOS\tu 33} & \texttt{+1.18}\\
-        \ttdef{\DCOFFSET P\tu LVCMOS\tu 25} & \texttt{+1.18}\\
+        \ttdef{\DCOFFSET P\tu CMOS} & \texttt{+\dcmax}\\
+        \ttdef{\DCOFFSET P\tu LVCMOS\tu 33} & \texttt{+\dcmax}\\
+        \ttdef{\DCOFFSET P\tu LVCMOS\tu 25} & \texttt{+\dcmax}\\
         \ttdef{\DCOFFSET P\tu LVCMOS\tu 18} & \texttt{+0.90}\\
-        \ttdef{\DCOFFSET P\tu TTL} & \texttt{+1.18}\\
-        \ttdef{\DCOFFSET P\tu LVTTL\tu 33} & \texttt{+1.18}\\
-        \ttdef{\DCOFFSET P\tu LVTTL\tu 25} & \texttt{+1.18}\\
-        \ttdef{\DCOFFSET P\tu SSTL\tu 3} & \texttt{+1.18}\\
-        \ttdef{\DCOFFSET P\tu SSTL\tu 2} & \texttt{+1.18}\\
+        \ttdef{\DCOFFSET P\tu TTL} & \texttt{+\dcmax}\\
+        \ttdef{\DCOFFSET P\tu LVTTL\tu 33} & \texttt{+\dcmax}\\
+        \ttdef{\DCOFFSET P\tu LVTTL\tu 25} & \texttt{+\dcmax}\\
+        \ttdef{\DCOFFSET P\tu SSTL\tu 3} & \texttt{+\dcmax}\\
+        \ttdef{\DCOFFSET P\tu SSTL\tu 2} & \texttt{+\dcmax}\\
         \ttdef{\DCOFFSET N\tu NIM} & \texttt{-0.35}\\
-        \ttdef{\DCOFFSET N\tu CMOS} & \texttt{-1.32}\\
-        \ttdef{\DCOFFSET N\tu LVCMOS\tu 33} & \texttt{-1.32}\\
+        \ttdef{\DCOFFSET N\tu CMOS} & \texttt{-\dcminabs}\\
+        \ttdef{\DCOFFSET N\tu LVCMOS\tu 33} & \texttt{-\dcminabs}\\
         \ttdef{\DCOFFSET N\tu LVCMOS\tu 25} & \texttt{-1.25}\\
         \ttdef{\DCOFFSET N\tu LVCMOS\tu 18} & \texttt{-0.90}\\
-        \ttdef{\DCOFFSET N\tu TTL} & \texttt{-1.32}\\
-        \ttdef{\DCOFFSET N\tu LVTTL\tu 33} & \texttt{-1.32}\\
+        \ttdef{\DCOFFSET N\tu TTL} & \texttt{-\dcminabs}\\
+        \ttdef{\DCOFFSET N\tu LVTTL\tu 33} & \texttt{-\dcminabs}\\
         \ttdef{\DCOFFSET N\tu LVTTL\tu 25} & \texttt{-1.25}\\
-        \ttdef{\DCOFFSET N\tu SSTL\tu 3} & \texttt{-1.32}\\
+        \ttdef{\DCOFFSET N\tu SSTL\tu 3} & \texttt{-\dcminabs}\\
         \ttdef{\DCOFFSET N\tu SSTL\tu 2} & \texttt{-1.25}\\
-    \end{tabular}\par
+    \end{xltabular}\par
     \noindent The inputs are AC coupled. Thus, the absolute voltage is not
     important for pulse inputs.  It is the relative pulse amplitude that
     causes the input circuits to switch.  The parameter must be set to the
