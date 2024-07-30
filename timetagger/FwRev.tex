@@ -3,11 +3,18 @@
     \hline
     Revision & Date & Comments\\
     \hline\hline
-    \hypertarget{fwrev}{0.1187} & 2023-05-25 & 
+    \hypertarget{fwrev}{0.1219} & 2024-07-15 & 
     \makecell[l] {
-        extended standard range of measurement to 24\,bits\\*
-        fixed wrong polarity flag bug\\*
-        internal optimizations
+        PCIe interface optimizations\\*
+        Fixed first-level FIFO overflow\\*
+        Fixed rare bug that causes PC freezes\\*
+    }\\
+    \hline
+    0.1187 & 2023-05-25 & 
+    \makecell[l] {
+        Extended standard range of measurement to 24\,bits\\*
+        Fixed wrong polarity flag bug\\*
+        Internal optimizations
     }\\
     \hline
     0.1132 & 2021-12-09 & Fixed possible register read issues\\
@@ -25,6 +32,20 @@
     \hline
     Revision & Date & Comments\\
     \hline\hline
+    0.24178 & 2024-06-26 &
+    \makecell[l]{
+        Fixed bug related to the PCIe interface\\*
+        Internal optimizations\\*
+    }\\
+    \hline
+    0.24052 & 2024-02-21 &
+    \makecell[l]{
+        Activated AER capabilities\\*
+        Improved alignment for TT4-10G\\*
+        Added jitter filter for TT4-10G\\*
+        Added option to discard empty packets before they reach the ringbuffer\\*
+    }\\
+    \hline
     0.23180 & 2023-06-29 & Initial release\\ 
     \hline
 \end{tabularx}
