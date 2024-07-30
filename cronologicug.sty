@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[2022-06-01]
-\ProvidesPackage{cronologicug}[2024-01-18]
+\ProvidesPackage{cronologicug}[2024-07-30]
 \author{cronologic GmbH \& Co KG}
 
 \RequirePackage{iftex}
@@ -326,45 +326,47 @@
 \unless\if@crono@noframe
   \usetikzlibrary{calc}
   \AddToHook{shipout/background}{
-    \begin{tikzpicture}[remember picture,overlay]%
-    % left lines
-    \draw [line width=\@crono@framelinewidth,cronolightgrey] 
-    ($(current page.north west)+(\@crono@framemargin,-\@crono@frameoffset)$)
-    -- ($(current page.south west)+(\@crono@framemargin,\@crono@frameoffset)$);
-    \draw [line width=\@crono@framelinewidth,cronolightgrey] 
-    ($(current page.north west)+
-      (\@crono@framemargin+\@crono@framelinesep,-\@crono@frameoffset)$)
-    -- 
-    ($(current page.south west)+
-      (\@crono@framemargin+\@crono@framelinesep,\@crono@frameoffset)$);
-    % right lines
-    \draw [line width=\@crono@framelinewidth,cronolightgrey] 
-    ($(current page.north east)+(-\@crono@framemargin,-\@crono@frameoffset)$)
-    -- ($(current page.south east)+(-\@crono@framemargin,\@crono@frameoffset)$);
-    \draw [line width=\@crono@framelinewidth,cronolightgrey] 
-    ($(current page.north east)+
-      (-\@crono@framemargin-\@crono@framelinesep,-\@crono@frameoffset)$)
-    -- 
-    ($(current page.south east)+
-      (-\@crono@framemargin-\@crono@framelinesep,\@crono@frameoffset)$);
-    % top lines
-    \draw [line width=\@crono@framelinewidth,cronolightgrey] 
-    ($(current page.north west)+(\@crono@frameoffset,-\@crono@framemargin)$)
-    -- ($(current page.north east)+(-\@crono@frameoffset,-\@crono@framemargin)$);
-    \draw [line width=\@crono@framelinewidth,cronolightgrey] 
-    ($(current page.north west)+
-      (\@crono@frameoffset,-\@crono@framemargin-\@crono@framelinesep)$)
-    -- 
-    ($(current page.north east)+
-      (-\@crono@frameoffset,-\@crono@framemargin-\@crono@framelinesep)$);
-    % bottom lines
-    \draw [line width=\@crono@framelinewidth,cronolightgrey]
-    ($(current page.south west)+(\@crono@frameoffset,\@crono@framemargin)$)
-    -- ($(current page.south east)+(-\@crono@frameoffset,\@crono@framemargin)$);
-    \draw [line width=\@crono@framelinewidth,cronolightgrey]
-    ($(current page.south west)+(\@crono@frameoffset,\@crono@framemargin+\@crono@framelinesep)$)
-    -- ($(current page.south east)+(-\@crono@frameoffset,\@crono@framemargin+\@crono@framelinesep)$);
-    \end{tikzpicture}
+    \ifnum\value{page}>1%
+      \begin{tikzpicture}[remember picture,overlay]%
+      % left lines
+      \draw [line width=\@crono@framelinewidth,cronolightgrey] 
+      ($(current page.north west)+(\@crono@framemargin,-\@crono@frameoffset)$)
+      -- ($(current page.south west)+(\@crono@framemargin,\@crono@frameoffset)$);
+      \draw [line width=\@crono@framelinewidth,cronolightgrey] 
+      ($(current page.north west)+
+        (\@crono@framemargin+\@crono@framelinesep,-\@crono@frameoffset)$)
+      -- 
+      ($(current page.south west)+
+        (\@crono@framemargin+\@crono@framelinesep,\@crono@frameoffset)$);
+      % right lines
+      \draw [line width=\@crono@framelinewidth,cronolightgrey] 
+      ($(current page.north east)+(-\@crono@framemargin,-\@crono@frameoffset)$)
+      -- ($(current page.south east)+(-\@crono@framemargin,\@crono@frameoffset)$);
+      \draw [line width=\@crono@framelinewidth,cronolightgrey] 
+      ($(current page.north east)+
+        (-\@crono@framemargin-\@crono@framelinesep,-\@crono@frameoffset)$)
+      -- 
+      ($(current page.south east)+
+        (-\@crono@framemargin-\@crono@framelinesep,\@crono@frameoffset)$);
+      % top lines
+      \draw [line width=\@crono@framelinewidth,cronolightgrey] 
+      ($(current page.north west)+(\@crono@frameoffset,-\@crono@framemargin)$)
+      -- ($(current page.north east)+(-\@crono@frameoffset,-\@crono@framemargin)$);
+      \draw [line width=\@crono@framelinewidth,cronolightgrey] 
+      ($(current page.north west)+
+        (\@crono@frameoffset,-\@crono@framemargin-\@crono@framelinesep)$)
+      -- 
+      ($(current page.north east)+
+        (-\@crono@frameoffset,-\@crono@framemargin-\@crono@framelinesep)$);
+      % bottom lines
+      \draw [line width=\@crono@framelinewidth,cronolightgrey]
+      ($(current page.south west)+(\@crono@frameoffset,\@crono@framemargin)$)
+      -- ($(current page.south east)+(-\@crono@frameoffset,\@crono@framemargin)$);
+      \draw [line width=\@crono@framelinewidth,cronolightgrey]
+      ($(current page.south west)+(\@crono@frameoffset,\@crono@framemargin+\@crono@framelinesep)$)
+      -- ($(current page.south east)+(-\@crono@frameoffset,\@crono@framemargin+\@crono@framelinesep)$);
+      \end{tikzpicture}
+    \fi%
   }
 \fi
 
