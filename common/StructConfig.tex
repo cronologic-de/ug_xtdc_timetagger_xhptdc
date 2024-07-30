@@ -129,10 +129,10 @@ It uses multiple substructures to configure various aspects of the board.
         \end{itemize}
     }
 
-    The supported range is \dcmin{} to \dcmax{}\,V. This should be close to 50\% of the height of the input pulse. Examples for various signaling standards are defined as follows:\par
+    The supported range is \dcmin{} to \dcmax{}\,V. This should be close to 50\% of the height of the input pulse. Examples for various signaling standards are defined as follows.\par
 
     \ifxHPTDC{}{
-        \textbf{Important Note:} The supported range changed for \hyperref[sec:rev_driver_applications]{driver release} 1.10.7. That means, if you use a value for \texttt{dc\_offset} outside the new supported range in your source code, the device configuration will report an error. Adjust your \texttt{dc\_offset} accordingly, preferably using the defines provided below.
+        \textbf{Important Note:} The supported range changed for \hyperref[sec:rev_driver_applications]{driver release} 1.10.7. That means, if you use a value for \texttt{dc\_offset} outside the new supported range in your source code, the device configuration will adjust it automatically to the new supported range (e.g., a value of +1.18\,V will be reduced to +1.13\,V).
     }
 
 \ifxHPTDC{
