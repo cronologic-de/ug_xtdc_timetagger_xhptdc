@@ -11,7 +11,8 @@
     interval before and after the edge.  Triggers on the start channel must
     not occur less than \SI{5}{\nano\second} apart. The \deviceName\ records
     events without dead time at a readout rate of about 48\,MHits/s for Gen\,1
-    and 60\,MHits/s for Gen\,2.
+    and 60\,MHits/s for Gen\,2. For Gen\,2, the maximum readout rate
+    of a single channel is 40\,MHits/s.
 }{ %xTDC4
     The \deviceName\ is a ``classic'' common start time-to-digital converter. 
 
@@ -28,7 +29,7 @@
     \label{difficulthits}
     Transitions of the input signals are called hits. To measure all hits with
     the maximum resolution the hits must fulfill all criteria set forth in
-    this document.  However, the \deviceName does include mechanisms to
+    this document.  However, the \deviceName{} does include mechanisms to
     provide as much information as possible for hits that fall out of these
     specs.
 
@@ -50,7 +51,7 @@
     overflows the high resolution measurement of some hits will be discarded. 
     In this case a measurement from an alternative TDC will be used that has a
     resolution of about \SI{150}{\pico\second}.  For these hits bit 6 in the
-    data word will be set
+    data word will be set.
 } { %xHPTDC8 version
     The \deviceName\ is a streaming time-to-digital converter. It records the
     timestamps of changes at the inputs A-H in an infinite stream.  A flexible
@@ -58,10 +59,11 @@
     behavior. See Section~\ref{sec:grouping} for details.
 
     For each channel, it can be selected individually whether rising or
-    falling edges are recorded. It is not possible to record both edges of the
+    falling edges are recorded. It is not possible to record both edges at the
     same channel.  The timestamps are recorded in integer multiples of a bin
     size of $5000/(3\times 128) = 13.0208\overline{3}$\,ps. 
     There must be at least \SI{5}{\nano\second} between consecutive hits on
     the same input channel to be detected reliably.  The \deviceName\ records
-    events without dead time at a readout rate of about 48\,MHits/s.
+    events without dead time at a readout rate of about 48\,MHits/s. For a
+    single channel, the maximum readout rate is about 12\,MHits/s.
 }
