@@ -86,13 +86,12 @@ lanes.  Make sure that the PC is powered off and that the main power connector i
         multiple boards are used together as described in
         Section~\ref{multiboard}.
     }{%TT4 & xTDC4
-        Furthermore, for Gen\,1 boards three inter-board connectors can be
-        found near the top edge of the \deviceName\ board, as displayed in
-        Figure~\ref{fig:schematics}. Connector J25 is reserved for future
-        use. The pinout of connector J12 is shown in Table~\ref{J12} and the
-        pinout of connector J6 is depicted in Table~\ref{J6}. \textbf{Gen\,2
-        boards do not possess these three connectors}.
-    }
+        Furthermore, for \textbf{Gen\,1} boards three inter-board connectors 
+        can be found near the top edge of the \deviceName\ board, as displayed 
+        in Figure~\ref{fig:schematics}. Connector J25 is reserved for future 
+        use. The pinout of connector J12 is shown in Table~\ref{J12} and the 
+        pinout of connector J6 is depicted in Table~\ref{J6}. \textbf{Gen\,2 
+        boards do not possess these three connectors}.  }
     %
         \begin{figure*}[htb]
             \centering
@@ -103,8 +102,11 @@ lanes.  Make sure that the PC is powered off and that the main power connector i
                     \includegraphics[width=0.7\textwidth]{%
                         figures/xTDC4_schematic.pdf}
                 }
-                \caption{Schematic view of \adeviceName\ Gen\,1 board showing
-                    the inter-board connectors.\label{fig:schematics}}
+                \caption{Schematic view of \adeviceName\ 
+                    board including the inter-board connectors.
+                    \ifxHPTDC{}{The inter-board connectors are only present
+                    on Gen\,1 boards.}
+                    \label{fig:schematics}}
         \end{figure*}
     %
 

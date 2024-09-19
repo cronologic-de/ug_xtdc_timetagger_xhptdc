@@ -37,8 +37,8 @@
    guidetolerance="10"
    id="namedview3064"
    inkscape:current-layer="svg2985"
-   inkscape:cx="42.721915"
-   inkscape:cy="125.13224"
+   inkscape:cx="30.714276"
+   inkscape:cy="143.96527"
    inkscape:guide-bbox="true"
    inkscape:pageopacity="0"
    inkscape:pageshadow="2"
@@ -47,7 +47,7 @@
    inkscape:window-width="3440"
    inkscape:window-x="-8"
    inkscape:window-y="-8"
-   inkscape:zoom="1.9779076"
+   inkscape:zoom="3.9558152"
    objecttolerance="10"
    pagecolor="#ffffff"
    showgrid="false"
@@ -154,7 +154,7 @@
    class="st5 st6"
    x="43.651009"
    y="97.848465"
-   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.0870347">S</text><text
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.0870347">T</text><text
    id="text3056-5"
    class="st5 st6"
    x="31.636364"
@@ -314,12 +314,7 @@
    sodipodi:nodetypes="ccc"
    class="st15"
    d="M 30.30568,253.99291 30.679374,19.68721 H 1.7665401"
-   style="stroke-width:3.53308;stroke-dasharray:none" />&#10;<path
-   id="path3805"
-   inkscape:connector-curvature="0"
-   class="st13"
-   d="M 34.622585,87.382665 V 100.75987"
-   style="stroke-width:2.09268;stroke-dasharray:none" />&#10;<path
+   style="stroke-width:3.53308;stroke-dasharray:none" />&#10;&#10;<path
    id="path3927"
    inkscape:connector-curvature="0"
    class="st13"
@@ -410,4 +405,4 @@
    r="3.4813812" /><text
    xml:space="preserve"
    id="text2"
-   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.33333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect2);fill:#282828;stroke:#000000;stroke-width:0;stroke-dasharray:none" /></svg>
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:1.33333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect2);display:inline;fill:#282828;stroke:#000000;stroke-width:0;stroke-dasharray:none" /></svg>
