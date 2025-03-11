@@ -6,16 +6,25 @@ little overhead, but they are not guaranteed to be thread safe.
 
 \begin{description}[style=nextline]
     \item[\ttvar{int}{start\tu capture(})]
-    Start data acquisition.
+    Start data acquisition of all cards.
 
     \item[\ttvar{int}{pause\tu capture(})]
-    Pause a started data acquisition. 
-    \emph{Pause} and \emph{continue} have less overhead than \emph{start} and \emph{stop} but don't allow for a configuration change.
+    Pause a started data acquisition of all cards. Every subsequent call of
+    \texttt{\prefix read\_hits()} will return empty packets.
+
+    \textit{Pause} and \textit{continue} have less overhead
+    than \textit{start} and \textit{stop} but do not allow for a configuration change.
 
     \item[\ttvar{int}{continue\tu capture(})]
     Call this to resume data acquisition after a call to
-    \texttt{\prefix pause\tu capture()}.  Pause and continue have less overhead
-    than start and stop but don't allow for a configuration change.
+    \texttt{\prefix pause\tu capture()}.
+
+    Be aware that after continuing a
+    measurement, the first few hits in a packet may have old timestamps
+    (from before \texttt{\prefix pause\_capture} has been called).
+
+    \textit{Pause} and \textit{continue} have less overhead
+    than \textit{start} and \textit{stop} but do not allow for a configuration change.
 
     \item[\ttvar{int}{stop\tu capture(})]
     Stop data acquisition.
