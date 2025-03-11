@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[2022-06-01]
-\ProvidesPackage{cronologicug}[2024-07-30]
+\ProvidesPackage{cronologicug}[2025-03-11]
 \author{cronologic GmbH \& Co KG}
 
 \RequirePackage{iftex}
@@ -11,7 +11,6 @@
 \fi
 
 \DeclareKeys{
-  font.store              = \@crono@font,
   sphinx.if               = @crono@sphinx,
   noframe.if              = @crono@noframe,
   monofontdescriptions.if = @crono@monofontdescriptions,
@@ -31,7 +30,6 @@
 }
 
 \SetKeys{
-  font    = montserrat,
   noframe = false,
   pdflang = en,
   left    = 1.5cm,
@@ -154,125 +152,37 @@
 
 \defaultfontfeatures{Scale=MatchLowercase}
 
-% font option "montserrat"
-% since Montserrat doesn't have a Mono/Math font, set up different fonts
-% for that
-\ifthenelse{\equal{\@crono@font}{montserrat}}
-{
-    \setmainfont[
-        ItalicFont={Montserrat-Italic.otf},
-        BoldFont={Montserrat-Bold.otf},
-        BoldItalicFont={Montserrat-BoldItalic.otf},
-        Numbers=Tabular,
-    ]{Montserrat-Regular.otf}
-    \setsansfont[
-        ItalicFont={Montserrat-Italic.otf},
-        Numbers=Tabular,
-        BoldFont={Montserrat-Bold.otf},
-        BoldItalicFont={Montserrat-BoldItalic.otf}
-    ]{Montserrat-Regular.otf}
+\setmainfont[
+    ItalicFont={Montserrat-Italic.otf},
+    BoldFont={Montserrat-Bold.otf},
+    BoldItalicFont={Montserrat-BoldItalic.otf},
+    Numbers=Tabular,
+]{Montserrat-Regular.otf}
+\setsansfont[
+    ItalicFont={Montserrat-Italic.otf},
+    Numbers=Tabular,
+    BoldFont={Montserrat-Bold.otf},
+    BoldItalicFont={Montserrat-BoldItalic.otf}
+]{Montserrat-Regular.otf}
 
-    \setmonofont[
-      Scale=MatchLowercase,
-      ItalicFont={SourceCodePro-RegularIt.otf},
-      BoldFont={SourceCodePro-Bold.otf},
-      BoldItalicFont={SourceCodePro-BoldIt.otf}
-    ]{SourceCodePro-Regular.otf}
+\setmonofont[Scale=MatchLowercase]{Latin Modern Mono Light}
+\setmathfont[Scale=MatchUppercase]{Latin Modern Math}
 
-    \setmathfont[Scale=MatchUppercase]{Latin Modern Math}
+\setmathfont[range=up/{latin,Latin,num},Numbers=Tabular]{Montserrat-Regular.otf}
+\setmathfont[range=it/{latin,Latin},Numbers=Tabular]{Montserrat-Italic.otf}
+\setmathfont[range=bfup/{latin,Latin,num},Numbers=Tabular]{Montserrat-Bold}
+\setmathfont[range=bfit/{latin,Latin},Numbers=Tabular]{Montserrat-BoldItalic.otf}
 
-    \setmathfont[range=up/{latin,Latin,num},Numbers=Tabular]{Montserrat-Regular.otf}
-    \setmathfont[range=it/{latin,Latin},Numbers=Tabular]{Montserrat-Italic.otf}
-    \setmathfont[range=bfup/{latin,Latin,num},Numbers=Tabular]{Montserrat-Bold}
-    \setmathfont[range=bfit/{latin,Latin},Numbers=Tabular]{Montserrat-BoldItalic.otf}
+\setmathfont[range=up/{greek,Greek}]{KerkisSans.otf}
+\setmathfont[range=it/{greek,Greek}]{KerkisSans-Italic.otf}
+\setmathfont[range=bfup/{greek,Greek}]{KerkisSans-Bold.otf}
+\setmathfont[range=bfit/{greek,Greek}]{KerkisSans-BoldItalic.otf}
 
-    \setmathfont[range=up/{greek,Greek}]{KerkisSans.otf}
-    \setmathfont[range=it/{greek,Greek}]{KerkisSans-Italic.otf}
-    \setmathfont[range=bfup/{greek,Greek}]{KerkisSans-Bold.otf}
-    \setmathfont[range=bfit/{greek,Greek}]{KerkisSans-BoldItalic.otf}
-
-    \newfontfamily\cronoheaderfont[
-        ItalicFont={Montserrat-Italic.otf},
-        BoldFont={Montserrat-Bold.otf},
-        BoldItalicFont={Montserrat-BoldItalic.otf}
-    ]{Montserrat-Regular.otf}
-}{\relax}
-
-% Font option "fira"
-% https://www.ctan.org/tex-archive/fonts/fira
-% https://www.ctan.org/pkg/firamath
-\ifthenelse{\equal{\@crono@font}{fira}}
-{
-    \setmainfont[
-        ItalicFont={FiraSans-Italic.otf},
-        BoldFont={FiraSans-Bold.otf},
-        BoldItalicFont={FiraSans-BoldItalic.otf}
-    ]{FiraSans-Regular.otf}
-
-    \setsansfont[
-        ItalicFont={FiraSans-Italic.otf},
-        BoldFont={FiraSans-Bold.otf},
-        BoldItalicFont={FiraSans-BoldItalic.otf}
-    ]{FiraSans-Regular.otf}
-
-    \setmonofont[
-        ItalicFont={FiraMono-Oblique.otf},
-        BoldFont={FiraMono-Bold.otf},
-        BoldItalicFont={FiraMono-BoldOblique.otf}
-    ]{FiraMono-Regular.otf}
-
-    \newfontfamily\cronoheaderfont
-    [
-        ItalicFont={Montserrat-Italic.otf},
-        BoldFont={Montserrat-Bold.otf},
-        BoldItalicFont={Montserrat-BoldItalic.otf}
-    ]
-    {Montserrat-Regular.otf}
-
-    \setmathfont{Fira Math}
-}{\relax}
-
-% font option "avenirnext"
-% The fonts Avenir Next and AvantGarde must be installed on the System
-\ifthenelse{\equal{\@crono@font}{avenirnext}}
-{
-    \setmainfont[Numbers=Tabular]{Avenir Next}
-    \setsansfont[Numbers=Tabular]{Avenir Next}
-
-    \setmonofont[
-      Scale=MatchLowercase,
-      ItalicFont={SourceCodePro-RegularIt.otf},
-      BoldFont={SourceCodePro-Bold.otf},
-      BoldItalicFont={SourceCodePro-BoldIt.otf}
-    ]{SourceCodePro-Regular.otf}
-
-    \setmathfont[Scale=MatchUppercase]{Latin Modern Math}
-    % \setmathfont{TeX Gyre Termes Math}
-
-    \setmathfont[
-      Numbers=Tabular,
-      range=up/{latin,Latin,num,greek,Greek}
-    ]{Avenir Next}
-    \setmathfont[
-      Numbers=Tabular,
-      range=it/{latin,Latin,greek,Greek}
-    ]{Avenir Next Italic}
-    \setmathfont[
-      Numbers=Tabular,
-      range=bfup/{latin,Latin,num,greek,Greek}
-    ]{Avenir Next Demi Bold}
-    \setmathfont[
-      Numbers=Tabular,
-      range=bfit/{latin,Latin,greek,Greek}
-    ]{Avenir Next Demi Bold Italic}
-
-    \newfontfamily\cronoheaderfont{Avgardm.ttf}
-}{\relax}
-
-\ifthenelse{\equal{\@crono@font}{default}}
-{
-    \newcommand\cronoheaderfont{}
-}{\relax}
+\newfontfamily\cronoheaderfont[
+    ItalicFont={TexGyreAdventor-Italic.otf},
+    BoldFont={TexGyreAdventor-Bold.otf},
+    BoldItalicFont={TexGyreAdventor-BoldItalic.otf}
+]{TexGyreAdventor-Regular.otf}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
