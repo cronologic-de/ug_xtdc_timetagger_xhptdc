@@ -15,6 +15,10 @@ little overhead, but they are not guaranteed to be thread safe.
     \textit{Pause} and \textit{continue} have less overhead
     than \textit{start} and \textit{stop} but do not allow for a configuration change.
 
+    \textbf{Note:} Before \hyperlink{sec:firmware}{Firmware 2.1225} and
+    \hyperlink{sec:driver}{Driver Revision 1.5.0}, this feature
+    was bugged.
+
     \item[\ttvar{int}{continue\tu capture(})]
     Call this to resume data acquisition after a call to
     \texttt{\prefix pause\tu capture()}.
@@ -25,6 +29,10 @@ little overhead, but they are not guaranteed to be thread safe.
 
     \textit{Pause} and \textit{continue} have less overhead
     than \textit{start} and \textit{stop} but do not allow for a configuration change.
+
+    \textbf{Note:} Before \hyperlink{sec:firmware}{Firmware 2.1225} and
+    \hyperlink{sec:driver}{Driver Revision 1.5.0}, this feature
+    was bugged.
 
     \item[\ttvar{int}{stop\tu capture(})]
     Stop data acquisition.
@@ -41,6 +49,7 @@ little overhead, but they are not guaranteed to be thread safe.
     \texttt{\PREFIX TRIGGER\tu SOURCE\tu SOFTWARE}. 
 \end{description}
 
+\clearpage
 \section{Readout}
 \begin{description}[style=nextline]
     \item[\ttvar{int}{read\tu hits(}\cronvar{TDCHit}{*hit\tu buf,} \cronvar{size\tu t}{size})]
