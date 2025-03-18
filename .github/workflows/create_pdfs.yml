@@ -38,3 +38,37 @@ jobs:
         with:
           name: xTDC-TimeTagger-xHPTDC8-User-Guides
           path: "*_User_Guide.pdf"
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # checkout specific branch
+          ref: dev
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Publish xHPTDC8
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
+          source: ./artifacts/xHPTDC8_User_Guide.pdf
+          target: ${{ secrets.TARGETPDFXHPTDC }}
+          strip_components: 2
+          rm: true
+
+      # - name: Upload documentation as release asset
+      #   env:
+      #     GITHUB_TOKEN: ${{ github.token }}
+      #   run: |
+      #     gh release upload ${{ github.event.release.tag_name }} ./documentation.zip
