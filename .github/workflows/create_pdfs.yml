@@ -1,11 +1,9 @@
-name: create-pdfs
+name: build-and-publish-pdfs
 
 on:
-  workflow_dispatch:
-
-  push:
-    branches:
-      - dev
+  release:
+    types:
+      created
 
 jobs:
   build-and-publish:
@@ -14,30 +12,52 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v4
-      # - name: Compile TimeTagger4 User Guide
-      #   uses: xu-cheng/latex-action@v3
-      #   with:
-      #     root_file: TimeTagger4_User_Guide.tex
-      #     latexmk_use_lualatex: true
-      #     # work_in_root_file_dir: true
-      #     working_directory: .
-      # - name: Compile xTDC4 User Guide
-      #   uses: xu-cheng/latex-action@v3
-      #   with:
-      #     root_file: xTDC4_User_Guide.tex
-      #     latexmk_use_lualatex: true
+
+      - name: Compile TimeTagger4 User Guide
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: TimeTagger4_User_Guide.tex
+          latexmk_use_lualatex: true
           # work_in_root_file_dir: true
+          working_directory: .
+
+      - name: Compile xTDC4 User Guide
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: xTDC4_User_Guide.tex
+          latexmk_use_lualatex: true
+          # work_in_root_file_dir: true
+
       - name: Compile xHPTDC8 User Guide
         uses: xu-cheng/latex-action@v3
         with:
           root_file: xHPTDC8_User_Guide.tex
           latexmk_use_lualatex: true
           # work_in_root_file_dir: true
-      # - name: Upload User Guides as Artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: xTDC-TimeTagger-xHPTDC8-User-Guides
-      #     path: "*_User_Guide.pdf"
+
+      - name: Publish TimeTagger4
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
+          source: ./TimeTagger4_User_Guide.pdf
+          target: ${{ secrets.TARGETPDFTIMETAGGER }}
+          # strip_components: 2
+          rm: true
+
+      - name: Publish xTDC4
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
+          source: ./xTDC4_User_Guide.pdf
+          target: ${{ secrets.TARGETPDFXTDC }}
+          # strip_components: 2
+          rm: true
 
       - name: Publish xHPTDC8
         uses: appleboy/scp-action@v0.1.7
@@ -50,4 +70,3 @@ jobs:
           target: ${{ secrets.TARGETPDFXHPTDC }}
           # strip_components: 2
           rm: true
-
