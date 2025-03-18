@@ -8,24 +8,24 @@ on:
       - dev
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
 
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v4
-      - name: Compile TimeTagger4 User Guide
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: TimeTagger4_User_Guide.tex
-          latexmk_use_lualatex: true
-          # work_in_root_file_dir: true
-          working_directory: .
-      - name: Compile xTDC4 User Guide
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: xTDC4_User_Guide.tex
-          latexmk_use_lualatex: true
+      # - name: Compile TimeTagger4 User Guide
+      #   uses: xu-cheng/latex-action@v3
+      #   with:
+      #     root_file: TimeTagger4_User_Guide.tex
+      #     latexmk_use_lualatex: true
+      #     # work_in_root_file_dir: true
+      #     working_directory: .
+      # - name: Compile xTDC4 User Guide
+      #   uses: xu-cheng/latex-action@v3
+      #   with:
+      #     root_file: xTDC4_User_Guide.tex
+      #     latexmk_use_lualatex: true
           # work_in_root_file_dir: true
       - name: Compile xHPTDC8 User Guide
         uses: xu-cheng/latex-action@v3
@@ -33,27 +33,11 @@ jobs:
           root_file: xHPTDC8_User_Guide.tex
           latexmk_use_lualatex: true
           # work_in_root_file_dir: true
-      - name: Upload User Guides as Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: xTDC-TimeTagger-xHPTDC8-User-Guides
-          path: "*_User_Guide.pdf"
-
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          # checkout specific branch
-          ref: dev
-
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: ./artifacts
+      # - name: Upload User Guides as Artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: xTDC-TimeTagger-xHPTDC8-User-Guides
+      #     path: "*_User_Guide.pdf"
 
       - name: Publish xHPTDC8
         uses: appleboy/scp-action@v0.1.7
@@ -62,13 +46,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
-          source: ./artifacts/xHPTDC8_User_Guide.pdf
+          source: ./xHPTDC8_User_Guide.pdf
           target: ${{ secrets.TARGETPDFXHPTDC }}
-          strip_components: 2
+          # strip_components: 2
           rm: true
 
-      # - name: Upload documentation as release asset
-      #   env:
-      #     GITHUB_TOKEN: ${{ github.token }}
-      #   run: |
-      #     gh release upload ${{ github.event.release.tag_name }} ./documentation.zip
