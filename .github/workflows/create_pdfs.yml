@@ -2,8 +2,7 @@ name: build-and-publish-pdfs
 
 on:
   release:
-    types:
-      created
+    types: created
 
 jobs:
   build-and-publish:
@@ -70,3 +69,12 @@ jobs:
           target: ${{ secrets.TARGETPDFXHPTDC }}
           # strip_components: 2
           rm: true
+
+      - name: Zip PDFs
+        run: zip user_guides.zip *_User_Guide.pdf
+
+      - name: Upload documentation as release asset
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload ${{ github.event.release.tag_name }} ./user_guides.zip
