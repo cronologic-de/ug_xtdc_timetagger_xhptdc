@@ -29,7 +29,7 @@
     \hline
 \end{tabularx}
 
-\subsection{TDC Inputs}
+\subsection{TDC Inputs} \label{din:tdcinputs}
 The \deviceName's inputs are single-ended AC-coupled with 50\,Ω termination.
 
 \noindent
@@ -41,7 +41,17 @@ The \deviceName's inputs are single-ended AC-coupled with 50\,Ω termination.
     \hline
     V\subscript{Threshold} & Trigger Level & V\subscript{Base} $-$ \dcminabs & & V\subscript{Base} + \dcmax & \si{\volt}\\
     \hline
-    t\subscript{Pulse} & Pulse Length & 2 & 5 & 200 & \si{\nano\second}\\
+    \itett{
+        t\subscript{Pulse} & Pulse Length\newline
+            \hfill --1.25G\newline
+            \hfill --2.5G\newline
+            \hfill --5G\newline
+            \hfill --10G
+        & \makecell[tc]{\mbox{}\\0.8\\0.4\\0.2\\0.1} & 5 & 200 & \si{\nano\second}
+    }
+    {
+        t\subscript{Pulse} & Pulse Length & 2 & 5 & 200 & \si{\nano\second}
+    }\\
     \hline
     t\subscript{Rise} & Pulse Edge 20\% to 80\%  &  &  & 10 & \si{\nano\second}\\
     \hline
