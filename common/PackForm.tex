@@ -90,7 +90,7 @@ Which have a variable length. The structure contains the following fields.
         $5/(3*128) = 13.0208\overline{3}$\,\si{\pico\second}
     }
 \begin{verbatim}
-uint32_t timestamp  = (hit >> 8) & 0xF;
+uint32_t timestamp  = (hit >> 8) & 0xFFFFFF;
 uint32_t flags      = (hit >> 4) & 0xF;
 uint32_t channel    =  hit       & 0xF;
 \end{verbatim}
