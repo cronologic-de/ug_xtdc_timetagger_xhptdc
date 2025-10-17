@@ -12,51 +12,12 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v4
 
-      - name: Compile TimeTagger4 User Guide
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: TimeTagger4_User_Guide.tex
-          latexmk_use_lualatex: true
-          # work_in_root_file_dir: true
-          working_directory: .
-
-      - name: Compile xTDC4 User Guide
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: xTDC4_User_Guide.tex
-          latexmk_use_lualatex: true
-          # work_in_root_file_dir: true
-
       - name: Compile xHPTDC8 User Guide
         uses: xu-cheng/latex-action@v3
         with:
           root_file: xHPTDC8_User_Guide.tex
           latexmk_use_lualatex: true
           # work_in_root_file_dir: true
-
-      - name: Publish TimeTagger4
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.KEY }}
-          source: ./TimeTagger4_User_Guide.pdf
-          target: ${{ secrets.TARGETPDFTIMETAGGER }}
-          # strip_components: 2
-          rm: true
-
-      - name: Publish xTDC4
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.KEY }}
-          source: ./xTDC4_User_Guide.pdf
-          target: ${{ secrets.TARGETPDFXTDC }}
-          # strip_components: 2
-          rm: true
 
       - name: Publish xHPTDC8
         uses: appleboy/scp-action@v0.1.7
@@ -70,11 +31,8 @@ jobs:
           # strip_components: 2
           rm: true
 
-      - name: Zip PDFs
-        run: zip user_guides.zip *_User_Guide.pdf
-
       - name: Upload documentation as release asset
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          gh release upload ${{ github.event.release.tag_name }} ./user_guides.zip
+          gh release upload ${{ github.event.release.tag_name }} ./xHPTDC8_User_Guide.pdf
