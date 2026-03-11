@@ -1,0 +1,61 @@
+font.size: 10
+font.family: "sans-serif"
+font.sans-serif: "Arial, DejaVu Serif, sans-serif"
+figure.dpi: 100
+
+text.color: "#afafaf"
+
+axes.formatter.useoffset: False
+
+axes.prop_cycle: cycler("color", ["#376EB5", "#ED7800", "#009E73", "#f0E442", "#0072B2", "#D55E00", "#CC79A7"])
+
+axes.spines.left: False
+axes.spines.bottom: False
+axes.spines.top: False
+axes.spines.right: False
+
+xtick.major.pad: 1.8
+xtick.minor.pad: 1.5
+ytick.major.pad: 1.8
+ytick.minor.pad: 1.5
+axes.labelpad: 2.0
+axes.titlepad: 5.0
+
+axes.grid: True
+axes.grid.axis: "both"
+axes.grid.which: "major"
+
+figure.facecolor: "none"
+
+axes.linewidth: 0.8
+
+lines.linewidth: 1.5
+lines.markersize: 5.0
+
+xtick.major.size: 0.0
+ytick.major.size: 0.0
+xtick.minor.size: 0.0
+ytick.minor.size: 0.0
+xtick.major.width: 0.8
+ytick.major.width: 0.8
+xtick.minor.width: 0.4
+ytick.minor.width: 0.4
+
+axes.titlelocation: "left"
+axes.titlecolor:"#afafaf"
+
+grid.color: "w"
+grid.alpha: 1.0
+axes.edgecolor: "#AFAFAF"
+axes.facecolor: "#f2f2f2"
+axes.labelcolor: "#AFAFAF"
+xtick.color: "#f2f2f2"
+ytick.color:  "#f2f2f2"
+xtick.labelcolor:   "#AFAFAF"
+ytick.labelcolor:   "#AFAFAF"
+
+grid.linewidth: 0.8
+
+legend.frameon: False
+
+image.aspect: "auto"

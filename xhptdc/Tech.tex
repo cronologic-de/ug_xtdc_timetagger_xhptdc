@@ -37,6 +37,28 @@ of the PCB and protrudes 9.25~mm beyond PCIe specifications.
             \hline
         \end{tabularx}
 
+    \label{sec:cable-delay}
+    \subsection{Cable Delay Histograms}
+
+    Figure~\ref{fig:cable-delay-test} shows histograms resulting from cable delay tests
+    for the different combinations of channels. A constant delay is measured multiple
+    time, using channel A as start and the other channels as stop.
+
+    From these histograms it becomes apparent that the largest contribution to the
+    timing error is due to the quantization into 13~ps bins (see our
+    \href{https://docs.cronologic.de/app_notes/tdc_errors}{application note}
+    on the topic).
+
+    \begin{figure}
+        \includegraphics{figures/cable_delay_hist.pdf}
+        \caption{
+            Cable delay histograms of the xHPTDC8. The x-axis shows the relative
+            delay in reference to the highest peak.
+        }
+        \label{fig:cable-delay-test}
+
+    \end{figure}
+
     \subsection{Oscillator Time Base}
 
         \noindent
