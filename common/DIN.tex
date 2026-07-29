@@ -52,7 +52,11 @@ The \deviceName's inputs are single-ended AC-coupled with 50\,Ω termination.
         & \makecell[tc]{\mbox{}\\0.8\\0.4\\0.2\\0.1} & 5 & 200 & \si{\nano\second}
     }
     {
-        t\subscript{Pulse} & Pulse Length & 2 & 5 & 200 & \si{\nano\second}
+        t\subscript{Pulse} & Pulse Length & \ifxHPTDC{0.25}{2} & 5 & 200 & \si{\nano\second}
+        \ifxHPTDC{
+        \\ \hline
+        N\subscript{Multihit} & Number of hits limited solely by t\subscript{DPfull} & 15 &  &  & Hits/Ch
+        }{}
     }\\
     \hline
     t\subscript{Rise} & Pulse Edge 20\% to 80\%  &  &  & 10 & \si{\nano\second}\\
